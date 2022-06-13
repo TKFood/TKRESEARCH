@@ -138,6 +138,35 @@ namespace TKRESEARCH
 
         }
 
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            textBox1.Text = null;
+            textBox2.Text = null;
+            textBox3.Text = null;
+           
+
+            if (dataGridView1.CurrentRow != null)
+            {
+                int rowindex = dataGridView1.CurrentRow.Index;
+                if (rowindex >= 0)
+                {
+                    DataGridViewRow row = dataGridView1.Rows[rowindex];
+                    textBox1.Text = row.Cells["品號"].Value.ToString();
+                    textBox2.Text = row.Cells["品名"].Value.ToString();
+                    textBox3.Text = row.Cells["單位"].Value.ToString();
+                   
+                   
+                }
+                else
+                {
+                    textBox1.Text = null;
+                    textBox2.Text = null;
+                    textBox3.Text = null;
+                    
+                }
+            }
+        }
+
         #endregion
 
         #region BUTTON
@@ -146,5 +175,7 @@ namespace TKRESEARCH
             SEARCH();
         }
         #endregion
+
+       
     }
 }
