@@ -74,6 +74,7 @@ namespace TKRESEARCH
         {
             try
             {
+                DataSet ds = new DataSet();
                 //20210902密
                 Class1 TKID = new Class1();//用new 建立類別實體
                 SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
@@ -388,6 +389,193 @@ namespace TKRESEARCH
             textBox12.Text = null;
         }
 
+        public void SEARCHINVMB()
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+
+                sbSql.AppendFormat(@"  
+                                    SELECT 
+                                    [MB001] AS '品號'
+                                    ,[NAME] AS '品名'
+                                    ,[UNIT] AS '單位'
+                                    FROM [TKRESEARCH].[dbo].[INVMB]
+                                    ORDER BY MB001
+                                    ");
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count == 0)
+                {
+                    dataGridView2.DataSource = null;
+
+                }
+                else
+                {
+                    if (ds.Tables["ds"].Rows.Count >= 1)
+                    {
+                        dataGridView2.DataSource = ds.Tables["ds"];
+
+                        dataGridView2.AutoResizeColumns();
+
+                        if (ROWSINDEX > 0 || COLUMNSINDEX > 0)
+                        {
+                            dataGridView2.CurrentCell = dataGridView2.Rows[ROWSINDEX].Cells[COLUMNSINDEX];
+
+                            DataGridViewRow row = dataGridView2.Rows[ROWSINDEX];
+                            ID = row.Cells["ID"].Value.ToString();
+
+
+
+
+
+                        }
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+        }
+
+        private void dataGridView2_SelectionChanged(object sender, EventArgs e)
+        {
+            string MB001 = null;
+
+            if (dataGridView2.CurrentRow != null)
+            {
+                int rowindex = dataGridView2.CurrentRow.Index;
+
+                if (dataGridView2.CurrentCell.RowIndex > 0 || dataGridView2.CurrentCell.ColumnIndex > 0)
+                {
+                    ROWSINDEX = dataGridView2.CurrentCell.RowIndex;
+                    COLUMNSINDEX = dataGridView2.CurrentCell.ColumnIndex;
+
+                    rowindex = ROWSINDEX;
+                }
+
+
+                if (rowindex >= 0)
+                {
+                    DataGridViewRow row = dataGridView2.Rows[rowindex];
+                    MB001 = row.Cells["品號"].Value.ToString();
+
+                    SEARCHINVLA(MB001);
+                }
+                else
+                {
+                  
+
+                }
+            }
+        }
+
+        public void SEARCHINVLA(string MB001)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+
+                sbSql.AppendFormat(@"  
+                                   SELECT 
+                                    [ID] AS '編號'
+                                    ,[INOUT] AS '進出'
+                                    ,[MB001] AS '品號'
+                                    ,[NAME] AS '品名'
+                                    ,[UNIT] AS '單位'
+                                    ,[NUMS] AS '數量'
+                                    ,[LOT] AS '批號'
+                                    ,[CMMENTS] AS '備註'
+                                    ,[USERNAME] AS '使用者'
+                                    FROM [TKRESEARCH].[dbo].[INVLA]
+                                    WHERE [MB001]='{0}'
+                                    ORDER BY [ID]
+                                    ", MB001);
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count == 0)
+                {
+                    dataGridView3.DataSource = null;
+
+                }
+                else
+                {
+                    if (ds.Tables["ds"].Rows.Count >= 1)
+                    {
+                        dataGridView3.DataSource = ds.Tables["ds"];
+                        dataGridView3.AutoResizeColumns();
+                       
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+        }
+
+
         #region FUNCTION
 
 
@@ -431,9 +619,14 @@ namespace TKRESEARCH
                         );
             SETNULL();
         }
+        private void button4_Click(object sender, EventArgs e)
+        {
+            SEARCHINVMB();
+        }
+
 
         #endregion
 
-
+       
     }
 }
