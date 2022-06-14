@@ -57,7 +57,9 @@ namespace TKRESEARCH
         string tablename = null;
         int rownum = 0;
         int result;
-
+        int rowindex;
+        int ROWSINDEX;
+        int COLUMNSINDEX;
 
         string ID;
 
@@ -119,8 +121,19 @@ namespace TKRESEARCH
                         dataGridView1.DataSource = ds.Tables["ds"];
 
                         dataGridView1.AutoResizeColumns();
-                       
 
+                        if (ROWSINDEX > 0 || COLUMNSINDEX > 0)
+                        {
+                            dataGridView1.CurrentCell = dataGridView1.Rows[ROWSINDEX].Cells[COLUMNSINDEX];
+
+                            DataGridViewRow row = dataGridView1.Rows[ROWSINDEX];
+                            ID = row.Cells["ID"].Value.ToString();
+
+                          
+
+
+
+                        }
 
                     }
 
@@ -148,6 +161,16 @@ namespace TKRESEARCH
             if (dataGridView1.CurrentRow != null)
             {
                 int rowindex = dataGridView1.CurrentRow.Index;
+
+                if (dataGridView1.CurrentCell.RowIndex > 0 || dataGridView1.CurrentCell.ColumnIndex > 0)
+                {
+                    ROWSINDEX = dataGridView1.CurrentCell.RowIndex;
+                    COLUMNSINDEX = dataGridView1.CurrentCell.ColumnIndex;
+
+                    rowindex = ROWSINDEX;
+                }
+
+          
                 if (rowindex >= 0)
                 {
                     DataGridViewRow row = dataGridView1.Rows[rowindex];
@@ -165,6 +188,181 @@ namespace TKRESEARCH
                     
                 }
             }
+
+           
+        }
+
+        public void DELINVMB(string MB001)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                    DELETE [TKRESEARCH].[dbo].[INVMB]
+                                    WHERE [MB001]='{0}'
+                                    ", MB001);
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+
+            SEARCH();
+        }
+
+        public void UPDATEINVMB(string MB001,string NAME,string UNIT)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                    UPDATE [TKRESEARCH].[dbo].[INVMB]
+                                    SET [NAME]='{1}',[UNIT]='{2}'
+                                    WHERE [MB001]='{0}'
+                                    ", MB001, NAME, UNIT);
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+
+            SEARCH();
+        }
+
+        public void INSERTINVMB(string MB001, string NAME, string UNIT)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                   INSERT  [TKRESEARCH].[dbo].[INVMB]
+                                    ([MB001],[NAME],[UNIT])
+                                    VALUES ('{0}','{1}','{2}')
+                                    ", MB001, NAME, UNIT);
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+
+            SEARCH();
         }
 
         #endregion
@@ -174,8 +372,34 @@ namespace TKRESEARCH
         {
             SEARCH();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            UPDATEINVMB(textBox1.Text.Trim(), textBox2.Text.Trim(), textBox3.Text.Trim());
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DELINVMB(textBox1.Text.Trim());
+
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            INSERTINVMB(textBox4.Text.Trim(), textBox5.Text.Trim(), textBox6.Text.Trim());
+        }
+
         #endregion
 
-       
+
     }
 }
