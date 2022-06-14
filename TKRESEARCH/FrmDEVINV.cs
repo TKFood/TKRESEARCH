@@ -575,6 +575,185 @@ namespace TKRESEARCH
             }
         }
 
+        private void dataGridView3_SelectionChanged(object sender, EventArgs e)
+        {
+            textBox13.Text = null;
+            textBox14.Text = null;
+            textBox15.Text = null;
+            textBox16.Text = null;
+            textBox17.Text = null;
+            textBox18.Text = null;
+            textBox19.Text = null;
+            textBox20.Text = null;
+
+            if (dataGridView3.CurrentRow != null)
+            {
+                int rowindex = dataGridView3.CurrentRow.Index;
+
+                if (rowindex >= 0)
+                {
+                    DataGridViewRow row = dataGridView3.Rows[rowindex];
+                    textBox13.Text = row.Cells["編號"].Value.ToString();
+                    textBox14.Text = row.Cells["進出"].Value.ToString();
+                    textBox15.Text = row.Cells["品號"].Value.ToString();
+                    textBox16.Text = row.Cells["品名"].Value.ToString();
+                    textBox17.Text = row.Cells["單位"].Value.ToString();
+                    textBox18.Text = row.Cells["數量"].Value.ToString();
+                    textBox19.Text = row.Cells["批號"].Value.ToString();
+                    textBox20.Text = row.Cells["備註"].Value.ToString();
+
+
+                }
+                else
+                {
+                    textBox13.Text = null;
+                    textBox14.Text = null;
+                    textBox15.Text = null;
+                    textBox16.Text = null;
+                    textBox17.Text = null;
+                    textBox18.Text = null;
+                    textBox19.Text = null;
+                    textBox20.Text = null;
+
+                }
+            }
+
+        }
+
+        public void UPDATEINVLA(string ID
+                                , string INOUT
+                                , string MB001
+                                , string NAME
+                                , string UNIT
+                                , string NUMS
+                                , string LOT
+                                , string CMMENTS
+                                , string USERNAME
+                                            )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"
+                                     UPDATE [TKRESEARCH].[dbo].[INVLA]
+                                    SET [INOUT]='{1}'
+                                    ,[MB001]='{2}'
+                                    ,[NAME]='{3}'
+                                    ,[UNIT]='{4}'
+                                    ,[NUMS]='{5}'
+                                    ,[LOT]='{6}'
+                                    ,[CMMENTS]='{7}'
+                                    ,[USERNAME]='{8}'
+                                    WHERE [ID]='{0}'
+                                    ",ID
+                                    , INOUT
+                                    , MB001
+                                    , NAME
+                                    , UNIT
+                                    , NUMS
+                                    , LOT
+                                    , CMMENTS
+                                    , USERNAME);
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
+
+        public void DELETENIVLA(string ID)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"
+                                     DELETE [TKRESEARCH].[dbo].[INVLA]                                   
+                                     WHERE [ID]='{0}'
+                                    ", ID
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
 
         #region FUNCTION
 
@@ -625,8 +804,33 @@ namespace TKRESEARCH
         }
 
 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string USERNAME = shareArea.UserName;
+            UPDATEINVLA(textBox13.Text.Trim(), textBox14.Text.Trim(), textBox15.Text.Trim(), textBox16.Text.Trim(), textBox17.Text.Trim(), textBox18.Text.Trim(), textBox19.Text.Trim(), textBox20.Text.Trim(), USERNAME);
+
+            SEARCHINVLA(textBox15.Text.Trim());
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string MB001 = textBox15.Text.Trim();
+
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+
+                DELETENIVLA(textBox13.Text.Trim());
+                SEARCHINVLA(MB001);
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+        }
+
         #endregion
 
-       
+
     }
 }
