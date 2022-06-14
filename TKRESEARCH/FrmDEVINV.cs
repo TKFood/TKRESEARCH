@@ -387,6 +387,15 @@ namespace TKRESEARCH
             textBox10.Text = null;
             textBox11.Text = null;
             textBox12.Text = null;
+
+            textBox21.Text = null;
+            textBox22.Text = null;
+            textBox23.Text = null;
+            textBox24.Text = null;
+            textBox25.Text = null;
+            textBox26.Text = null;
+            textBox27.Text = null;
+            textBox28.Text = null;
         }
 
         public void SEARCHINVMB()
@@ -755,6 +764,92 @@ namespace TKRESEARCH
             }
         }
 
+        private void textBox23_TextChanged(object sender, EventArgs e)
+        {
+            textBox24.Text = null;
+            textBox25.Text = null;
+
+            DataSet ds = SERACHINVMBDETAIL(textBox23.Text.Trim());
+            try
+            {
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    textBox24.Text = ds.Tables[0].Rows[0]["NAME"].ToString();
+                    textBox25.Text = ds.Tables[0].Rows[0]["UNIT"].ToString();
+                }
+            }
+            catch
+            {
+
+            }
+           
+           
+        }
+
+        public DataSet SERACHINVMBDETAIL(string MB001)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                StringBuilder sbSql = new StringBuilder();
+                sbSql.Clear();
+                sbSqlQuery.Clear();
+                ds.Clear();
+
+                sbSql.AppendFormat(@"  
+                                    SELECT TOP 1 [MB001]
+                                    ,[NAME]
+                                    ,[UNIT]
+                                    FROM [TKRESEARCH].[dbo].[INVMB]
+                                    WHERE [MB001]='{0}'
+                                    ", MB001);
+
+                adapter4 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder4 = new SqlCommandBuilder(adapter4);
+                sqlConn.Open();
+                ds.Clear();
+                adapter4.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    if (ds.Tables["ds"].Rows.Count >= 1)
+                    {
+                        
+                        return ds;
+
+                    }
+                    return null;
+                }
+
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
         #region FUNCTION
 
 
@@ -828,9 +923,29 @@ namespace TKRESEARCH
                 //do something else
             }
         }
+        private void button8_Click(object sender, EventArgs e)
+        {
+            string USERNAME = shareArea.UserName;
+
+            string MB001 = textBox23.Text.Trim();
+
+            INSERTINVLA(textBox22.Text.Trim()
+                        , textBox23.Text.Trim()
+                        , textBox24.Text.Trim()
+                        , textBox25.Text.Trim()
+                        , textBox26.Text.Trim()
+                        , textBox27.Text.Trim()
+                        , textBox28.Text.Trim()
+                        , USERNAME
+                        );
+            SETNULL();
+
+            SEARCHINVLA(MB001);
+        }
+
 
         #endregion
 
-
+      
     }
 }
