@@ -104,6 +104,7 @@ namespace TKRESEARCH
                                     ,[SAVELIFE] AS '保存期限'
                                     ,[SAVESONDITIONS] AS '保存條件'
                                     ,[METARIAL] AS '材質'
+                                    ,(SELECT ISNULL(SUM([INOUT]*[NUMS]),0) FROM [TKRESEARCH].[dbo].[INVLA] WHERE [INVLA].MB001=[INVMB].MB001) AS '總數量'
                                     FROM [TKRESEARCH].[dbo].[INVMB]
                                     ORDER BY MB001
                                     ");
@@ -170,7 +171,7 @@ namespace TKRESEARCH
             textBox10.Text = null;
             textBox11.Text = null;
             textBox17.Text = null;
-
+            textBox99.Text = null;
 
             if (dataGridView1.CurrentRow != null)
             {
@@ -197,6 +198,7 @@ namespace TKRESEARCH
                     textBox10.Text = row.Cells["保存期限"].Value.ToString();
                     textBox11.Text = row.Cells["保存條件"].Value.ToString();
                     textBox17.Text = row.Cells["材質"].Value.ToString();
+                    textBox99.Text = row.Cells["總數量"].Value.ToString();
 
 
                 }
@@ -211,7 +213,7 @@ namespace TKRESEARCH
                     textBox10.Text = null;
                     textBox11.Text = null;
                     textBox17.Text = null;
-
+                    textBox99.Text = null;
                 }
             }
 
@@ -463,6 +465,7 @@ namespace TKRESEARCH
                             ,[SAVELIFE] AS '保存期限'
                             ,[SAVESONDITIONS] AS '保存條件'
                             ,[METARIAL] AS '材質'
+                            ,(SELECT ISNULL(SUM([INOUT]*[NUMS]),0) FROM [TKRESEARCH].[dbo].[INVLA] WHERE [INVLA].MB001=[INVMB].MB001) AS '總數量'
                             FROM [TKRESEARCH].[dbo].[INVMB]
                             ORDER BY MB001
 
@@ -473,6 +476,77 @@ namespace TKRESEARCH
 
         }
 
+
+        public string SEARCHINVLA(string MB001)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+
+                sbSql.AppendFormat(@"  
+                                   SELECT 品號,品名,單位,SUM(數量) 數量
+                                    FROM (
+                                    SELECT 品號,品名,單位,批號
+                                    ,(SELECT ISNULL(SUM([INOUT]*[NUMS]),0) FROM [TKRESEARCH].[dbo].[INVLA] WHERE [INVLA].MB001=品號 AND [INVLA].[LOT]=批號 )  AS '數量'
+                                    FROM(
+                                    SELECT 
+                                    [INVMB].[MB001] AS '品號'
+                                    ,[INVMB].[NAME] AS '品名'
+                                    ,[INVMB].[UNIT] AS '單位'
+                                    ,ISNULL([INVLA].[LOT],'') AS '批號'
+                                    FROM [TKRESEARCH].[dbo].[INVMB]
+                                    LEFT JOIN [TKRESEARCH].[dbo].[INVLA] ON [INVLA].MB001=[INVMB].MB001
+                                    GROUP BY [INVMB].[MB001],[INVMB].[NAME],[INVMB].[UNIT],ISNULL([INVLA].[LOT],'')
+                                    ) AS TEMP
+                                    ) AS TEMP 
+                                    WHERE 1=1
+                                    AND 品號='{0}'
+                                    GROUP BY 品號,品名,單位
+                                    ORDER BY 品號
+                                    ", MB001);
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    return ds.Tables["ds"].Rows[0]["數量"].ToString();
+                }
+                else
+                {
+                    return "0";
+                }
+
+            }
+            catch
+            {
+                return "0";
+            }
+            finally
+            {
+
+            }
+        }
         #endregion
 
         #region BUTTON
