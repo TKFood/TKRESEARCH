@@ -24,6 +24,8 @@ using FastReport.Data;
 using System.Collections;
 using TKITDLL;
 
+
+
 namespace TKRESEARCH
 {
     public partial class FrmINVMB : Form
@@ -389,6 +391,85 @@ namespace TKRESEARCH
             SEARCH();
         }
 
+        public void SETFASTREPORT()
+        {
+            StringBuilder SQL1 = new StringBuilder();
+
+            SQL1 = SETSQL();
+            Report report1 = new Report();
+            report1.Load(@"REPORT\研發品號.frx");
+
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            report1.Dictionary.Connections[0].ConnectionString = sqlsb.ConnectionString;
+
+
+            TableDataSource table = report1.GetDataSource("Table") as TableDataSource;
+            table.SelectCommand = SQL1.ToString();
+
+            //report1.SetParameterValue("P1", dateTimePicker1.Value.ToString("yyyyMMdd"));
+            //report1.SetParameterValue("P2", dateTimePicker2.Value.ToString("yyyyMMdd"));
+
+            //report1.Preview = previewControl1;
+            //report1.Show();
+
+            // prepare a report
+            report1.Prepare();
+            // create an instance of HTML export filter
+            FastReport.Export.OoXML.Excel2007Export REPORTExcelxport = new FastReport.Export.OoXML.Excel2007Export();
+            // show the export options dialog and do the export
+
+            //桌面路徑 
+            string DESKTOPNAME = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)+"\\";
+            //匯出檔名
+            string FLESEXPORTNAME = "研發品號" + DateTime.Now.ToString("yyyyMMddHHss") + ".xlsx";
+            //匯出到桌面
+            report1.Export(REPORTExcelxport, DESKTOPNAME + FLESEXPORTNAME);
+
+            //if (REPORTExcelxport.ShowDialog())
+            //{
+            //    report1.Export(REPORTExcelxport, desktop + "result.xlsx");
+            //}
+
+
+
+        }
+
+        public StringBuilder SETSQL()
+        {
+            StringBuilder SB = new StringBuilder();
+
+
+            SB.AppendFormat(@" 
+                            SELECT 
+                            [MB001] AS '品號'
+                            ,[NAME] AS '品名'
+                            ,[UNIT] AS '單位'
+                            ,[SUPPLIER] AS '供應商'
+                            ,[ORIGIN] AS '產地'
+                            ,[UNITWEIGHT] AS '單位重量'
+                            ,[SAVELIFE] AS '保存期限'
+                            ,[SAVESONDITIONS] AS '保存條件'
+                            ,[METARIAL] AS '材質'
+                            FROM [TKRESEARCH].[dbo].[INVMB]
+                            ORDER BY MB001
+
+                            ");
+
+
+            return SB;
+
+        }
+
         #endregion
 
         #region BUTTON
@@ -422,6 +503,10 @@ namespace TKRESEARCH
             INSERTINVMB(textBox4.Text.Trim(), textBox5.Text.Trim(), textBox6.Text.Trim(), textBox12.Text.Trim(), textBox13.Text.Trim(), textBox14.Text.Trim(), textBox15.Text.Trim(), textBox16.Text.Trim(), textBox18.Text.Trim());
         }
 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            SETFASTREPORT();
+        }
         #endregion
 
 
