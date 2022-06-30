@@ -101,6 +101,7 @@ namespace TKRESEARCH
                                     ,[UNITWEIGHT] AS '單位重量'
                                     ,[SAVELIFE] AS '保存期限'
                                     ,[SAVESONDITIONS] AS '保存條件'
+                                    ,[METARIAL] AS '材質'
                                     FROM [TKRESEARCH].[dbo].[INVMB]
                                     ORDER BY MB001
                                     ");
@@ -166,6 +167,7 @@ namespace TKRESEARCH
             textBox9.Text = null;
             textBox10.Text = null;
             textBox11.Text = null;
+            textBox17.Text = null;
 
 
             if (dataGridView1.CurrentRow != null)
@@ -192,6 +194,7 @@ namespace TKRESEARCH
                     textBox9.Text = row.Cells["單位重量"].Value.ToString();
                     textBox10.Text = row.Cells["保存期限"].Value.ToString();
                     textBox11.Text = row.Cells["保存條件"].Value.ToString();
+                    textBox17.Text = row.Cells["材質"].Value.ToString();
 
 
                 }
@@ -205,6 +208,7 @@ namespace TKRESEARCH
                     textBox9.Text = null;
                     textBox10.Text = null;
                     textBox11.Text = null;
+                    textBox17.Text = null;
 
                 }
             }
@@ -269,7 +273,7 @@ namespace TKRESEARCH
             SEARCH();
         }
 
-        public void UPDATEINVMB(string MB001, string NAME, string UNIT, string SUPPLIER, string ORIGIN, string UNITWEIGHT, string SAVELIFE, string SAVESONDITIONS)
+        public void UPDATEINVMB(string MB001, string NAME, string UNIT, string SUPPLIER, string ORIGIN, string UNITWEIGHT, string SAVELIFE, string SAVESONDITIONS,string METARIAL)
         {
             try
             {
@@ -293,9 +297,9 @@ namespace TKRESEARCH
 
                 sbSql.AppendFormat(@" 
                                     UPDATE [TKRESEARCH].[dbo].[INVMB]
-                                    SET [NAME]='{1}',[UNIT]='{2}',[SUPPLIER]='{3}',[ORIGIN]='{4}',[UNITWEIGHT]='{5}',[SAVELIFE]='{6}',[SAVESONDITIONS]='{7}'
+                                    SET [NAME]='{1}',[UNIT]='{2}',[SUPPLIER]='{3}',[ORIGIN]='{4}',[UNITWEIGHT]='{5}',[SAVELIFE]='{6}',[SAVESONDITIONS]='{7}',[METARIAL]='{8}'
                                     WHERE [MB001]='{0}'
-                                    ", MB001, NAME, UNIT, SUPPLIER, ORIGIN, UNITWEIGHT, SAVELIFE, SAVESONDITIONS);
+                                    ", MB001, NAME, UNIT, SUPPLIER, ORIGIN, UNITWEIGHT, SAVELIFE, SAVESONDITIONS, METARIAL);
 
                 cmd.Connection = sqlConn;
                 cmd.CommandTimeout = 60;
@@ -327,7 +331,7 @@ namespace TKRESEARCH
             SEARCH();
         }
 
-        public void INSERTINVMB(string MB001, string NAME, string UNIT, string SUPPLIER, string ORIGIN, string UNITWEIGHT, string SAVELIFE, string SAVESONDITIONS)
+        public void INSERTINVMB(string MB001, string NAME, string UNIT, string SUPPLIER, string ORIGIN, string UNITWEIGHT, string SAVELIFE, string SAVESONDITIONS,string METARIAL)
         {
             try
             {
@@ -351,9 +355,9 @@ namespace TKRESEARCH
 
                 sbSql.AppendFormat(@" 
                                    INSERT  [TKRESEARCH].[dbo].[INVMB]
-                                    ([MB001],[NAME],[UNIT],[SUPPLIER],[ORIGIN],[UNITWEIGHT],[SAVELIFE],[SAVESONDITIONS])
-                                    VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}')
-                                    ", MB001, NAME, UNIT, SUPPLIER, ORIGIN, UNITWEIGHT, SAVELIFE, SAVESONDITIONS);
+                                    ([MB001],[NAME],[UNIT],[SUPPLIER],[ORIGIN],[UNITWEIGHT],[SAVELIFE],[SAVESONDITIONS],[METARIAL])
+                                    VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}')
+                                    ", MB001, NAME, UNIT, SUPPLIER, ORIGIN, UNITWEIGHT, SAVELIFE, SAVESONDITIONS, METARIAL);
 
                 cmd.Connection = sqlConn;
                 cmd.CommandTimeout = 60;
@@ -395,7 +399,7 @@ namespace TKRESEARCH
 
         private void button2_Click(object sender, EventArgs e)
         {
-            UPDATEINVMB(textBox1.Text.Trim(), textBox2.Text.Trim(), textBox3.Text.Trim(), textBox7.Text.Trim(), textBox8.Text.Trim(), textBox9.Text.Trim(), textBox10.Text.Trim(), textBox11.Text.Trim());
+            UPDATEINVMB(textBox1.Text.Trim(), textBox2.Text.Trim(), textBox3.Text.Trim(), textBox7.Text.Trim(), textBox8.Text.Trim(), textBox9.Text.Trim(), textBox10.Text.Trim(), textBox11.Text.Trim(), textBox17.Text.Trim());
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -415,7 +419,7 @@ namespace TKRESEARCH
 
         private void button4_Click(object sender, EventArgs e)
         {
-            INSERTINVMB(textBox4.Text.Trim(), textBox5.Text.Trim(), textBox6.Text.Trim(), textBox12.Text.Trim(), textBox13.Text.Trim(), textBox14.Text.Trim(), textBox15.Text.Trim(), textBox16.Text.Trim());
+            INSERTINVMB(textBox4.Text.Trim(), textBox5.Text.Trim(), textBox6.Text.Trim(), textBox12.Text.Trim(), textBox13.Text.Trim(), textBox14.Text.Trim(), textBox15.Text.Trim(), textBox16.Text.Trim(), textBox18.Text.Trim());
         }
 
         #endregion

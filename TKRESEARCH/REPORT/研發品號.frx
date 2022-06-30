@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/30/2022 08:57:35" ReportInfo.Modified="06/30/2022 09:01:49" ReportInfo.CreatorVersion="2016.4.4.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqHwzMSgwTFaHpjtG3vsOj8Zy6q+uhwpDsytgWqwZQZyEQUQyQ022aWUGqU90pHzzNjHuzu89K+RQ2LIBVx1fpgNkNJhwC4eetn2/Uy0fMrO7zDUE5AmRb+0bcYI+lxqpN+i5gA3VDGcwlcfm6L9ZMsLrZ3U+wEDtHCQtd9vw2XUGJ6fzsfi3inuwUzJnaIlv0">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="SELECT &#13;&#10;[MB001] AS '品號'&#13;&#10;,[NAME] AS '品名'&#13;&#10;,[UNIT] AS '單位'&#13;&#10;,[SUPPLIER] AS '供應商'&#13;&#10;,[ORIGIN] AS '產地'&#13;&#10;,[UNITWEIGHT] AS '單位重量'&#13;&#10;,[SAVELIFE] AS '保存期限'&#13;&#10;,[SAVESONDITIONS] AS '保存條件'&#13;&#10;FROM [TKRESEARCH].[dbo].[INVMB]&#13;&#10;ORDER BY MB001">
+        <Column Name="品號" DataType="System.String"/>
+        <Column Name="品名" DataType="System.String"/>
+        <Column Name="單位" DataType="System.String"/>
+        <Column Name="供應商" DataType="System.String"/>
+        <Column Name="產地" DataType="System.String"/>
+        <Column Name="單位重量" DataType="System.String"/>
+        <Column Name="保存期限" DataType="System.String"/>
+        <Column Name="保存條件" DataType="System.String"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210">
+    <PageHeaderBand Name="PageHeader1" Width="1047.06" Height="18.9">
+      <TextObject Name="Text2" Width="94.5" Height="18.9" Border.Lines="All" Text="品號" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text4" Left="94.5" Width="94.5" Height="18.9" Border.Lines="All" Text="品名" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text6" Left="189" Width="94.5" Height="18.9" Border.Lines="All" Text="單位" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text8" Left="283.5" Width="94.5" Height="18.9" Border.Lines="All" Text="供應商" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text10" Left="378" Width="94.5" Height="18.9" Border.Lines="All" Text="產地" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text12" Left="472.5" Width="94.5" Height="18.9" Border.Lines="All" Text="單位重量" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text14" Left="567" Width="94.5" Height="18.9" Border.Lines="All" Text="保存期限" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text16" Left="661.5" Width="94.5" Height="18.9" Border.Lines="All" Text="保存條件" HorzAlign="Center" VertAlign="Center"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="23.39" Width="1047.06" Height="18.9" CanGrow="true" DataSource="Table">
+      <TextObject Name="Text1" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.品號]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text3" Left="94.5" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.品名]" VertAlign="Center"/>
+      <TextObject Name="Text5" Left="189" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.單位]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text7" Left="283.5" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.供應商]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text9" Left="378" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.產地]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text11" Left="472.5" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.單位重量]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text13" Left="567" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.保存期限]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text15" Left="661.5" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.保存條件]" HorzAlign="Center" VertAlign="Center"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="46.79" Width="1047.06" Height="18.9"/>
+  </ReportPage>
+</Report>
