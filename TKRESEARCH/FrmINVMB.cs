@@ -435,6 +435,9 @@ namespace TKRESEARCH
             //匯出到桌面
             report1.Export(REPORTExcelxport, DESKTOPNAME + FLESEXPORTNAME);
 
+            //C#開啟Excel文件，要裝excel
+            System.Diagnostics.Process.Start(DESKTOPNAME + FLESEXPORTNAME);
+
             //if (REPORTExcelxport.ShowDialog())
             //{
             //    report1.Export(REPORTExcelxport, desktop + "result.xlsx");
