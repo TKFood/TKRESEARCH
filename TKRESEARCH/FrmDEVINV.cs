@@ -916,16 +916,17 @@ namespace TKRESEARCH
             //report1.Show();
 
             // prepare a report
+            //一定要先做prepare讓FAST REPORT產生報表資料
             report1.Prepare();
-            // create an instance of HTML export filter
-            FastReport.Export.OoXML.Excel2007Export REPORTExcelxport = new FastReport.Export.OoXML.Excel2007Export();
-            // show the export options dialog and do the export
 
-            //桌面路徑 
+            //匯出指定成Excel2007Export
+            FastReport.Export.OoXML.Excel2007Export REPORTExcelxport = new FastReport.Export.OoXML.Excel2007Export();
+         
+            //找出桌面路徑 
             string DESKTOPNAME = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\";
-            //匯出檔名
+            //匯出的檔名
             string FLESEXPORTNAME = "研發品號的庫存表" + DateTime.Now.ToString("yyyyMMddHHss") + ".xlsx";
-            //匯出到桌面
+            //匯出到平用者桌面
             report1.Export(REPORTExcelxport, DESKTOPNAME + FLESEXPORTNAME);
 
             //C#開啟Excel文件，要裝excel
