@@ -692,7 +692,7 @@
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(114, 34);
             this.button5.TabIndex = 1;
-            this.button5.Text = "報表";
+            this.button5.Text = "匯出EXCEL";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
@@ -725,6 +725,7 @@
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(319, 416);
             this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // previewControl1
             // 

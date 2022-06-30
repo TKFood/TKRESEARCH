@@ -883,6 +883,123 @@ namespace TKRESEARCH
                 sqlConn.Close();
             }
         }
+
+        public void SETFASTREPORT(string ISALL)
+        {
+            StringBuilder SQL1 = new StringBuilder();
+
+            SQL1 = SETSQL(ISALL);
+            Report report1 = new Report();
+            report1.Load(@"REPORT\研發品號的庫存表.frx");
+
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            report1.Dictionary.Connections[0].ConnectionString = sqlsb.ConnectionString;
+
+
+            TableDataSource table = report1.GetDataSource("Table") as TableDataSource;
+            table.SelectCommand = SQL1.ToString();
+
+            //report1.SetParameterValue("P1", dateTimePicker1.Value.ToString("yyyyMMdd"));
+            //report1.SetParameterValue("P2", dateTimePicker2.Value.ToString("yyyyMMdd"));
+
+            //report1.Preview = previewControl1;
+            //report1.Show();
+
+            // prepare a report
+            report1.Prepare();
+            // create an instance of HTML export filter
+            FastReport.Export.OoXML.Excel2007Export REPORTExcelxport = new FastReport.Export.OoXML.Excel2007Export();
+            // show the export options dialog and do the export
+
+            //桌面路徑 
+            string DESKTOPNAME = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\";
+            //匯出檔名
+            string FLESEXPORTNAME = "研發品號的庫存表" + DateTime.Now.ToString("yyyyMMddHHss") + ".xlsx";
+            //匯出到桌面
+            report1.Export(REPORTExcelxport, DESKTOPNAME + FLESEXPORTNAME);
+
+            //C#開啟Excel文件，要裝excel
+            System.Diagnostics.Process.Start(DESKTOPNAME + FLESEXPORTNAME);
+
+            //if (REPORTExcelxport.ShowDialog())
+            //{
+            //    report1.Export(REPORTExcelxport, desktop + "result.xlsx");
+            //}
+
+
+
+        }
+
+        public StringBuilder SETSQL(string ISALL)
+        {
+            StringBuilder SB = new StringBuilder();
+
+
+            if (ISALL.Equals("是"))
+            {
+                SB.AppendFormat(@"  
+                                        SELECT 品號,品名,單位,批號,數量
+                                        FROM (
+                                        SELECT 品號,品名,單位,批號
+                                        ,(SELECT ISNULL(SUM([INOUT]*[NUMS]),0) FROM [TKRESEARCH].[dbo].[INVLA] WHERE [INVLA].MB001=品號 AND [INVLA].[LOT]=批號 )  AS '數量'
+                                        FROM(
+                                        SELECT 
+                                        [INVMB].[MB001] AS '品號'
+                                        ,[INVMB].[NAME] AS '品名'
+                                        ,[INVMB].[UNIT] AS '單位'
+                                        ,ISNULL([INVLA].[LOT],'') AS '批號'
+                                        FROM [TKRESEARCH].[dbo].[INVMB]
+                                        LEFT JOIN [TKRESEARCH].[dbo].[INVLA] ON [INVLA].MB001=[INVMB].MB001
+                                        GROUP BY [INVMB].[MB001],[INVMB].[NAME],[INVMB].[UNIT],ISNULL([INVLA].[LOT],'')
+                                        ) AS TEMP
+                                        ) AS TEMP 
+                                        WHERE 1=1
+                                        
+                                        ORDER BY 品號
+                                    ");
+
+            }
+            else
+            {
+                SB.AppendFormat(@"  
+                                    SELECT 品號,品名,單位,批號,數量
+                                        FROM (
+                                        SELECT 品號,品名,單位,批號
+                                        ,(SELECT ISNULL(SUM([INOUT]*[NUMS]),0) FROM [TKRESEARCH].[dbo].[INVLA] WHERE [INVLA].MB001=品號 AND [INVLA].[LOT]=批號 )  AS '數量'
+                                        FROM(
+                                        SELECT 
+                                        [INVMB].[MB001] AS '品號'
+                                        ,[INVMB].[NAME] AS '品名'
+                                        ,[INVMB].[UNIT] AS '單位'
+                                        ,ISNULL([INVLA].[LOT],'') AS '批號'
+                                        FROM [TKRESEARCH].[dbo].[INVMB]
+                                        LEFT JOIN [TKRESEARCH].[dbo].[INVLA] ON [INVLA].MB001=[INVMB].MB001
+                                        GROUP BY [INVMB].[MB001],[INVMB].[NAME],[INVMB].[UNIT],ISNULL([INVLA].[LOT],'')
+                                        ) AS TEMP
+                                        ) AS TEMP 
+                                        WHERE 1=1
+                                        AND 數量<>0
+                                        ORDER BY 品號
+                                    ");
+
+            }
+
+
+            return SB;
+
+        }
+
+
         #region FUNCTION
 
 
@@ -975,10 +1092,14 @@ namespace TKRESEARCH
 
             SEARCHINVLA(MB001);
         }
+        private void button7_Click(object sender, EventArgs e)
+        {
+            SETFASTREPORT(comboBox1.Text.ToString());
+        }
 
 
         #endregion
 
-      
+
     }
 }
