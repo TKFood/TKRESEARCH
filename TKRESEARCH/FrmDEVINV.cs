@@ -926,7 +926,7 @@ namespace TKRESEARCH
             string DESKTOPNAME = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\";
             //匯出的檔名
             string FLESEXPORTNAME = "研發品號的庫存表" + DateTime.Now.ToString("yyyyMMddHHss") + ".xlsx";
-            //匯出到平用者桌面
+            //匯出到使用者桌面
             report1.Export(REPORTExcelxport, DESKTOPNAME + FLESEXPORTNAME);
 
             //C#開啟Excel文件，要裝excel
