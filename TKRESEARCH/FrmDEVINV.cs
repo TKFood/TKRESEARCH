@@ -70,7 +70,7 @@ namespace TKRESEARCH
 
        
 
-        public void SEARCH(string ISALL)
+        public void SEARCH(string ISALL, string MB001)
         {
             try
             {
@@ -90,9 +90,66 @@ namespace TKRESEARCH
 
                 sbSql.Clear();
 
-                if(ISALL.Equals("是"))
+                if (!string.IsNullOrEmpty(MB001))
                 {
-                    sbSql.AppendFormat(@"  
+                    if (ISALL.Equals("是"))
+                    {
+                        sbSql.AppendFormat(@"  
+                                        SELECT 品號,品名,單位,批號,數量
+                                        FROM (
+                                        SELECT 品號,品名,單位,批號
+                                        ,(SELECT ISNULL(SUM([INOUT]*[NUMS]),0) FROM [TKRESEARCH].[dbo].[INVLA] WHERE [INVLA].MB001=品號 AND [INVLA].[LOT]=批號 )  AS '數量'
+                                        FROM(
+                                        SELECT 
+                                        [INVMB].[MB001] AS '品號'
+                                        ,[INVMB].[NAME] AS '品名'
+                                        ,[INVMB].[UNIT] AS '單位'
+                                        ,ISNULL([INVLA].[LOT],'') AS '批號'
+                                        FROM [TKRESEARCH].[dbo].[INVMB]
+                                        LEFT JOIN [TKRESEARCH].[dbo].[INVLA] ON [INVLA].MB001=[INVMB].MB001
+                                        WHERE (  [INVMB].[MB001] LIKE '%{0}%' OR  [INVMB].[NAME] LIKE '%{0}%')
+
+                                        GROUP BY [INVMB].[MB001],[INVMB].[NAME],[INVMB].[UNIT],ISNULL([INVLA].[LOT],'')
+                                        ) AS TEMP
+                                        ) AS TEMP 
+                                        WHERE 1=1
+                                        
+                                        ORDER BY 品號
+                                    ",MB001);
+
+                    }
+                    else
+                    {
+                        sbSql.AppendFormat(@"  
+                                    SELECT 品號,品名,單位,批號,數量
+                                        FROM (
+                                        SELECT 品號,品名,單位,批號
+                                        ,(SELECT ISNULL(SUM([INOUT]*[NUMS]),0) FROM [TKRESEARCH].[dbo].[INVLA] WHERE [INVLA].MB001=品號 AND [INVLA].[LOT]=批號 )  AS '數量'
+                                        FROM(
+                                        SELECT 
+                                        [INVMB].[MB001] AS '品號'
+                                        ,[INVMB].[NAME] AS '品名'
+                                        ,[INVMB].[UNIT] AS '單位'
+                                        ,ISNULL([INVLA].[LOT],'') AS '批號'
+                                        FROM [TKRESEARCH].[dbo].[INVMB]
+                                        LEFT JOIN [TKRESEARCH].[dbo].[INVLA] ON [INVLA].MB001=[INVMB].MB001
+                                        WHERE (  [INVMB].[MB001] LIKE '%{0}%' OR  [INVMB].[NAME] LIKE '%{0}%')
+
+                                        GROUP BY [INVMB].[MB001],[INVMB].[NAME],[INVMB].[UNIT],ISNULL([INVLA].[LOT],'')
+                                        ) AS TEMP
+                                        ) AS TEMP 
+                                        WHERE 1=1
+                                        AND 數量<>0
+                                        ORDER BY 品號
+                                    ", MB001);
+
+                    }
+                }
+                else
+                {
+                    if (ISALL.Equals("是"))
+                    {
+                        sbSql.AppendFormat(@"  
                                         SELECT 品號,品名,單位,批號,數量
                                         FROM (
                                         SELECT 品號,品名,單位,批號
@@ -113,10 +170,10 @@ namespace TKRESEARCH
                                         ORDER BY 品號
                                     ");
 
-                }
-                else
-                {
-                    sbSql.AppendFormat(@"  
+                    }
+                    else
+                    {
+                        sbSql.AppendFormat(@"  
                                     SELECT 品號,品名,單位,批號,數量
                                         FROM (
                                         SELECT 品號,品名,單位,批號
@@ -137,7 +194,11 @@ namespace TKRESEARCH
                                         ORDER BY 品號
                                     ");
 
+                    }
                 }
+
+
+                
 
                 adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
 
@@ -323,8 +384,8 @@ namespace TKRESEARCH
                 sqlConn.Close();
             }
 
-           
-            SEARCH(comboBox1.SelectedText.ToString());
+
+            SEARCH(comboBox1.Text.ToString(), textBox999.Text.Trim());
 
         }
 
@@ -1009,7 +1070,7 @@ namespace TKRESEARCH
         #region BUTTON
         private void button1_Click(object sender, EventArgs e)
         {
-            SEARCH(comboBox1.Text.ToString());
+            SEARCH(comboBox1.Text.ToString(), textBox999.Text.Trim());
         }
         private void button2_Click(object sender, EventArgs e)
         {
