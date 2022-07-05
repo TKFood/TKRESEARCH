@@ -73,7 +73,7 @@ namespace TKRESEARCH
 
         #region FUNCTION
 
-        public void SEARCH()
+        public void SEARCH(string MB001)
         {
             try
             {
@@ -92,8 +92,28 @@ namespace TKRESEARCH
 
                 sbSql.Clear();
 
-           
-                sbSql.AppendFormat(@"  
+                if(!string.IsNullOrEmpty(MB001))
+                {
+                    sbSql.AppendFormat(@"  
+                                    SELECT 
+                                    [MB001] AS '品號'
+                                    ,[NAME] AS '品名'
+                                    ,[UNIT] AS '單位'
+                                    ,[SUPPLIER] AS '供應商'
+                                    ,[ORIGIN] AS '產地'
+                                    ,[UNITWEIGHT] AS '單位重量'
+                                    ,[SAVELIFE] AS '保存期限'
+                                    ,[SAVESONDITIONS] AS '保存條件'
+                                    ,[METARIAL] AS '材質'
+                                    ,(SELECT ISNULL(SUM([INOUT]*[NUMS]),0) FROM [TKRESEARCH].[dbo].[INVLA] WHERE [INVLA].MB001=[INVMB].MB001) AS '總數量'
+                                    FROM [TKRESEARCH].[dbo].[INVMB]
+                                    WHERE ( MB001 LIKE '%{0}%' OR  NAME LIKE '%{0}%')
+                                    ORDER BY MB001
+                                    ", MB001);
+                }
+                else
+                {
+                    sbSql.AppendFormat(@"  
                                     SELECT 
                                     [MB001] AS '品號'
                                     ,[NAME] AS '品名'
@@ -108,6 +128,8 @@ namespace TKRESEARCH
                                     FROM [TKRESEARCH].[dbo].[INVMB]
                                     ORDER BY MB001
                                     ");
+                }
+                
 
                 adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
 
@@ -274,7 +296,7 @@ namespace TKRESEARCH
             }
 
 
-            SEARCH();
+            SEARCH(textBox999.Text.Trim());
         }
 
         public void UPDATEINVMB(string MB001, string NAME, string UNIT, string SUPPLIER, string ORIGIN, string UNITWEIGHT, string SAVELIFE, string SAVESONDITIONS,string METARIAL)
@@ -332,7 +354,7 @@ namespace TKRESEARCH
             }
 
 
-            SEARCH();
+            SEARCH(textBox999.Text.Trim());
         }
 
         public void INSERTINVMB(string MB001, string NAME, string UNIT, string SUPPLIER, string ORIGIN, string UNITWEIGHT, string SAVELIFE, string SAVESONDITIONS,string METARIAL)
@@ -390,7 +412,7 @@ namespace TKRESEARCH
             }
 
 
-            SEARCH();
+            SEARCH(textBox999.Text.Trim());
         }
 
         public void SETFASTREPORT()
@@ -552,7 +574,7 @@ namespace TKRESEARCH
         #region BUTTON
         private void button1_Click(object sender, EventArgs e)
         {
-            SEARCH();
+            SEARCH(textBox999.Text.Trim());
         }
 
         private void button2_Click(object sender, EventArgs e)
