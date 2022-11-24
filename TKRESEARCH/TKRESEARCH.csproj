@@ -84,6 +84,12 @@
     <Compile Include="FrmINVMB.Designer.cs">
       <DependentUpon>FrmINVMB.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmINVMBCALCOST.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmINVMBCALCOST.Designer.cs">
+      <DependentUpon>FrmINVMBCALCOST.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmINVMB.resx">
       <DependentUpon>FrmINVMB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmINVMBCALCOST.resx">
+      <DependentUpon>FrmINVMBCALCOST.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
