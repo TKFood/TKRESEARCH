@@ -1631,7 +1631,7 @@ namespace TKRESEARCH
 
                 if(AFETERRAWS>0)
                 {
-                    UNITCOSTS = (Convert.ToDecimal(textBox45.Text) + Convert.ToDecimal(textBox46.Text) + Convert.ToDecimal(textBox47.Text)) / AFETERRAWS;
+                    UNITCOSTS = (Convert.ToDecimal(textBox45.Text) + Convert.ToDecimal(textBox46.Text) + Convert.ToDecimal(textBox47.Text)) / (AFETERRAWS*1000);
                     textBox44.Text = Math.Round(UNITCOSTS,3).ToString();
                 }
                
