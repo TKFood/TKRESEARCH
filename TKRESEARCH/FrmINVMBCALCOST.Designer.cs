@@ -3460,6 +3460,7 @@
             this.button19.TabIndex = 0;
             this.button19.Text = "新增";
             this.button19.UseVisualStyleBackColor = true;
+            this.button19.Click += new System.EventHandler(this.button19_Click);
             // 
             // label81
             // 

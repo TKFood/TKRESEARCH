@@ -2846,6 +2846,127 @@ namespace TKRESEARCH
         {
             CALHUMANCALCOSTPRODS6INPACK();
         }
+        public void ADDCALCOSTPRODS6INPACK(string MID
+                                   , string PRODNAMES
+                                   , string MANUHR1
+                                   , string MANUHUMAN1
+                                   , string MANUHR2
+                                   , string MANUHUMAN2
+                                   , string MANUHR3
+                                   , string MANUHUMAN3
+                                   , string TMANUHR
+                                   , string TMANUBUMAN
+                                   , string HRSEPCS
+                                   , string THUMANCOSTS
+                                   , string OUTSPEC
+                                   , string HUMANCOSTS
+
+                                )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                    DELETE 
+                                    [TKRESEARCH].[dbo].[CALCOSTPRODS6INPACK]
+                                    WHERE [MID]='{0}'
+
+                                    INSERT INTO [TKRESEARCH].[dbo].[CALCOSTPRODS6INPACK]
+                                    (
+                                    [MID]
+                                    ,[PRODNAMES]
+                                    ,[MANUHR1]
+                                    ,[MANUHUMAN1]
+                                    ,[MANUHR2]
+                                    ,[MANUHUMAN2]
+                                    ,[MANUHR3]
+                                    ,[MANUHUMAN3]
+                                    ,[TMANUHR]
+                                    ,[TMANUBUMAN]
+                                    ,[HRSEPCS]
+                                    ,[THUMANCOSTS]
+                                    ,[OUTSPEC]
+                                    ,[HUMANCOSTS]
+                                    )
+                                    VALUES
+                                    (
+                                    '{0}'
+                                    ,'{1}'
+                                    ,'{2}'
+                                    ,'{3}'
+                                    ,'{4}'
+                                    ,'{5}'
+                                    ,'{6}'
+                                    ,'{7}'
+                                    ,'{8}'
+                                    ,'{9}'
+                                    ,'{10}'
+                                    ,'{11}'
+                                    ,'{12}'
+                                    ,'{13}'
+                                    )
+                                      "
+                                    , MID
+                                    , PRODNAMES
+                                    , MANUHR1
+                                    , MANUHUMAN1
+                                    , MANUHR2
+                                    , MANUHUMAN2
+                                    , MANUHR3
+                                    , MANUHUMAN3
+                                    , TMANUHR
+                                    , TMANUBUMAN
+                                    , HRSEPCS
+                                    , THUMANCOSTS
+                                    , OUTSPEC
+                                    , HUMANCOSTS
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
+
         public void SETTEXTBOX1()
         {
             textBox3.Text = null;
@@ -2989,10 +3110,16 @@ namespace TKRESEARCH
             SEARCHDG8(textBox62.Text);
         }
 
+        private void button19_Click(object sender, EventArgs e)
+        {
+
+            ADDCALCOSTPRODS6INPACK(textBoxID10.Text, textBox62.Text, textBox75.Text, textBox76.Text, textBox77.Text, textBox78.Text, textBox79.Text, textBox80.Text, textBox81.Text, textBox82.Text, textBox83.Text, textBox84.Text, textBox85.Text, textBox86.Text);
+            SEARCHDG8(textBox62.Text);
+        }
 
 
         #endregion
 
-     
+
     }
 }
