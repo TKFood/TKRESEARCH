@@ -252,6 +252,10 @@ namespace TKRESEARCH
             textBox6.Text = null;
             textBoxID2.Text = null;
 
+            textBox16.Text = null;
+            textBox17.Text = null;         
+            textBoxID4.Text = null;
+
             if (dataGridView1.CurrentRow != null)
             {
                 int rowindex = dataGridView1.CurrentRow.Index;               
@@ -268,6 +272,10 @@ namespace TKRESEARCH
                     textBoxID2.Text = row.Cells["ID"].Value.ToString();
                     SEARCHDG2(textBox5.Text.Trim());
 
+                    textBox16.Text = row.Cells["產品名稱"].Value.ToString();
+                    textBox17.Text = row.Cells["產品名稱"].Value.ToString();                   
+                    textBoxID4.Text = row.Cells["ID"].Value.ToString();
+                    SEARCHDG3(textBox16.Text);
                 }
                 else
                 {
@@ -278,6 +286,10 @@ namespace TKRESEARCH
                     textBox5.Text = null;
                     textBox6.Text = null;
                     textBoxID2.Text = null;
+
+                    textBox16.Text = null;
+                    textBox17.Text = null;                  
+                    textBoxID4.Text = null;
                 }
             }
         }
@@ -803,6 +815,281 @@ namespace TKRESEARCH
             }
 
         }
+
+        public void SEARCHDG3(string PRODNAMES)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                if (!string.IsNullOrEmpty(PRODNAMES))
+                {
+                    sbSql.AppendFormat(@"  
+                                        SELECT 
+                                        [MID] AS 'ID'
+                                        ,[PRODNAMES] AS '產品名稱'
+                                        ,[MB001] AS '使用物料品號'
+                                        ,[MB002] AS '使用物料品名'
+                                        ,[INS] AS '投入重量'
+                                        ,[PRICES] AS '單價'
+                                        ,[TMONEYS] AS '金額'
+                                        ,[REMARK] AS '備註'
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODS2MATERIL]
+                                        WHERE [PRODNAMES] LIKE '%{0}%'
+                                        ORDER BY [MID],[PRODNAMES],[MB001]
+
+                                        ", PRODNAMES);
+                }
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count == 0)
+                {
+                    dataGridView3.DataSource = null;
+
+                }
+                else
+                {
+                    if (ds.Tables["ds"].Rows.Count >= 1)
+                    {
+                        dataGridView3.DataSource = ds.Tables["ds"];
+
+                        dataGridView3.AutoResizeColumns();
+
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+        }
+
+        public void ADDCALCOSTPRODS2MATERIL(string MID
+                                     , string PRODNAMES
+                                     , string MB001
+                                     , string MB002
+                                     , string INS
+                                     , string PRICES
+                                     , string TMONEYS
+                                     , string REMARK
+                                     )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                   
+                                    INSERT INTO  [TKRESEARCH].[dbo].[CALCOSTPRODS2MATERIL]
+                                    (
+                                    [MID]
+                                    ,[PRODNAMES]
+                                    ,[MB001]
+                                    ,[MB002]
+                                    ,[INS]
+                                    ,[PRICES]
+                                    ,[TMONEYS]
+                                    ,[REMARK]
+                                    )
+                                    VALUES
+                                    (
+                                    '{0}'
+                                    ,'{1}'
+                                    ,'{2}'
+                                    ,'{3}'
+                                    ,'{4}'
+                                    ,'{5}'
+                                    ,'{6}'
+                                    ,'{7}'
+                                    )
+                                    ", MID
+                                        , PRODNAMES
+                                        , MB001
+                                        , MB002
+                                        , INS
+                                        , PRICES
+                                        , TMONEYS
+                                        , REMARK);
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
+
+        private void dataGridView3_SelectionChanged(object sender, EventArgs e)
+        {
+            textBoxID5.Text = null;
+            textBox25.Text = null;
+            textBox26.Text = null;
+            textBox27.Text = null;
+
+            if (dataGridView3.CurrentRow != null)
+            {
+                int rowindex = dataGridView3.CurrentRow.Index;
+
+                if (rowindex >= 0)
+                {
+                    DataGridViewRow row = dataGridView3.Rows[rowindex];
+                    textBox25.Text = row.Cells["產品名稱"].Value.ToString();
+                    textBox26.Text = row.Cells["使用物料品號"].Value.ToString();
+                    textBox27.Text = row.Cells["使用物料品名"].Value.ToString();
+                    textBoxID5.Text = row.Cells["ID"].Value.ToString();
+
+                }
+                else
+                {
+                    textBoxID5.Text = null;
+                    textBox25.Text = null;
+                    textBox26.Text = null;
+                    textBox27.Text = null;
+                }
+            }
+        }
+
+        public void DELCALCOSTPRODS2MATERIL(string MID
+                                    , string MB001
+
+                                    )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                   
+                                    DELETE  [TKRESEARCH].[dbo].[CALCOSTPRODS2MATERIL]
+                                    WHERE [MID]='{0}' AND [MB001]='{1}'
+                                    ", MID
+                                        , MB001
+                                       );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
+        private void textBox18_TextChanged(object sender, EventArgs e)
+        {
+            textBox19.Text = FINDMB002(textBox18.Text.ToString());
+            textBox21.Text = FINDPRICES(textBox18.Text.ToString());
+        }
+
+        private void textBox20_TextChanged(object sender, EventArgs e)
+        {
+            textBox22.Text = (Convert.ToDecimal(textBox20.Text) * Convert.ToDecimal(textBox21.Text)).ToString();
+        }
+
         public void SETTEXTBOX1()
         {
             textBox3.Text = null;
@@ -856,10 +1143,37 @@ namespace TKRESEARCH
             }
         }
 
+        private void button7_Click(object sender, EventArgs e)
+        {
+            SEARCHDG3(textBox16.Text); 
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            ADDCALCOSTPRODS2MATERIL(textBoxID4.Text.Trim(), textBox17.Text.Trim(), textBox18.Text.Trim(), textBox19.Text.Trim(), textBox20.Text.Trim(), textBox21.Text.Trim(), textBox22.Text.Trim(), textBox23.Text.Trim());
+            SEARCHDG3(textBox16.Text.Trim());
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DELCALCOSTPRODS2MATERIL(textBoxID5.Text.Trim(), textBox26.Text.Trim());
+                SEARCHDG3(textBox16.Text.Trim());
+
+
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+        }
+
+
 
         #endregion
 
-       
-        
+     
     }
 }
