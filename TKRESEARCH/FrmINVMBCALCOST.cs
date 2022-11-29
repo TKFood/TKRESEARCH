@@ -266,6 +266,7 @@ namespace TKRESEARCH
                     textBox5.Text = row.Cells["產品名稱"].Value.ToString();
                     textBox6.Text = row.Cells["產品名稱"].Value.ToString();
                     textBoxID2.Text = row.Cells["ID"].Value.ToString();
+                    SEARCHDG2(textBox5.Text.Trim());
 
                 }
                 else
@@ -711,6 +712,97 @@ namespace TKRESEARCH
             }
         }
 
+        private void dataGridView2_SelectionChanged(object sender, EventArgs e)
+        {
+           
+            textBoxID3.Text = null;
+            textBox13.Text = null;
+            textBox14.Text = null;
+            textBox15.Text = null;
+
+            if (dataGridView1.CurrentRow != null)
+            {
+                int rowindex = dataGridView2.CurrentRow.Index;
+
+                if (rowindex >= 0)
+                {
+                    DataGridViewRow row = dataGridView2.Rows[rowindex];
+                    textBox13.Text = row.Cells["產品名稱"].Value.ToString();
+                    textBox14.Text = row.Cells["使用品號"].Value.ToString();
+                    textBox15.Text = row.Cells["使用品名"].Value.ToString();
+                    textBoxID3.Text = row.Cells["ID"].Value.ToString();                  
+
+                }
+                else
+                {
+                    textBoxID3.Text = null;
+                    textBox13.Text = null;
+                    textBox14.Text = null;
+                    textBox15.Text = null;
+                }
+            }
+        }
+
+        public void DELCALCOSTPRODS1RAW(string MID                                     
+                                     , string MB001
+                                     
+                                     )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                   
+                                    DELETE  [TKRESEARCH].[dbo].[CALCOSTPRODS1RAW]
+                                    WHERE [MID]='{0}' AND [MB001]='{1}'
+                                    ", MID                                       
+                                        , MB001
+                                       );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
         public void SETTEXTBOX1()
         {
             textBox3.Text = null;
@@ -748,9 +840,26 @@ namespace TKRESEARCH
             SEARCHDG2(textBox5.Text.Trim());
         }
 
+        private void button6_Click(object sender, EventArgs e)
+        {          
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DELCALCOSTPRODS1RAW(textBoxID3.Text.Trim(), textBox14.Text.Trim());
+                SEARCHDG2(textBox5.Text.Trim());
+
+
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+        }
+
 
         #endregion
 
        
+        
     }
 }
