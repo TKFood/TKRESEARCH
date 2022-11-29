@@ -59,6 +59,8 @@ namespace TKRESEARCH
 
             comboBox1load();
             comboBox2load();
+
+            SETCAL();
         }
 
         #region FUNCTION
@@ -136,6 +138,12 @@ namespace TKRESEARCH
             sqlConn.Close();
 
 
+        }
+
+        public void SETCAL()
+        {
+            textBox41.Text=FINDDEVALUESWATER();
+            textBox42.Text = FINDDEVALUESNG();
         }
         public void SEARCH(string PRODNAMES,string ISCLOESED)
         {
@@ -1527,6 +1535,7 @@ namespace TKRESEARCH
 
             ///計算原料、物料、鹹蛋黃的金額加總
             CALUNITCOSTSTMONEYS();
+            SETUNITCOSTS();
 
         }
         public void UPDATECALCOSTPRODS(string ID
@@ -1607,17 +1616,25 @@ namespace TKRESEARCH
             decimal AFETERRAWS = 0;
             decimal UNITCOSTS = 0;
 
+            textBox44.Text = "0";
+
             if (!string.IsNullOrEmpty(textBox40.Text)& !string.IsNullOrEmpty(textBox41.Text)& !string.IsNullOrEmpty(textBox42.Text)& !string.IsNullOrEmpty(textBox43.Text)& !string.IsNullOrEmpty(textBox44.Text))
             {
-                TOTALRAWS = Convert.ToDecimal(textBox40.Text);
+                TOTALRAWS = Convert.ToDecimal(textBox40.Text)+ Convert.ToDecimal(textBox48.Text);
                 WATERLOSTS = Convert.ToDecimal(textBox41.Text);
                 NGLOSTS = Convert.ToDecimal(textBox42.Text);
                 AFETERRAWS = Convert.ToDecimal(textBox43.Text);
                 UNITCOSTS = Convert.ToDecimal(textBox44.Text);
 
                 AFETERRAWS = TOTALRAWS * (1 - WATERLOSTS / 100 - NGLOSTS / 100);
-
                 textBox43.Text = AFETERRAWS.ToString();
+
+                if(AFETERRAWS>0)
+                {
+                    UNITCOSTS = (Convert.ToDecimal(textBox45.Text) + Convert.ToDecimal(textBox46.Text) + Convert.ToDecimal(textBox47.Text)) / AFETERRAWS;
+                    textBox44.Text = Math.Round(UNITCOSTS,3).ToString();
+                }
+               
             }
         }
 
@@ -1647,7 +1664,7 @@ namespace TKRESEARCH
                 if (!string.IsNullOrEmpty(MID))
                 {
                     sbSql.AppendFormat(@"  
-                                        SELECT SUM([TMONEYS]) TMONEYS     
+                                        SELECT ISNULL(SUM([TMONEYS]),0) TMONEYS     
                                         FROM [TKRESEARCH].[dbo].[CALCOSTPRODS1RAW]
                                         WHERE MID='{0}'
                                         ", MID);
@@ -1668,6 +1685,70 @@ namespace TKRESEARCH
                 if (ds.Tables["ds"].Rows.Count >= 1)
                 {
                     return ds.Tables["ds"].Rows[0]["TMONEYS"].ToString();
+                }
+                else
+                {
+                    return "0";
+                }
+
+            }
+            catch
+            {
+                return "0";
+            }
+            finally
+            {
+
+            }
+        }
+
+        public string CALCOSTPRODS1RAWTINS(string MID)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                if (!string.IsNullOrEmpty(MID))
+                {
+                    sbSql.AppendFormat(@"  
+                                        SELECT ISNULL(SUM([INS]),0) INS     
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODS1RAW]
+                                        WHERE MID='{0}'
+                                        ", MID);
+                }
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    return ds.Tables["ds"].Rows[0]["INS"].ToString();
                 }
                 else
                 {
@@ -1710,7 +1791,7 @@ namespace TKRESEARCH
                 if (!string.IsNullOrEmpty(MID))
                 {
                     sbSql.AppendFormat(@"  
-                                        SELECT SUM([TMONEYS]) TMONEYS     
+                                        SELECT ISNULL(SUM([TMONEYS]),0) TMONEYS     
                                         FROM [TKRESEARCH].[dbo].[CALCOSTPRODS2MATERIL]
                                         WHERE MID='{0}'
                                         ", MID);
@@ -1773,7 +1854,7 @@ namespace TKRESEARCH
                 if (!string.IsNullOrEmpty(MID))
                 {
                     sbSql.AppendFormat(@"  
-                                        SELECT SUM([TMONEYS]) TMONEYS     
+                                        SELECT ISNULL(SUM([TMONEYS]),0) TMONEYS     
                                         FROM [TKRESEARCH].[dbo].[CALCOSTPRODS3EGG]
                                         WHERE MID='{0}'
                                         ", MID);
@@ -1811,11 +1892,211 @@ namespace TKRESEARCH
             }
         }
 
+        public string CALCALCOSTPRODS3EGGTINS(string MID)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                if (!string.IsNullOrEmpty(MID))
+                {
+                    sbSql.AppendFormat(@"  
+                                        SELECT ISNULL(SUM([INS]),0) INS     
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODS3EGG]
+                                        WHERE MID='{0}'
+                                        ", MID);
+                }
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    return ds.Tables["ds"].Rows[0]["INS"].ToString();
+                }
+                else
+                {
+                    return "0";
+                }
+
+            }
+            catch
+            {
+                return "0";
+            }
+            finally
+            {
+
+            }
+        }
+
         public void CALUNITCOSTSTMONEYS()
         {
             textBox45.Text = CALCOSTPRODS1RAWTMONEYS(textBoxID8.Text);
             textBox46.Text = CALCALCOSTPRODS2MATERILTMONEYS(textBoxID8.Text);
             textBox47.Text = CALCALCOSTPRODS3EGGTMONEYS(textBoxID8.Text);
+            textBox40.Text = CALCOSTPRODS1RAWTINS(textBoxID8.Text);
+            textBox48.Text = CALCALCOSTPRODS3EGGTINS(textBoxID8.Text);
+        }
+
+        public string FINDDEVALUESWATER()
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                       SELECT [KINDS]
+                                        ,[TYPE]
+                                        ,[DEVALUES]
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODSTYPE]
+                                        WHERE [KINDS]='1' AND [TYPE]='水份蒸發率'
+                                        ");
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    return ds.Tables["ds"].Rows[0]["DEVALUES"].ToString();
+                }
+                else
+                {
+                    return "0";
+                }
+
+            }
+            catch
+            {
+                return "0";
+            }
+            finally
+            {
+
+            }
+        }
+        public string FINDDEVALUESNG()
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                       SELECT [KINDS]
+                                        ,[TYPE]
+                                        ,[DEVALUES]
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODSTYPE]
+                                        WHERE [KINDS]='1' AND [TYPE]='不良率'
+                                        ");
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    return ds.Tables["ds"].Rows[0]["DEVALUES"].ToString();
+                }
+                else
+                {
+                    return "0";
+                }
+
+            }
+            catch
+            {
+                return "0";
+            }
+            finally
+            {
+
+            }
+        }
+        private void textBox41_TextChanged(object sender, EventArgs e)
+        {
+            SETUNITCOSTS();
+        }
+
+        private void textBox42_TextChanged(object sender, EventArgs e)
+        {
+            SETUNITCOSTS();
         }
         public void SETTEXTBOX1()
         {
@@ -1935,8 +2216,9 @@ namespace TKRESEARCH
         }
 
 
+
         #endregion
 
-
+     
     }
 }
