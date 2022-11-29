@@ -821,7 +821,7 @@ namespace TKRESEARCH
             textBox14.Text = null;
             textBox15.Text = null;
 
-            if (dataGridView1.CurrentRow != null)
+            if (dataGridView2.CurrentRow != null)
             {
                 int rowindex = dataGridView2.CurrentRow.Index;
 
@@ -3528,7 +3528,96 @@ namespace TKRESEARCH
 
 
         }
+        private void dataGridView10_SelectionChanged(object sender, EventArgs e)
+        {
+           
+            textBox108.Text = null;
+            textBox109.Text = null;
 
+            if (dataGridView10.CurrentRow != null)
+            {
+                int rowindex = dataGridView10.CurrentRow.Index;
+
+                if (rowindex >= 0)
+                {
+                    DataGridViewRow row = dataGridView10.Rows[rowindex];
+                    textBox108.Text = row.Cells["產品名稱"].Value.ToString();
+                    textBox109.Text = row.Cells["生產站"].Value.ToString();
+                    
+                    
+
+                }
+                else
+                {
+                    textBox108.Text = null;
+                    textBox109.Text = null;
+                }
+            }
+        }
+
+        public void DELCALCOSTPRODS8PRODUSEDMANU(string MID                                               
+                                                , string PRODWORKS
+                                                
+                                                            )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                    DELETE  [TKRESEARCH].[dbo].[CALCOSTPRODS8PRODUSEDMANU]
+                                    WHERE [MID]='{0}' AND [PRODWORKS]='{1}'
+                                    
+                                    ", MID                                    
+                                    , PRODWORKS
+                                  
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+
+
+        }
         public void SETTEXTBOX1()
         {
             textBox3.Text = null;
@@ -3697,6 +3786,12 @@ namespace TKRESEARCH
         private void button23_Click(object sender, EventArgs e)
         {
             ADDCALCOSTPRODS8PRODUSEDMANU(textBoxID12.Text, textBox101.Text, textBox102.Text, textBox104.Text, textBox105.Text , textBox106.Text , textBox107.Text , textBox103.Text        );
+            SEARCHDG10(textBox100.Text);
+        }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            DELCALCOSTPRODS8PRODUSEDMANU(textBoxID12.Text, textBox109.Text);
             SEARCHDG10(textBox100.Text);
         }
     }
