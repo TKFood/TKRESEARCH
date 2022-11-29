@@ -164,13 +164,18 @@ namespace TKRESEARCH
                 {
                     sbSql.AppendFormat(@"  
                                         SELECT  
-                                        [PRODNAMES] AS '產品名稱'
+                                         [PRODNAMES] AS '產品名稱'
                                         ,[SPECS] AS '規格及重量'
                                         ,[COSTRAW] AS '原料成本'
                                         ,[COSTMATERIL] AS '物料成本'
                                         ,[COSTART] AS '人工成本(製造+內外包)'
                                         ,[COSTMANU] AS '製造費用' 
                                         ,[COSTTOTALS] AS '單位成本合計'
+                                        ,[TOTALRAWS] AS '總投入原料重量'
+                                        ,[WATERLOSTS] AS '水份蒸發損秏率'
+                                        ,[NGLOSTS] AS '不良率'
+                                        ,[AFETERRAWS] AS '烘焙後總重量'
+                                        ,[UNITCOSTS] AS '每單位原料成本'
                                         ,CONVERT(NVARCHAR,[CREATEDATE],112) AS '建立日期'
                                         ,[ISCLOESED] AS '結案'
                                         ,[ID]
@@ -260,6 +265,9 @@ namespace TKRESEARCH
             textBox28.Text = null;
             textBoxID6.Text = null;
 
+            textBox39.Text = null;
+            textBoxID8.Text = null;
+
             if (dataGridView1.CurrentRow != null)
             {
                 int rowindex = dataGridView1.CurrentRow.Index;               
@@ -286,6 +294,10 @@ namespace TKRESEARCH
                     textBoxID6.Text = row.Cells["ID"].Value.ToString();
                     SEARCHDG4(textBox24.Text);
 
+                    textBox39.Text = row.Cells["產品名稱"].Value.ToString();
+                    textBoxID8.Text = row.Cells["ID"].Value.ToString();
+                    SEARCHDG5(textBox39.Text);
+
                 }
                 else
                 {
@@ -304,6 +316,9 @@ namespace TKRESEARCH
                     textBox24.Text = null;
                     textBox28.Text = null;
                     textBoxID6.Text = null;
+
+                    textBox39.Text = null;
+                    textBoxID8.Text = null;
                 }
             }
         }
@@ -1421,6 +1436,165 @@ namespace TKRESEARCH
                 textBox35.Text = (Convert.ToDecimal(textBox34.Text) * Convert.ToDecimal(textBox33.Text)).ToString();
             }
         }
+
+        public void SEARCHDG5(string PRODNAMES )
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                if (!string.IsNullOrEmpty(PRODNAMES))
+                {
+                    sbSql.AppendFormat(@"  
+                                        SELECT  
+                                         [PRODNAMES] AS '產品名稱'
+                                        ,[SPECS] AS '規格及重量'
+                                        ,[COSTRAW] AS '原料成本'
+                                        ,[COSTMATERIL] AS '物料成本'
+                                        ,[COSTART] AS '人工成本(製造+內外包)'
+                                        ,[COSTMANU] AS '製造費用' 
+                                        ,[COSTTOTALS] AS '單位成本合計'
+                                        ,[TOTALRAWS] AS '總投入原料重量'
+                                        ,[WATERLOSTS] AS '水份蒸發損秏率'
+                                        ,[NGLOSTS] AS '不良率'
+                                        ,[AFETERRAWS] AS '烘焙後總重量'
+                                        ,[UNITCOSTS] AS '每單位原料成本'
+                                        ,CONVERT(NVARCHAR,[CREATEDATE],112) AS '建立日期'
+                                        ,[ISCLOESED] AS '結案'
+                                        ,[ID]
+
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODS]
+                                        WHERE [PRODNAMES] LIKE '%{0}%'                               
+                                        ORDER BY CONVERT(NVARCHAR,[CREATEDATE],112)
+                                        ", PRODNAMES);
+                }
+               
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count == 0)
+                {
+                    dataGridView5.DataSource = null;
+
+                }
+                else
+                {
+                    if (ds.Tables["ds"].Rows.Count >= 1)
+                    {
+                        dataGridView5.DataSource = ds.Tables["ds"];
+
+                        dataGridView5.AutoResizeColumns();
+
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+        }
+        public void UPDATECALCOSTPRODS(string ID
+                                    , string TOTALRAWS
+                                    , string WATERLOSTS
+                                    , string NGLOSTS
+                                    , string AFETERRAWS
+                                    , string UNITCOSTS
+
+                                  )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                   UPDATE [TKRESEARCH].[dbo].[CALCOSTPRODS]
+                                    SET TOTALRAWS='{1}',WATERLOSTS='{2}',NGLOSTS='{3}',AFETERRAWS='{4}',UNITCOSTS='{5}'
+                                    WHERE [ID]='{0}'
+                                  
+                                      "
+                                    , ID
+                                    , TOTALRAWS
+                                    , WATERLOSTS
+                                    , NGLOSTS
+                                    , AFETERRAWS
+                                    , UNITCOSTS);
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
+
         public void SETTEXTBOX1()
         {
             textBox3.Text = null;
@@ -1527,11 +1701,20 @@ namespace TKRESEARCH
             }
         }
 
+        private void button13_Click(object sender, EventArgs e)
+        {
+            SEARCHDG5(textBox39.Text);
+        }
 
+        private void button14_Click(object sender, EventArgs e)
+        {
+            UPDATECALCOSTPRODS(textBoxID8.Text, textBox40.Text, textBox41.Text, textBox42.Text, textBox43.Text, textBox44.Text);
+            SEARCHDG5(textBox39.Text);
+        }
 
 
         #endregion
 
-       
+
     }
 }
