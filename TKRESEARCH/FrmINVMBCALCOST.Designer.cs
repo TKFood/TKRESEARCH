@@ -2565,6 +2565,7 @@
             // 
             this.label63.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label63.AutoSize = true;
+            this.label63.ForeColor = System.Drawing.Color.OrangeRed;
             this.label63.Location = new System.Drawing.Point(603, 124);
             this.label63.Name = "label63";
             this.label63.Size = new System.Drawing.Size(114, 32);

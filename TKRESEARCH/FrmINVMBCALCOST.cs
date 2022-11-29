@@ -2260,7 +2260,8 @@ namespace TKRESEARCH
             {
                 textBox56.Text = (Convert.ToInt32(textBox50.Text) + Convert.ToInt32(textBox52.Text) + Convert.ToInt32(textBox54.Text)).ToString();
                 textBox55.Text = (Convert.ToInt32(textBox49.Text) + Convert.ToInt32(textBox51.Text) + Convert.ToInt32(textBox53.Text)).ToString();
-                textBox58.Text = (Convert.ToInt32(textBox49.Text) * Convert.ToInt32(textBox50.Text)+ Convert.ToInt32(textBox51.Text) * Convert.ToInt32(textBox52.Text)+ Convert.ToInt32(textBox53.Text) * Convert.ToInt32(textBox54.Text)).ToString();
+                int HUMAN = (Convert.ToInt32(textBox49.Text) * Convert.ToInt32(textBox50.Text) + Convert.ToInt32(textBox51.Text) * Convert.ToInt32(textBox52.Text) + Convert.ToInt32(textBox53.Text) * Convert.ToInt32(textBox54.Text));
+                textBox58.Text = (Convert.ToDecimal(textBox57.Text) * HUMAN).ToString();
                 //textBox58.Text = (Convert.ToInt32(textBox57.Text) * (Convert.ToInt32(textBox49.Text)* Convert.ToInt32(textBox50.Text)+ Convert.ToInt32(textBox51.Text)* Convert.ToInt32(textBox52.Text)+ Convert.ToInt32(textBox53.Text)* Convert.ToInt32(textBox54.Text))).ToString();
             }
         }
