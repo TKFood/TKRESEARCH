@@ -144,6 +144,8 @@ namespace TKRESEARCH
         {
             textBox41.Text=FINDDEVALUESWATER();
             textBox42.Text = FINDDEVALUESNG();
+
+            textBox57.Text= FINDDEVALUESHUMAN();
         }
         public void SEARCH(string PRODNAMES,string ISCLOESED)
         {
@@ -305,6 +307,7 @@ namespace TKRESEARCH
                     textBox39.Text = row.Cells["產品名稱"].Value.ToString();
                     textBoxID8.Text = row.Cells["ID"].Value.ToString();
                     SEARCHDG5(textBox39.Text);
+                    SEARCHDG6(textBox39.Text);
 
                 }
                 else
@@ -2089,6 +2092,69 @@ namespace TKRESEARCH
 
             }
         }
+
+        public string FINDDEVALUESHUMAN()
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                       SELECT [KINDS]
+                                        ,[TYPE]
+                                        ,[DEVALUES]
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODSTYPE]
+                                        WHERE [KINDS]='1' AND [TYPE]='標準工時人'
+                                        ");
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    return ds.Tables["ds"].Rows[0]["DEVALUES"].ToString();
+                }
+                else
+                {
+                    return "0";
+                }
+
+            }
+            catch
+            {
+                return "0";
+            }
+            finally
+            {
+
+            }
+        }
         private void textBox41_TextChanged(object sender, EventArgs e)
         {
             SETUNITCOSTS();
@@ -2098,6 +2164,258 @@ namespace TKRESEARCH
         {
             SETUNITCOSTS();
         }
+
+        public void SEARCHDG6(string PRODNAMES)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                if (!string.IsNullOrEmpty(PRODNAMES))
+                {
+                    sbSql.AppendFormat(@"  
+                                        SELECT 
+                                        [MID] AS 'ID'
+                                        ,[PRODNAMES] AS '產品名稱'
+                                        ,[MANUHR1] AS '製程時間(時)-1'
+                                        ,[MANUHUMAN1] AS '製程時間(時)-1所需人員(人)'
+                                        ,[MANUHR2] AS '製程時間(時)-2'
+                                        ,[MANUHUMAN2] AS '製程時間(時)-2所需人員(人)'
+                                        ,[MANUHR3] AS '製程時間(時)-3'
+                                        ,[MANUHUMAN3] AS '製程時間(時)-3所需人員(人)'
+                                        ,[TMANUHR] AS '合計-製程時間(時)'
+                                        ,[TMANUBUMAN] AS '合計-所需人員'
+                                        ,[HRSEPCS] AS '標準工時/人'
+                                        ,[THUMANCOSTS] AS '人工總計'
+                                        ,[OUTSPEC] AS '標準產出數量'
+                                        ,[HUMANCOSTS] AS '每單位製造人工成本'
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODS4PRODYIELD]
+                                        WHERE [PRODNAMES]='{0}'
+
+                                        ", PRODNAMES);
+                }
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count == 0)
+                {
+                    dataGridView6.DataSource = null;
+
+                }
+                else
+                {
+                    if (ds.Tables["ds"].Rows.Count >= 1)
+                    {
+                        dataGridView6.DataSource = ds.Tables["ds"];
+
+                        dataGridView6.AutoResizeColumns();
+
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+
+           
+        }
+
+        public void CALHUMAN()
+        {
+            if(!string.IsNullOrEmpty(textBox49.Text)& !string.IsNullOrEmpty(textBox50.Text)& !string.IsNullOrEmpty(textBox51.Text)& !string.IsNullOrEmpty(textBox52.Text)& !string.IsNullOrEmpty(textBox53.Text)& !string.IsNullOrEmpty(textBox54.Text))
+            {
+                textBox56.Text = (Convert.ToInt32(textBox50.Text) + Convert.ToInt32(textBox52.Text) + Convert.ToInt32(textBox54.Text)).ToString();
+                textBox55.Text = (Convert.ToInt32(textBox49.Text) + Convert.ToInt32(textBox51.Text) + Convert.ToInt32(textBox53.Text)).ToString();
+                textBox58.Text = (Convert.ToInt32(textBox49.Text) * Convert.ToInt32(textBox50.Text)+ Convert.ToInt32(textBox51.Text) * Convert.ToInt32(textBox52.Text)+ Convert.ToInt32(textBox53.Text) * Convert.ToInt32(textBox54.Text)).ToString();
+                //textBox58.Text = (Convert.ToInt32(textBox57.Text) * (Convert.ToInt32(textBox49.Text)* Convert.ToInt32(textBox50.Text)+ Convert.ToInt32(textBox51.Text)* Convert.ToInt32(textBox52.Text)+ Convert.ToInt32(textBox53.Text)* Convert.ToInt32(textBox54.Text))).ToString();
+            }
+        }
+        private void textBox49_TextChanged(object sender, EventArgs e)
+        {
+            CALHUMAN();
+        }
+
+        private void textBox50_TextChanged(object sender, EventArgs e)
+        {
+            CALHUMAN();
+        }
+
+        private void textBox51_TextChanged(object sender, EventArgs e)
+        {
+            CALHUMAN();
+        }
+
+        private void textBox52_TextChanged(object sender, EventArgs e)
+        {
+            CALHUMAN();
+        }
+
+        private void textBox53_TextChanged(object sender, EventArgs e)
+        {
+            CALHUMAN();
+        }
+
+        private void textBox54_TextChanged(object sender, EventArgs e)
+        {
+            CALHUMAN();
+        }
+
+        public void ADDCALCOSTPRODS4PRODYIELD(string MID
+                                    , string PRODNAMES
+                                    , string MANUHR1
+                                    , string MANUHUMAN1
+                                    , string MANUHR2
+                                    , string MANUHUMAN2
+                                    , string MANUHR3
+                                    , string MANUHUMAN3
+                                    , string TMANUHR
+                                    , string TMANUBUMAN
+                                    , string HRSEPCS
+                                    , string THUMANCOSTS
+                                    , string OUTSPEC
+                                    , string HUMANCOSTS
+
+                                 )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                    DELETE 
+                                    [TKRESEARCH].[dbo].[CALCOSTPRODS4PRODYIELD]
+                                    WHERE [MID]='{0}'
+
+                                    INSERT INTO [TKRESEARCH].[dbo].[CALCOSTPRODS4PRODYIELD]
+                                    (
+                                    [MID]
+                                    ,[PRODNAMES]
+                                    ,[MANUHR1]
+                                    ,[MANUHUMAN1]
+                                    ,[MANUHR2]
+                                    ,[MANUHUMAN2]
+                                    ,[MANUHR3]
+                                    ,[MANUHUMAN3]
+                                    ,[TMANUHR]
+                                    ,[TMANUBUMAN]
+                                    ,[HRSEPCS]
+                                    ,[THUMANCOSTS]
+                                    ,[OUTSPEC]
+                                    ,[HUMANCOSTS]
+                                    )
+                                    VALUES
+                                    (
+                                    '{0}'
+                                    ,'{1}'
+                                    ,'{2}'
+                                    ,'{3}'
+                                    ,'{4}'
+                                    ,'{5}'
+                                    ,'{6}'
+                                    ,'{7}'
+                                    ,'{8}'
+                                    ,'{9}'
+                                    ,'{10}'
+                                    ,'{11}'
+                                    ,'{12}'
+                                    ,'{13}'
+                                    )
+                                      "
+                                    , MID
+                                    , PRODNAMES
+                                    , MANUHR1
+                                    , MANUHUMAN1
+                                    , MANUHR2
+                                    , MANUHUMAN2
+                                    , MANUHR3
+                                    , MANUHUMAN3
+                                    , TMANUHR
+                                    , TMANUBUMAN
+                                    , HRSEPCS
+                                    , THUMANCOSTS
+                                    , OUTSPEC
+                                    , HUMANCOSTS
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
+
+
         public void SETTEXTBOX1()
         {
             textBox3.Text = null;
@@ -2207,18 +2525,27 @@ namespace TKRESEARCH
         private void button13_Click(object sender, EventArgs e)
         {
             SEARCHDG5(textBox39.Text);
+            SEARCHDG6(textBox39.Text);
         }
 
         private void button14_Click(object sender, EventArgs e)
         {
             UPDATECALCOSTPRODS(textBoxID8.Text, textBox40.Text, textBox41.Text, textBox42.Text, textBox43.Text, textBox44.Text);
             SEARCHDG5(textBox39.Text);
+            SEARCHDG6(textBox39.Text);
         }
 
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            ADDCALCOSTPRODS4PRODYIELD(textBoxID8.Text, textBox39.Text,textBox49.Text,textBox50.Text, textBox51.Text, textBox52.Text, textBox53.Text, textBox54.Text, textBox55.Text, textBox56.Text, textBox57.Text, textBox58.Text, textBox59.Text, textBox60.Text);
+            SEARCHDG5(textBox39.Text);
+            SEARCHDG6(textBox39.Text);
+        }
 
 
         #endregion
 
-     
+
     }
 }
