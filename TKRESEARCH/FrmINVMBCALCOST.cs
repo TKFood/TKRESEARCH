@@ -1524,6 +1524,10 @@ namespace TKRESEARCH
             {
 
             }
+
+            ///計算原料、物料、鹹蛋黃的金額加總
+            CALUNITCOSTSTMONEYS();
+
         }
         public void UPDATECALCOSTPRODS(string ID
                                     , string TOTALRAWS
@@ -1595,6 +1599,224 @@ namespace TKRESEARCH
 
         }
 
+        public void SETUNITCOSTS()
+        {
+            decimal TOTALRAWS = 0;
+            decimal WATERLOSTS = 0;
+            decimal NGLOSTS = 0;
+            decimal AFETERRAWS = 0;
+            decimal UNITCOSTS = 0;
+
+            if (!string.IsNullOrEmpty(textBox40.Text)& !string.IsNullOrEmpty(textBox41.Text)& !string.IsNullOrEmpty(textBox42.Text)& !string.IsNullOrEmpty(textBox43.Text)& !string.IsNullOrEmpty(textBox44.Text))
+            {
+                TOTALRAWS = Convert.ToDecimal(textBox40.Text);
+                WATERLOSTS = Convert.ToDecimal(textBox41.Text);
+                NGLOSTS = Convert.ToDecimal(textBox42.Text);
+                AFETERRAWS = Convert.ToDecimal(textBox43.Text);
+                UNITCOSTS = Convert.ToDecimal(textBox44.Text);
+
+                AFETERRAWS = TOTALRAWS * (1 - WATERLOSTS / 100 - NGLOSTS / 100);
+
+                textBox43.Text = AFETERRAWS.ToString();
+            }
+        }
+
+        public string CALCOSTPRODS1RAWTMONEYS(string MID)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                if (!string.IsNullOrEmpty(MID))
+                {
+                    sbSql.AppendFormat(@"  
+                                        SELECT SUM([TMONEYS]) TMONEYS     
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODS1RAW]
+                                        WHERE MID='{0}'
+                                        ", MID);
+                }
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    return ds.Tables["ds"].Rows[0]["TMONEYS"].ToString();
+                }
+                else
+                {
+                    return "0";
+                }
+
+            }
+            catch
+            {
+                return "0";
+            }
+            finally
+            {
+
+            }
+        }
+        public string CALCALCOSTPRODS2MATERILTMONEYS(string MID)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                if (!string.IsNullOrEmpty(MID))
+                {
+                    sbSql.AppendFormat(@"  
+                                        SELECT SUM([TMONEYS]) TMONEYS     
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODS2MATERIL]
+                                        WHERE MID='{0}'
+                                        ", MID);
+                }
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    return ds.Tables["ds"].Rows[0]["TMONEYS"].ToString();
+                }
+                else
+                {
+                    return "0";
+                }
+
+            }
+            catch
+            {
+                return "0";
+            }
+            finally
+            {
+
+            }
+        }
+        public string CALCALCOSTPRODS3EGGTMONEYS(string MID)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                if (!string.IsNullOrEmpty(MID))
+                {
+                    sbSql.AppendFormat(@"  
+                                        SELECT SUM([TMONEYS]) TMONEYS     
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODS3EGG]
+                                        WHERE MID='{0}'
+                                        ", MID);
+                }
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    return ds.Tables["ds"].Rows[0]["TMONEYS"].ToString();
+                }
+                else
+                {
+                    return "0";
+                }
+
+            }
+            catch
+            {
+                return "0";
+            }
+            finally
+            {
+
+            }
+        }
+
+        public void CALUNITCOSTSTMONEYS()
+        {
+            textBox45.Text = CALCOSTPRODS1RAWTMONEYS(textBoxID8.Text);
+            textBox46.Text = CALCALCOSTPRODS2MATERILTMONEYS(textBoxID8.Text);
+            textBox47.Text = CALCALCOSTPRODS3EGGTMONEYS(textBoxID8.Text);
+        }
         public void SETTEXTBOX1()
         {
             textBox3.Text = null;

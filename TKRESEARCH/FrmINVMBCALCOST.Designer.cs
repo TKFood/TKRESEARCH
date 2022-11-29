@@ -189,6 +189,13 @@
             this.label44 = new System.Windows.Forms.Label();
             this.textBox44 = new System.Windows.Forms.TextBox();
             this.textBoxID8 = new System.Windows.Forms.TextBox();
+            this.label48 = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
+            this.label50 = new System.Windows.Forms.Label();
+            this.textBox45 = new System.Windows.Forms.TextBox();
+            this.textBox46 = new System.Windows.Forms.TextBox();
+            this.textBox47 = new System.Windows.Forms.TextBox();
+            this.label51 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -2040,7 +2047,7 @@
             // 
             this.splitContainer15.Panel1.Controls.Add(this.tableLayoutPanel14);
             this.splitContainer15.Size = new System.Drawing.Size(976, 570);
-            this.splitContainer15.SplitterDistance = 260;
+            this.splitContainer15.SplitterDistance = 213;
             this.splitContainer15.TabIndex = 0;
             // 
             // tableLayoutPanel13
@@ -2116,8 +2123,6 @@
             this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel14.Controls.Add(this.label43, 0, 0);
             this.tableLayoutPanel14.Controls.Add(this.textBox40, 0, 1);
             this.tableLayoutPanel14.Controls.Add(this.label47, 1, 0);
@@ -2126,18 +2131,26 @@
             this.tableLayoutPanel14.Controls.Add(this.textBox42, 2, 1);
             this.tableLayoutPanel14.Controls.Add(this.textBox43, 3, 1);
             this.tableLayoutPanel14.Controls.Add(this.label45, 3, 0);
-            this.tableLayoutPanel14.Controls.Add(this.button14, 4, 2);
-            this.tableLayoutPanel14.Controls.Add(this.textBox44, 4, 1);
-            this.tableLayoutPanel14.Controls.Add(this.label44, 4, 0);
+            this.tableLayoutPanel14.Controls.Add(this.label48, 0, 2);
+            this.tableLayoutPanel14.Controls.Add(this.label49, 1, 2);
+            this.tableLayoutPanel14.Controls.Add(this.label50, 2, 2);
+            this.tableLayoutPanel14.Controls.Add(this.textBox45, 0, 3);
+            this.tableLayoutPanel14.Controls.Add(this.textBox46, 1, 3);
+            this.tableLayoutPanel14.Controls.Add(this.textBox47, 2, 3);
+            this.tableLayoutPanel14.Controls.Add(this.label44, 3, 2);
+            this.tableLayoutPanel14.Controls.Add(this.textBox44, 3, 3);
+            this.tableLayoutPanel14.Controls.Add(this.button14, 4, 3);
+            this.tableLayoutPanel14.Controls.Add(this.label51, 5, 3);
             this.tableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel14.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel14.Name = "tableLayoutPanel14";
-            this.tableLayoutPanel14.RowCount = 4;
+            this.tableLayoutPanel14.RowCount = 5;
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel14.Size = new System.Drawing.Size(972, 256);
+            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel14.Size = new System.Drawing.Size(972, 209);
             this.tableLayoutPanel14.TabIndex = 6;
             // 
             // label43
@@ -2153,7 +2166,7 @@
             // 
             // button14
             // 
-            this.button14.Location = new System.Drawing.Point(483, 83);
+            this.button14.Location = new System.Drawing.Point(483, 123);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(114, 34);
             this.button14.TabIndex = 0;
@@ -2189,7 +2202,7 @@
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(114, 16);
             this.label46.TabIndex = 20;
-            this.label46.Text = "不良率";
+            this.label46.Text = "不良率%";
             this.label46.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label47
@@ -2200,7 +2213,7 @@
             this.label47.Name = "label47";
             this.label47.Size = new System.Drawing.Size(114, 32);
             this.label47.TabIndex = 21;
-            this.label47.Text = "水份蒸發損秏率";
+            this.label47.Text = "水份蒸發損秏率%";
             this.label47.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // textBox41
@@ -2234,7 +2247,7 @@
             // 
             this.label44.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(483, 4);
+            this.label44.Location = new System.Drawing.Point(363, 84);
             this.label44.Name = "label44";
             this.label44.Size = new System.Drawing.Size(114, 32);
             this.label44.TabIndex = 25;
@@ -2244,8 +2257,9 @@
             // textBox44
             // 
             this.textBox44.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox44.Location = new System.Drawing.Point(483, 46);
+            this.textBox44.Location = new System.Drawing.Point(363, 126);
             this.textBox44.Name = "textBox44";
+            this.textBox44.ReadOnly = true;
             this.textBox44.Size = new System.Drawing.Size(114, 27);
             this.textBox44.TabIndex = 26;
             this.textBox44.Text = "0";
@@ -2257,6 +2271,81 @@
             this.textBoxID8.Name = "textBoxID8";
             this.textBoxID8.Size = new System.Drawing.Size(94, 27);
             this.textBoxID8.TabIndex = 28;
+            // 
+            // label48
+            // 
+            this.label48.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label48.AutoSize = true;
+            this.label48.Location = new System.Drawing.Point(3, 84);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(114, 32);
+            this.label48.TabIndex = 27;
+            this.label48.Text = "總投入原料金額";
+            this.label48.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label49
+            // 
+            this.label49.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(123, 84);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(114, 32);
+            this.label49.TabIndex = 28;
+            this.label49.Text = "總投入物料金額";
+            this.label49.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label50
+            // 
+            this.label50.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label50.AutoSize = true;
+            this.label50.Location = new System.Drawing.Point(243, 84);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(114, 32);
+            this.label50.TabIndex = 29;
+            this.label50.Text = "總投入鹹蛋黃金額";
+            this.label50.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // textBox45
+            // 
+            this.textBox45.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox45.Location = new System.Drawing.Point(3, 126);
+            this.textBox45.Name = "textBox45";
+            this.textBox45.ReadOnly = true;
+            this.textBox45.Size = new System.Drawing.Size(114, 27);
+            this.textBox45.TabIndex = 30;
+            this.textBox45.Text = "0";
+            // 
+            // textBox46
+            // 
+            this.textBox46.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox46.Location = new System.Drawing.Point(123, 126);
+            this.textBox46.Name = "textBox46";
+            this.textBox46.ReadOnly = true;
+            this.textBox46.Size = new System.Drawing.Size(114, 27);
+            this.textBox46.TabIndex = 31;
+            this.textBox46.Text = "0";
+            // 
+            // textBox47
+            // 
+            this.textBox47.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox47.Location = new System.Drawing.Point(243, 126);
+            this.textBox47.Name = "textBox47";
+            this.textBox47.ReadOnly = true;
+            this.textBox47.Size = new System.Drawing.Size(114, 27);
+            this.textBox47.TabIndex = 32;
+            this.textBox47.Text = "0";
+            // 
+            // label51
+            // 
+            this.label51.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label51.AutoSize = true;
+            this.tableLayoutPanel14.SetColumnSpan(this.label51, 2);
+            this.label51.Location = new System.Drawing.Point(603, 132);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(366, 16);
+            this.label51.TabIndex = 33;
+            this.label51.Text = "(原料+物料+鹹蛋黃)/烘焙後總重量";
+            this.label51.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // FrmINVMBCALCOST
             // 
@@ -2533,5 +2622,12 @@
         private System.Windows.Forms.TextBox textBox44;
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.TextBox textBoxID8;
+        private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.TextBox textBox45;
+        private System.Windows.Forms.TextBox textBox46;
+        private System.Windows.Forms.TextBox textBox47;
+        private System.Windows.Forms.Label label51;
     }
 }
