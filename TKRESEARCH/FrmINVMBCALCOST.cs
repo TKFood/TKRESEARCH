@@ -256,6 +256,10 @@ namespace TKRESEARCH
             textBox17.Text = null;         
             textBoxID4.Text = null;
 
+            textBox24.Text = null;
+            textBox28.Text = null;
+            textBoxID6.Text = null;
+
             if (dataGridView1.CurrentRow != null)
             {
                 int rowindex = dataGridView1.CurrentRow.Index;               
@@ -276,6 +280,12 @@ namespace TKRESEARCH
                     textBox17.Text = row.Cells["產品名稱"].Value.ToString();                   
                     textBoxID4.Text = row.Cells["ID"].Value.ToString();
                     SEARCHDG3(textBox16.Text);
+
+                    textBox24.Text = row.Cells["產品名稱"].Value.ToString();
+                    textBox28.Text = row.Cells["產品名稱"].Value.ToString();
+                    textBoxID6.Text = row.Cells["ID"].Value.ToString();
+                    SEARCHDG4(textBox24.Text);
+
                 }
                 else
                 {
@@ -290,6 +300,10 @@ namespace TKRESEARCH
                     textBox16.Text = null;
                     textBox17.Text = null;                  
                     textBoxID4.Text = null;
+
+                    textBox24.Text = null;
+                    textBox28.Text = null;
+                    textBoxID6.Text = null;
                 }
             }
         }
@@ -1090,6 +1104,323 @@ namespace TKRESEARCH
             textBox22.Text = (Convert.ToDecimal(textBox20.Text) * Convert.ToDecimal(textBox21.Text)).ToString();
         }
 
+        public void SEARCHDG4(string PRODNAMES)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                if (!string.IsNullOrEmpty(PRODNAMES))
+                {
+                    sbSql.AppendFormat(@"  
+                                       SELECT 
+                                        [MID] AS 'ID'
+                                        ,[PRODNAMES] AS '產品名稱'
+                                        ,[MB001] AS '使用鹹蛋黃品號'
+                                        ,[MB002] AS '使用鹹蛋黃品名'
+                                        ,[INS] AS '投入重量'
+                                        ,[NOTYIELD] AS '秏損率'
+                                        ,[AFTERYIELDINS] AS '投入重量秏損後'
+                                        ,[PRICES] AS '單價'
+                                        ,[TMONEYS] AS '金額'
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODS3EGG]
+                                        WHERE [PRODNAMES] LIKE '%{0}%'
+                                        ORDER BY [MID],[PRODNAMES],[MB001]
+
+                                        ", PRODNAMES);
+                }
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count == 0)
+                {
+                    dataGridView4.DataSource = null;
+
+                }
+                else
+                {
+                    if (ds.Tables["ds"].Rows.Count >= 1)
+                    {
+                        dataGridView4.DataSource = ds.Tables["ds"];
+
+                        dataGridView4.AutoResizeColumns();
+
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+        }
+
+        public void ADDCALCOSTPRODS3EGG(string MID
+                                   , string PRODNAMES
+                                   , string MB001
+                                   , string MB002
+                                   , string INS
+                                   , string NOTYIELD
+                                   , string AFTERYIELDINS
+                                   , string PRICES
+                                   , string TMONEYS
+                                   
+                                   )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                   
+                                    INSERT INTO  [TKRESEARCH].[dbo].[CALCOSTPRODS3EGG]
+                                    (
+                                    [MID]
+                                    ,[PRODNAMES]
+                                    ,[MB001]
+                                    ,[MB002]
+                                    ,[INS]
+                                    ,[NOTYIELD]
+                                    ,[AFTERYIELDINS]
+                                    ,[PRICES]
+                                    ,[TMONEYS]
+                                    )
+                                    VALUES
+                                    (
+                                    '{0}'
+                                    ,'{1}'
+                                    ,'{2}'
+                                    ,'{3}'
+                                    ,'{4}'
+                                    ,'{5}'
+                                    ,'{6}'
+                                    ,'{7}'
+                                    ,'{8}'
+                                    )
+                                    ", MID
+                                        , PRODNAMES
+                                        , MB001
+                                        , MB002
+                                        , INS
+                                        , NOTYIELD
+                                        , AFTERYIELDINS
+                                        , PRICES
+                                        , TMONEYS
+                                        );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
+
+        private void dataGridView4_SelectionChanged(object sender, EventArgs e)
+        {
+            textBoxID7.Text = null;
+            textBox36.Text = null;
+            textBox37.Text = null;
+            textBox38.Text = null;
+
+            if (dataGridView4.CurrentRow != null)
+            {
+                int rowindex = dataGridView4.CurrentRow.Index;
+
+                if (rowindex >= 0)
+                {
+                    DataGridViewRow row = dataGridView4.Rows[rowindex];
+                    textBox36.Text = row.Cells["產品名稱"].Value.ToString();
+                    textBox37.Text = row.Cells["使用鹹蛋黃品號"].Value.ToString();
+                    textBox38.Text = row.Cells["使用鹹蛋黃品名"].Value.ToString();
+                    textBoxID7.Text = row.Cells["ID"].Value.ToString();
+
+                }
+                else
+                {
+                    textBoxID7.Text = null;
+                    textBox36.Text = null;
+                    textBox37.Text = null;
+                    textBox38.Text = null;
+                }
+            }
+        }
+        public void DELCALCOSTPRODS3EGG(string MID
+                                   , string MB001
+
+                                   )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                   
+                                    DELETE  [TKRESEARCH].[dbo].[CALCOSTPRODS3EGG]
+                                    WHERE [MID]='{0}' AND [MB001]='{1}'
+                                    ", MID
+                                        , MB001
+                                       );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
+        private void textBox29_TextChanged(object sender, EventArgs e)
+        {
+            textBox30.Text = FINDMB002(textBox29.Text.ToString());
+            textBox34.Text = FINDPRICES(textBox29.Text.ToString());
+        }
+
+        private void textBox31_TextChanged(object sender, EventArgs e)
+        {
+            if(!string.IsNullOrEmpty(textBox32.Text))
+            {
+                textBox33.Text = (Convert.ToDecimal(textBox31.Text) - (Convert.ToDecimal(textBox31.Text) * (Convert.ToDecimal(textBox32.Text) / 100))).ToString();
+            }
+
+            if (!string.IsNullOrEmpty(textBox34.Text))
+            {
+                textBox35.Text = (Convert.ToDecimal(textBox34.Text) * Convert.ToDecimal(textBox33.Text)).ToString();
+            }
+            
+        }
+
+        private void textBox32_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBox32.Text))
+            {
+                textBox33.Text = (Convert.ToDecimal(textBox31.Text) - (Convert.ToDecimal(textBox31.Text) * (Convert.ToDecimal(textBox32.Text) / 100))).ToString();
+            }
+
+            if (!string.IsNullOrEmpty(textBox34.Text))
+            {
+                textBox35.Text = (Convert.ToDecimal(textBox34.Text) * Convert.ToDecimal(textBox33.Text)).ToString();
+            }
+        }
+
+        private void textBox33_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBox34.Text))
+            {
+                textBox35.Text = (Convert.ToDecimal(textBox34.Text) * Convert.ToDecimal(textBox33.Text)).ToString();
+            }
+        }
+
+        private void textBox34_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBox34.Text))
+            {
+                textBox35.Text = (Convert.ToDecimal(textBox34.Text) * Convert.ToDecimal(textBox33.Text)).ToString();
+            }
+        }
         public void SETTEXTBOX1()
         {
             textBox3.Text = null;
@@ -1169,11 +1500,38 @@ namespace TKRESEARCH
                 //do something else
             }
         }
+        private void button10_Click(object sender, EventArgs e)
+        {
+            SEARCHDG4(textBox24.Text);
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            ADDCALCOSTPRODS3EGG(textBoxID6.Text.Trim(), textBox28.Text.Trim(), textBox29.Text.Trim(), textBox30.Text.Trim(), textBox31.Text.Trim(), textBox32.Text.Trim(), textBox33.Text.Trim(), textBox34.Text.Trim(), textBox35.Text.Trim());
+            SEARCHDG4(textBox24.Text);
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DELCALCOSTPRODS3EGG(textBoxID7.Text.Trim(), textBox37.Text.Trim());
+                SEARCHDG4(textBox24.Text);
+
+
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+        }
+
 
 
 
         #endregion
 
-     
+       
     }
 }
