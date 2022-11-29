@@ -139,6 +139,10 @@ namespace TKRESEARCH
         }
         public void SEARCH(string PRODNAMES,string ISCLOESED)
         {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
             try
             {
                 //20210902密
@@ -244,6 +248,8 @@ namespace TKRESEARCH
             textBox2.Text = null;
             textBoxID.Text = null;
 
+            textBox5.Text = null;
+
             if (dataGridView1.CurrentRow != null)
             {
                 int rowindex = dataGridView1.CurrentRow.Index;               
@@ -254,7 +260,8 @@ namespace TKRESEARCH
                     textBox1.Text = row.Cells["產品名稱"].Value.ToString();
                     textBox2.Text = row.Cells["規格及重量"].Value.ToString();
                     textBoxID.Text = row.Cells["ID"].Value.ToString();
-                   
+
+                    textBox5.Text = row.Cells["產品名稱"].Value.ToString();
 
 
                 }
@@ -263,6 +270,8 @@ namespace TKRESEARCH
                     textBox1.Text = null;
                     textBox2.Text = null;
                     textBoxID.Text = null;
+
+                    textBox5.Text = null;
                 }
             }
         }
@@ -386,6 +395,87 @@ namespace TKRESEARCH
 
         }
 
+        public void SEARCHDG2(string PRODNAMES)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                if (!string.IsNullOrEmpty(PRODNAMES))
+                {
+                    sbSql.AppendFormat(@"  
+                                        SELECT 
+                                        [MID] AS 'ID'
+                                        ,[PRODNAMES] AS '產品名稱'
+                                        ,[MB001] AS '使用品號'
+                                        ,[MB002] AS '使用品名'
+                                        ,[INS] AS '投入重量'
+                                        ,[PRICES] AS '單價'
+                                        ,[TMONEYS] AS '金額'
+                                        ,[REMARK] AS '備註'
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODS1RAW]
+                                        WHERE [PRODNAMES] LIKE '%{0}%'
+                                        ORDER BY [MID],[PRODNAMES],[MB001]
+                                        ", PRODNAMES);
+                }
+               
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count == 0)
+                {
+                    dataGridView2.DataSource = null;
+
+                }
+                else
+                {
+                    if (ds.Tables["ds"].Rows.Count >= 1)
+                    {
+                        dataGridView2.DataSource = ds.Tables["ds"];
+
+                        dataGridView2.AutoResizeColumns();
+
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+        }
+
         public void SETTEXTBOX1()
         {
             textBox3.Text = null;
@@ -412,9 +502,13 @@ namespace TKRESEARCH
 
             SEARCH(textBox999.Text.Trim(), comboBox1.Text.ToString());
         }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SEARCHDG2(textBox5.Text.Trim());
+        }
 
         #endregion
 
-     
+
     }
 }
