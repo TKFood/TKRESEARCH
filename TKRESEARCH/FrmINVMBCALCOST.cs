@@ -3356,6 +3356,7 @@ namespace TKRESEARCH
                                         ,[UNITCOSTS] AS '每單位製造費用'
                                         FROM [TKRESEARCH].[dbo].[CALCOSTPRODS8PRODUSEDMANU]
                                         WHERE [PRODNAMES]='{0}'
+                                        ORDER BY [PRODWORKS]
 
                                         ", PRODNAMES);
                 }
@@ -3434,6 +3435,100 @@ namespace TKRESEARCH
         {
             CALCOSTPRODS8PRODUSEDMANU();
         }
+        public void ADDCALCOSTPRODS8PRODUSEDMANU(string MID
+                                                , string PRODNAMES
+                                                , string PRODWORKS
+                                                , string HRS
+                                                , string HUMANS
+                                                , string TOTALHRHUMANS
+                                                , string PRODS
+                                                , string UNITCOSTS
+                                                            )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                    INSERT INTO [TKRESEARCH].[dbo].[CALCOSTPRODS8PRODUSEDMANU]
+                                    (
+                                    [MID]
+                                    ,[PRODNAMES]
+                                    ,[PRODWORKS]
+                                    ,[HRS]
+                                    ,[HUMANS]
+                                    ,[TOTALHRHUMANS]
+                                    ,[PRODS]
+                                    ,[UNITCOSTS]
+                                    )
+                                    VALUES
+                                    (
+                                    '{0}'
+                                    ,'{1}'
+                                    ,'{2}'
+                                    ,'{3}'
+                                    ,'{4}'
+                                    ,'{5}'
+                                    ,'{6}'
+                                    ,'{7}'
+                                    )
+
+                                    ", MID
+                                    , PRODNAMES
+                                    , PRODWORKS
+                                    , HRS
+                                    , HUMANS
+                                    , TOTALHRHUMANS
+                                    , PRODS
+                                    , UNITCOSTS
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+
+
+        }
+
         public void SETTEXTBOX1()
         {
             textBox3.Text = null;
@@ -3599,7 +3694,11 @@ namespace TKRESEARCH
             SEARCHDG10(textBox100.Text);
         }
 
-       
+        private void button23_Click(object sender, EventArgs e)
+        {
+            ADDCALCOSTPRODS8PRODUSEDMANU(textBoxID12.Text, textBox101.Text, textBox102.Text, textBox104.Text, textBox105.Text , textBox106.Text , textBox107.Text , textBox103.Text        );
+            SEARCHDG10(textBox100.Text);
+        }
     }
 
 
