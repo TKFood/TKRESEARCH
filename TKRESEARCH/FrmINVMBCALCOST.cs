@@ -149,6 +149,7 @@ namespace TKRESEARCH
             textBox71.Text = FINDDEVALUESHUMAN();
             textBox83.Text = FINDDEVALUESHUMAN();
             textBox96.Text = FINDDEVALUESHUMAN();
+            textBox104.Text = FINDDEVALUESMANUHUMAN();
         }
         public void SEARCH(string PRODNAMES,string ISCLOESED)
         {
@@ -290,6 +291,10 @@ namespace TKRESEARCH
             textBox87.Text = null;
             textBoxID11.Text = null;
 
+            textBox100.Text = null;
+            textBox101.Text = null;
+            textBoxID12.Text = null;
+
             if (dataGridView1.CurrentRow != null)
             {
                 int rowindex = dataGridView1.CurrentRow.Index;               
@@ -333,6 +338,11 @@ namespace TKRESEARCH
                     textBoxID11.Text = row.Cells["ID"].Value.ToString();
                     SEARCHDG9(textBox87.Text);
 
+                    textBox100.Text = row.Cells["產品名稱"].Value.ToString();
+                    textBox101.Text = row.Cells["產品名稱"].Value.ToString();
+                    textBoxID12.Text = row.Cells["ID"].Value.ToString();
+                    SEARCHDG10(textBox100.Text);
+
                 }
                 else
                 {
@@ -363,6 +373,11 @@ namespace TKRESEARCH
 
                     textBox87.Text = null;
                     textBoxID11.Text = null;
+
+                    textBox100.Text = null;
+                    textBox101.Text = null;
+                    textBoxID12.Text = null;
+
 
                 }
             }
@@ -2189,6 +2204,69 @@ namespace TKRESEARCH
 
             }
         }
+
+        public string FINDDEVALUESMANUHUMAN()
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                       SELECT [KINDS]
+                                        ,[TYPE]
+                                        ,[DEVALUES]
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODSTYPE]
+                                        WHERE [KINDS]='1' AND [TYPE]='標準製費'
+                                        ");
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    return ds.Tables["ds"].Rows[0]["DEVALUES"].ToString();
+                }
+                else
+                {
+                    return "0";
+                }
+
+            }
+            catch
+            {
+                return "0";
+            }
+            finally
+            {
+
+            }
+        }
         private void textBox41_TextChanged(object sender, EventArgs e)
         {
             SETUNITCOSTS();
@@ -3240,6 +3318,122 @@ namespace TKRESEARCH
         {
             CALHUMANCALCOSTPRODS7OUTPACK();
         }
+
+        public void SEARCHDG10(string PRODNAMES)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                if (!string.IsNullOrEmpty(PRODNAMES))
+                {
+                    sbSql.AppendFormat(@"  
+                                        SELECT
+                                        [MID]  AS 'ID'
+                                        ,[PRODNAMES] AS '產品名稱'
+                                        ,[PRODWORKS] AS '生產站'
+                                        ,[HRS] AS '每小時製費/人'
+                                        ,[HUMANS] AS '所需人數'
+                                        ,[TOTALHRHUMANS] AS '8小時製造費用金額'
+                                        ,[PRODS] AS '8小時生產數量'
+                                        ,[UNITCOSTS] AS '每單位製造費用'
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODS8PRODUSEDMANU]
+                                        WHERE [PRODNAMES]='{0}'
+
+                                        ", PRODNAMES);
+                }
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count == 0)
+                {
+                    dataGridView9.DataSource = null;
+
+                }
+                else
+                {
+                    if (ds.Tables["ds"].Rows.Count >= 1)
+                    {
+                        dataGridView10.DataSource = ds.Tables["ds"];
+
+                        dataGridView10.AutoResizeColumns();
+
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+
+
+        }
+        
+        public void CALCOSTPRODS8PRODUSEDMANU()
+        {
+            if(!string.IsNullOrEmpty(textBox104.Text)& !string.IsNullOrEmpty(textBox105.Text)& !string.IsNullOrEmpty(textBox106.Text)& !string.IsNullOrEmpty(textBox107.Text))
+            {
+                textBox106.Text = (Convert.ToDecimal(textBox104.Text)* Convert.ToDecimal(textBox105.Text)).ToString();
+
+                if(Convert.ToDecimal(textBox104.Text)>0& Convert.ToDecimal(textBox105.Text)>0& Convert.ToDecimal(textBox107.Text)>0)
+                {
+                    textBox103.Text = ((Convert.ToDecimal(textBox104.Text) * Convert.ToDecimal(textBox105.Text)) / Convert.ToDecimal(textBox107.Text)).ToString();
+                }
+                
+            }
+        }
+        private void textBox104_TextChanged(object sender, EventArgs e)
+        {
+            CALCOSTPRODS8PRODUSEDMANU();
+        }
+
+        private void textBox105_TextChanged(object sender, EventArgs e)
+        {
+            CALCOSTPRODS8PRODUSEDMANU();
+        }
+
+        private void textBox106_TextChanged(object sender, EventArgs e)
+        {
+            CALCOSTPRODS8PRODUSEDMANU();
+        }
+
+        private void textBox107_TextChanged(object sender, EventArgs e)
+        {
+            CALCOSTPRODS8PRODUSEDMANU();
+        }
         public void SETTEXTBOX1()
         {
             textBox3.Text = null;
@@ -3400,7 +3594,12 @@ namespace TKRESEARCH
             SEARCHDG9(textBox87.Text);
         }
 
-      
+        private void button22_Click(object sender, EventArgs e)
+        {
+            SEARCHDG10(textBox100.Text);
+        }
+
+       
     }
 
 
