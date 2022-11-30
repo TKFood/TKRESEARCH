@@ -150,6 +150,11 @@ namespace TKRESEARCH
             textBox83.Text = FINDDEVALUESHUMAN();
             textBox96.Text = FINDDEVALUESHUMAN();
             textBox104.Text = FINDDEVALUESMANUHUMAN();
+            textBox111.Text = FINDDEVALUESEGGS();
+            textBox112.Text = FINDREMARKSEGGS();
+            textBox113.Text = FINDREMARKS1();
+            textBox114.Text = FINDREMARKS2();
+            textBox115.Text = FINDREMARKS3();
         }
         public void SEARCH(string PRODNAMES,string ISCLOESED)
         {
@@ -2017,6 +2022,7 @@ namespace TKRESEARCH
             textBox47.Text = CALCALCOSTPRODS3EGGTMONEYS(textBoxID8.Text);
             textBox40.Text = CALCOSTPRODS1RAWTINS(textBoxID8.Text);
             textBox48.Text = CALCALCOSTPRODS3EGGTINS(textBoxID8.Text);
+            textBox110.Text = CALCALCOSTPRODS3EGGTINS(textBoxID8.Text);
         }
 
         public string FINDDEVALUESWATER()
@@ -2253,6 +2259,323 @@ namespace TKRESEARCH
                 if (ds.Tables["ds"].Rows.Count >= 1)
                 {
                     return ds.Tables["ds"].Rows[0]["DEVALUES"].ToString();
+                }
+                else
+                {
+                    return "0";
+                }
+
+            }
+            catch
+            {
+                return "0";
+            }
+            finally
+            {
+
+            }
+        }
+
+        public string FINDDEVALUESEGGS()
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                       SELECT [KINDS]
+                                        ,[TYPE]
+                                        ,[DEVALUES]
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODSTYPE]
+                                        WHERE [KINDS]='1' AND [TYPE]='烤後鹹蛋黃一桶片數'
+                                        ");
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    return ds.Tables["ds"].Rows[0]["DEVALUES"].ToString();
+                }
+                else
+                {
+                    return "0";
+                }
+
+            }
+            catch
+            {
+                return "0";
+            }
+            finally
+            {
+
+            }
+        }
+
+        public string FINDREMARKSEGGS()
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                       SELECT [KINDS]
+                                        ,[TYPE]
+                                        ,[DEVALUES]
+                                        ,[REMARKS]
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODSTYPE]
+                                        WHERE [KINDS]='B' AND [TYPE]='烤後鹹蛋黃'
+                                        ");
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    return ds.Tables["ds"].Rows[0]["REMARKS"].ToString();
+                }
+                else
+                {
+                    return "0";
+                }
+
+            }
+            catch
+            {
+                return "0";
+            }
+            finally
+            {
+
+            }
+        }
+
+        public string FINDREMARKS1()
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                       SELECT [KINDS]
+                                        ,[TYPE]
+                                        ,[DEVALUES]
+                                        ,[REMARKS]
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODSTYPE]
+                                        WHERE [KINDS]='B' AND [TYPE]='製程'
+                                        ");
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    return ds.Tables["ds"].Rows[0]["REMARKS"].ToString();
+                }
+                else
+                {
+                    return "0";
+                }
+
+            }
+            catch
+            {
+                return "0";
+            }
+            finally
+            {
+
+            }
+        }
+        public string FINDREMARKS2()
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                       SELECT [KINDS]
+                                        ,[TYPE]
+                                        ,[DEVALUES]
+                                        ,[REMARKS]
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODSTYPE]
+                                        WHERE [KINDS]='B' AND [TYPE]='內包'
+                                        ");
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    return ds.Tables["ds"].Rows[0]["REMARKS"].ToString();
+                }
+                else
+                {
+                    return "0";
+                }
+
+            }
+            catch
+            {
+                return "0";
+            }
+            finally
+            {
+
+            }
+        }
+        public string FINDREMARKS3()
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                       SELECT [KINDS]
+                                        ,[TYPE]
+                                        ,[DEVALUES]
+                                        ,[REMARKS]
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODSTYPE]
+                                        WHERE [KINDS]='B' AND [TYPE]='外包'
+                                        ");
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    return ds.Tables["ds"].Rows[0]["REMARKS"].ToString();
                 }
                 else
                 {
@@ -3620,6 +3943,43 @@ namespace TKRESEARCH
 
 
         }
+
+        public void CALATFERCOOKEGGS()
+        {
+            if (!string.IsNullOrEmpty(textBox58.Text) & !string.IsNullOrEmpty(textBox59.Text) & !string.IsNullOrEmpty(textBox110.Text) & !string.IsNullOrEmpty(textBox111.Text))
+            {
+                if (Convert.ToDecimal(textBox58.Text) > 0 & Convert.ToDecimal(textBox59.Text) > 0 & Convert.ToDecimal(textBox110.Text) > 0 & Convert.ToDecimal(textBox111.Text) > 0)
+                {
+                    textBox60.Text = ((Convert.ToDecimal(textBox58.Text) / Convert.ToDecimal(textBox59.Text)) * Convert.ToDecimal(textBox110.Text)/ Convert.ToDecimal(textBox111.Text)).ToString();
+                }
+
+            }
+        }
+        private void textBox58_TextChanged(object sender, EventArgs e)
+        {
+            CALATFERCOOKEGGS();
+        }
+
+        private void textBox59_TextChanged(object sender, EventArgs e)
+        {
+            CALATFERCOOKEGGS();
+        }
+
+        private void textBox110_TextChanged(object sender, EventArgs e)
+        {
+            CALATFERCOOKEGGS();
+        }
+
+        private void textBox111_TextChanged(object sender, EventArgs e)
+        {
+            CALATFERCOOKEGGS();
+        }
+
+        private void textBox102_TextChanged(object sender, EventArgs e)
+        {
+            textBox107.Text = "0";
+            textBox108.Text = "0";
+        }
         public void SETTEXTBOX1()
         {
             textBox3.Text = null;
@@ -3796,6 +4156,8 @@ namespace TKRESEARCH
             DELCALCOSTPRODS8PRODUSEDMANU(textBoxID12.Text, textBox109.Text);
             SEARCHDG10(textBox100.Text);
         }
+
+       
     }
 
 
