@@ -300,6 +300,9 @@ namespace TKRESEARCH
             textBox101.Text = null;
             textBoxID12.Text = null;
 
+            textBox116.Text = null;
+            textBoxID13.Text = null;
+
             if (dataGridView1.CurrentRow != null)
             {
                 int rowindex = dataGridView1.CurrentRow.Index;               
@@ -348,6 +351,9 @@ namespace TKRESEARCH
                     textBoxID12.Text = row.Cells["ID"].Value.ToString();
                     SEARCHDG10(textBox100.Text);
 
+                    textBox116.Text = row.Cells["產品名稱"].Value.ToString();
+                    textBoxID13.Text = row.Cells["ID"].Value.ToString();
+
                 }
                 else
                 {
@@ -383,6 +389,8 @@ namespace TKRESEARCH
                     textBox101.Text = null;
                     textBoxID12.Text = null;
 
+                    textBox116.Text = null;
+                    textBoxID13.Text = null;
 
                 }
             }
@@ -3980,11 +3988,110 @@ namespace TKRESEARCH
             textBox107.Text = "0";
             textBox108.Text = "0";
         }
+
+        public void UPDATECALCOSTPRODSCOSTTOTALS(string ID
+                                        , string COSTRAW
+                                        , string COSTMATERIL
+                                        , string COSTART
+                                        , string COSTMANU
+                                        , string COSTTOTALS
+                                                           )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                    UPDATE [TKRESEARCH].[dbo].[CALCOSTPRODS]
+                                    SET [COSTRAW]='{1}',[COSTMATERIL]='{2}',[COSTART]='{3}',[COSTMANU]='{4}',[COSTTOTALS]='{5}'
+                                    WHERE [ID]='{0}'
+                                    ", ID
+                                    , COSTRAW
+                                    , COSTMATERIL
+                                    , COSTART
+                                    , COSTMANU
+                                    , COSTTOTALS
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+
+
+        }
+
+        public void CALCALCOSTPRODS()
+        {
+            if (!string.IsNullOrEmpty(textBox117.Text) & !string.IsNullOrEmpty(textBox118.Text) & !string.IsNullOrEmpty(textBox119.Text) & !string.IsNullOrEmpty(textBox120.Text))
+            {
+                textBox121.Text = ((Convert.ToDecimal(textBox117.Text) + Convert.ToDecimal(textBox118.Text)) + Convert.ToDecimal(textBox119.Text) +Convert.ToDecimal(textBox120.Text)).ToString();
+
+            }
+        }
+        private void textBox117_TextChanged(object sender, EventArgs e)
+        {
+            CALCALCOSTPRODS();
+        }
+
+        private void textBox118_TextChanged(object sender, EventArgs e)
+        {
+            CALCALCOSTPRODS();
+        }
+
+        private void textBox119_TextChanged(object sender, EventArgs e)
+        {
+            CALCALCOSTPRODS();
+        }
+
+        private void textBox120_TextChanged(object sender, EventArgs e)
+        {
+            CALCALCOSTPRODS();
+        }
         public void SETTEXTBOX1()
         {
             textBox3.Text = null;
             textBox4.Text = null;
         }
+
         #endregion
 
         #region BUTTON
@@ -4157,7 +4264,12 @@ namespace TKRESEARCH
             SEARCHDG10(textBox100.Text);
         }
 
-       
+        private void button26_Click(object sender, EventArgs e)
+        {
+            UPDATECALCOSTPRODSCOSTTOTALS(textBoxID13.Text, textBox117.Text, textBox118.Text, textBox119.Text, textBox120.Text, textBox121.Text);
+        }
+
+     
     }
 
 
