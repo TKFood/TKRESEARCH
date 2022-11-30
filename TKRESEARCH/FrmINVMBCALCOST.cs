@@ -678,6 +678,7 @@ namespace TKRESEARCH
         {
             textBox8.Text = FINDMB002(textBox7.Text.ToString());
             textBox10.Text = FINDPRICES(textBox7.Text.ToString());
+            textBox9.Text = "0";
         }
 
         private void textBox9_TextChanged(object sender, EventArgs e)
