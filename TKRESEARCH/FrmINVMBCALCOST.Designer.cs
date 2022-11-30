@@ -3946,14 +3946,22 @@
             // tableLayoutPanel20
             // 
             this.tableLayoutPanel20.BackColor = System.Drawing.Color.LightGreen;
-            this.tableLayoutPanel20.ColumnCount = 3;
+            this.tableLayoutPanel20.ColumnCount = 9;
             this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
             this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 812F));
+            this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel20.Controls.Add(this.label94, 0, 0);
             this.tableLayoutPanel20.Controls.Add(this.button20, 0, 2);
             this.tableLayoutPanel20.Controls.Add(this.textBox87, 0, 1);
             this.tableLayoutPanel20.Controls.Add(this.textBoxID11, 1, 1);
+            this.tableLayoutPanel20.Controls.Add(this.textBox115, 2, 1);
+            this.tableLayoutPanel20.Controls.Add(this.label123, 2, 0);
             this.tableLayoutPanel20.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel20.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel20.Name = "tableLayoutPanel20";
@@ -4070,8 +4078,6 @@
             this.tableLayoutPanel21.Controls.Add(this.textBox97, 3, 4);
             this.tableLayoutPanel21.Controls.Add(this.textBox98, 4, 4);
             this.tableLayoutPanel21.Controls.Add(this.textBox99, 5, 4);
-            this.tableLayoutPanel21.Controls.Add(this.label123, 6, 0);
-            this.tableLayoutPanel21.Controls.Add(this.textBox115, 6, 1);
             this.tableLayoutPanel21.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel21.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel21.Name = "tableLayoutPanel21";
@@ -4836,7 +4842,7 @@
             // 
             this.label123.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label123.AutoSize = true;
-            this.label123.Location = new System.Drawing.Point(723, 12);
+            this.label123.Location = new System.Drawing.Point(163, 12);
             this.label123.Name = "label123";
             this.label123.Size = new System.Drawing.Size(114, 16);
             this.label123.TabIndex = 56;
@@ -4858,14 +4864,14 @@
             // 
             // textBox115
             // 
-            this.tableLayoutPanel21.SetColumnSpan(this.textBox115, 2);
+            this.tableLayoutPanel20.SetColumnSpan(this.textBox115, 4);
             this.textBox115.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox115.Location = new System.Drawing.Point(723, 43);
+            this.textBox115.Location = new System.Drawing.Point(163, 43);
             this.textBox115.Multiline = true;
             this.textBox115.Name = "textBox115";
             this.textBox115.ReadOnly = true;
-            this.tableLayoutPanel21.SetRowSpan(this.textBox115, 2);
-            this.textBox115.Size = new System.Drawing.Size(246, 74);
+            this.tableLayoutPanel20.SetRowSpan(this.textBox115, 3);
+            this.textBox115.Size = new System.Drawing.Size(474, 110);
             this.textBox115.TabIndex = 57;
             this.textBox115.Text = "0";
             // 

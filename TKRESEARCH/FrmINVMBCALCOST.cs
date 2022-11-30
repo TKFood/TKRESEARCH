@@ -154,7 +154,8 @@ namespace TKRESEARCH
             textBox112.Text = FINDREMARKSEGGS();
             textBox113.Text = FINDREMARKS1();
             textBox114.Text = FINDREMARKS2();
-            textBox115.Text = FINDREMARKS3();
+            //textBox115.Text = FINDREMARKS3();
+            textBox115.Text = FINDREMARKSOUTPACK();
         }
         public void SEARCH(string PRODNAMES,string ISCLOESED)
         {
@@ -2567,6 +2568,70 @@ namespace TKRESEARCH
                                         ,[REMARKS]
                                         FROM [TKRESEARCH].[dbo].[CALCOSTPRODSTYPE]
                                         WHERE [KINDS]='B' AND [TYPE]='外包'
+                                        ");
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    return ds.Tables["ds"].Rows[0]["REMARKS"].ToString();
+                }
+                else
+                {
+                    return "0";
+                }
+
+            }
+            catch
+            {
+                return "0";
+            }
+            finally
+            {
+
+            }
+        }
+
+         public string FINDREMARKSOUTPACK()
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                       SELECT 
+                                        (SELECT
+                                        ([TYPE]+':'+[REMARKS])+', '
+                                        FROM [TKRESEARCH].[dbo].[CALCOSTPRODSTYPE]
+                                        WHERE [KINDS]='A'
+                                          FOR XML PATH('')  ) AS 'REMARKS'
                                         ");
 
 
