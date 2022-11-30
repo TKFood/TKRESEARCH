@@ -3940,7 +3940,7 @@
             // 
             this.splitContainer21.Panel2.Controls.Add(this.splitContainer22);
             this.splitContainer21.Size = new System.Drawing.Size(976, 731);
-            this.splitContainer21.SplitterDistance = 160;
+            this.splitContainer21.SplitterDistance = 180;
             this.splitContainer21.TabIndex = 0;
             // 
             // tableLayoutPanel20
@@ -3970,7 +3970,7 @@
             this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel20.Size = new System.Drawing.Size(972, 156);
+            this.tableLayoutPanel20.Size = new System.Drawing.Size(972, 176);
             this.tableLayoutPanel20.TabIndex = 8;
             // 
             // label94
@@ -4025,8 +4025,8 @@
             // splitContainer22.Panel2
             // 
             this.splitContainer22.Panel2.Controls.Add(this.tableLayoutPanel21);
-            this.splitContainer22.Size = new System.Drawing.Size(976, 567);
-            this.splitContainer22.SplitterDistance = 154;
+            this.splitContainer22.Size = new System.Drawing.Size(976, 547);
+            this.splitContainer22.SplitterDistance = 148;
             this.splitContainer22.TabIndex = 0;
             // 
             // dataGridView9
@@ -4037,7 +4037,7 @@
             this.dataGridView9.Location = new System.Drawing.Point(0, 0);
             this.dataGridView9.Name = "dataGridView9";
             this.dataGridView9.RowTemplate.Height = 24;
-            this.dataGridView9.Size = new System.Drawing.Size(972, 150);
+            this.dataGridView9.Size = new System.Drawing.Size(972, 144);
             this.dataGridView9.TabIndex = 9;
             // 
             // tableLayoutPanel21
@@ -4091,7 +4091,7 @@
             this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel21.Size = new System.Drawing.Size(972, 405);
+            this.tableLayoutPanel21.Size = new System.Drawing.Size(972, 391);
             this.tableLayoutPanel21.TabIndex = 10;
             // 
             // button21
@@ -4871,7 +4871,7 @@
             this.textBox115.Name = "textBox115";
             this.textBox115.ReadOnly = true;
             this.tableLayoutPanel20.SetRowSpan(this.textBox115, 3);
-            this.textBox115.Size = new System.Drawing.Size(474, 110);
+            this.textBox115.Size = new System.Drawing.Size(474, 130);
             this.textBox115.TabIndex = 57;
             this.textBox115.Text = "0";
             // 

@@ -155,7 +155,7 @@ namespace TKRESEARCH
             textBox113.Text = FINDREMARKS1();
             textBox114.Text = FINDREMARKS2();
             //textBox115.Text = FINDREMARKS3();
-            textBox115.Text = FINDREMARKSOUTPACK();
+            textBox115.Text = FINDREMARKSOUTPACK().ToString();
         }
         public void SEARCH(string PRODNAMES,string ISCLOESED)
         {
@@ -2602,8 +2602,10 @@ namespace TKRESEARCH
             }
         }
 
-         public string FINDREMARKSOUTPACK()
+         public StringBuilder FINDREMARKSOUTPACK()
         {
+            StringBuilder MESS = new StringBuilder();
+
             SqlDataAdapter adapter = new SqlDataAdapter();
             SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
             DataSet ds = new DataSet();
@@ -2626,12 +2628,10 @@ namespace TKRESEARCH
                 sbSql.Clear();
 
                 sbSql.AppendFormat(@"  
-                                       SELECT 
-                                        (SELECT
-                                        ([TYPE]+':'+[REMARKS])+', '
+                                        SELECT 
+                                        ([TYPE]+':'+[REMARKS]) AS 'REMARKS'
                                         FROM [TKRESEARCH].[dbo].[CALCOSTPRODSTYPE]
                                         WHERE [KINDS]='A'
-                                          FOR XML PATH('')  ) AS 'REMARKS'
                                         ");
 
 
@@ -2648,17 +2648,25 @@ namespace TKRESEARCH
 
                 if (ds.Tables["ds"].Rows.Count >= 1)
                 {
-                    return ds.Tables["ds"].Rows[0]["REMARKS"].ToString();
+                    
+                    //return ds.Tables["ds"].Rows[0]["REMARKS"].ToString();
+                    foreach(DataRow DR in ds.Tables["ds"].Rows)
+                    {
+                        MESS.AppendFormat(@"{0}", DR["REMARKS"].ToString());
+                        MESS.AppendLine();
+                    }
+
+                    return MESS;
                 }
                 else
                 {
-                    return "0";
+                    return MESS;
                 }
 
             }
             catch
             {
-                return "0";
+                return MESS;
             }
             finally
             {
