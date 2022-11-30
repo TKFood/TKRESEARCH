@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="11/30/2022 08:22:00" ReportInfo.Modified="11/30/2022 11:25:28" ReportInfo.CreatorVersion="2016.4.4.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqHwzMSgwTFaHpjtG3vsOj8Zy6q+uhwpDsytgWqwZQZyEQUQyQ022aWUGqU90pHzzNjHuzu89K+RQ2LIBVx1fpgNkNJhwC4eetn2/Uy0fMrO7zDUE5AmRb+0bcYI+lxqpN+i5gA3VDGcwlcfm6L9ZMsLrZ3U+wEDtHCQtd9vw2XUFy/13X0DkWSComcX+BZuZC">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="/****** SSMS 中 SelectTopNRows 命令的指令碼  ******/&#13;&#10;SELECT &#13;&#10;[PRODNAMES] AS '產品名稱'&#13;&#10;,[SPECS] AS '規格及重量'&#13;&#10;,[COSTRAW] AS '原料成本'&#13;&#10;,[COSTMATERIL] AS '物料成本'&#13;&#10;,[COSTART] AS '人工成本(製造+內外包)'&#13;&#10;,[COSTMANU] AS '製造費用' &#13;&#10;,[COSTTOTALS] AS '單位成本合計'&#13;&#10;,[TOTALRAWS] AS '總投入原料重量'&#13;&#10;,[WATERLOSTS] AS '水份蒸發損秏率'&#13;&#10;,[NGLOSTS] AS '不良率'&#13;&#10;,[AFETERRAWS] AS '烘焙後總重量'&#13;&#10;,[UNITCOSTS] AS '每單位原料成本'&#13;&#10;,CONVERT(NVARCHAR,[CREATEDATE],112) AS '建立日期'&#13;&#10;,[ISCLOESED] AS '結案'&#13;&#10;,[ID]&#13;&#10;FROM [TKRESEARCH].[dbo].[CALCOSTPRODS]&#13;&#10;WHERE [ID]='4'&#13;&#10;&#13;&#10;&#13;&#10;">
+        <Column Name="產品名稱" DataType="System.String"/>
+        <Column Name="規格及重量" DataType="System.String"/>
+        <Column Name="原料成本" DataType="System.Decimal"/>
+        <Column Name="物料成本" DataType="System.Decimal"/>
+        <Column Name="人工成本(製造+內外包)" DataType="System.Decimal"/>
+        <Column Name="製造費用" DataType="System.Decimal"/>
+        <Column Name="單位成本合計" DataType="System.Decimal"/>
+        <Column Name="總投入原料重量" DataType="System.Decimal"/>
+        <Column Name="水份蒸發損秏率" DataType="System.Decimal"/>
+        <Column Name="不良率" DataType="System.Decimal"/>
+        <Column Name="烘焙後總重量" DataType="System.Decimal"/>
+        <Column Name="每單位原料成本" DataType="System.Decimal"/>
+        <Column Name="建立日期" DataType="System.String"/>
+        <Column Name="結案" DataType="System.String"/>
+        <Column Name="ID" DataType="System.Decimal"/>
+      </TableDataSource>
+      <TableDataSource Name="Table1" DataType="System.Int32" Enabled="true" SelectCommand="SELECT &#13;&#10;[MID] AS 'ID'&#13;&#10;,[PRODNAMES] AS '產品名稱'&#13;&#10;,[MB001] AS '使用品號'&#13;&#10;,[MB002] AS '使用品名'&#13;&#10;,[INS] AS '投入重量'&#13;&#10;,[PRICES] AS '單價'&#13;&#10;,[TMONEYS] AS '金額'&#13;&#10;,[REMARK] AS '備註'&#13;&#10;FROM [TKRESEARCH].[dbo].[CALCOSTPRODS1RAW]&#13;&#10;WHERE [MID]='4'&#13;&#10;ORDER BY [MID],[PRODNAMES],[MB001]">
+        <Column Name="ID" DataType="System.Decimal"/>
+        <Column Name="產品名稱" DataType="System.String"/>
+        <Column Name="使用品號" DataType="System.String"/>
+        <Column Name="使用品名" DataType="System.String"/>
+        <Column Name="投入重量" DataType="System.Decimal"/>
+        <Column Name="單價" DataType="System.Decimal"/>
+        <Column Name="金額" DataType="System.Decimal"/>
+        <Column Name="備註" DataType="System.String"/>
+      </TableDataSource>
+      <TableDataSource Name="Table2" DataType="System.Int32" Enabled="true" SelectCommand="SELECT &#13;&#10;[MID] AS 'ID'&#13;&#10;,[PRODNAMES] AS '產品名稱'&#13;&#10;,[MB001] AS '使用物料品號'&#13;&#10;,[MB002] AS '使用物料品名'&#13;&#10;,[INS] AS '投入重量'&#13;&#10;,[PRICES] AS '單價'&#13;&#10;,[TMONEYS] AS '金額'&#13;&#10;,[REMARK] AS '備註'&#13;&#10;FROM [TKRESEARCH].[dbo].[CALCOSTPRODS2MATERIL]&#13;&#10;WHERE [MID]='4'&#13;&#10;ORDER BY [MID],[PRODNAMES],[MB001]">
+        <Column Name="ID" DataType="System.Decimal"/>
+        <Column Name="產品名稱" DataType="System.String"/>
+        <Column Name="使用物料品號" DataType="System.String"/>
+        <Column Name="使用物料品名" DataType="System.String"/>
+        <Column Name="投入重量" DataType="System.Decimal"/>
+        <Column Name="單價" DataType="System.Decimal"/>
+        <Column Name="金額" DataType="System.Decimal"/>
+        <Column Name="備註" DataType="System.String"/>
+      </TableDataSource>
+      <TableDataSource Name="Table3" DataType="System.Int32" Enabled="true" SelectCommand="SELECT &#13;&#10;[MID] AS 'ID'&#13;&#10;,[PRODNAMES] AS '產品名稱'&#13;&#10;,[MB001] AS '使用鹹蛋黃品號'&#13;&#10;,[MB002] AS '使用鹹蛋黃品名'&#13;&#10;,[INS] AS '投入重量'&#13;&#10;,[NOTYIELD] AS '秏損率'&#13;&#10;,[AFTERYIELDINS] AS '投入重量秏損後'&#13;&#10;,[PRICES] AS '單價'&#13;&#10;,[TMONEYS] AS '金額'&#13;&#10;FROM [TKRESEARCH].[dbo].[CALCOSTPRODS3EGG]&#13;&#10;WHERE [MID]='4'&#13;&#10;ORDER BY [MID],[PRODNAMES],[MB001]">
+        <Column Name="ID" DataType="System.Decimal"/>
+        <Column Name="產品名稱" DataType="System.String"/>
+        <Column Name="使用鹹蛋黃品號" DataType="System.String"/>
+        <Column Name="使用鹹蛋黃品名" DataType="System.String"/>
+        <Column Name="投入重量" DataType="System.Decimal"/>
+        <Column Name="秏損率" DataType="System.Decimal"/>
+        <Column Name="投入重量秏損後" DataType="System.Decimal"/>
+        <Column Name="單價" DataType="System.Decimal"/>
+        <Column Name="金額" DataType="System.Decimal"/>
+      </TableDataSource>
+      <TableDataSource Name="Table4" DataType="System.Int32" Enabled="true" SelectCommand="&#13;&#10;SELECT &#13;&#10;[MID] AS 'ID'&#13;&#10;,[PRODNAMES] AS '產品名稱'&#13;&#10;,[MANUHR1] AS '製程時間(時)-1'&#13;&#10;,[MANUHUMAN1] AS '製程時間(時)-1所需人員(人)'&#13;&#10;,[MANUHR2] AS '製程時間(時)-2'&#13;&#10;,[MANUHUMAN2] AS '製程時間(時)-2所需人員(人)'&#13;&#10;,[MANUHR3] AS '製程時間(時)-3'&#13;&#10;,[MANUHUMAN3] AS '製程時間(時)-3所需人員(人)'&#13;&#10;,[TMANUHR] AS '合計-製程時間(時)'&#13;&#10;,[TMANUBUMAN] AS '合計-所需人員'&#13;&#10;,[HRSEPCS] AS '標準工時/人'&#13;&#10;,[THUMANCOSTS] AS '人工總計'&#13;&#10;,[OUTSPEC] AS '標準產出數量'&#13;&#10;,[HUMANCOSTS] AS '每單位製造人工成本'&#13;&#10;FROM [TKRESEARCH].[dbo].[CALCOSTPRODS4PRODYIELD]&#13;&#10;WHERE [MID]='4'   ">
+        <Column Name="ID" DataType="System.Decimal"/>
+        <Column Name="產品名稱" DataType="System.String"/>
+        <Column Name="製程時間(時)-1" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-1所需人員(人)" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-2" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-2所需人員(人)" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-3" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-3所需人員(人)" DataType="System.Decimal"/>
+        <Column Name="合計-製程時間(時)" DataType="System.Decimal"/>
+        <Column Name="合計-所需人員" DataType="System.Decimal"/>
+        <Column Name="標準工時/人" DataType="System.Decimal"/>
+        <Column Name="人工總計" DataType="System.Decimal"/>
+        <Column Name="標準產出數量" DataType="System.Decimal"/>
+        <Column Name="每單位製造人工成本" DataType="System.Decimal"/>
+      </TableDataSource>
+      <TableDataSource Name="Table5" DataType="System.Int32" Enabled="true" SelectCommand="&#13;&#10;SELECT &#13;&#10;[MID] AS 'ID'&#13;&#10;,[PRODNAMES] AS '產品名稱'&#13;&#10;,[MANUHR1] AS '製程時間(時)-1'&#13;&#10;,[MANUHUMAN1] AS '製程時間(時)-1所需人員(人)'&#13;&#10;,[MANUHR2] AS '製程時間(時)-2'&#13;&#10;,[MANUHUMAN2] AS '製程時間(時)-2所需人員(人)'&#13;&#10;,[MANUHR3] AS '製程時間(時)-3'&#13;&#10;,[MANUHUMAN3] AS '製程時間(時)-3所需人員(人)'&#13;&#10;,[TMANUHR] AS '合計-製程時間(時)'&#13;&#10;,[TMANUBUMAN] AS '合計-所需人員'&#13;&#10;,[HRSEPCS] AS '標準工時/人'&#13;&#10;,[THUMANCOSTS] AS '人工總計'&#13;&#10;,[OUTSPEC] AS '標準產出數量'&#13;&#10;,[HUMANCOSTS] AS '每單位製造人工成本'&#13;&#10;FROM [TKRESEARCH].[dbo].[CALCOSTPRODS5MANU]&#13;&#10;WHERE [MID]='4'  ">
+        <Column Name="ID" DataType="System.Decimal"/>
+        <Column Name="產品名稱" DataType="System.String"/>
+        <Column Name="製程時間(時)-1" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-1所需人員(人)" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-2" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-2所需人員(人)" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-3" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-3所需人員(人)" DataType="System.Decimal"/>
+        <Column Name="合計-製程時間(時)" DataType="System.Decimal"/>
+        <Column Name="合計-所需人員" DataType="System.Decimal"/>
+        <Column Name="標準工時/人" DataType="System.Decimal"/>
+        <Column Name="人工總計" DataType="System.Decimal"/>
+        <Column Name="標準產出數量" DataType="System.Decimal"/>
+        <Column Name="每單位製造人工成本" DataType="System.Decimal"/>
+      </TableDataSource>
+      <TableDataSource Name="Table6" DataType="System.Int32" Enabled="true" SelectCommand="&#13;&#10;SELECT &#13;&#10;[MID] AS 'ID'&#13;&#10;,[PRODNAMES] AS '產品名稱'&#13;&#10;,[MANUHR1] AS '製程時間(時)-1'&#13;&#10;,[MANUHUMAN1] AS '製程時間(時)-1所需人員(人)'&#13;&#10;,[MANUHR2] AS '製程時間(時)-2'&#13;&#10;,[MANUHUMAN2] AS '製程時間(時)-2所需人員(人)'&#13;&#10;,[MANUHR3] AS '製程時間(時)-3'&#13;&#10;,[MANUHUMAN3] AS '製程時間(時)-3所需人員(人)'&#13;&#10;,[TMANUHR] AS '合計-製程時間(時)'&#13;&#10;,[TMANUBUMAN] AS '合計-所需人員'&#13;&#10;,[HRSEPCS] AS '標準工時/人'&#13;&#10;,[THUMANCOSTS] AS '人工總計'&#13;&#10;,[OUTSPEC] AS '標準產出數量'&#13;&#10;,[HUMANCOSTS] AS '每單位製造人工成本'&#13;&#10;FROM [TKRESEARCH].[dbo].[CALCOSTPRODS6INPACK]&#13;&#10;WHERE [MID]='4'  ">
+        <Column Name="ID" DataType="System.Decimal"/>
+        <Column Name="產品名稱" DataType="System.String"/>
+        <Column Name="製程時間(時)-1" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-1所需人員(人)" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-2" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-2所需人員(人)" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-3" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-3所需人員(人)" DataType="System.Decimal"/>
+        <Column Name="合計-製程時間(時)" DataType="System.Decimal"/>
+        <Column Name="合計-所需人員" DataType="System.Decimal"/>
+        <Column Name="標準工時/人" DataType="System.Decimal"/>
+        <Column Name="人工總計" DataType="System.Decimal"/>
+        <Column Name="標準產出數量" DataType="System.Decimal"/>
+        <Column Name="每單位製造人工成本" DataType="System.Decimal"/>
+      </TableDataSource>
+      <TableDataSource Name="Table7" DataType="System.Int32" Enabled="true" SelectCommand="&#13;&#10;SELECT &#13;&#10;[MID] AS 'ID'&#13;&#10;,[PRODNAMES] AS '產品名稱'&#13;&#10;,[MANUHR1] AS '製程時間(時)-1'&#13;&#10;,[MANUHUMAN1] AS '製程時間(時)-1所需人員(人)'&#13;&#10;,[MANUHR2] AS '製程時間(時)-2'&#13;&#10;,[MANUHUMAN2] AS '製程時間(時)-2所需人員(人)'&#13;&#10;,[MANUHR3] AS '製程時間(時)-3'&#13;&#10;,[MANUHUMAN3] AS '製程時間(時)-3所需人員(人)'&#13;&#10;,[TMANUHR] AS '合計-製程時間(時)'&#13;&#10;,[TMANUBUMAN] AS '合計-所需人員'&#13;&#10;,[HRSEPCS] AS '標準工時/人'&#13;&#10;,[THUMANCOSTS] AS '人工總計'&#13;&#10;,[OUTSPEC] AS '標準產出數量'&#13;&#10;,[HUMANCOSTS] AS '每單位製造人工成本'&#13;&#10;FROM [TKRESEARCH].[dbo].[CALCOSTPRODS7OUTPACK]&#13;&#10;WHERE [MID]='4' ">
+        <Column Name="ID" DataType="System.Decimal"/>
+        <Column Name="產品名稱" DataType="System.String"/>
+        <Column Name="製程時間(時)-1" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-1所需人員(人)" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-2" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-2所需人員(人)" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-3" DataType="System.Decimal"/>
+        <Column Name="製程時間(時)-3所需人員(人)" DataType="System.Decimal"/>
+        <Column Name="合計-製程時間(時)" DataType="System.Decimal"/>
+        <Column Name="合計-所需人員" DataType="System.Decimal"/>
+        <Column Name="標準工時/人" DataType="System.Decimal"/>
+        <Column Name="人工總計" DataType="System.Decimal"/>
+        <Column Name="標準產出數量" DataType="System.Decimal"/>
+        <Column Name="每單位製造人工成本" DataType="System.Decimal"/>
+      </TableDataSource>
+      <TableDataSource Name="Table8" DataType="System.Int32" Enabled="true" SelectCommand="SELECT &#13;&#10;[MID] AS 'ID'&#13;&#10;,[PRODNAMES] AS '產品名稱'&#13;&#10;,[PRODWORKS] AS '生產站'&#13;&#10;,[HRS] AS '每小時製費/人'&#13;&#10;,[HUMANS] AS '所需人數'&#13;&#10;,[TOTALHRHUMANS] AS '8小時製造費用金額'&#13;&#10;,[PRODS] AS '8小時生產數量'&#13;&#10;,[UNITCOSTS] AS '每單位製造費用'&#13;&#10;FROM [TKRESEARCH].[dbo].[CALCOSTPRODS8PRODUSEDMANU]&#13;&#10;WHERE [MID]='4' &#13;&#10;ORDER BY [PRODWORKS]">
+        <Column Name="ID" DataType="System.Decimal"/>
+        <Column Name="產品名稱" DataType="System.String"/>
+        <Column Name="生產站" DataType="System.String"/>
+        <Column Name="每小時製費/人" DataType="System.Decimal"/>
+        <Column Name="所需人數" DataType="System.Int32"/>
+        <Column Name="8小時製造費用金額" DataType="System.Decimal"/>
+        <Column Name="8小時生產數量" DataType="System.Int32"/>
+        <Column Name="每單位製造費用" DataType="System.Decimal"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Total Name="Total投入重量原料" Expression="[Table1.投入重量]" Evaluator="Data2"/>
+    <Total Name="Total金額原料" Expression="[Table1.金額]" Evaluator="Data2"/>
+    <Total Name="Total投入重量物料" Expression="[Table2.投入重量]" Evaluator="Data3"/>
+    <Total Name="Total金額物料" Expression="[Table2.金額]" Evaluator="Data3"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="400" PaperHeight="400">
+    <ReportTitleBand Name="ReportTitle1" Width="1436.4" Height="18.9">
+      <TextObject Name="Text1" Width="718.2" Height="18.9" Text="新品成本試算表" HorzAlign="Center" VertAlign="Center"/>
+    </ReportTitleBand>
+    <GroupHeaderBand Name="GroupHeader2" Top="23.39" Width="1436.4" Condition="[Table.ID]">
+      <DataBand Name="Data1" Top="27.89" Width="1436.4" Height="18.9" CanGrow="true" CanShrink="true" DataSource="Table">
+        <TextObject Name="Text2" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="產品名稱:" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text3" Left="94.5" Width="283.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.產品名稱]" VertAlign="Center"/>
+        <TextObject Name="Text4" Left="378" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="規格及重量:" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text5" Left="472.5" Width="245.7" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.規格及重量]" VertAlign="Center"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter2" Top="51.28" Width="1436.4"/>
+    </GroupHeaderBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="55.78" Width="1436.4" Height="37.8" Condition="[Table1.ID]">
+      <TextObject Name="Text9" Left="94.5" Top="18.9" Width="151.2" Height="18.9" Border.Lines="All" Text="使用品名" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text8" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="使用品號" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text14" Left="245.7" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="投入重量" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text15" Left="340.2" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="單價" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text16" Left="434.7" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="金額" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text17" Left="529.2" Top="18.9" Width="189" Height="18.9" Border.Lines="All" Text="備註" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text18" Width="94.5" Height="18.9" Text="原料" HorzAlign="Center" VertAlign="Center"/>
+      <DataBand Name="Data2" Top="98.07" Width="1436.4" Height="18.9" DataSource="Table1">
+        <TextObject Name="Text6" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table1.使用品號]" VertAlign="Center"/>
+        <TextObject Name="Text7" Left="94.5" Width="151.2" Height="18.9" Border.Lines="All" Text="[Table1.使用品名]" VertAlign="Center"/>
+        <TextObject Name="Text10" Left="245.7" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table1.投入重量]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text11" Left="340.2" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table1.單價]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text12" Left="434.7" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table1.金額]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text13" Left="529.2" Width="189" Height="18.9" Border.Lines="All" Text="[Table1.備註]" VertAlign="Center"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter1" Top="121.47" Width="1436.4" Height="18.9">
+        <TextObject Name="Text19" Left="340.2" Width="94.5" Height="18.9" Border.Lines="All" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text20" Left="434.7" Width="94.5" Height="18.9" Border.Lines="All" Text="[Total金額原料]" HorzAlign="Right" VertAlign="Center"/>
+        <TextObject Name="Text21" Width="245.7" Height="18.9" Border.Lines="All" Text="合計" VertAlign="Center"/>
+        <TextObject Name="Text22" Left="245.7" Width="94.5" Height="18.9" Border.Lines="All" Text="[Total投入重量原料]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text23" Left="529.2" Width="189" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+      </GroupFooterBand>
+    </GroupHeaderBand>
+    <GroupHeaderBand Name="GroupHeader3" Top="144.86" Width="1436.4" Height="37.8" Condition="[Table2.ID]">
+      <TextObject Name="Text24" Left="94.5" Top="18.9" Width="151.2" Height="18.9" Border.Lines="All" Text="使用品名" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text25" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="使用品號" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text26" Left="245.7" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="投入重量" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text27" Left="340.2" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="單價" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text28" Left="434.7" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="金額" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text29" Left="529.2" Top="18.9" Width="189" Height="18.9" Border.Lines="All" Text="備註" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text30" Width="94.5" Height="18.9" Text="物料" HorzAlign="Center" VertAlign="Center"/>
+      <DataBand Name="Data3" Top="187.16" Width="1436.4" Height="18.9" DataSource="Table2">
+        <TextObject Name="Text31" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table2.使用物料品號]" VertAlign="Center"/>
+        <TextObject Name="Text32" Left="94.5" Width="151.2" Height="18.9" Border.Lines="All" Text="[Table2.使用物料品名]" HorzAlign="Right" VertAlign="Center"/>
+        <TextObject Name="Text33" Left="245.7" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table2.投入重量]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text34" Left="340.2" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table2.單價]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text35" Left="434.7" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table2.金額]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text36" Left="529.2" Width="189" Height="18.9" Border.Lines="All" Text="[Table2.備註]" VertAlign="Center"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter3" Top="210.55" Width="1436.4" Height="18.9">
+        <TextObject Name="Text37" Left="245.7" Width="94.5" Height="18.9" Border.Lines="All" Text="[Total投入重量物料]" HorzAlign="Right" VertAlign="Center"/>
+        <TextObject Name="Text38" Left="434.7" Width="94.5" Height="18.9" Border.Lines="All" Text="[Total金額物料]" HorzAlign="Right" VertAlign="Center"/>
+        <TextObject Name="Text39" Width="245.7" Height="18.9" Border.Lines="All" Text="合計" VertAlign="Center"/>
+        <TextObject Name="Text40" Left="340.2" Width="94.5" Height="18.9" Border.Lines="All" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text41" Left="529.2" Width="189" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+      </GroupFooterBand>
+    </GroupHeaderBand>
+    <GroupHeaderBand Name="GroupHeader4" Top="233.94" Width="1436.4" Height="37.8" Condition="[Table3.ID]">
+      <TextObject Name="Text42" Left="94.5" Top="18.9" Width="151.2" Height="18.9" Border.Lines="All" Text="使用品名" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text43" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="使用品號" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text44" Left="245.7" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="投入重量" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text45" Left="529.2" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="單價" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text46" Left="623.7" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="金額" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text47" Left="718.2" Top="18.9" Width="189" Height="18.9" Border.Lines="All" Text="備註" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text48" Width="94.5" Height="18.9" Text="鹹蛋黃" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text57" Left="340.2" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="秏損率%" Format="Currency" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text58" Left="434.7" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="投入重量秏損後" Format="Currency" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <DataBand Name="Data4" Top="276.24" Width="1436.4" Height="18.9" DataSource="Table3">
+        <TextObject Name="Text49" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table3.使用鹹蛋黃品號]" VertAlign="Center"/>
+        <TextObject Name="Text50" Left="94.5" Width="151.2" Height="18.9" Border.Lines="All" Text="[Table3.使用鹹蛋黃品名]" VertAlign="Center"/>
+        <TextObject Name="Text51" Left="245.7" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table3.投入重量]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text52" Left="529.2" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table3.單價]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text53" Left="340.2" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table3.秏損率]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text54" Left="434.7" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table3.投入重量秏損後]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text55" Left="623.7" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table3.金額]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text56" Left="718.2" Width="189" Height="18.9" Border.Lines="All" HorzAlign="Center" VertAlign="Center"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter4" Top="299.63" Width="1436.4"/>
+    </GroupHeaderBand>
+    <GroupHeaderBand Name="GroupHeader5" Top="304.13" Width="1436.4" Height="37.8" Condition="[Table.ID]">
+      <TextObject Name="Text65" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="總投入原料重量" Format="Currency" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text66" Left="94.5" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="烘焙後總重量" Format="Currency" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text67" Left="189" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="水份蒸發損秏率" Format="Currency" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text68" Left="283.5" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="不良率" Format="Currency" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text69" Left="378" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="損耗率" Format="Currency" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text70" Left="472.5" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="每單位原料成本" Format="Currency" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <DataBand Name="Data5" Top="346.42" Width="1436.4" Height="18.9" DataSource="Table">
+        <TextObject Name="Text59" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table.總投入原料重量]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text60" Left="94.5" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table.烘焙後總重量]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text61" Left="189" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table.水份蒸發損秏率]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text62" Left="283.5" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table.不良率]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text63" Left="378" Width="94.5" Height="18.9" Border.Lines="All" Text="[[Table.水份蒸發損秏率]+[Table.不良率]]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text64" Left="472.5" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table.每單位原料成本]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="6" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter5" Top="369.82" Width="1436.4"/>
+    </GroupHeaderBand>
+    <GroupHeaderBand Name="GroupHeader6" Top="374.31" Width="1436.4" Height="56.7" Condition="[Table4.ID]">
+      <TextObject Name="Text71" Width="94.5" Height="18.9" Text="烤鹹蛋黃" AllowExpressions="false" VertAlign="Center"/>
+      <TextObject Name="Text84" Top="18.9" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-1" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text85" Left="103.95" Top="18.9" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-1所需人員(人)" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text86" Left="207.9" Top="18.9" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-2" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text87" Left="311.85" Top="18.9" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-2所需人員(人)" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text88" Left="415.8" Top="18.9" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-3" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text89" Left="519.75" Top="18.9" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-3所需人員(人)" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text90" Left="623.7" Top="18.9" Width="113.4" Height="37.8" Border.Lines="All" Text="合計-製程時間(時)" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text91" Left="737.1" Top="18.9" Width="94.5" Height="37.8" Border.Lines="All" Text="合計-所需人員" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text92" Left="831.6" Top="18.9" Width="94.5" Height="37.8" Border.Lines="All" Text="標準工時/人" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text93" Left="926.1" Top="18.9" Width="94.5" Height="37.8" Border.Lines="All" Text="人工總計" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text94" Left="1020.6" Top="18.9" Width="94.5" Height="37.8" Border.Lines="All" Text="標準產出數量" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text95" Left="1115.1" Top="18.9" Width="122.85" Height="37.8" Border.Lines="All" Text="每單位製造人工成本" AllowExpressions="false" Format="Number" Format.UseLocale="false" Format.DecimalDigits="8" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <DataBand Name="Data6" Top="435.5" Width="1436.4" Height="18.9" DataSource="Table4">
+        <TextObject Name="Text72" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table4.製程時間(時)-1]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text73" Left="103.95" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table4.製程時間(時)-1所需人員(人)]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text74" Left="207.9" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table4.製程時間(時)-2]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text75" Left="311.85" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table4.製程時間(時)-2所需人員(人)]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text76" Left="415.8" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table4.製程時間(時)-3]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text77" Left="519.75" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table4.製程時間(時)-3所需人員(人)]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text78" Left="623.7" Width="113.4" Height="18.9" Border.Lines="All" Text="[Table4.合計-製程時間(時)]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text79" Left="737.1" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table4.合計-所需人員]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text80" Left="831.6" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table4.標準工時/人]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text81" Left="926.1" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table4.人工總計]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text82" Left="1020.6" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table4.標準產出數量]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text83" Left="1115.1" Width="122.85" Height="18.9" Border.Lines="All" Text="[Table4.每單位製造人工成本]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="8" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter6" Top="458.9" Width="1436.4"/>
+    </GroupHeaderBand>
+    <GroupHeaderBand Name="GroupHeader7" Top="463.39" Width="1436.4" Height="56.7" Condition="[Table5.ID]">
+      <TextObject Name="Text96" Width="481.95" Height="18.9" Text="一、(8H)標準批量人工計算-製造站" AllowExpressions="false" VertAlign="Center"/>
+      <TextObject Name="Text97" Top="18.9" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-1" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text98" Left="103.95" Top="18.9" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-1所需人員(人)" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text99" Left="207.9" Top="18.9" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-2" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text100" Left="311.85" Top="18.9" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-2所需人員(人)" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text101" Left="415.8" Top="18.9" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-3" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text102" Left="519.75" Top="18.9" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-3所需人員(人)" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text103" Left="623.7" Top="18.9" Width="113.4" Height="37.8" Border.Lines="All" Text="合計-製程時間(時)" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text104" Left="737.1" Top="18.9" Width="94.5" Height="37.8" Border.Lines="All" Text="合計-所需人員" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text105" Left="831.6" Top="18.9" Width="94.5" Height="37.8" Border.Lines="All" Text="標準工時/人" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text106" Left="926.1" Top="18.9" Width="94.5" Height="37.8" Border.Lines="All" Text="人工總計" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text107" Left="1020.6" Top="18.9" Width="94.5" Height="37.8" Border.Lines="All" Text="標準產出數量" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text108" Left="1115.1" Top="18.9" Width="122.85" Height="37.8" Border.Lines="All" Text="每單位製造人工成本" AllowExpressions="false" Format="Number" Format.UseLocale="false" Format.DecimalDigits="8" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <DataBand Name="Data7" Top="524.59" Width="1436.4" Height="18.9" DataSource="Table5">
+        <TextObject Name="Text109" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table5.製程時間(時)-1]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text110" Left="103.95" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table5.製程時間(時)-1所需人員(人)]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text111" Left="207.9" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table5.製程時間(時)-2]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text112" Left="311.85" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table5.製程時間(時)-2所需人員(人)]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text113" Left="415.8" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table5.製程時間(時)-3]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text114" Left="519.75" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table5.製程時間(時)-3所需人員(人)]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text115" Left="623.7" Width="113.4" Height="18.9" Border.Lines="All" Text="[Table5.合計-製程時間(時)]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text116" Left="737.1" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table5.合計-所需人員]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text117" Left="831.6" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table5.標準工時/人]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text118" Left="926.1" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table5.人工總計]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text119" Left="1020.6" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table5.標準產出數量]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text120" Left="1115.1" Width="122.85" Height="18.9" Border.Lines="All" Text="[Table5.每單位製造人工成本]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter7" Top="547.98" Width="1436.4"/>
+    </GroupHeaderBand>
+    <GroupHeaderBand Name="GroupHeader8" Top="552.48" Width="1436.4" Height="66.15" Condition="[Table6.ID]">
+      <TextObject Name="Text121" Width="481.95" Height="18.9" Text="二、(8H)標準批量人工計算-內包裝站" AllowExpressions="false" VertAlign="Center"/>
+      <TextObject Name="Text122" Top="28.35" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-1" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text123" Left="103.95" Top="28.35" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-1所需人員(人)" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text124" Left="207.9" Top="28.35" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-2" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text125" Left="311.85" Top="28.35" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-2所需人員(人)" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text126" Left="415.8" Top="28.35" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-3" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text127" Left="519.75" Top="28.35" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-3所需人員(人)" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text128" Left="623.7" Top="28.35" Width="113.4" Height="37.8" Border.Lines="All" Text="合計-製程時間(時)" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text129" Left="737.1" Top="28.35" Width="94.5" Height="37.8" Border.Lines="All" Text="合計-所需人員" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text130" Left="831.6" Top="28.35" Width="94.5" Height="37.8" Border.Lines="All" Text="標準工時/人" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text131" Left="926.1" Top="28.35" Width="94.5" Height="37.8" Border.Lines="All" Text="人工總計" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text132" Left="1020.6" Top="28.35" Width="94.5" Height="37.8" Border.Lines="All" Text="標準產出數量" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text133" Left="1115.1" Top="28.35" Width="122.85" Height="37.8" Border.Lines="All" Text="每單位製造人工成本" AllowExpressions="false" Format="Number" Format.UseLocale="false" Format.DecimalDigits="8" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <DataBand Name="Data8" Top="623.12" Width="1436.4" Height="18.9" DataSource="Table6">
+        <TextObject Name="Text134" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table6.製程時間(時)-1]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text135" Left="103.95" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table6.製程時間(時)-1所需人員(人)]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text136" Left="207.9" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table6.製程時間(時)-2]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text137" Left="311.85" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table6.製程時間(時)-2所需人員(人)]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text138" Left="415.8" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table6.製程時間(時)-3]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text139" Left="519.75" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table6.製程時間(時)-3所需人員(人)]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text140" Left="623.7" Width="113.4" Height="18.9" Border.Lines="All" Text="[Table6.合計-製程時間(時)]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text141" Left="737.1" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table6.合計-所需人員]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text142" Left="831.6" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table6.標準工時/人]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text143" Left="926.1" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table6.人工總計]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text144" Left="1020.6" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table6.標準產出數量]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text145" Left="1115.1" Width="122.85" Height="18.9" Border.Lines="All" Text="[Table6.每單位製造人工成本]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter8" Top="646.52" Width="1436.4"/>
+    </GroupHeaderBand>
+    <GroupHeaderBand Name="GroupHeader9" Top="651.01" Width="1436.4" Height="66.15" Condition="[Table7.ID]">
+      <TextObject Name="Text146" Width="481.95" Height="18.9" Text="三、(8H)標準批量人工計算-外包裝站" AllowExpressions="false" VertAlign="Center"/>
+      <TextObject Name="Text147" Top="28.35" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-1" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text148" Left="103.95" Top="28.35" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-1所需人員(人)" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text149" Left="207.9" Top="28.35" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-2" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text150" Left="311.85" Top="28.35" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-2所需人員(人)" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text151" Left="415.8" Top="28.35" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-3" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text152" Left="519.75" Top="28.35" Width="103.95" Height="37.8" Border.Lines="All" Text="製程時間(時)-3所需人員(人)" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text153" Left="623.7" Top="28.35" Width="113.4" Height="37.8" Border.Lines="All" Text="合計-製程時間(時)" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text154" Left="737.1" Top="28.35" Width="94.5" Height="37.8" Border.Lines="All" Text="合計-所需人員" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text155" Left="831.6" Top="28.35" Width="94.5" Height="37.8" Border.Lines="All" Text="標準工時/人" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text156" Left="926.1" Top="28.35" Width="94.5" Height="37.8" Border.Lines="All" Text="人工總計" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text157" Left="1020.6" Top="28.35" Width="94.5" Height="37.8" Border.Lines="All" Text="標準產出數量" AllowExpressions="false" Format="Number" Format.UseLocale="true" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text158" Left="1115.1" Top="28.35" Width="122.85" Height="37.8" Border.Lines="All" Text="每單位製造人工成本" AllowExpressions="false" Format="Number" Format.UseLocale="false" Format.DecimalDigits="8" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <DataBand Name="Data9" Top="721.65" Width="1436.4" Height="18.9" DataSource="Table7">
+        <TextObject Name="Text159" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table7.製程時間(時)-1]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text160" Left="103.95" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table7.製程時間(時)-1所需人員(人)]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text161" Left="207.9" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table7.製程時間(時)-2]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text162" Left="311.85" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table7.製程時間(時)-2所需人員(人)]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text163" Left="415.8" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table7.製程時間(時)-3]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text164" Left="519.75" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table7.製程時間(時)-3所需人員(人)]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text165" Left="623.7" Width="113.4" Height="18.9" Border.Lines="All" Text="[Table7.合計-製程時間(時)]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text166" Left="737.1" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table7.合計-所需人員]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text167" Left="831.6" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table7.標準工時/人]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text168" Left="926.1" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table7.人工總計]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text169" Left="1020.6" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table7.標準產出數量]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text170" Left="1115.1" Width="122.85" Height="18.9" Border.Lines="All" Text="[Table7.每單位製造人工成本]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter9" Top="745.05" Width="1436.4"/>
+    </GroupHeaderBand>
+    <GroupHeaderBand Name="GroupHeader10" Top="749.54" Width="1436.4" Height="37.8" Condition="[Table8.ID]" SortOrder="None">
+      <TextObject Name="Text171" Width="481.95" Height="18.9" Text="四、(8H)標準批量製造費用計算" AllowExpressions="false" VertAlign="Center"/>
+      <TextObject Name="Text178" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="生產站" Format="Number" Format.UseLocale="true" VertAlign="Center"/>
+      <TextObject Name="Text179" Left="94.5" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="每小時製費/人" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text180" Left="189" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="所需人數" Format="Number" Format.UseLocale="true" VertAlign="Center"/>
+      <TextObject Name="Text181" Left="283.5" Top="18.9" Width="113.4" Height="18.9" Border.Lines="All" Text="8小時製造費用金額" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text182" Left="396.9" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="8小時生產數量" Format="Number" Format.UseLocale="true" VertAlign="Center"/>
+      <TextObject Name="Text183" Left="491.4" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="每單位製造費用" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <DataBand Name="Data10" Top="791.84" Width="1436.4" Height="18.9" DataSource="Table8">
+        <TextObject Name="Text172" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table8.生產站]" Format="Number" Format.UseLocale="true" VertAlign="Center"/>
+        <TextObject Name="Text173" Left="94.5" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table8.每小時製費/人]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text174" Left="189" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table8.所需人數]" Format="Number" Format.UseLocale="true" VertAlign="Center"/>
+        <TextObject Name="Text175" Left="283.5" Width="113.4" Height="18.9" Border.Lines="All" Text="[Table8.8小時製造費用金額]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text176" Left="396.9" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table8.8小時生產數量]" Format="Number" Format.UseLocale="true" VertAlign="Center"/>
+        <TextObject Name="Text177" Left="491.4" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table8.每單位製造費用]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="8" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter10" Top="815.23" Width="1436.4"/>
+    </GroupHeaderBand>
+    <GroupHeaderBand Name="GroupHeader11" Top="819.73" Width="1436.4" Height="37.8" Condition="[Table.ID]">
+      <TextObject Name="Text184" Width="481.95" Height="18.9" Text="單位製造成本計算" AllowExpressions="false" VertAlign="Center"/>
+      <TextObject Name="Text190" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="Orange" Text="原料成本" Format="Number" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text191" Left="94.5" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="Orange" Text="物料成本" Format="Number" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text192" Left="189" Top="18.9" Width="141.75" Height="18.9" Border.Lines="All" Fill.Color="Orange" Text="人工成本(製造+內外包)" Format="Number" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text193" Left="330.75" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="Orange" Text="製造費用" Format="Number" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text194" Left="425.25" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="Orange" Text="單位成本合計" Format="Number" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <DataBand Name="Data11" Top="862.02" Width="1436.4" Height="18.9" DataSource="Table">
+        <TextObject Name="Text185" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="Orange" Text="[Table.原料成本]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text186" Left="94.5" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="Orange" Text="[Table.物料成本]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text187" Left="189" Width="141.75" Height="18.9" Border.Lines="All" Fill.Color="Orange" Text="[Table.人工成本(製造+內外包)]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text188" Left="330.75" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="Orange" Text="[Table.製造費用]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text189" Left="425.25" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="Orange" Text="[Table.單位成本合計]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter11" Top="885.41" Width="1436.4"/>
+    </GroupHeaderBand>
+  </ReportPage>
+</Report>

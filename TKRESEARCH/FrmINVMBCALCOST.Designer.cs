@@ -400,6 +400,7 @@
             this.textBox122 = new System.Windows.Forms.TextBox();
             this.label126 = new System.Windows.Forms.Label();
             this.label127 = new System.Windows.Forms.Label();
+            this.previewControl1 = new FastReport.Preview.PreviewControl();
             this.tabControl1.SuspendLayout();
             this.tabPage9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -551,6 +552,7 @@
             this.splitContainer26.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer27)).BeginInit();
             this.splitContainer27.Panel1.SuspendLayout();
+            this.splitContainer27.Panel2.SuspendLayout();
             this.splitContainer27.SuspendLayout();
             this.tableLayoutPanel25.SuspendLayout();
             this.tableLayoutPanel26.SuspendLayout();
@@ -4883,7 +4885,7 @@
             // 
             this.splitContainer26.Panel2.Controls.Add(this.tableLayoutPanel26);
             this.splitContainer26.Size = new System.Drawing.Size(976, 731);
-            this.splitContainer26.SplitterDistance = 298;
+            this.splitContainer26.SplitterDistance = 485;
             this.splitContainer26.TabIndex = 0;
             // 
             // splitContainer27
@@ -4896,7 +4898,11 @@
             // splitContainer27.Panel1
             // 
             this.splitContainer27.Panel1.Controls.Add(this.tableLayoutPanel25);
-            this.splitContainer27.Size = new System.Drawing.Size(976, 298);
+            // 
+            // splitContainer27.Panel2
+            // 
+            this.splitContainer27.Panel2.Controls.Add(this.previewControl1);
+            this.splitContainer27.Size = new System.Drawing.Size(976, 485);
             this.splitContainer27.SplitterDistance = 207;
             this.splitContainer27.TabIndex = 0;
             // 
@@ -4919,7 +4925,7 @@
             this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel25.Size = new System.Drawing.Size(203, 294);
+            this.tableLayoutPanel25.Size = new System.Drawing.Size(203, 481);
             this.tableLayoutPanel25.TabIndex = 10;
             // 
             // label124
@@ -4941,6 +4947,7 @@
             this.button25.TabIndex = 0;
             this.button25.Text = "報表";
             this.button25.UseVisualStyleBackColor = true;
+            this.button25.Click += new System.EventHandler(this.button25_Click);
             // 
             // textBox116
             // 
@@ -4990,17 +4997,17 @@
             this.tableLayoutPanel26.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel26.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel26.Name = "tableLayoutPanel26";
-            this.tableLayoutPanel26.RowCount = 9;
+            this.tableLayoutPanel26.RowCount = 5;
             this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel26.Size = new System.Drawing.Size(972, 425);
+            this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel26.Size = new System.Drawing.Size(972, 238);
             this.tableLayoutPanel26.TabIndex = 11;
             // 
             // button26
@@ -5186,6 +5193,19 @@
             this.label127.Text = "需*規格重量";
             this.label127.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // previewControl1
+            // 
+            this.previewControl1.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.previewControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.previewControl1.Font = new System.Drawing.Font("宋体", 9F);
+            this.previewControl1.Location = new System.Drawing.Point(0, 0);
+            this.previewControl1.Margin = new System.Windows.Forms.Padding(4);
+            this.previewControl1.Name = "previewControl1";
+            this.previewControl1.PageOffset = new System.Drawing.Point(10, 10);
+            this.previewControl1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.previewControl1.Size = new System.Drawing.Size(761, 481);
+            this.previewControl1.TabIndex = 10;
+            // 
             // FrmINVMBCALCOST
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
@@ -5370,6 +5390,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer26)).EndInit();
             this.splitContainer26.ResumeLayout(false);
             this.splitContainer27.Panel1.ResumeLayout(false);
+            this.splitContainer27.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer27)).EndInit();
             this.splitContainer27.ResumeLayout(false);
             this.tableLayoutPanel25.ResumeLayout(false);
@@ -5754,5 +5775,6 @@
         private System.Windows.Forms.Label label132;
         private System.Windows.Forms.Label label126;
         private System.Windows.Forms.Label label127;
+        private FastReport.Preview.PreviewControl previewControl1;
     }
 }

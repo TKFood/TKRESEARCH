@@ -4092,6 +4092,322 @@ namespace TKRESEARCH
             textBox4.Text = null;
         }
 
+        public void SETFASTREPORT(string ID)
+        {
+            StringBuilder SQL = new StringBuilder();
+            StringBuilder SQL1 = new StringBuilder();
+            StringBuilder SQL2 = new StringBuilder();
+            StringBuilder SQL3 = new StringBuilder();
+            StringBuilder SQL4 = new StringBuilder();
+            StringBuilder SQL5 = new StringBuilder();
+            StringBuilder SQL6 = new StringBuilder();
+            StringBuilder SQL7 = new StringBuilder();
+            StringBuilder SQL8 = new StringBuilder();
+
+            SQL = SETSQL(ID);
+            SQL1 = SETSQL1(ID);
+            SQL2 = SETSQL2(ID);
+            SQL3 = SETSQL3(ID);
+            SQL4 = SETSQL4(ID);
+            SQL5 = SETSQL5(ID);
+            SQL6 = SETSQL6(ID);
+            SQL7 = SETSQL7(ID);
+            SQL8 = SETSQL8(ID);
+
+            Report report1 = new Report();
+            report1.Load(@"REPORT\新品成本試算表.frx");
+
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            report1.Dictionary.Connections[0].ConnectionString = sqlsb.ConnectionString;
+
+
+            TableDataSource table = report1.GetDataSource("Table") as TableDataSource;
+            table.SelectCommand = SQL.ToString();
+            TableDataSource table1 = report1.GetDataSource("Table1") as TableDataSource;
+            table1.SelectCommand = SQL1.ToString();
+            TableDataSource table2 = report1.GetDataSource("Table2") as TableDataSource;
+            table2.SelectCommand = SQL2.ToString();
+            TableDataSource table3 = report1.GetDataSource("Table3") as TableDataSource;
+            table3.SelectCommand = SQL3.ToString();
+            TableDataSource table4 = report1.GetDataSource("Table4") as TableDataSource;
+            table4.SelectCommand = SQL4.ToString();
+            TableDataSource table5 = report1.GetDataSource("Table5") as TableDataSource;
+            table5.SelectCommand = SQL5.ToString();
+            TableDataSource table6 = report1.GetDataSource("Table6") as TableDataSource;
+            table6.SelectCommand = SQL6.ToString();
+            TableDataSource table7 = report1.GetDataSource("Table7") as TableDataSource;
+            table7.SelectCommand = SQL7.ToString();
+            TableDataSource table8 = report1.GetDataSource("Table8") as TableDataSource;
+            table8.SelectCommand = SQL8.ToString();
+
+            //report1.SetParameterValue("P1", dateTimePicker1.Value.ToString("yyyyMMdd"));
+            //report1.SetParameterValue("P2", dateTimePicker2.Value.ToString("yyyyMMdd"));
+
+            report1.Preview = previewControl1;
+            report1.Show();
+
+        }
+        public StringBuilder SETSQL(string ID)
+        {
+            StringBuilder SB = new StringBuilder();
+
+
+            SB.AppendFormat(@" 
+                            SELECT 
+                            [PRODNAMES] AS '產品名稱'
+                            ,[SPECS] AS '規格及重量'
+                            ,[COSTRAW] AS '原料成本'
+                            ,[COSTMATERIL] AS '物料成本'
+                            ,[COSTART] AS '人工成本(製造+內外包)'
+                            ,[COSTMANU] AS '製造費用' 
+                            ,[COSTTOTALS] AS '單位成本合計'
+                            ,[TOTALRAWS] AS '總投入原料重量'
+                            ,[WATERLOSTS] AS '水份蒸發損秏率'
+                            ,[NGLOSTS] AS '不良率'
+                            ,[AFETERRAWS] AS '烘焙後總重量'
+                            ,[UNITCOSTS] AS '每單位原料成本'
+                            ,CONVERT(NVARCHAR,[CREATEDATE],112) AS '建立日期'
+                            ,[ISCLOESED] AS '結案'
+                            ,[ID]
+                            FROM [TKRESEARCH].[dbo].[CALCOSTPRODS]
+                            WHERE [ID]='{0}'
+
+                           
+
+                            ", ID);
+
+
+            return SB;
+        }
+        public StringBuilder SETSQL1(string ID)
+        {
+            StringBuilder SB = new StringBuilder();
+
+
+            SB.AppendFormat(@" 
+                            SELECT 
+                            [MID] AS 'ID'
+                            ,[PRODNAMES] AS '產品名稱'
+                            ,[MB001] AS '使用品號'
+                            ,[MB002] AS '使用品名'
+                            ,[INS] AS '投入重量'
+                            ,[PRICES] AS '單價'
+                            ,[TMONEYS] AS '金額'
+                            ,[REMARK] AS '備註'
+                            FROM [TKRESEARCH].[dbo].[CALCOSTPRODS1RAW]
+                            WHERE [MID]='{0}'
+
+                            ORDER BY [MID],[PRODNAMES],[MB001]
+
+                            ", ID);
+
+
+            return SB;
+        }
+        public StringBuilder SETSQL2(string ID)
+        {
+            StringBuilder SB = new StringBuilder();
+
+
+            SB.AppendFormat(@" 
+                            SELECT 
+                            [MID] AS 'ID'
+                            ,[PRODNAMES] AS '產品名稱'
+                            ,[MB001] AS '使用物料品號'
+                            ,[MB002] AS '使用物料品名'
+                            ,[INS] AS '投入重量'
+                            ,[PRICES] AS '單價'
+                            ,[TMONEYS] AS '金額'
+                            ,[REMARK] AS '備註'
+                            FROM [TKRESEARCH].[dbo].[CALCOSTPRODS2MATERIL]
+                            WHERE [MID]='{0}'
+                            ORDER BY [MID],[PRODNAMES],[MB001]
+
+                            ", ID);
+
+
+            return SB;
+        }
+        public StringBuilder SETSQL3(string ID)
+        {
+            StringBuilder SB = new StringBuilder();
+
+
+            SB.AppendFormat(@" 
+                            SELECT 
+                            [MID] AS 'ID'
+                            ,[PRODNAMES] AS '產品名稱'
+                            ,[MB001] AS '使用鹹蛋黃品號'
+                            ,[MB002] AS '使用鹹蛋黃品名'
+                            ,[INS] AS '投入重量'
+                            ,[NOTYIELD] AS '秏損率'
+                            ,[AFTERYIELDINS] AS '投入重量秏損後'
+                            ,[PRICES] AS '單價'
+                            ,[TMONEYS] AS '金額'
+                            FROM [TKRESEARCH].[dbo].[CALCOSTPRODS3EGG]
+                            WHERE [MID]='{0}'
+                            ORDER BY [MID],[PRODNAMES],[MB001]
+
+                            ", ID);
+
+
+            return SB;
+        }
+        public StringBuilder SETSQL4(string ID)
+        {
+            StringBuilder SB = new StringBuilder();
+
+
+            SB.AppendFormat(@" 
+                           
+                            SELECT 
+                            [MID] AS 'ID'
+                            ,[PRODNAMES] AS '產品名稱'
+                            ,[MANUHR1] AS '製程時間(時)-1'
+                            ,[MANUHUMAN1] AS '製程時間(時)-1所需人員(人)'
+                            ,[MANUHR2] AS '製程時間(時)-2'
+                            ,[MANUHUMAN2] AS '製程時間(時)-2所需人員(人)'
+                            ,[MANUHR3] AS '製程時間(時)-3'
+                            ,[MANUHUMAN3] AS '製程時間(時)-3所需人員(人)'
+                            ,[TMANUHR] AS '合計-製程時間(時)'
+                            ,[TMANUBUMAN] AS '合計-所需人員'
+                            ,[HRSEPCS] AS '標準工時/人'
+                            ,[THUMANCOSTS] AS '人工總計'
+                            ,[OUTSPEC] AS '標準產出數量'
+                            ,[HUMANCOSTS] AS '每單位製造人工成本'
+                            FROM [TKRESEARCH].[dbo].[CALCOSTPRODS4PRODYIELD]
+                            WHERE [MID]='{0}' 
+
+                            ", ID);
+
+
+            return SB;
+        }
+        public StringBuilder SETSQL5(string ID)
+        {
+            StringBuilder SB = new StringBuilder();
+
+
+            SB.AppendFormat(@" 
+
+                            SELECT 
+                            [MID] AS 'ID'
+                            ,[PRODNAMES] AS '產品名稱'
+                            ,[MANUHR1] AS '製程時間(時)-1'
+                            ,[MANUHUMAN1] AS '製程時間(時)-1所需人員(人)'
+                            ,[MANUHR2] AS '製程時間(時)-2'
+                            ,[MANUHUMAN2] AS '製程時間(時)-2所需人員(人)'
+                            ,[MANUHR3] AS '製程時間(時)-3'
+                            ,[MANUHUMAN3] AS '製程時間(時)-3所需人員(人)'
+                            ,[TMANUHR] AS '合計-製程時間(時)'
+                            ,[TMANUBUMAN] AS '合計-所需人員'
+                            ,[HRSEPCS] AS '標準工時/人'
+                            ,[THUMANCOSTS] AS '人工總計'
+                            ,[OUTSPEC] AS '標準產出數量'
+                            ,[HUMANCOSTS] AS '每單位製造人工成本'
+                            FROM [TKRESEARCH].[dbo].[CALCOSTPRODS5MANU]
+                            WHERE [MID]='{0}' 
+                           
+
+                            ", ID);
+
+
+            return SB;
+        }
+        public StringBuilder SETSQL6(string ID)
+        {
+            StringBuilder SB = new StringBuilder();
+
+
+            SB.AppendFormat(@"                            
+
+                            SELECT 
+                            [MID] AS 'ID'
+                            ,[PRODNAMES] AS '產品名稱'
+                            ,[MANUHR1] AS '製程時間(時)-1'
+                            ,[MANUHUMAN1] AS '製程時間(時)-1所需人員(人)'
+                            ,[MANUHR2] AS '製程時間(時)-2'
+                            ,[MANUHUMAN2] AS '製程時間(時)-2所需人員(人)'
+                            ,[MANUHR3] AS '製程時間(時)-3'
+                            ,[MANUHUMAN3] AS '製程時間(時)-3所需人員(人)'
+                            ,[TMANUHR] AS '合計-製程時間(時)'
+                            ,[TMANUBUMAN] AS '合計-所需人員'
+                            ,[HRSEPCS] AS '標準工時/人'
+                            ,[THUMANCOSTS] AS '人工總計'
+                            ,[OUTSPEC] AS '標準產出數量'
+                            ,[HUMANCOSTS] AS '每單位製造人工成本'
+                            FROM [TKRESEARCH].[dbo].[CALCOSTPRODS6INPACK]
+                            WHERE [MID]='{0}'   
+                            ", ID);
+
+
+            return SB;
+        }
+        public StringBuilder SETSQL7(string ID)
+        {
+            StringBuilder SB = new StringBuilder();
+
+
+            SB.AppendFormat(@" 
+                           
+                            SELECT 
+                            [MID] AS 'ID'
+                            ,[PRODNAMES] AS '產品名稱'
+                            ,[MANUHR1] AS '製程時間(時)-1'
+                            ,[MANUHUMAN1] AS '製程時間(時)-1所需人員(人)'
+                            ,[MANUHR2] AS '製程時間(時)-2'
+                            ,[MANUHUMAN2] AS '製程時間(時)-2所需人員(人)'
+                            ,[MANUHR3] AS '製程時間(時)-3'
+                            ,[MANUHUMAN3] AS '製程時間(時)-3所需人員(人)'
+                            ,[TMANUHR] AS '合計-製程時間(時)'
+                            ,[TMANUBUMAN] AS '合計-所需人員'
+                            ,[HRSEPCS] AS '標準工時/人'
+                            ,[THUMANCOSTS] AS '人工總計'
+                            ,[OUTSPEC] AS '標準產出數量'
+                            ,[HUMANCOSTS] AS '每單位製造人工成本'
+                            FROM [TKRESEARCH].[dbo].[CALCOSTPRODS7OUTPACK]
+                            WHERE [MID]='{0}'   
+
+                            ", ID);
+
+
+            return SB;
+        }
+        public StringBuilder SETSQL8(string ID)
+        {
+            StringBuilder SB = new StringBuilder();
+
+
+            SB.AppendFormat(@" 
+                            SELECT 
+                            [MID] AS 'ID'
+                            ,[PRODNAMES] AS '產品名稱'
+                            ,[PRODWORKS] AS '生產站'
+                            ,[HRS] AS '每小時製費/人'
+                            ,[HUMANS] AS '所需人數'
+                            ,[TOTALHRHUMANS] AS '8小時製造費用金額'
+                            ,[PRODS] AS '8小時生產數量'
+                            ,[UNITCOSTS] AS '每單位製造費用'
+                            FROM [TKRESEARCH].[dbo].[CALCOSTPRODS8PRODUSEDMANU]
+                            WHERE [MID]='{0}' 
+                            ORDER BY [PRODWORKS]
+
+                            ", ID);
+
+
+            return SB;
+        }
+
         #endregion
 
         #region BUTTON
@@ -4269,7 +4585,10 @@ namespace TKRESEARCH
             UPDATECALCOSTPRODSCOSTTOTALS(textBoxID13.Text, textBox117.Text, textBox118.Text, textBox119.Text, textBox120.Text, textBox121.Text);
         }
 
-     
+        private void button25_Click(object sender, EventArgs e)
+        {
+            SETFASTREPORT(textBoxID13.Text);
+        }
     }
 
 
