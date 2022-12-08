@@ -58,7 +58,7 @@ namespace TKRESEARCH
             InitializeComponent();
 
             SEARCH(textBox1.Text.Trim());
-            SETdataGridView1();
+            SETdataGridView1(); 
         }
 
 
