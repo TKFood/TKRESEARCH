@@ -181,10 +181,16 @@ namespace TKRESEARCH
                     using (SqlCommand cmd = new SqlCommand())
                     {
                         SQL.AppendFormat(@"
-                                         select Name, Data, ContentType from [TKRESEARCH].[dbo].[tblFiles] where Id=@Id
+                                         SELECT 
+                                         [id]
+                                        ,[NAME]
+                                        ,[CONTENTTYPE]
+                                        ,[DATA]
+                                        FROM [TKRESEARCH].[dbo].[tblFiles]
+                                        where id=@id
                                             ");
-                        cmd.CommandText = "";
-                        cmd.Parameters.AddWithValue("@Id", id);
+                        cmd.CommandText = SQL.ToString();
+                        cmd.Parameters.AddWithValue("@id", id);
                         cmd.Connection = con;
                         con.Open();
                         using (SqlDataReader sdr = cmd.ExecuteReader())
@@ -213,6 +219,71 @@ namespace TKRESEARCH
             }
         }
 
+        private void UploadFile()
+        {
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = openFileDialog1.FileName;
+                    byte[] bytes = File.ReadAllBytes(fileName);
+                    string contentType = "";
+                    //Set the contenttype based on File Extension
+
+                    switch (Path.GetExtension(fileName))
+                    {
+                        case ".doc":
+                            contentType = "application/msword";
+                            break;
+                        case ".xls":
+                            contentType = "application/vnd.ms-excel";
+                            break;
+                        case ".xlsx":
+                            contentType = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            break;
+                        case ".jpg":
+                            contentType = "image/jpeg";
+                            break;
+                        case ".png":
+                            contentType = "image/png";
+                            break;
+                        case ".gif":
+                            contentType = "image/gif";
+                            break;
+                        case ".bmp":
+                            contentType = "image/bmp";
+                            break;
+                    }
+
+                    // 20210902密
+                    Class1 TKID = new Class1();//用new 建立類別實體
+                    SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                    //資料庫使用者密碼解密
+                    sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                    sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                    String connectionString;
+                    sqlConn = new SqlConnection(sqlsb.ConnectionString);
+                    using (SqlConnection conn = sqlConn)
+                    {
+                        string sql = "INSERT INTO [TKRESEARCH].[dbo].[tblFiles] VALUES(@Name, @ContentType, @Data)";
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@Name", Path.GetFileName(fileName));
+                            cmd.Parameters.AddWithValue("@ContentType", contentType);
+                            cmd.Parameters.AddWithValue("@Data", bytes);
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                        }
+                    }
+
+                    SEARCH(textBox1.Text.Trim());
+                }
+            }
+        }
+
         #endregion
 
         #region BUTTON
@@ -220,6 +291,15 @@ namespace TKRESEARCH
         {
             SEARCH(textBox1.Text.Trim());
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            UploadFile();
+        }
+
+
         #endregion
+
+
     }
 }
