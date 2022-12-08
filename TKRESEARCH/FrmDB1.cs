@@ -144,12 +144,19 @@ namespace TKRESEARCH
         //設定下載欄
         public void SETdataGridView1()
         {
+            if (dataGridView1.Columns.Count>=3)
+            {
+                dataGridView1.Columns.RemoveAt(3);
+            }
+           
+
             DataGridViewLinkColumn lnkDownload = new DataGridViewLinkColumn();
             lnkDownload.UseColumnTextForLinkValue = true;
             lnkDownload.LinkBehavior = LinkBehavior.SystemDefault;
             lnkDownload.Name = "lnkDownload";
             lnkDownload.HeaderText = "Download";
             lnkDownload.Text = "Download";
+          
             dataGridView1.Columns.Insert(2, lnkDownload);
             dataGridView1.CellContentClick += new DataGridViewCellEventHandler(DataGridView1_CellClick);
         }
@@ -226,7 +233,10 @@ namespace TKRESEARCH
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     string fileName = openFileDialog1.FileName;
-                    byte[] bytes = File.ReadAllBytes(fileName);
+                    Stream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                    BinaryReader br = new BinaryReader(fs); //reads the binary files  
+                    Byte[] bytes = br.ReadBytes((Int32)fs.Length); //counting the file length into bytes  
+                    //byte[] bytes = File.ReadAllBytes(fileName);
                     string contentType = "";
                     //Set the contenttype based on File Extension
 
@@ -240,6 +250,9 @@ namespace TKRESEARCH
                             break;
                         case ".xlsx":
                             contentType = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            break;
+                        case ".pdf":
+                            contentType = "application/pdf";
                             break;
                         case ".jpg":
                             contentType = "image/jpeg";
