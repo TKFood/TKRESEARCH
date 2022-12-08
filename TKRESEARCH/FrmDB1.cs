@@ -57,7 +57,8 @@ namespace TKRESEARCH
         {
             InitializeComponent();
 
-           
+            SEARCH(textBox1.Text.Trim());
+            SETdataGridView1();
         }
 
 
@@ -121,7 +122,7 @@ namespace TKRESEARCH
 
                     dataGridView1.AutoResizeColumns();
 
-                    SETdataGridView1();
+                    
 
                 }
                 else
@@ -144,12 +145,6 @@ namespace TKRESEARCH
         //設定下載欄
         public void SETdataGridView1()
         {
-            if (dataGridView1.Columns.Count>=3)
-            {
-                dataGridView1.Columns.RemoveAt(3);
-            }
-           
-
             DataGridViewLinkColumn lnkDownload = new DataGridViewLinkColumn();
             lnkDownload.UseColumnTextForLinkValue = true;
             lnkDownload.LinkBehavior = LinkBehavior.SystemDefault;
@@ -168,7 +163,7 @@ namespace TKRESEARCH
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
-                int id = Convert.ToInt16((row.Cells[0].Value));
+                int id = Convert.ToInt16((row.Cells["id"].Value));
                 byte[] bytes;
                 string fileName, contentType;
 
@@ -200,12 +195,13 @@ namespace TKRESEARCH
                         cmd.Parameters.AddWithValue("@id", id);
                         cmd.Connection = con;
                         con.Open();
+
                         using (SqlDataReader sdr = cmd.ExecuteReader())
                         {
                             sdr.Read();
-                            bytes = (byte[])sdr["Data"];
-                            contentType = sdr["ContentType"].ToString();
-                            fileName = sdr["Name"].ToString();
+                            bytes = (byte[])sdr["DATA"];
+                            contentType = sdr["CONTENTTYPE"].ToString();
+                            fileName = sdr["NAME"].ToString();
 
                             Stream stream;
                             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -228,16 +224,17 @@ namespace TKRESEARCH
 
         private void UploadFile()
         {
+            string FILETYPE = null;
+            string contentType = "";
+            byte[] bytes = null;
+
             using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    string fileName = openFileDialog1.FileName;
-                    Stream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-                    BinaryReader br = new BinaryReader(fs); //reads the binary files  
-                    Byte[] bytes = br.ReadBytes((Int32)fs.Length); //counting the file length into bytes  
-                    //byte[] bytes = File.ReadAllBytes(fileName);
-                    string contentType = "";
+                    string fileName = openFileDialog1.FileName;                     
+                    bytes = File.ReadAllBytes(fileName);
+
                     //Set the contenttype based on File Extension
 
                     switch (Path.GetExtension(fileName))
@@ -256,6 +253,7 @@ namespace TKRESEARCH
                             break;
                         case ".jpg":
                             contentType = "image/jpeg";
+                           
                             break;
                         case ".png":
                             contentType = "image/png";
