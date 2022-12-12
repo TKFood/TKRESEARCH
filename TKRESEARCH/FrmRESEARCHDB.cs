@@ -54,6 +54,9 @@ namespace TKRESEARCH
         byte[] BYTES1 = null;
         string CONTENTTYPES1 = null;
         string DOCNAMES1 = null;
+        byte[] BYTES2 = null;
+        string CONTENTTYPES2 = null;
+        string DOCNAMES2 = null;
 
         public FrmRESEARCHDB()
         {
@@ -563,6 +566,62 @@ namespace TKRESEARCH
             }
         }
 
+        public void OPEN2()
+        {
+            string FILETYPE = null;
+            CONTENTTYPES2 = "";
+            BYTES2 = null;
+            DOCNAMES2 = null;
+
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = openFileDialog1.FileName;
+
+                    DOCNAMES2 = Path.GetFileName(fileName);
+                    textBox216.Text = fileName;
+
+                    BYTES2 = File.ReadAllBytes(fileName);
+
+                    //Set the contenttype based on File Extension
+
+                    switch (Path.GetExtension(fileName))
+                    {
+                        case ".docx":
+                            CONTENTTYPES2 = "application/msword";
+                            break;
+                        case ".doc":
+                            CONTENTTYPES2 = "application/msword";
+                            break;
+                        case ".xls":
+                            CONTENTTYPES2 = "application/vnd.ms-excel";
+                            break;
+                        case ".xlsx":
+                            CONTENTTYPES2 = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            break;
+                        case ".pdf":
+                            CONTENTTYPES2 = "application/pdf";
+                            break;
+                        case ".jpg":
+                            CONTENTTYPES2 = "image/jpeg";
+                            break;
+                        case ".png":
+                            CONTENTTYPES2 = "image/png";
+                            break;
+                        case ".gif":
+                            CONTENTTYPES2 = "image/gif";
+                            break;
+                        case ".bmp":
+                            CONTENTTYPES2 = "image/bmp";
+                            break;
+                    }
+
+
+                }
+            }
+        }
+
         public void ADD_TO_TBDB1(string DOCID,string COMMENTS, string DOCNAMES, string CONTENTTYPES,byte[] BYTES)
         {
             // 20210902密
@@ -737,6 +796,10 @@ namespace TKRESEARCH
             SEARCH2(textBox2A.Text.Trim());
         }
 
+        private void button7_Click(object sender, EventArgs e)
+        {
+            OPEN2();
+        }
         #endregion
 
 
