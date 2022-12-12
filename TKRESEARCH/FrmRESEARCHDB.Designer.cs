@@ -857,13 +857,10 @@
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel6.Controls.Add(this.label8, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.textBox201, 0, 1);
-            this.tableLayoutPanel6.Controls.Add(this.button7, 2, 7);
             this.tableLayoutPanel6.Controls.Add(this.label10, 0, 6);
-            this.tableLayoutPanel6.Controls.Add(this.textBox216, 0, 7);
             this.tableLayoutPanel6.Controls.Add(this.label14, 0, 4);
             this.tableLayoutPanel6.Controls.Add(this.label15, 2, 0);
             this.tableLayoutPanel6.Controls.Add(this.label16, 2, 2);
-            this.tableLayoutPanel6.Controls.Add(this.button8, 4, 6);
             this.tableLayoutPanel6.Controls.Add(this.label19, 3, 2);
             this.tableLayoutPanel6.Controls.Add(this.label23, 4, 2);
             this.tableLayoutPanel6.Controls.Add(this.label26, 5, 2);
@@ -875,7 +872,6 @@
             this.tableLayoutPanel6.Controls.Add(this.textBox203, 4, 1);
             this.tableLayoutPanel6.Controls.Add(this.textBox204, 6, 1);
             this.tableLayoutPanel6.Controls.Add(this.textBox205, 0, 3);
-            this.tableLayoutPanel6.Controls.Add(this.textBox208, 3, 3);
             this.tableLayoutPanel6.Controls.Add(this.textBox206, 1, 3);
             this.tableLayoutPanel6.Controls.Add(this.textBox207, 2, 3);
             this.tableLayoutPanel6.Controls.Add(this.textBox209, 4, 3);
@@ -887,8 +883,12 @@
             this.tableLayoutPanel6.Controls.Add(this.textBox213, 2, 5);
             this.tableLayoutPanel6.Controls.Add(this.label24, 3, 4);
             this.tableLayoutPanel6.Controls.Add(this.label27, 4, 4);
-            this.tableLayoutPanel6.Controls.Add(this.textBox214, 3, 5);
             this.tableLayoutPanel6.Controls.Add(this.textBox215, 4, 5);
+            this.tableLayoutPanel6.Controls.Add(this.textBox208, 3, 3);
+            this.tableLayoutPanel6.Controls.Add(this.textBox214, 3, 5);
+            this.tableLayoutPanel6.Controls.Add(this.button7, 3, 6);
+            this.tableLayoutPanel6.Controls.Add(this.textBox216, 1, 6);
+            this.tableLayoutPanel6.Controls.Add(this.button8, 5, 6);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -950,14 +950,14 @@
             // 
             this.textBox216.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel6.SetColumnSpan(this.textBox216, 2);
-            this.textBox216.Location = new System.Drawing.Point(3, 293);
+            this.textBox216.Location = new System.Drawing.Point(123, 246);
             this.textBox216.Name = "textBox216";
             this.textBox216.Size = new System.Drawing.Size(234, 27);
             this.textBox216.TabIndex = 10;
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(243, 283);
+            this.button7.Location = new System.Drawing.Point(363, 243);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(114, 34);
             this.button7.TabIndex = 11;
@@ -967,12 +967,13 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(483, 243);
+            this.button8.Location = new System.Drawing.Point(603, 243);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(114, 34);
             this.button8.TabIndex = 8;
             this.button8.Text = "新增";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // textBox202
             // 

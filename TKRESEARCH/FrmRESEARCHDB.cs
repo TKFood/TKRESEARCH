@@ -208,7 +208,7 @@ namespace TKRESEARCH
                                         ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'
                                         ,[DOCNAMES] AS '產品圖片'
                                         ,[CONTENTTYPES] 
-                                        ,[DATAS] 
+                                      
                                         FROM [TKRESEARCH].[dbo].[TBDB2]
                                         WHERE [NAMES] LIKE '%{0}%'
                                         ORDER BY [ID] 
@@ -238,9 +238,8 @@ namespace TKRESEARCH
                                         ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'
                                         ,[DOCNAMES] AS '產品圖片'
                                         ,[CONTENTTYPES] 
-                                        ,[DATAS] 
-                                        FROM [TKRESEARCH].[dbo].[TBDB2]
-                                        FROM [TKRESEARCH].[dbo].[TBDB1]
+                                       
+                                        FROM [TKRESEARCH].[dbo].[TBDB2]                                       
                                         ORDER BY [ID] 
                                     ");
                 }
@@ -675,7 +674,7 @@ namespace TKRESEARCH
                 
             }
 
-            SEARCH(textBox1A.Text.Trim());
+          
         }
         public void  UPDATE_TO_TBDB1(string ID,string DOCID,string COMMENTS)
         {
@@ -717,7 +716,7 @@ namespace TKRESEARCH
 
             }
 
-            SEARCH(textBox1A.Text.Trim());
+          
         }
 
         public void DELETE_TO_TBDB1(string ID)
@@ -757,8 +756,125 @@ namespace TKRESEARCH
 
             }
 
-            SEARCH(textBox1A.Text.Trim());
+          
         }
+
+        public void ADD_TO_TBDB2(
+                                string NAMES
+                                , string CHARS
+                                , string ORIS
+                                , string SPECS
+                                , string PRICES
+                                , string SAVEDAYS
+                                , string SAVEMETHODS
+                                , string PRIMES
+                                , string ALLERGENS
+                                , string OWNERS
+                                , string EATES
+                                , string CHECKSUNITS
+                                , string CHECKS
+                                , string OTHERS
+                                , string COMMENTS
+                                , string DOCNAMES
+                                , string CONTENTTYPES,
+                                byte[] BYTES
+                                )
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(NAMES))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                       
+                                        INSERT INTO [TKRESEARCH].[dbo].[TBDB2]
+                                        (
+                                        [NAMES]
+                                        ,[CHARS]
+                                        ,[ORIS]
+                                        ,[SPECS]
+                                        ,[PRICES]
+                                        ,[SAVEDAYS]
+                                        ,[SAVEMETHODS]
+                                        ,[PRIMES]
+                                        ,[ALLERGENS]
+                                        ,[OWNERS]
+                                        ,[EATES]
+                                        ,[CHECKSUNITS]
+                                        ,[CHECKS]
+                                        ,[OTHERS]
+                                        ,[COMMENTS]
+                                        ,[DOCNAMES]
+                                        ,[CONTENTTYPES]
+                                        ,[DATAS]
+                                        )
+                                        VALUES
+                                        (
+                                        @NAMES
+                                        ,@CHARS
+                                        ,@ORIS
+                                        ,@SPECS
+                                        ,@PRICES
+                                        ,@SAVEDAYS
+                                        ,@SAVEMETHODS
+                                        ,@PRIMES
+                                        ,@ALLERGENS
+                                        ,@OWNERS
+                                        ,@EATES
+                                        ,@CHECKSUNITS
+                                        ,@CHECKS
+                                        ,@OTHERS
+                                        ,@COMMENTS
+                                        ,@DOCNAMES
+                                        ,@CONTENTTYPES
+                                        ,@DATAS
+                                        )
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                        cmd.Parameters.AddWithValue("@CHARS", CHARS);
+                        cmd.Parameters.AddWithValue("@ORIS", ORIS);
+                        cmd.Parameters.AddWithValue("@SPECS", SPECS);
+                        cmd.Parameters.AddWithValue("@PRICES", PRICES);
+                        cmd.Parameters.AddWithValue("@SAVEDAYS", SAVEDAYS);
+                        cmd.Parameters.AddWithValue("@SAVEMETHODS", SAVEMETHODS);
+                        cmd.Parameters.AddWithValue("@PRIMES", PRIMES);
+                        cmd.Parameters.AddWithValue("@ALLERGENS", ALLERGENS);
+                        cmd.Parameters.AddWithValue("@OWNERS", OWNERS);
+                        cmd.Parameters.AddWithValue("@EATES", EATES);
+                        cmd.Parameters.AddWithValue("@CHECKSUNITS", CHECKSUNITS);
+                        cmd.Parameters.AddWithValue("@CHECKS", CHECKS);
+                        cmd.Parameters.AddWithValue("@OTHERS", OTHERS);
+                        cmd.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+                        cmd.Parameters.AddWithValue("@DOCNAMES", DOCNAMES);
+                        cmd.Parameters.AddWithValue("@CONTENTTYPES", CONTENTTYPES);
+                        cmd.Parameters.AddWithValue("@DATAS", BYTES);
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+
+           
+        }
+
+
         #endregion
 
         #region BUTTON
@@ -769,14 +885,17 @@ namespace TKRESEARCH
         private void button2_Click(object sender, EventArgs e)
         {
             OPEN1();
+
         }
         private void button4_Click(object sender, EventArgs e)
         {
             ADD_TO_TBDB1(textBox11.Text, textBox12.Text, DOCNAMES1, CONTENTTYPES1, BYTES1);
+            SEARCH(textBox1A.Text.Trim());
         }
         private void button6_Click(object sender, EventArgs e)
         {
             UPDATE_TO_TBDB1(textBox1B.Text,textBox14.Text,textBox15.Text);
+            SEARCH(textBox1A.Text.Trim());
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -785,6 +904,7 @@ namespace TKRESEARCH
             if (dialogResult == DialogResult.Yes)
             {
                 DELETE_TO_TBDB1(textBox1C.Text);
+                SEARCH(textBox1A.Text.Trim());
             }
             else if (dialogResult == DialogResult.No)
             {
@@ -799,6 +919,46 @@ namespace TKRESEARCH
         private void button7_Click(object sender, EventArgs e)
         {
             OPEN2();
+        }
+        private void button8_Click(object sender, EventArgs e)
+        {
+            string NAMES = textBox201.Text;
+            string CHARS = textBox202.Text;
+            string ORIS = textBox203.Text;
+            string SPECS = textBox204.Text;
+            string PRICES = textBox205.Text;
+            string SAVEDAYS = textBox206.Text;
+            string SAVEMETHODS = textBox207.Text;
+            string PRIMES = textBox208.Text; 
+            string ALLERGENS = textBox209.Text;
+            string OWNERS = textBox210.Text;
+            string EATES = textBox211.Text;
+            string CHECKSUNITS = textBox212.Text;
+            string CHECKS = textBox213.Text;
+            string OTHERS = textBox214.Text;
+            string COMMENTS = textBox215.Text;
+
+
+            ADD_TO_TBDB2( NAMES
+                                ,  CHARS
+                                ,  ORIS
+                                ,  SPECS
+                                ,  PRICES
+                                ,  SAVEDAYS
+                                ,  SAVEMETHODS
+                                ,  PRIMES
+                                ,  ALLERGENS
+                                ,  OWNERS
+                                ,  EATES
+                                ,  CHECKSUNITS
+                                ,  CHECKS
+                                ,  OTHERS
+                                ,  COMMENTS
+                                ,  DOCNAMES2
+                                ,  CONTENTTYPES2
+                                ,  BYTES2
+                                );
+            SEARCH2(textBox2A.Text.Trim());
         }
         #endregion
 
