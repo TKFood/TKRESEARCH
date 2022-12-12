@@ -24,10 +24,9 @@ using FastReport.Data;
 using System.Collections;
 using TKITDLL;
 
-
 namespace TKRESEARCH
 {
-    public partial class FrmDB1 : Form
+    public partial class FrmRESEARCHDB : Form
     {
         SqlConnection sqlConn = new SqlConnection();
         SqlCommand sqlComm = new SqlCommand();
@@ -52,18 +51,21 @@ namespace TKRESEARCH
         int COLUMNSINDEX;
 
         string ID;
+        byte[] BYTES1 = null;
+        string CONTENTTYPES1 = null;
+        string DOCNAMES1 = null;
 
-        public FrmDB1()
+        public FrmRESEARCHDB()
         {
             InitializeComponent();
 
-            SEARCH(textBox1.Text.Trim());
-            SETdataGridView1(); 
+            SEARCH(textBox1A.Text.Trim());
+            SETdataGridView1();
         }
 
-
         #region FUNCTION
-        public void SEARCH(string MB001)
+
+        public void SEARCH(string KEYS)
         {
             SqlDataAdapter adapter1 = new SqlDataAdapter();
             SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
@@ -87,22 +89,34 @@ namespace TKRESEARCH
 
                 sbSql.Clear();
 
-                if (!string.IsNullOrEmpty(MB001))
+                if (!string.IsNullOrEmpty(KEYS))
                 {
                     sbSql.AppendFormat(@"  
-                                   
-                                    ", MB001);
+                                        SELECT
+                                        [ID] 
+                                        ,[DOCID] AS '文件編號'
+                                        ,[COMMENTS]  AS '備註'
+                                        ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'
+                                     
+                                        ,[DOCNAMES]
+                                        FROM [TKRESEARCH].[dbo].[TBDB1]
+                                        WHERE [DOCID] LIKE '%{0}%'
+                                        ORDER BY [ID] 
+
+                                    ", KEYS);
                 }
                 else
                 {
                     sbSql.AppendFormat(@"  
-                                    SELECT 
-                                    [id]
-                                    ,[NAME]
-                                  
-
-                                    FROM [TKRESEARCH].[dbo].[tblFiles]
-                                    ORDER BY [NAME]
+                                        SELECT
+                                         [ID] 
+                                        ,[DOCID] AS '文件編號'
+                                        ,[COMMENTS]  AS '備註'
+                                        ,CONVERT(NVARCHAR,[CREATEDATES],112)  AS '填表日期'
+                                      
+                                        ,[DOCNAMES]
+                                        FROM [TKRESEARCH].[dbo].[TBDB1]
+                                        ORDER BY [ID] 
                                     ");
                 }
 
@@ -122,7 +136,7 @@ namespace TKRESEARCH
 
                     dataGridView1.AutoResizeColumns();
 
-                    
+
 
                 }
                 else
@@ -151,8 +165,8 @@ namespace TKRESEARCH
             lnkDownload.Name = "lnkDownload";
             lnkDownload.HeaderText = "Download";
             lnkDownload.Text = "Download";
-          
-            dataGridView1.Columns.Insert(2, lnkDownload);
+
+            dataGridView1.Columns.Insert(dataGridView1.ColumnCount, lnkDownload);
             dataGridView1.CellContentClick += new DataGridViewCellEventHandler(DataGridView1_CellClick);
         }
 
@@ -163,7 +177,7 @@ namespace TKRESEARCH
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
-                int id = Convert.ToInt16((row.Cells["id"].Value));
+                int ID = Convert.ToInt16((row.Cells["ID"].Value));
                 byte[] bytes;
                 string fileName, contentType;
 
@@ -183,25 +197,30 @@ namespace TKRESEARCH
                     using (SqlCommand cmd = new SqlCommand())
                     {
                         SQL.AppendFormat(@"
-                                         SELECT 
-                                         [id]
-                                        ,[NAME]
-                                        ,[CONTENTTYPE]
-                                        ,[DATA]
-                                        FROM [TKRESEARCH].[dbo].[tblFiles]
-                                        where id=@id
+                                            SELECT
+                                             [ID] 
+                                            ,[DOCID] AS '文件編號'
+                                            ,[COMMENTS]  AS '備註'
+                                            ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'
+                                            ,[DATAS]  
+                                            ,[DOCNAMES]
+                                            ,[CONTENTTYPES]
+                                            FROM [TKRESEARCH].[dbo].[TBDB1]
+                                            WHERE ID=@ID
+                                            ORDER BY [ID] 
+                                       
                                             ");
                         cmd.CommandText = SQL.ToString();
-                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.Parameters.AddWithValue("@ID", ID);
                         cmd.Connection = con;
                         con.Open();
 
                         using (SqlDataReader sdr = cmd.ExecuteReader())
                         {
                             sdr.Read();
-                            bytes = (byte[])sdr["DATA"];
-                            contentType = sdr["CONTENTTYPE"].ToString();
-                            fileName = sdr["NAME"].ToString();
+                            bytes = (byte[])sdr["DATAS"];
+                            contentType = sdr["CONTENTTYPES"].ToString();
+                            fileName = sdr["DOCNAMES"].ToString();
 
                             Stream stream;
                             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -222,96 +241,133 @@ namespace TKRESEARCH
             }
         }
 
-        private void UploadFile()
+    
+
+        public void OPEN1()
         {
             string FILETYPE = null;
-            string contentType = "";
-            byte[] bytes = null;
+            CONTENTTYPES1 = "";
+            BYTES1 = null;
+            DOCNAMES1 = null;
 
             using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    string fileName = openFileDialog1.FileName;                     
-                    bytes = File.ReadAllBytes(fileName);
+                    string fileName = openFileDialog1.FileName;
+                    DOCNAMES1 = Path.GetFileName(fileName);
+                    textBox13.Text = fileName;
+
+                    BYTES1 = File.ReadAllBytes(fileName);
 
                     //Set the contenttype based on File Extension
 
                     switch (Path.GetExtension(fileName))
                     {
                         case ".docx":
-                            contentType = "application/msword";
+                            CONTENTTYPES1 = "application/msword";
                             break;
                         case ".doc":
-                            contentType = "application/msword";
+                            CONTENTTYPES1 = "application/msword";
                             break;
                         case ".xls":
-                            contentType = "application/vnd.ms-excel";
+                            CONTENTTYPES1 = "application/vnd.ms-excel";
                             break;
                         case ".xlsx":
-                            contentType = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            CONTENTTYPES1 = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                             break;
                         case ".pdf":
-                            contentType = "application/pdf";
+                            CONTENTTYPES1 = "application/pdf";
                             break;
                         case ".jpg":
-                            contentType = "image/jpeg";
-                           
+                            CONTENTTYPES1 = "image/jpeg";
                             break;
                         case ".png":
-                            contentType = "image/png";
+                            CONTENTTYPES1 = "image/png";
                             break;
                         case ".gif":
-                            contentType = "image/gif";
+                            CONTENTTYPES1 = "image/gif";
                             break;
                         case ".bmp":
-                            contentType = "image/bmp";
+                            CONTENTTYPES1 = "image/bmp";
                             break;
                     }
 
-                    // 20210902密
-                    Class1 TKID = new Class1();//用new 建立類別實體
-                    SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
-
-                    //資料庫使用者密碼解密
-                    sqlsb.Password = TKID.Decryption(sqlsb.Password);
-                    sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
-
-                    String connectionString;
-                    sqlConn = new SqlConnection(sqlsb.ConnectionString);
-                    using (SqlConnection conn = sqlConn)
-                    {
-                        string sql = "INSERT INTO [TKRESEARCH].[dbo].[tblFiles] VALUES(@Name, @ContentType, @Data)";
-                        using (SqlCommand cmd = new SqlCommand(sql, conn))
-                        {
-                            cmd.Parameters.AddWithValue("@Name", Path.GetFileName(fileName));
-                            cmd.Parameters.AddWithValue("@ContentType", contentType);
-                            cmd.Parameters.AddWithValue("@Data", bytes);
-                            conn.Open();
-                            cmd.ExecuteNonQuery();
-                            conn.Close();
-                        }
-                    }
-
-                    SEARCH(textBox1.Text.Trim());
+                
                 }
             }
         }
 
+        public void ADD_TO_TBDB1(string DOCID,string COMMENTS, string DOCNAMES, string CONTENTTYPES,byte[] BYTES)
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if(!string.IsNullOrEmpty(DOCID))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        INSERT INTO [TKRESEARCH].[dbo].[TBDB1]
+                                        (
+                                        [DOCID]
+                                        ,[COMMENTS] 
+                                        ,[DOCNAMES]
+                                        ,[CONTENTTYPES]
+                                        ,[DATAS]
+                                        )
+                                        VALUES
+                                        (
+                                        @DOCID
+                                        ,@COMMENTS                                   
+                                        ,@DOCNAMES
+                                        ,@CONTENTTYPES
+                                        ,@DATAS
+                                        )
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@DOCID", Path.GetFileName(DOCID));
+                        cmd.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+                        cmd.Parameters.AddWithValue("@DOCNAMES", DOCNAMES);
+                        cmd.Parameters.AddWithValue("@CONTENTTYPES", CONTENTTYPES);
+                        cmd.Parameters.AddWithValue("@DATAS", BYTES);
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+                
+            }
+
+            SEARCH(textBox1A.Text.Trim());
+        }
         #endregion
 
         #region BUTTON
         private void button1_Click(object sender, EventArgs e)
         {
-            SEARCH(textBox1.Text.Trim());
+            SEARCH(textBox1A.Text.Trim());
         }
-
         private void button2_Click(object sender, EventArgs e)
         {
-            UploadFile();
+            OPEN1();
         }
-
-
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ADD_TO_TBDB1(textBox11.Text, textBox12.Text, DOCNAMES1, CONTENTTYPES1, BYTES1);
+        }
         #endregion
 
 
