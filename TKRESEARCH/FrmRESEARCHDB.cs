@@ -169,12 +169,54 @@ namespace TKRESEARCH
             dataGridView1.Columns.Insert(dataGridView1.ColumnCount, lnkDownload);
             dataGridView1.CellContentClick += new DataGridViewCellEventHandler(DataGridView1_CellClick);
         }
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            textBox1B.Text = null;
+            textBox1C.Text = null;
+            textBox14.Text = null;
+            textBox15.Text = null;
 
+            if (dataGridView1.CurrentRow != null)
+            {
+                int rowindex = dataGridView1.CurrentRow.Index;
+
+                if (dataGridView1.CurrentCell.RowIndex > 0 || dataGridView1.CurrentCell.ColumnIndex > 0)
+                {
+                    ROWSINDEX = dataGridView1.CurrentCell.RowIndex;
+                    COLUMNSINDEX = dataGridView1.CurrentCell.ColumnIndex;
+
+                    rowindex = ROWSINDEX;                }
+
+
+                if (rowindex >= 0)
+                {
+                    DataGridViewRow row = dataGridView1.Rows[rowindex];
+                    textBox1B.Text = row.Cells["ID"].Value.ToString();
+                    textBox1C.Text = row.Cells["ID"].Value.ToString();
+                    textBox14.Text = row.Cells["文件編號"].Value.ToString();
+                    textBox15.Text = row.Cells["備註"].Value.ToString();
+
+
+                }
+                else
+                {
+                    textBox1B.Text = null;
+                    textBox1C.Text = null;
+                    textBox14.Text = null;
+                    textBox15.Text = null;
+
+                }
+            }
+
+        }
         private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             StringBuilder SQL = new StringBuilder();
 
-            if (e.RowIndex >= 0)
+            DataGridView dgv = (DataGridView)sender;
+            string columnName = dgv.Columns[e.ColumnIndex].Name;
+
+            if (e.RowIndex >= 0 && columnName.Equals("lnkDownload"))
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
                 int ID = Convert.ToInt16((row.Cells["ID"].Value));
@@ -338,7 +380,7 @@ namespace TKRESEARCH
 
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
-                        cmd.Parameters.AddWithValue("@DOCID", Path.GetFileName(DOCID));
+                        cmd.Parameters.AddWithValue("@DOCID", DOCID);
                         cmd.Parameters.AddWithValue("@COMMENTS", COMMENTS);
                         cmd.Parameters.AddWithValue("@DOCNAMES", DOCNAMES);
                         cmd.Parameters.AddWithValue("@CONTENTTYPES", CONTENTTYPES);
@@ -349,6 +391,88 @@ namespace TKRESEARCH
                     }
                 }
                 
+            }
+
+            SEARCH(textBox1A.Text.Trim());
+        }
+        public void  UPDATE_TO_TBDB1(string ID,string DOCID,string COMMENTS)
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(ID))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        UPDATE[TKRESEARCH].[dbo].[TBDB1]
+                                        SET DOCID=@DOCID,COMMENTS=@COMMENTS
+                                        WHERE ID=@ID
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", ID);
+                        cmd.Parameters.AddWithValue("@DOCID", DOCID);
+                        cmd.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+
+            SEARCH(textBox1A.Text.Trim());
+        }
+
+        public void DELETE_TO_TBDB1(string ID)
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(ID))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        DELETE[TKRESEARCH].[dbo].[TBDB1]
+                                        WHERE ID=@ID
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", ID);
+                    
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
             }
 
             SEARCH(textBox1A.Text.Trim());
@@ -368,8 +492,26 @@ namespace TKRESEARCH
         {
             ADD_TO_TBDB1(textBox11.Text, textBox12.Text, DOCNAMES1, CONTENTTYPES1, BYTES1);
         }
+        private void button6_Click(object sender, EventArgs e)
+        {
+            UPDATE_TO_TBDB1(textBox1B.Text,textBox14.Text,textBox15.Text);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DELETE_TO_TBDB1(textBox1C.Text);
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+        }
+
         #endregion
 
-
+      
     }
 }
