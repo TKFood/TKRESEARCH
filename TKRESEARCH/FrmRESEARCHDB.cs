@@ -280,6 +280,157 @@ namespace TKRESEARCH
 
         }
 
+        public void SEARCH3(string KEYS)
+        {
+            SqlDataAdapter adapter1 = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+
+            DataSet ds1 = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                if (!string.IsNullOrEmpty(KEYS))
+                {
+                    sbSql.AppendFormat(@"  
+                                       SELECT 
+                                         [ID]
+                                        ,[KINDS] AS '分類'
+                                        ,[SUPPLYS] AS '供應商'
+                                        ,[NAMES] AS '產品品名'
+                                        ,[ORIS] AS '產品成分'
+                                        ,[SPECS] AS '產品規格'
+                                        ,[PROALLGENS] AS '產品過敏原'
+                                        ,[MANUALLGENS] AS '產線過敏原'
+                                        ,[PLACES] AS '產地'
+                                        ,[OUTS] AS '產品外觀'
+                                        ,[COLORS] AS '產品色澤'
+                                        ,[TASTES] AS '產品風味'
+                                        ,[LOTS] AS '產品批號'
+                                        ,[CHECKS] AS '外包裝及驗收標準'
+                                        ,[SAVEDAYS] AS '保存期限'
+                                        ,[SAVECONDITIONS] AS '保存條件'
+                                        ,[BASEONS] AS '基改/非基改'
+                                        ,[COA] AS '檢附COA'
+                                        ,[INCHECKRATES] AS '抽驗頻率'
+                                        ,[RULES] AS '相關法規'
+                                        ,[COMMEMTS] AS '備註'
+                                        ,[CREATEDATES] AS '填表日期'
+                                        ,[DOCNAMES1] AS '三證'
+                                        ,[CONTENTTYPES1] 
+                                        ,[DATAS1] 
+                                        ,[DOCNAMES2] AS '產品成分'
+                                        ,[CONTENTTYPES2] 
+                                        ,[DATAS2]
+                                        ,[DOCNAMES3] AS '檢驗報告'
+                                        ,[CONTENTTYPES3] 
+                                        ,[DATAS3]
+                                        ,[DOCNAMES4] AS '營養標示'
+                                        ,[CONTENTTYPES4]
+                                        ,[DATAS4] 
+                                        ,[DOCNAMES5] AS '產品圖片'
+                                        ,[CONTENTTYPES5]
+                                        ,[DATAS5]
+                                        FROM [TKRESEARCH].[dbo].[TBDB3]
+                                        WHERE NAMES LIKE '%{0}%'
+
+                                    ", KEYS);
+                }
+                else
+                {
+                    sbSql.AppendFormat(@"                                          
+                                       SELECT 
+                                         [ID]
+                                        ,[KINDS] AS '分類'
+                                        ,[SUPPLYS] AS '供應商'
+                                        ,[NAMES] AS '產品品名'
+                                        ,[ORIS] AS '產品成分'
+                                        ,[SPECS] AS '產品規格'
+                                        ,[PROALLGENS] AS '產品過敏原'
+                                        ,[MANUALLGENS] AS '產線過敏原'
+                                        ,[PLACES] AS '產地'
+                                        ,[OUTS] AS '產品外觀'
+                                        ,[COLORS] AS '產品色澤'
+                                        ,[TASTES] AS '產品風味'
+                                        ,[LOTS] AS '產品批號'
+                                        ,[CHECKS] AS '外包裝及驗收標準'
+                                        ,[SAVEDAYS] AS '保存期限'
+                                        ,[SAVECONDITIONS] AS '保存條件'
+                                        ,[BASEONS] AS '基改/非基改'
+                                        ,[COA] AS '檢附COA'
+                                        ,[INCHECKRATES] AS '抽驗頻率'
+                                        ,[RULES] AS '相關法規'
+                                        ,[COMMEMTS] AS '備註'
+                                        ,[CREATEDATES] AS '填表日期'
+                                        ,[DOCNAMES1] AS '三證'
+                                        ,[CONTENTTYPES1] 
+                                        ,[DATAS1] 
+                                        ,[DOCNAMES2] AS '產品成分'
+                                        ,[CONTENTTYPES2] 
+                                        ,[DATAS2]
+                                        ,[DOCNAMES3] AS '檢驗報告'
+                                        ,[CONTENTTYPES3] 
+                                        ,[DATAS3]
+                                        ,[DOCNAMES4] AS '營養標示'
+                                        ,[CONTENTTYPES4]
+                                        ,[DATAS4] 
+                                        ,[DOCNAMES5] AS '產品圖片'
+                                        ,[CONTENTTYPES5]
+                                        ,[DATAS5]
+                                        FROM [TKRESEARCH].[dbo].[TBDB3]
+                                    ");
+                }
+
+
+                adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+                sqlConn.Open();
+                ds1.Clear();
+                adapter1.Fill(ds1, "ds1");
+                sqlConn.Close();
+
+
+                if (ds1.Tables["ds1"].Rows.Count >= 1)
+                {
+                    dataGridView3.DataSource = ds1.Tables["ds1"];
+
+                    dataGridView3.AutoResizeColumns();
+
+
+
+                }
+                else
+                {
+                    dataGridView3.DataSource = null;
+
+                }
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+
+        }
+
         //設定下載欄
         public void SETdataGridView1()
         {
@@ -1191,6 +1342,10 @@ namespace TKRESEARCH
             {
                 //do something else
             }
+        }
+        private void button9_Click(object sender, EventArgs e)
+        {
+            SEARCH3(textBox3A.Text);
         }
 
         #endregion
