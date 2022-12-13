@@ -94,6 +94,13 @@ namespace TKRESEARCH
         string CONTENTTYPES53 = null;
         string DOCNAMES53 = null;
 
+        byte[] BYTES61 = null;
+        string CONTENTTYPES61 = null;
+        string DOCNAMES61 = null;
+        byte[] BYTES62 = null;
+        string CONTENTTYPES62 = null;
+        string DOCNAMES62 = null;
+
 
         public FrmRESEARCHDB()
         {
@@ -3004,6 +3011,117 @@ namespace TKRESEARCH
             }
         }
 
+        public void OPEN61()
+        {
+            string FILETYPE = null;
+            CONTENTTYPES61 = "";
+            BYTES61 = null;
+            DOCNAMES61 = null;
+
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = openFileDialog1.FileName;
+
+                    DOCNAMES61 = Path.GetFileName(fileName);
+                    textBox620.Text = fileName;
+
+                    BYTES61 = File.ReadAllBytes(fileName);
+
+                    //Set the contenttype based on File Extension
+
+                    switch (Path.GetExtension(fileName))
+                    {
+                        case ".docx":
+                            CONTENTTYPES61 = "application/msword";
+                            break;
+                        case ".doc":
+                            CONTENTTYPES61 = "application/msword";
+                            break;
+                        case ".xls":
+                            CONTENTTYPES61 = "application/vnd.ms-excel";
+                            break;
+                        case ".xlsx":
+                            CONTENTTYPES61 = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            break;
+                        case ".pdf":
+                            CONTENTTYPES61 = "application/pdf";
+                            break;
+                        case ".jpg":
+                            CONTENTTYPES61 = "image/jpeg";
+                            break;
+                        case ".png":
+                            CONTENTTYPES61 = "image/png";
+                            break;
+                        case ".gif":
+                            CONTENTTYPES61 = "image/gif";
+                            break;
+                        case ".bmp":
+                            CONTENTTYPES61 = "image/bmp";
+                            break;
+                    }
+
+
+                }
+            }
+        }
+        public void OPEN62()
+        {
+            string FILETYPE = null;
+            CONTENTTYPES62 = "";
+            BYTES62 = null;
+            DOCNAMES62 = null;
+
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = openFileDialog1.FileName;
+
+                    DOCNAMES62 = Path.GetFileName(fileName);
+                    textBox621.Text = fileName;
+
+                    BYTES62 = File.ReadAllBytes(fileName);
+
+                    //Set the contenttype based on File Extension
+
+                    switch (Path.GetExtension(fileName))
+                    {
+                        case ".docx":
+                            CONTENTTYPES62 = "application/msword";
+                            break;
+                        case ".doc":
+                            CONTENTTYPES62 = "application/msword";
+                            break;
+                        case ".xls":
+                            CONTENTTYPES62 = "application/vnd.ms-excel";
+                            break;
+                        case ".xlsx":
+                            CONTENTTYPES62 = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            break;
+                        case ".pdf":
+                            CONTENTTYPES62 = "application/pdf";
+                            break;
+                        case ".jpg":
+                            CONTENTTYPES62 = "image/jpeg";
+                            break;
+                        case ".png":
+                            CONTENTTYPES62 = "image/png";
+                            break;
+                        case ".gif":
+                            CONTENTTYPES62 = "image/gif";
+                            break;
+                        case ".bmp":
+                            CONTENTTYPES62 = "image/bmp";
+                            break;
+                    }
+
+
+                }
+            }
+        }
+
         public void ADD_TO_TBDB1(string DOCID,string COMMENTS, string DOCNAMES, string CONTENTTYPES,byte[] BYTES)
         {
             // 20210902密
@@ -4751,6 +4869,164 @@ namespace TKRESEARCH
 
         }
 
+        public void ADD_TO_TBDB6(
+                            string KINDS
+                            , string IANUMERS
+                            , string REGISTERNO
+                            , string MANUNAMES
+                            , string ADDRESS
+                            , string CHECKS
+                            , string NAMES
+                            , string ORIS
+                            , string MANUS
+                            , string PROALLGENS
+                            , string MANUALLGENS
+                            , string PRIMES
+                            , string COLORS
+                            , string TASTES
+                            , string CHARS
+                            , string PACKAGES
+                            , string WEIGHTS
+                            , string SPECS
+                            , string SAVEDAYS
+                            , string SAVECONDITIONS
+                            , string COMMEMTS
+                            , string DOCNAMES1
+                            , string CONTENTTYPES1
+                            , byte[] DATAS1
+                            , string DOCNAMES2
+                            , string CONTENTTYPES2
+                            , byte[] DATAS2                       
+
+                             )
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(NAMES))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"   
+                                        INSERT INTO [TKRESEARCH].[dbo].[TBDB6]
+                                        (
+                                        [KINDS]
+                                        ,[IANUMERS]
+                                        ,[REGISTERNO]
+                                        ,[MANUNAMES]
+                                        ,[ADDRESS]
+                                        ,[CHECKS]
+                                        ,[NAMES]
+                                        ,[ORIS]
+                                        ,[MANUS]
+                                        ,[PROALLGENS]
+                                        ,[MANUALLGENS]
+                                        ,[PRIMES]
+                                        ,[COLORS]
+                                        ,[TASTES]
+                                        ,[CHARS]
+                                        ,[PACKAGES]
+                                        ,[WEIGHTS]
+                                        ,[SPECS]
+                                        ,[SAVEDAYS]
+                                        ,[SAVECONDITIONS]
+                                        ,[COMMEMTS]
+                                        ,[DOCNAMES1]
+                                        ,[CONTENTTYPES1]
+                                        ,[DATAS1]
+                                        ,[DOCNAMES2]
+                                        ,[CONTENTTYPES2]
+                                        ,[DATAS2]
+                                        )
+                                        VALUES
+                                        (
+                                        @KINDS
+                                        ,@IANUMERS
+                                        ,@REGISTERNO
+                                        ,@MANUNAMES
+                                        ,@ADDRESS
+                                        ,@CHECKS
+                                        ,@NAMES
+                                        ,@ORIS
+                                        ,@MANUS
+                                        ,@PROALLGENS
+                                        ,@MANUALLGENS
+                                        ,@PRIMES
+                                        ,@COLORS
+                                        ,@TASTES
+                                        ,@CHARS
+                                        ,@PACKAGES
+                                        ,@WEIGHTS
+                                        ,@SPECS
+                                        ,@SAVEDAYS
+                                        ,@SAVECONDITIONS
+                                        ,@COMMEMTS
+                                        ,@DOCNAMES1
+                                        ,@CONTENTTYPES1
+                                        ,@DATAS1
+                                        ,@DOCNAMES2
+                                        ,@CONTENTTYPES2
+                                        ,@DATAS2
+                                        )
+                                       
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+
+                        cmd.Parameters.AddWithValue("@KINDS", KINDS);
+                        cmd.Parameters.AddWithValue("@IANUMERS", IANUMERS);
+                        cmd.Parameters.AddWithValue("@REGISTERNO", REGISTERNO);
+                        cmd.Parameters.AddWithValue("@MANUNAMES", MANUNAMES);
+                        cmd.Parameters.AddWithValue("@ADDRESS", ADDRESS);
+                        cmd.Parameters.AddWithValue("@CHECKS", CHECKS);
+                        cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                        cmd.Parameters.AddWithValue("@ORIS", ORIS);
+                        cmd.Parameters.AddWithValue("@MANUS", MANUS);
+                        cmd.Parameters.AddWithValue("@PROALLGENS", PROALLGENS);
+                        cmd.Parameters.AddWithValue("@MANUALLGENS", MANUALLGENS);
+                        cmd.Parameters.AddWithValue("@PRIMES", PRIMES);
+                        cmd.Parameters.AddWithValue("@COLORS", COLORS);
+                        cmd.Parameters.AddWithValue("@TASTES", TASTES);
+                        cmd.Parameters.AddWithValue("@CHARS", CHARS);
+                        cmd.Parameters.AddWithValue("@PACKAGES", PACKAGES);
+                        cmd.Parameters.AddWithValue("@WEIGHTS", WEIGHTS);
+                        cmd.Parameters.AddWithValue("@SPECS", SPECS);
+                        cmd.Parameters.AddWithValue("@SAVEDAYS", SAVEDAYS);
+                        cmd.Parameters.AddWithValue("@SAVECONDITIONS", SAVECONDITIONS);
+                        cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);                      
+
+                        cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
+                        cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
+                        cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
+                        cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
+                        cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
+                        cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
+                     
+
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+
+
+        }
+
+
         #endregion
 
         #region BUTTON
@@ -5328,17 +5604,95 @@ namespace TKRESEARCH
         private void button41_Click(object sender, EventArgs e)
         {
 
+            string KINDS = comboBox5.Text.ToString();
+            string IANUMERS = textBox601.Text.ToString();
+            string REGISTERNO = textBox601.Text.ToString();
+            string MANUNAMES = textBox602.Text.ToString();
+            string ADDRESS = textBox603.Text.ToString();
+            string CHECKS = textBox604.Text.ToString();
+            string NAMES = textBox605.Text.ToString();
+            string ORIS = textBox606.Text.ToString();
+            string MANUS = textBox607.Text.ToString();
+            string PROALLGENS = textBox608.Text.ToString();
+            string MANUALLGENS = textBox609.Text.ToString();
+            string PRIMES = textBox610.Text.ToString();
+            string COLORS = textBox611.Text.ToString();
+            string TASTES = textBox612.Text.ToString();
+            string CHARS = textBox613.Text.ToString();
+            string PACKAGES = textBox614.Text.ToString();
+            string WEIGHTS = textBox615.Text.ToString();
+            string SPECS = textBox616.Text.ToString();
+            string SAVEDAYS = textBox617.Text.ToString();
+            string SAVECONDITIONS = textBox618.Text.ToString();
+            string COMMEMTS = textBox619.Text.ToString();
+
+            string DOCNAMES1 = "";
+            string CONTENTTYPES1 = "";
+            byte[] DATAS1 = new byte[] { 1 };
+            string DOCNAMES2 = "";
+            string CONTENTTYPES2 = "";
+            byte[] DATAS2 = new byte[] { 1 };
+           
+
+
+            if (!string.IsNullOrEmpty(DOCNAMES61))
+            {
+                DOCNAMES1 = DOCNAMES61;
+                CONTENTTYPES1 = CONTENTTYPES61;
+                DATAS1 = BYTES61;
+            }
+            if (!string.IsNullOrEmpty(DOCNAMES62))
+            {
+                DOCNAMES2 = DOCNAMES62;
+                CONTENTTYPES2 = CONTENTTYPES62;
+                DATAS2 = BYTES62;
+            }
+          
+
+
+
+
+            ADD_TO_TBDB6(
+                        KINDS
+                        , IANUMERS
+                        , REGISTERNO
+                        , MANUNAMES
+                        , ADDRESS
+                        , CHECKS
+                        , NAMES
+                        , ORIS
+                        , MANUS
+                        , PROALLGENS
+                        , MANUALLGENS
+                        , PRIMES
+                        , COLORS
+                        , TASTES
+                        , CHARS
+                        , PACKAGES
+                        , WEIGHTS
+                        , SPECS
+                        , SAVEDAYS
+                        , SAVECONDITIONS
+                        , COMMEMTS
+                        , DOCNAMES1
+                        , CONTENTTYPES1
+                        , DATAS1
+                        , DOCNAMES2
+                        , CONTENTTYPES2
+                        , DATAS2
+                        );
+
             SEARCH6(textBox6A.Text);
         }
 
         private void button35_Click(object sender, EventArgs e)
         {
-
+            OPEN61();
         }
 
         private void button40_Click(object sender, EventArgs e)
         {
-
+            OPEN62();
         }
         #endregion
 
