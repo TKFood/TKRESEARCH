@@ -4337,6 +4337,137 @@ namespace TKRESEARCH
             }
         }
 
+        public void SEARCH6(string KEYS)
+        {
+            SqlDataAdapter adapter1 = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+
+            DataSet ds1 = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                if (!string.IsNullOrEmpty(KEYS))
+                {
+                    sbSql.AppendFormat(@"  
+                                      SELECT 
+                                        [ID] 
+                                        ,[KINDS] AS '分類'
+                                        ,[IANUMERS] AS '國際條碼'
+                                        ,[REGISTERNO] AS '食品業者登錄字號'
+                                        ,[MANUNAMES] AS '製造商名稱'
+                                        ,[ADDRESS] AS '製造商地址'
+                                        ,[CHECKS] AS '品質認證'
+                                        ,[NAMES] AS '產品品名'
+                                        ,[ORIS] AS '產品成分'
+                                        ,[MANUS] AS '製造流程'
+                                        ,[PROALLGENS] AS '產品過敏原'
+                                        ,[MANUALLGENS] AS '產線及生產設備過敏原'
+                                        ,[PRIMES] AS '素別'
+                                        ,[COLORS] AS '色澤'
+                                        ,[TASTES] AS '風味'
+                                        ,[CHARS] AS '性狀'
+                                        ,[PACKAGES] AS '材質'
+                                        ,[WEIGHTS] AS '淨重量'
+                                        ,[SPECS] AS '規格'
+                                        ,[SAVEDAYS] AS '保存期限'
+                                        ,[SAVECONDITIONS] AS '保存條件'
+                                        ,[COMMEMTS] AS '備註'
+                                        ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'
+                                        ,[DOCNAMES1] AS '營養標示'
+                                    
+                                        ,[DOCNAMES2] AS '產品圖片'
+                                       
+                                        FROM [TKRESEARCH].[dbo].[TBDB6]
+
+                                        WHERE NAMES LIKE '%{0}%'
+                                        ORDER BY  [ID]
+                                    ", KEYS);
+                }
+                else
+                {
+                    sbSql.AppendFormat(@"                                          
+                                         SELECT 
+                                        [ID] 
+                                        ,[KINDS] AS '分類'
+                                        ,[IANUMERS] AS '國際條碼'
+                                        ,[REGISTERNO] AS '食品業者登錄字號'
+                                        ,[MANUNAMES] AS '製造商名稱'
+                                        ,[ADDRESS] AS '製造商地址'
+                                        ,[CHECKS] AS '品質認證'
+                                        ,[NAMES] AS '產品品名'
+                                        ,[ORIS] AS '產品成分'
+                                        ,[MANUS] AS '製造流程'
+                                        ,[PROALLGENS] AS '產品過敏原'
+                                        ,[MANUALLGENS] AS '產線及生產設備過敏原'
+                                        ,[PRIMES] AS '素別'
+                                        ,[COLORS] AS '色澤'
+                                        ,[TASTES] AS '風味'
+                                        ,[CHARS] AS '性狀'
+                                        ,[PACKAGES] AS '材質'
+                                        ,[WEIGHTS] AS '淨重量'
+                                        ,[SPECS] AS '規格'
+                                        ,[SAVEDAYS] AS '保存期限'
+                                        ,[SAVECONDITIONS] AS '保存條件'
+                                        ,[COMMEMTS] AS '備註'
+                                        ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'
+                                        ,[DOCNAMES1] AS '營養標示'
+                                    
+                                        ,[DOCNAMES2] AS '產品圖片'
+                                       
+                                        FROM [TKRESEARCH].[dbo].[TBDB6]
+
+                                        ORDER BY  [ID]
+                                    ");
+                }
+
+
+                adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+                sqlConn.Open();
+                ds1.Clear();
+                adapter1.Fill(ds1, "ds1");
+                sqlConn.Close();
+
+
+                if (ds1.Tables["ds1"].Rows.Count >= 1)
+                {
+                    dataGridView6.DataSource = ds1.Tables["ds1"];
+
+                    dataGridView6.AutoResizeColumns();
+
+                }
+                else
+                {
+                    dataGridView6.DataSource = null;
+
+                }
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+
+        }
 
         #endregion
 
@@ -4906,11 +5037,15 @@ namespace TKRESEARCH
                 //do something else
             }
         }
+        private void button34_Click(object sender, EventArgs e)
+        {
+            SEARCH6(textBox6A.Text);
+        }
 
 
         #endregion
 
-      
+
     }
 }
 
