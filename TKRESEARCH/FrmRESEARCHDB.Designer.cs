@@ -347,8 +347,6 @@
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.tabPage10 = new System.Windows.Forms.TabPage();
-            this.tabPage11 = new System.Windows.Forms.TabPage();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl6 = new System.Windows.Forms.TabControl();
             this.tabPage24 = new System.Windows.Forms.TabPage();
@@ -618,8 +616,6 @@
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Controls.Add(this.tabPage9);
-            this.tabControl1.Controls.Add(this.tabPage10);
-            this.tabControl1.Controls.Add(this.tabPage11);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -4356,7 +4352,7 @@
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Size = new System.Drawing.Size(976, 731);
             this.tabPage7.TabIndex = 6;
-            this.tabPage7.Text = "研發紀錄資料庫";
+            this.tabPage7.Text = "試量產資料庫";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
             // tabPage8
@@ -4365,7 +4361,7 @@
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Size = new System.Drawing.Size(976, 731);
             this.tabPage8.TabIndex = 7;
-            this.tabPage8.Text = "成本資料庫";
+            this.tabPage8.Text = "研發紀錄資料庫";
             this.tabPage8.UseVisualStyleBackColor = true;
             // 
             // tabPage9
@@ -4374,26 +4370,8 @@
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Size = new System.Drawing.Size(976, 731);
             this.tabPage9.TabIndex = 8;
-            this.tabPage9.Text = "營養標示資料庫";
+            this.tabPage9.Text = "相關文件資料庫";
             this.tabPage9.UseVisualStyleBackColor = true;
-            // 
-            // tabPage10
-            // 
-            this.tabPage10.Location = new System.Drawing.Point(4, 26);
-            this.tabPage10.Name = "tabPage10";
-            this.tabPage10.Size = new System.Drawing.Size(976, 731);
-            this.tabPage10.TabIndex = 9;
-            this.tabPage10.Text = "試量產資料庫";
-            this.tabPage10.UseVisualStyleBackColor = true;
-            // 
-            // tabPage11
-            // 
-            this.tabPage11.Location = new System.Drawing.Point(4, 26);
-            this.tabPage11.Name = "tabPage11";
-            this.tabPage11.Size = new System.Drawing.Size(976, 731);
-            this.tabPage11.TabIndex = 10;
-            this.tabPage11.Text = "相關文件資料庫";
-            this.tabPage11.UseVisualStyleBackColor = true;
             // 
             // openFileDialog1
             // 
@@ -6248,8 +6226,6 @@
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.TabPage tabPage8;
         private System.Windows.Forms.TabPage tabPage9;
-        private System.Windows.Forms.TabPage tabPage10;
-        private System.Windows.Forms.TabPage tabPage11;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
