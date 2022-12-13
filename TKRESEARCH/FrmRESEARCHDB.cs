@@ -1664,7 +1664,21 @@ namespace TKRESEARCH
                                         ,[DOCNAMES1]
                                         ,[CONTENTTYPES1]
                                         ,[DATAS1]
-                               
+                                        ,[DOCNAMES2]
+                                        ,[CONTENTTYPES2]
+                                        ,[DATAS2]
+                                        ,[DOCNAMES3]
+                                        ,[CONTENTTYPES3]
+                                        ,[DATAS3]
+                                        ,[DOCNAMES4]
+                                        ,[CONTENTTYPES4]
+                                        ,[DATAS4]
+                                        ,[DOCNAMES5]
+                                        ,[CONTENTTYPES5]
+                                        ,[DATAS5]
+                                        ,[DOCNAMES6]
+                                        ,[CONTENTTYPES6]
+                                        ,[DATAS6]
                                        
                                         )
                                         VALUES
@@ -1692,7 +1706,21 @@ namespace TKRESEARCH
                                         ,@DOCNAMES1
                                         ,@CONTENTTYPES1
                                         ,@DATAS1
-                                   
+                                        ,@DOCNAMES2
+                                        ,@CONTENTTYPES2
+                                        ,@DATAS2
+                                        ,@DOCNAMES3
+                                        ,@CONTENTTYPES3
+                                        ,@DATAS3
+                                        ,@DOCNAMES4
+                                        ,@CONTENTTYPES4
+                                        ,@DATAS4
+                                        ,@DOCNAMES5
+                                        ,@CONTENTTYPES5
+                                        ,@DATAS5
+                                        ,@DOCNAMES6
+                                        ,@CONTENTTYPES6
+                                        ,@DATAS6
                                         )
                                         
                                         ");
@@ -1724,21 +1752,21 @@ namespace TKRESEARCH
                         cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
                         cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
                         cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
-                        //cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
-                        //cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
-                        //cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
-                        //cmd.Parameters.AddWithValue("@DOCNAMES3", DOCNAMES3);
-                        //cmd.Parameters.AddWithValue("@CONTENTTYPES3", CONTENTTYPES3);
-                        //cmd.Parameters.AddWithValue("@DATAS3", DATAS3);
-                        //cmd.Parameters.AddWithValue("@DOCNAMES4", DOCNAMES4);
-                        //cmd.Parameters.AddWithValue("@CONTENTTYPES4", CONTENTTYPES4);
-                        //cmd.Parameters.AddWithValue("@DATAS4", DATAS4);
-                        //cmd.Parameters.AddWithValue("@DOCNAMES5", DOCNAMES5);
-                        //cmd.Parameters.AddWithValue("@CONTENTTYPES5", CONTENTTYPES5);
-                        //cmd.Parameters.AddWithValue("@DATAS5", DATAS5);
-                        //cmd.Parameters.AddWithValue("@DOCNAMES6", DOCNAMES6);
-                        //cmd.Parameters.AddWithValue("@CONTENTTYPES6", CONTENTTYPES6);
-                        //cmd.Parameters.AddWithValue("@DATAS6", DATAS6);
+                        cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
+                        cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
+                        cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
+                        cmd.Parameters.AddWithValue("@DOCNAMES3", DOCNAMES3);
+                        cmd.Parameters.AddWithValue("@CONTENTTYPES3", CONTENTTYPES3);
+                        cmd.Parameters.AddWithValue("@DATAS3", DATAS3);
+                        cmd.Parameters.AddWithValue("@DOCNAMES4", DOCNAMES4);
+                        cmd.Parameters.AddWithValue("@CONTENTTYPES4", CONTENTTYPES4);
+                        cmd.Parameters.AddWithValue("@DATAS4", DATAS4);
+                        cmd.Parameters.AddWithValue("@DOCNAMES5", DOCNAMES5);
+                        cmd.Parameters.AddWithValue("@CONTENTTYPES5", CONTENTTYPES5);
+                        cmd.Parameters.AddWithValue("@DATAS5", DATAS5);
+                        cmd.Parameters.AddWithValue("@DOCNAMES6", DOCNAMES6);
+                        cmd.Parameters.AddWithValue("@CONTENTTYPES6", CONTENTTYPES6);
+                        cmd.Parameters.AddWithValue("@DATAS6", DATAS6);
 
                         conn.Open();
                         cmd.ExecuteNonQuery();
@@ -1899,7 +1927,22 @@ namespace TKRESEARCH
             string COMMEMTS = textBox319.Text.ToString();
             string DOCNAMES1 = "";
             string CONTENTTYPES1 = "";
-            byte[] DATAS1=null;
+            byte[] DATAS1= new byte[] {1};
+            string DOCNAMES2 = "";
+            string CONTENTTYPES2 = "";
+            byte[] DATAS2 = new byte[] { 1 };
+            string DOCNAMES3 = "";
+            string CONTENTTYPES3 = "";
+            byte[] DATAS3 = new byte[] { 1 };
+            string DOCNAMES4 = "";
+            string CONTENTTYPES4 = "";
+            byte[] DATAS4 = new byte[] { 1 };
+            string DOCNAMES5 = "";
+            string CONTENTTYPES5 = "";
+            byte[] DATAS5 = new byte[] { 1 };
+            string DOCNAMES6 = "";
+            string CONTENTTYPES6 = "";
+            byte[] DATAS6 = new byte[] { 1 };
 
             if (!string.IsNullOrEmpty(DOCNAMES31))
             {
@@ -1907,23 +1950,39 @@ namespace TKRESEARCH
                 CONTENTTYPES1 = CONTENTTYPES31;
                 DATAS1 = BYTES31;
             }
+            if (!string.IsNullOrEmpty(DOCNAMES32))
+            {
+                DOCNAMES2 = DOCNAMES32;
+                CONTENTTYPES2 = CONTENTTYPES32;
+                DATAS2 = BYTES32;
+            }
+            if (!string.IsNullOrEmpty(DOCNAMES33))
+            {
+                DOCNAMES3 = DOCNAMES33;
+                CONTENTTYPES3 = CONTENTTYPES33;
+                DATAS3 = BYTES33;
+            }
+            if (!string.IsNullOrEmpty(DOCNAMES34))
+            {
+                DOCNAMES4 = DOCNAMES34;
+                CONTENTTYPES4 = CONTENTTYPES34;
+                DATAS4 = BYTES34;
+            }
+            if (!string.IsNullOrEmpty(DOCNAMES35))
+            {
+                DOCNAMES5 = DOCNAMES35;
+                CONTENTTYPES5 = CONTENTTYPES35;
+                DATAS5 = BYTES35;
+            }
+            if (!string.IsNullOrEmpty(DOCNAMES36))
+            {
+                DOCNAMES6 = DOCNAMES36;
+                CONTENTTYPES6 = CONTENTTYPES36;
+                DATAS6 = BYTES36;
+            }
+
+
       
-           
-            string DOCNAMES2 = DOCNAMES32;
-            string CONTENTTYPES2 = CONTENTTYPES32;
-            byte[] DATAS2 = BYTES32;
-            string DOCNAMES3 = DOCNAMES33;
-            string CONTENTTYPES3 = CONTENTTYPES33;
-            byte[] DATAS3 = BYTES33;
-            string DOCNAMES4 = DOCNAMES34;
-            string CONTENTTYPES4 = CONTENTTYPES34;
-            byte[] DATAS4 = BYTES34;
-            string DOCNAMES5 = DOCNAMES35;
-            string CONTENTTYPES5 = CONTENTTYPES35;
-            byte[] DATAS5 = BYTES35;
-            string DOCNAMES6 = DOCNAMES36;
-            string CONTENTTYPES6 = CONTENTTYPES36;
-            byte[] DATAS6 = BYTES36;
 
             ADD_TO_TBDB3(
                         KINDS
