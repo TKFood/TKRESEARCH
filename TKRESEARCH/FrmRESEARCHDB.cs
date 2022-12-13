@@ -4203,6 +4203,141 @@ namespace TKRESEARCH
 
         }
 
+        private void dataGridView5_SelectionChanged(object sender, EventArgs e)
+        {
+            textBox5B.Text = null;
+            textBox5C.Text = null;
+            textBox521.Text = null;
+            textBox522.Text = null;
+            textBox523.Text = null;
+            textBox531.Text = null;
+      
+
+            if (dataGridView5.CurrentRow != null)
+            {
+                int rowindex = dataGridView5.CurrentRow.Index;
+
+                if (rowindex >= 0)
+                {
+                    DataGridViewRow row = dataGridView5.Rows[rowindex];
+                    textBox5B.Text = row.Cells["ID"].Value.ToString();
+                    textBox5C.Text = row.Cells["ID"].Value.ToString();
+                   
+                    textBox521.Text = row.Cells["供應商"].Value.ToString();
+                    textBox522.Text = row.Cells["產品品名"].Value.ToString();
+                    textBox523.Text = row.Cells["備註"].Value.ToString();
+                    textBox531.Text = row.Cells["產品品名"].Value.ToString();
+
+
+                }
+                else
+                {
+                    textBox5B.Text = null;
+                    textBox5C.Text = null;
+                    textBox521.Text = null;
+                    textBox522.Text = null;
+                    textBox523.Text = null;
+                    textBox531.Text = null;
+
+                }
+            }
+        }
+
+        public void UPDATE_TO_TBDB5(
+                                string ID                              
+                               , string SUPPLYS
+                               , string NAMES                            
+                               , string COMMEMTS
+
+                               )
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(NAMES))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        UPDATE [TKRESEARCH].[dbo].[TBDB5]
+                                        SET
+                                        [SUPPLYS]=@SUPPLYS
+                                        ,[NAMES]=@NAMES          
+                                        ,[COMMEMTS]=@COMMEMTS
+                                        WHERE [ID]=@ID
+                                       
+                                       
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", ID);                     
+                        cmd.Parameters.AddWithValue("@SUPPLYS", SUPPLYS);
+                        cmd.Parameters.AddWithValue("@NAMES", NAMES);                       
+                        cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
+
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+
+
+        }
+
+        public void DELETE_TO_TBDB5(string ID)
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(ID))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        DELETE[TKRESEARCH].[dbo].[TBDB5]
+                                        WHERE ID=@ID
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", ID);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+        }
+
+
         #endregion
 
         #region BUTTON
@@ -4741,9 +4876,41 @@ namespace TKRESEARCH
         {
             OPEN53();
         }
+        private void button33_Click(object sender, EventArgs e)
+        {
+            string ID = textBox5B.Text;
+          
+            string SUPPLYS = textBox521.Text;
+            string NAMES = textBox522.Text;          
+            string COMMEMTS = textBox523.Text;
+
+            UPDATE_TO_TBDB5(
+                                ID                             
+                               , SUPPLYS
+                               , NAMES                             
+                               , COMMEMTS
+                               );
+
+            SEARCH5(textBox5A.Text);
+        }
+        private void button32_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DELETE_TO_TBDB5(textBox5C.Text);
+                SEARCH5(textBox5A.Text);
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+        }
+
+
         #endregion
 
-
+      
     }
 }
 
