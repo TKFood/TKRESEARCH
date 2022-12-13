@@ -85,6 +85,8 @@ namespace TKRESEARCH
             SETdataGridView1();
             SEARCH2(textBox2A.Text.Trim());
             SETdataGridView2();
+            SEARCH3(textBox3A.Text.Trim());
+            SETdataGridView3();
 
             comboBox1load();
         }
@@ -379,7 +381,13 @@ namespace TKRESEARCH
                                         ,[INCHECKRATES] AS '抽驗頻率'
                                         ,[RULES] AS '相關法規'
                                         ,[COMMEMTS] AS '備註'
-                                        ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'                                       
+                                        ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'  
+                                        ,[DOCNAMES1] AS '三證'
+                                        ,[DOCNAMES2] AS '產品成分'
+                                        ,[DOCNAMES3] AS '基改/非基改'
+                                        ,[DOCNAMES4] AS '檢驗報告'
+                                        ,[DOCNAMES5] AS '營養標示'
+                                        ,[DOCNAMES6] AS '產品圖片'                                     
                                         FROM [TKRESEARCH].[dbo].[TBDB3]
                                  
                                         WHERE NAMES LIKE '%{0}%'
@@ -411,7 +419,13 @@ namespace TKRESEARCH
                                         ,[INCHECKRATES] AS '抽驗頻率'
                                         ,[RULES] AS '相關法規'
                                         ,[COMMEMTS] AS '備註'
-                                        ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'                                       
+                                        ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'  
+                                        ,[DOCNAMES1] AS '三證'
+                                        ,[DOCNAMES2] AS '產品成分'
+                                        ,[DOCNAMES3] AS '基改/非基改'
+                                        ,[DOCNAMES4] AS '檢驗報告'
+                                        ,[DOCNAMES5] AS '營養標示'
+                                        ,[DOCNAMES6] AS '產品圖片'                                             
                                         FROM [TKRESEARCH].[dbo].[TBDB3]
                                         ORDER BY  [ID]
                                     ");
@@ -619,6 +633,127 @@ namespace TKRESEARCH
                             bytes = (byte[])sdr["DATAS"];
                             contentType = sdr["CONTENTTYPES"].ToString();
                             fileName = sdr["DOCNAMES"].ToString();
+
+                            Stream stream;
+                            SaveFileDialog saveFileDialog = new SaveFileDialog();
+                            saveFileDialog.Filter = "All files (*.*)|*.*";
+                            saveFileDialog.FilterIndex = 1;
+                            saveFileDialog.RestoreDirectory = true;
+                            saveFileDialog.FileName = fileName;
+                            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                stream = saveFileDialog.OpenFile();
+                                stream.Write(bytes, 0, bytes.Length);
+                                stream.Close();
+                            }
+                        }
+                    }
+                    con.Close();
+                }
+            }
+        }
+
+        public void SETdataGridView3()
+        {
+            DataGridViewLinkColumn lnkDownload = new DataGridViewLinkColumn();
+            lnkDownload.UseColumnTextForLinkValue = true;
+            lnkDownload.LinkBehavior = LinkBehavior.SystemDefault;
+            lnkDownload.Name = "lnkDownload";
+            lnkDownload.HeaderText = "三證Download";
+            lnkDownload.Text = "Download";
+
+            dataGridView3.Columns.Insert(dataGridView3.ColumnCount, lnkDownload);
+            dataGridView3.CellContentClick += new DataGridViewCellEventHandler(DataGridView3_CellClick);
+            
+        }
+        private void DataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
+        {   
+            StringBuilder SQL = new StringBuilder();
+
+            DataGridView dgv = (DataGridView)sender;
+            string columnName = dgv.Columns[e.ColumnIndex].Name;
+
+            if (e.RowIndex >= 0 && columnName.Equals("lnkDownload"))
+            {
+                DataGridViewRow row = dataGridView3.Rows[e.RowIndex];
+
+                int ID = Convert.ToInt16((row.Cells["ID"].Value));
+                byte[] bytes;
+                string fileName, contentType;
+
+                // 20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                using (SqlConnection con = sqlConn)
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        SQL.AppendFormat(@"
+                                           SELECT
+                                            [ID]
+                                            ,[KINDS]
+                                            ,[SUPPLYS]
+                                            ,[NAMES]
+                                            ,[ORIS]
+                                            ,[SPECS]
+                                            ,[PROALLGENS]
+                                            ,[MANUALLGENS]
+                                            ,[PLACES]
+                                            ,[OUTS]
+                                            ,[COLORS]
+                                            ,[TASTES]
+                                            ,[LOTS]
+                                            ,[CHECKS]
+                                            ,[SAVEDAYS]
+                                            ,[SAVECONDITIONS]
+                                            ,[BASEONS]
+                                            ,[COA]
+                                            ,[INCHECKRATES]
+                                            ,[RULES]
+                                            ,[COMMEMTS]
+                                            ,[CREATEDATES]
+                                            ,[DOCNAMES1]
+                                            ,[CONTENTTYPES1]
+                                            ,[DATAS1]
+                                            ,[DOCNAMES2]
+                                            ,[CONTENTTYPES2]
+                                            ,[DATAS2]
+                                            ,[DOCNAMES3]
+                                            ,[CONTENTTYPES3]
+                                            ,[DATAS3]
+                                            ,[DOCNAMES4]
+                                            ,[CONTENTTYPES4]
+                                            ,[DATAS4]
+                                            ,[DOCNAMES5]
+                                            ,[CONTENTTYPES5]
+                                            ,[DATAS5]
+                                            ,[DOCNAMES6]
+                                            ,[CONTENTTYPES6]
+                                            ,[DATAS6]
+                                            FROM [TKRESEARCH].[dbo].[TBDB3]
+                                            WHERE ID=@ID
+                                            ORDER BY [ID] 
+                                       
+                                            ");
+                        cmd.CommandText = SQL.ToString();
+                        cmd.Parameters.AddWithValue("@ID", ID);
+                        cmd.Connection = con;
+                        con.Open();
+
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            sdr.Read();
+                            bytes = (byte[])sdr["DATAS1"];
+                            contentType = sdr["CONTENTTYPES1"].ToString();
+                            fileName = sdr["DOCNAMES1"].ToString();
 
                             Stream stream;
                             SaveFileDialog saveFileDialog = new SaveFileDialog();
