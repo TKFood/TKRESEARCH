@@ -2793,6 +2793,118 @@ namespace TKRESEARCH
 
             }
         }
+
+        public void SEARCH4(string KEYS)
+        {
+            SqlDataAdapter adapter1 = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+
+            DataSet ds1 = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                if (!string.IsNullOrEmpty(KEYS))
+                {
+                    sbSql.AppendFormat(@"  
+                                      SELECT  
+                                        [ID]
+                                        ,[KINDS] AS '分類'
+                                        ,[SUPPLYS] AS '供應商'
+                                        ,[NAMES] AS '產品品名'
+                                        ,[SPECS] AS '產品規格'
+                                        ,[OUTS] AS '產品外觀'
+                                        ,[COLORS] AS '產品顏色'
+                                        ,[CHECKS] AS '外包裝及驗收標準'
+                                        ,[SAVEDAYS] AS '保存期限'
+                                        ,[COA] AS '檢附COA'
+                                        ,[COMMEMTS] AS '備註'
+                                        ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'
+                                        ,[DOCNAMES1] AS '三證'
+                                        
+                                        ,[DOCNAMES2] AS '產品圖片'
+                                        
+                                        FROM [TKRESEARCH].[dbo].[TBDB4]
+
+                                        WHERE NAMES LIKE '%{0}%'
+                                        ORDER BY  [ID]
+                                    ", KEYS);
+                }
+                else
+                {
+                    sbSql.AppendFormat(@"                                          
+                                        SELECT  
+                                        [ID]
+                                        ,[KINDS] AS '分類'
+                                        ,[SUPPLYS] AS '供應商'
+                                        ,[NAMES] AS '產品品名'
+                                        ,[SPECS] AS '產品規格'
+                                        ,[OUTS] AS '產品外觀'
+                                        ,[COLORS] AS '產品顏色'
+                                        ,[CHECKS] AS '外包裝及驗收標準'
+                                        ,[SAVEDAYS] AS '保存期限'
+                                        ,[COA] AS '檢附COA'
+                                        ,[COMMEMTS] AS '備註'
+                                        ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'
+                                        ,[DOCNAMES1] AS '三證'
+                                        
+                                        ,[DOCNAMES2] AS '產品圖片'
+                                        
+                                        FROM [TKRESEARCH].[dbo].[TBDB4]
+                                        ORDER BY  [ID]
+                                    ");
+                }
+
+
+                adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+                sqlConn.Open();
+                ds1.Clear();
+                adapter1.Fill(ds1, "ds1");
+                sqlConn.Close();
+
+
+                if (ds1.Tables["ds1"].Rows.Count >= 1)
+                {
+                    dataGridView4.DataSource = ds1.Tables["ds1"];
+
+                    dataGridView4.AutoResizeColumns();
+
+
+
+                }
+                else
+                {
+                    dataGridView3.DataSource = null;
+
+                }
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+
+        }
+
         #endregion
 
         #region BUTTON
@@ -3136,6 +3248,10 @@ namespace TKRESEARCH
             {
                 //do something else
             }
+        }
+        private void button21_Click(object sender, EventArgs e)
+        {
+            SEARCH4(textBox4A.Text.Trim());
         }
 
         #endregion
