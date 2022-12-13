@@ -379,31 +379,17 @@ namespace TKRESEARCH
                                         ,[INCHECKRATES] AS '抽驗頻率'
                                         ,[RULES] AS '相關法規'
                                         ,[COMMEMTS] AS '備註'
-                                        ,[CREATEDATES] AS '填表日期'
-                                        ,[DOCNAMES1] AS '三證'
-                                        ,[CONTENTTYPES1] 
-                                        ,[DATAS1] 
-                                        ,[DOCNAMES2] AS '產品成分'
-                                        ,[CONTENTTYPES2] 
-                                        ,[DATAS2]
-                                        ,[DOCNAMES3] AS '檢驗報告'
-                                        ,[CONTENTTYPES3] 
-                                        ,[DATAS3]
-                                        ,[DOCNAMES4] AS '營養標示'
-                                        ,[CONTENTTYPES4]
-                                        ,[DATAS4] 
-                                        ,[DOCNAMES5] AS '產品圖片'
-                                        ,[CONTENTTYPES5]
-                                        ,[DATAS5]
+                                        ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'                                       
                                         FROM [TKRESEARCH].[dbo].[TBDB3]
+                                 
                                         WHERE NAMES LIKE '%{0}%'
-
+                                        ORDER BY  [ID]
                                     ", KEYS);
                 }
                 else
                 {
                     sbSql.AppendFormat(@"                                          
-                                       SELECT 
+                                        SELECT 
                                          [ID]
                                         ,[KINDS] AS '分類'
                                         ,[SUPPLYS] AS '供應商'
@@ -425,23 +411,9 @@ namespace TKRESEARCH
                                         ,[INCHECKRATES] AS '抽驗頻率'
                                         ,[RULES] AS '相關法規'
                                         ,[COMMEMTS] AS '備註'
-                                        ,[CREATEDATES] AS '填表日期'
-                                        ,[DOCNAMES1] AS '三證'
-                                        ,[CONTENTTYPES1] 
-                                        ,[DATAS1] 
-                                        ,[DOCNAMES2] AS '產品成分'
-                                        ,[CONTENTTYPES2] 
-                                        ,[DATAS2]
-                                        ,[DOCNAMES3] AS '檢驗報告'
-                                        ,[CONTENTTYPES3] 
-                                        ,[DATAS3]
-                                        ,[DOCNAMES4] AS '營養標示'
-                                        ,[CONTENTTYPES4]
-                                        ,[DATAS4] 
-                                        ,[DOCNAMES5] AS '產品圖片'
-                                        ,[CONTENTTYPES5]
-                                        ,[DATAS5]
+                                        ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'                                       
                                         FROM [TKRESEARCH].[dbo].[TBDB3]
+                                        ORDER BY  [ID]
                                     ");
                 }
 
@@ -1609,6 +1581,176 @@ namespace TKRESEARCH
             }
         }
 
+        public void ADD_TO_TBDB3(
+                                string KINDS
+                                , string SUPPLYS
+                                , string NAMES
+                                , string ORIS
+                                , string SPECS
+                                , string PROALLGENS
+                                , string MANUALLGENS
+                                , string PLACES
+                                , string OUTS
+                                , string COLORS
+                                , string TASTES
+                                , string LOTS
+                                , string CHECKS
+                                , string SAVEDAYS
+                                , string SAVECONDITIONS
+                                , string BASEONS
+                                , string COA
+                                , string INCHECKRATES
+                                , string RULES
+                                , string COMMEMTS
+                                , string DOCNAMES1
+                                , string CONTENTTYPES1
+                                , byte[] DATAS1
+                                , string DOCNAMES2
+                                , string CONTENTTYPES2
+                                , byte[] DATAS2
+                                , string DOCNAMES3
+                                , string CONTENTTYPES3
+                                , byte[] DATAS3
+                                , string DOCNAMES4
+                                , string CONTENTTYPES4
+                                , byte[] DATAS4
+                                , string DOCNAMES5
+                                , string CONTENTTYPES5
+                                , byte[] DATAS5
+                                , string DOCNAMES6
+                                , string CONTENTTYPES6
+                                , byte[] DATAS6
+                                )
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(NAMES))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                       
+                                        INSERT INTO [TKRESEARCH].[dbo].[TBDB3]
+                                        (
+                                         [KINDS]
+                                        ,[SUPPLYS]
+                                        ,[NAMES]
+                                        ,[ORIS]
+                                        ,[SPECS]
+                                        ,[PROALLGENS]
+                                        ,[MANUALLGENS]
+                                        ,[PLACES]
+                                        ,[OUTS]
+                                        ,[COLORS]
+                                        ,[TASTES]
+                                        ,[LOTS]
+                                        ,[CHECKS]
+                                        ,[SAVEDAYS]
+                                        ,[SAVECONDITIONS]
+                                        ,[BASEONS]
+                                        ,[COA]
+                                        ,[INCHECKRATES]
+                                        ,[RULES]
+                                        ,[COMMEMTS]
+                                        ,[DOCNAMES1]
+                                        ,[CONTENTTYPES1]
+                                        ,[DATAS1]
+                               
+                                       
+                                        )
+                                        VALUES
+                                        (
+                                          @KINDS
+                                        ,@SUPPLYS
+                                        ,@NAMES
+                                        ,@ORIS
+                                        ,@SPECS
+                                        ,@PROALLGENS
+                                        ,@MANUALLGENS
+                                        ,@PLACES
+                                        ,@OUTS
+                                        ,@COLORS
+                                        ,@TASTES
+                                        ,@LOTS
+                                        ,@CHECKS
+                                        ,@SAVEDAYS
+                                        ,@SAVECONDITIONS
+                                        ,@BASEONS
+                                        ,@COA
+                                        ,@INCHECKRATES
+                                        ,@RULES
+                                        ,@COMMEMTS
+                                        ,@DOCNAMES1
+                                        ,@CONTENTTYPES1
+                                        ,@DATAS1
+                                   
+                                        )
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@KINDS", KINDS);
+                        cmd.Parameters.AddWithValue("@SUPPLYS", SUPPLYS);
+                        cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                        cmd.Parameters.AddWithValue("@ORIS", ORIS);
+                        cmd.Parameters.AddWithValue("@SPECS", SPECS);
+                        cmd.Parameters.AddWithValue("@PROALLGENS", PROALLGENS);
+                        cmd.Parameters.AddWithValue("@MANUALLGENS", MANUALLGENS);
+                        cmd.Parameters.AddWithValue("@PLACES", PLACES);
+                        cmd.Parameters.AddWithValue("@OUTS", OUTS);
+                        cmd.Parameters.AddWithValue("@COLORS", COLORS);
+                        cmd.Parameters.AddWithValue("@TASTES", TASTES);
+                        cmd.Parameters.AddWithValue("@LOTS", LOTS);
+                        cmd.Parameters.AddWithValue("@CHECKS", CHECKS);
+                        cmd.Parameters.AddWithValue("@SAVEDAYS", SAVEDAYS);
+                        cmd.Parameters.AddWithValue("@SAVECONDITIONS", SAVECONDITIONS);
+                        cmd.Parameters.AddWithValue("@BASEONS", BASEONS);
+                        cmd.Parameters.AddWithValue("@COA", COA);
+                        cmd.Parameters.AddWithValue("@INCHECKRATES", INCHECKRATES);
+                        cmd.Parameters.AddWithValue("@RULES", RULES);
+                        cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
+                        cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
+                        cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
+                        cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
+                        //cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
+                        //cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
+                        //cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
+                        //cmd.Parameters.AddWithValue("@DOCNAMES3", DOCNAMES3);
+                        //cmd.Parameters.AddWithValue("@CONTENTTYPES3", CONTENTTYPES3);
+                        //cmd.Parameters.AddWithValue("@DATAS3", DATAS3);
+                        //cmd.Parameters.AddWithValue("@DOCNAMES4", DOCNAMES4);
+                        //cmd.Parameters.AddWithValue("@CONTENTTYPES4", CONTENTTYPES4);
+                        //cmd.Parameters.AddWithValue("@DATAS4", DATAS4);
+                        //cmd.Parameters.AddWithValue("@DOCNAMES5", DOCNAMES5);
+                        //cmd.Parameters.AddWithValue("@CONTENTTYPES5", CONTENTTYPES5);
+                        //cmd.Parameters.AddWithValue("@DATAS5", DATAS5);
+                        //cmd.Parameters.AddWithValue("@DOCNAMES6", DOCNAMES6);
+                        //cmd.Parameters.AddWithValue("@CONTENTTYPES6", CONTENTTYPES6);
+                        //cmd.Parameters.AddWithValue("@DATAS6", DATAS6);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+
+
+        }
+
         #endregion
 
         #region BUTTON
@@ -1735,7 +1877,96 @@ namespace TKRESEARCH
         }
         private void button13_Click(object sender, EventArgs e)
         {
-            
+            string KINDS = comboBox1.Text.ToString();
+            string SUPPLYS = textBox301.Text.ToString();
+            string NAMES = textBox302.Text.ToString();
+            string ORIS = textBox303.Text.ToString();
+            string SPECS = textBox304.Text.ToString();
+            string PROALLGENS = textBox305.Text.ToString();
+            string MANUALLGENS = textBox306.Text.ToString();
+            string PLACES = textBox307.Text.ToString();
+            string OUTS = textBox308.Text.ToString();
+            string COLORS = textBox309.Text.ToString();
+            string TASTES = textBox310.Text.ToString();
+            string LOTS = textBox311.Text.ToString();
+            string CHECKS = textBox312.Text.ToString();
+            string SAVEDAYS = textBox313.Text.ToString();
+            string SAVECONDITIONS = textBox314.Text.ToString();
+            string BASEONS = textBox315.Text.ToString();
+            string COA = textBox315.Text.ToString();
+            string INCHECKRATES = textBox317.Text.ToString();
+            string RULES = textBox318.Text.ToString();
+            string COMMEMTS = textBox319.Text.ToString();
+            string DOCNAMES1 = "";
+            string CONTENTTYPES1 = "";
+            byte[] DATAS1=null;
+
+            if (!string.IsNullOrEmpty(DOCNAMES31))
+            {
+                DOCNAMES1 = DOCNAMES31;
+                CONTENTTYPES1 = CONTENTTYPES31;
+                DATAS1 = BYTES31;
+            }
+      
+           
+            string DOCNAMES2 = DOCNAMES32;
+            string CONTENTTYPES2 = CONTENTTYPES32;
+            byte[] DATAS2 = BYTES32;
+            string DOCNAMES3 = DOCNAMES33;
+            string CONTENTTYPES3 = CONTENTTYPES33;
+            byte[] DATAS3 = BYTES33;
+            string DOCNAMES4 = DOCNAMES34;
+            string CONTENTTYPES4 = CONTENTTYPES34;
+            byte[] DATAS4 = BYTES34;
+            string DOCNAMES5 = DOCNAMES35;
+            string CONTENTTYPES5 = CONTENTTYPES35;
+            byte[] DATAS5 = BYTES35;
+            string DOCNAMES6 = DOCNAMES36;
+            string CONTENTTYPES6 = CONTENTTYPES36;
+            byte[] DATAS6 = BYTES36;
+
+            ADD_TO_TBDB3(
+                        KINDS
+                        , SUPPLYS
+                        , NAMES
+                        , ORIS
+                        , SPECS
+                        , PROALLGENS
+                        , MANUALLGENS
+                        , PLACES
+                        , OUTS
+                        , COLORS
+                        , TASTES
+                        , LOTS
+                        , CHECKS
+                        , SAVEDAYS
+                        , SAVECONDITIONS
+                        , BASEONS
+                        , COA
+                        , INCHECKRATES
+                        , RULES
+                        , COMMEMTS
+                        , DOCNAMES1
+                        , CONTENTTYPES1
+                        , DATAS1
+                        , DOCNAMES2
+                        , CONTENTTYPES2
+                        , DATAS2
+                        , DOCNAMES3
+                        , CONTENTTYPES3
+                        , DATAS3
+                        , DOCNAMES4
+                        , CONTENTTYPES4
+                        , DATAS4
+                        , DOCNAMES5
+                        , CONTENTTYPES5
+                        , DATAS5
+                        , DOCNAMES6
+                        , CONTENTTYPES6
+                        , DATAS6
+                        );
+
+            SEARCH3(textBox3A.Text);
         }
 
         private void button12_Click(object sender, EventArgs e)
