@@ -94,6 +94,7 @@ namespace TKRESEARCH
             SETdataGridView36();
 
             comboBox1load();
+            comboBox2load();
         }
 
         #region FUNCTION
@@ -122,6 +123,35 @@ namespace TKRESEARCH
             comboBox1.DataSource = dt.DefaultView;
             comboBox1.ValueMember = "PARAID";
             comboBox1.DisplayMember = "PARAID";
+            sqlConn.Close();
+
+
+        }
+        public void comboBox2load()
+        {
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder Sequel = new StringBuilder();
+            Sequel.AppendFormat(@" SELECT  [ID],[KIND],[PARAID],[PARANAME]  FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='原料'  ORDER BY ID ");
+            SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+            DataTable dt = new DataTable();
+            sqlConn.Open();
+
+            dt.Columns.Add("PARAID", typeof(string));
+            dt.Columns.Add("PARANAME", typeof(string));
+            da.Fill(dt);
+            comboBox2.DataSource = dt.DefaultView;
+            comboBox2.ValueMember = "PARAID";
+            comboBox2.DisplayMember = "PARAID";
             sqlConn.Close();
 
 
@@ -2525,6 +2555,97 @@ namespace TKRESEARCH
 
         }
 
+        private void dataGridView3_SelectionChanged(object sender, EventArgs e)
+        {
+            textBox331.Text = null;
+            textBox332.Text = null;
+            textBox333.Text = null;
+            textBox334.Text = null;
+            textBox335.Text = null;
+            textBox336.Text = null;
+            textBox337.Text = null;
+            textBox338.Text = null;
+            textBox339.Text = null;
+            textBox340.Text = null;
+            textBox341.Text = null;
+            textBox342.Text = null;
+            textBox343.Text = null;
+            textBox344.Text = null;
+            textBox345.Text = null;
+            textBox346.Text = null;
+            textBox347.Text = null;
+            textBox348.Text = null;
+            textBox349.Text = null;
+            textBox350.Text = null;
+            textBox3B.Text = null;
+            textBox3C.Text = null;
+
+            if (dataGridView3.CurrentRow != null)
+            {
+                int rowindex = dataGridView3.CurrentRow.Index;
+              
+
+                if (rowindex >= 0)
+                {
+                    DataGridViewRow row = dataGridView3.Rows[rowindex];
+                    textBox3B.Text = row.Cells["ID"].Value.ToString();
+                    textBox3C.Text = row.Cells["ID"].Value.ToString();
+
+                    comboBox2.Text = row.Cells["分類"].Value.ToString();
+                    textBox331.Text = row.Cells["供應商"].Value.ToString();
+                    textBox332.Text = row.Cells["產品品名"].Value.ToString();
+                    textBox333.Text = row.Cells["產品成分"].Value.ToString();
+                    textBox334.Text = row.Cells["產品規格"].Value.ToString();
+                    textBox335.Text = row.Cells["產品過敏原"].Value.ToString();
+                    textBox336.Text = row.Cells["產線過敏原"].Value.ToString();
+                    textBox337.Text = row.Cells["產地"].Value.ToString();
+                    textBox338.Text = row.Cells["產品外觀"].Value.ToString();
+                    textBox339.Text = row.Cells["產品色澤"].Value.ToString();
+                    textBox340.Text = row.Cells["產品風味"].Value.ToString();
+                    textBox341.Text = row.Cells["產品批號"].Value.ToString();
+                    textBox342.Text = row.Cells["外包裝及驗收標準"].Value.ToString();
+                    textBox343.Text = row.Cells["保存期限"].Value.ToString();
+                    textBox344.Text = row.Cells["保存條件"].Value.ToString();
+                    textBox345.Text = row.Cells["基改/非基改"].Value.ToString();
+                    textBox346.Text = row.Cells["檢附COA"].Value.ToString();
+                    textBox347.Text = row.Cells["抽驗頻率"].Value.ToString();
+                    textBox348.Text = row.Cells["相關法規"].Value.ToString();
+                    textBox349.Text = row.Cells["備註"].Value.ToString();
+
+                    textBox350.Text = row.Cells["產品品名"].Value.ToString();
+                    
+
+
+                }
+                else
+                {
+                    textBox331.Text = null;
+                    textBox332.Text = null;
+                    textBox333.Text = null;
+                    textBox334.Text = null;
+                    textBox335.Text = null;
+                    textBox336.Text = null;
+                    textBox337.Text = null;
+                    textBox338.Text = null;
+                    textBox339.Text = null;
+                    textBox340.Text = null;
+                    textBox341.Text = null;
+                    textBox342.Text = null;
+                    textBox343.Text = null;
+                    textBox344.Text = null;
+                    textBox345.Text = null;
+                    textBox346.Text = null;
+                    textBox347.Text = null;
+                    textBox348.Text = null;
+                    textBox349.Text = null;
+                    textBox350.Text = null;
+                    textBox3B.Text = null;
+                    textBox3C.Text = null;
+                }
+            }
+
+        }
+
         #endregion
 
         #region BUTTON
@@ -2802,6 +2923,15 @@ namespace TKRESEARCH
         private void button20_Click(object sender, EventArgs e)
         {
             OPEN36();
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void button15_Click(object sender, EventArgs e)
+        {
+
         }
 
         #endregion
