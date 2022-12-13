@@ -58,6 +58,25 @@ namespace TKRESEARCH
         string CONTENTTYPES2 = null;
         string DOCNAMES2 = null;
 
+        byte[] BYTES31 = null;
+        string CONTENTTYPES31 = null;
+        string DOCNAMES31 = null;
+        byte[] BYTES32 = null;
+        string CONTENTTYPES32 = null;
+        string DOCNAMES32 = null;
+        byte[] BYTES33 = null;
+        string CONTENTTYPES33 = null;
+        string DOCNAMES33 = null;
+        byte[] BYTES34 = null;
+        string CONTENTTYPES34 = null;
+        string DOCNAMES34 = null;
+        byte[] BYTES35 = null;
+        string CONTENTTYPES35 = null;
+        string DOCNAMES35 = null;
+        byte[] BYTES36 = null;
+        string CONTENTTYPES36 = null;
+        string DOCNAMES36 = null;
+
         public FrmRESEARCHDB()
         {
             InitializeComponent();
@@ -803,6 +822,342 @@ namespace TKRESEARCH
             }
         }
 
+        public void OPEN31()
+        {
+            string FILETYPE = null;
+            CONTENTTYPES31 = "";
+            BYTES31 = null;
+            DOCNAMES31 = null;
+
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = openFileDialog1.FileName;
+
+                    DOCNAMES31 = Path.GetFileName(fileName);
+                    textBox320.Text = fileName;
+
+                    BYTES31 = File.ReadAllBytes(fileName);
+
+                    //Set the contenttype based on File Extension
+
+                    switch (Path.GetExtension(fileName))
+                    {
+                        case ".docx":
+                            CONTENTTYPES31 = "application/msword";
+                            break;
+                        case ".doc":
+                            CONTENTTYPES31 = "application/msword";
+                            break;
+                        case ".xls":
+                            CONTENTTYPES31 = "application/vnd.ms-excel";
+                            break;
+                        case ".xlsx":
+                            CONTENTTYPES31 = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            break;
+                        case ".pdf":
+                            CONTENTTYPES31 = "application/pdf";
+                            break;
+                        case ".jpg":
+                            CONTENTTYPES31 = "image/jpeg";
+                            break;
+                        case ".png":
+                            CONTENTTYPES31 = "image/png";
+                            break;
+                        case ".gif":
+                            CONTENTTYPES31 = "image/gif";
+                            break;
+                        case ".bmp":
+                            CONTENTTYPES31 = "image/bmp";
+                            break;
+                    }
+
+
+                }
+            }
+        }
+
+        public void OPEN32()
+        {
+            string FILETYPE = null;
+            CONTENTTYPES32 = "";
+            BYTES32 = null;
+            DOCNAMES32 = null;
+
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = openFileDialog1.FileName;
+
+                    DOCNAMES32 = Path.GetFileName(fileName);
+                    textBox321.Text = fileName;
+
+                    BYTES32 = File.ReadAllBytes(fileName);
+
+                    //Set the contenttype based on File Extension
+
+                    switch (Path.GetExtension(fileName))
+                    {
+                        case ".docx":
+                            CONTENTTYPES32 = "application/msword";
+                            break;
+                        case ".doc":
+                            CONTENTTYPES32 = "application/msword";
+                            break;
+                        case ".xls":
+                            CONTENTTYPES32 = "application/vnd.ms-excel";
+                            break;
+                        case ".xlsx":
+                            CONTENTTYPES32 = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            break;
+                        case ".pdf":
+                            CONTENTTYPES32 = "application/pdf";
+                            break;
+                        case ".jpg":
+                            CONTENTTYPES32 = "image/jpeg";
+                            break;
+                        case ".png":
+                            CONTENTTYPES32 = "image/png";
+                            break;
+                        case ".gif":
+                            CONTENTTYPES32 = "image/gif";
+                            break;
+                        case ".bmp":
+                            CONTENTTYPES32 = "image/bmp";
+                            break;
+                    }
+
+
+                }
+            }
+        }
+
+        public void OPEN33()
+        {
+            string FILETYPE = null;
+            CONTENTTYPES33 = "";
+            BYTES33 = null;
+            DOCNAMES33 = null;
+
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = openFileDialog1.FileName;
+
+                    DOCNAMES33 = Path.GetFileName(fileName);
+                    textBox322.Text = fileName;
+
+                    BYTES33 = File.ReadAllBytes(fileName);
+
+                    //Set the contenttype based on File Extension
+
+                    switch (Path.GetExtension(fileName))
+                    {
+                        case ".docx":
+                            CONTENTTYPES33 = "application/msword";
+                            break;
+                        case ".doc":
+                            CONTENTTYPES33 = "application/msword";
+                            break;
+                        case ".xls":
+                            CONTENTTYPES33 = "application/vnd.ms-excel";
+                            break;
+                        case ".xlsx":
+                            CONTENTTYPES33 = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            break;
+                        case ".pdf":
+                            CONTENTTYPES33 = "application/pdf";
+                            break;
+                        case ".jpg":
+                            CONTENTTYPES33 = "image/jpeg";
+                            break;
+                        case ".png":
+                            CONTENTTYPES33 = "image/png";
+                            break;
+                        case ".gif":
+                            CONTENTTYPES33 = "image/gif";
+                            break;
+                        case ".bmp":
+                            CONTENTTYPES33 = "image/bmp";
+                            break;
+                    }
+
+
+                }
+            }
+        }
+
+        public void OPEN34()
+        {
+            string FILETYPE = null;
+            CONTENTTYPES34 = "";
+            BYTES34 = null;
+            DOCNAMES34 = null;
+
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = openFileDialog1.FileName;
+
+                    DOCNAMES34 = Path.GetFileName(fileName);
+                    textBox323.Text = fileName;
+
+                    BYTES34 = File.ReadAllBytes(fileName);
+
+                    //Set the contenttype based on File Extension
+
+                    switch (Path.GetExtension(fileName))
+                    {
+                        case ".docx":
+                            CONTENTTYPES34 = "application/msword";
+                            break;
+                        case ".doc":
+                            CONTENTTYPES34 = "application/msword";
+                            break;
+                        case ".xls":
+                            CONTENTTYPES34 = "application/vnd.ms-excel";
+                            break;
+                        case ".xlsx":
+                            CONTENTTYPES34 = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            break;
+                        case ".pdf":
+                            CONTENTTYPES34 = "application/pdf";
+                            break;
+                        case ".jpg":
+                            CONTENTTYPES34 = "image/jpeg";
+                            break;
+                        case ".png":
+                            CONTENTTYPES34 = "image/png";
+                            break;
+                        case ".gif":
+                            CONTENTTYPES34 = "image/gif";
+                            break;
+                        case ".bmp":
+                            CONTENTTYPES34 = "image/bmp";
+                            break;
+                    }
+
+
+                }
+            }
+        }
+
+        public void OPEN35()
+        {
+            string FILETYPE = null;
+            CONTENTTYPES35 = "";
+            BYTES35 = null;
+            DOCNAMES35 = null;
+
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = openFileDialog1.FileName;
+
+                    DOCNAMES35 = Path.GetFileName(fileName);
+                    textBox324.Text = fileName;
+
+                    BYTES35 = File.ReadAllBytes(fileName);
+
+                    //Set the contenttype based on File Extension
+
+                    switch (Path.GetExtension(fileName))
+                    {
+                        case ".docx":
+                            CONTENTTYPES35 = "application/msword";
+                            break;
+                        case ".doc":
+                            CONTENTTYPES35 = "application/msword";
+                            break;
+                        case ".xls":
+                            CONTENTTYPES35 = "application/vnd.ms-excel";
+                            break;
+                        case ".xlsx":
+                            CONTENTTYPES35 = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            break;
+                        case ".pdf":
+                            CONTENTTYPES35 = "application/pdf";
+                            break;
+                        case ".jpg":
+                            CONTENTTYPES35 = "image/jpeg";
+                            break;
+                        case ".png":
+                            CONTENTTYPES35 = "image/png";
+                            break;
+                        case ".gif":
+                            CONTENTTYPES35 = "image/gif";
+                            break;
+                        case ".bmp":
+                            CONTENTTYPES35 = "image/bmp";
+                            break;
+                    }
+
+
+                }
+            }
+        }
+
+        public void OPEN36()
+        {
+            string FILETYPE = null;
+            CONTENTTYPES36 = "";
+            BYTES36 = null;
+            DOCNAMES36 = null;
+
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = openFileDialog1.FileName;
+
+                    DOCNAMES36 = Path.GetFileName(fileName);
+                    textBox325.Text = fileName;
+
+                    BYTES36 = File.ReadAllBytes(fileName);
+
+                    //Set the contenttype based on File Extension
+
+                    switch (Path.GetExtension(fileName))
+                    {
+                        case ".docx":
+                            CONTENTTYPES36 = "application/msword";
+                            break;
+                        case ".doc":
+                            CONTENTTYPES36 = "application/msword";
+                            break;
+                        case ".xls":
+                            CONTENTTYPES36 = "application/vnd.ms-excel";
+                            break;
+                        case ".xlsx":
+                            CONTENTTYPES36 = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            break;
+                        case ".pdf":
+                            CONTENTTYPES36 = "application/pdf";
+                            break;
+                        case ".jpg":
+                            CONTENTTYPES36 = "image/jpeg";
+                            break;
+                        case ".png":
+                            CONTENTTYPES36 = "image/png";
+                            break;
+                        case ".gif":
+                            CONTENTTYPES36 = "image/gif";
+                            break;
+                        case ".bmp":
+                            CONTENTTYPES36 = "image/bmp";
+                            break;
+                    }
+
+
+                }
+            }
+        }
+
         public void ADD_TO_TBDB1(string DOCID,string COMMENTS, string DOCNAMES, string CONTENTTYPES,byte[] BYTES)
         {
             // 20210902密
@@ -1377,6 +1732,40 @@ namespace TKRESEARCH
         private void button9_Click(object sender, EventArgs e)
         {
             SEARCH3(textBox3A.Text);
+        }
+        private void button13_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            OPEN31();
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            OPEN32();
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            OPEN33();
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            OPEN34();
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            OPEN35();
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            OPEN36();
         }
 
         #endregion
