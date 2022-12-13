@@ -2319,43 +2319,8 @@ namespace TKRESEARCH
             }
         }
 
-        public void DELETE_TO_TBDB2(string ID)
-        {
-            // 20210902密
-            Class1 TKID = new Class1();//用new 建立類別實體
-            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+      
 
-            //資料庫使用者密碼解密
-            sqlsb.Password = TKID.Decryption(sqlsb.Password);
-            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
-
-            String connectionString;
-            sqlConn = new SqlConnection(sqlsb.ConnectionString);
-            using (SqlConnection conn = sqlConn)
-            {
-                if (!string.IsNullOrEmpty(ID))
-                {
-                    StringBuilder ADDSQL = new StringBuilder();
-                    ADDSQL.AppendFormat(@"
-                                        DELETE[TKRESEARCH].[dbo].[TBDB2]
-                                        WHERE ID=@ID
-                                        
-                                        ");
-
-                    string sql = ADDSQL.ToString();
-
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@ID", ID);
-
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
-                    }
-                }
-
-            }
-        }
 
         public void ADD_TO_TBDB3(
                                 string KINDS
@@ -2646,6 +2611,188 @@ namespace TKRESEARCH
 
         }
 
+        public void UPDATE_TO_TBDB3(
+                                string ID
+                               , string KINDS
+                               , string SUPPLYS
+                               , string NAMES
+                               , string ORIS
+                               , string SPECS
+                               , string PROALLGENS
+                               , string MANUALLGENS
+                               , string PLACES
+                               , string OUTS
+                               , string COLORS
+                               , string TASTES
+                               , string LOTS
+                               , string CHECKS
+                               , string SAVEDAYS
+                               , string SAVECONDITIONS
+                               , string BASEONS
+                               , string COA
+                               , string INCHECKRATES
+                               , string RULES
+                               , string COMMEMTS
+                              
+                               )
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(NAMES))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        UPDATE [TKRESEARCH].[dbo].[TBDB3]
+                                        SET
+                                        [KINDS]=@KINDS
+                                        ,[SUPPLYS]=@SUPPLYS
+                                        ,[NAMES]=@NAMES
+                                        ,[ORIS]=@ORIS
+                                        ,[SPECS]=@SPECS
+                                        ,[PROALLGENS]=@PROALLGENS
+                                        ,[MANUALLGENS]=@MANUALLGENS
+                                        ,[PLACES]=@PLACES
+                                        ,[OUTS]=@OUTS
+                                        ,[COLORS]=@COLORS
+                                        ,[TASTES]=@TASTES
+                                        ,[LOTS]=@LOTS
+                                        ,[CHECKS]=@CHECKS
+                                        ,[SAVEDAYS]=@SAVEDAYS
+                                        ,[SAVECONDITIONS]=@SAVECONDITIONS
+                                        ,[BASEONS]=@BASEONS
+                                        ,[COA]=@COA
+                                        ,[INCHECKRATES]=@INCHECKRATES
+                                        ,[RULES]=@RULES
+                                        ,[COMMEMTS]=@COMMEMTS
+                                        WHERE [ID]=@ID
+                                       
+                                       
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", ID);
+                        cmd.Parameters.AddWithValue("@KINDS", KINDS);
+                        cmd.Parameters.AddWithValue("@SUPPLYS", SUPPLYS);
+                        cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                        cmd.Parameters.AddWithValue("@ORIS", ORIS);
+                        cmd.Parameters.AddWithValue("@SPECS", SPECS);
+                        cmd.Parameters.AddWithValue("@PROALLGENS", PROALLGENS);
+                        cmd.Parameters.AddWithValue("@MANUALLGENS", MANUALLGENS);
+                        cmd.Parameters.AddWithValue("@PLACES", PLACES);
+                        cmd.Parameters.AddWithValue("@OUTS", OUTS);
+                        cmd.Parameters.AddWithValue("@COLORS", COLORS);
+                        cmd.Parameters.AddWithValue("@TASTES", TASTES);
+                        cmd.Parameters.AddWithValue("@LOTS", LOTS);
+                        cmd.Parameters.AddWithValue("@CHECKS", CHECKS);
+                        cmd.Parameters.AddWithValue("@SAVEDAYS", SAVEDAYS);
+                        cmd.Parameters.AddWithValue("@SAVECONDITIONS", SAVECONDITIONS);
+                        cmd.Parameters.AddWithValue("@BASEONS", BASEONS);
+                        cmd.Parameters.AddWithValue("@COA", COA);
+                        cmd.Parameters.AddWithValue("@INCHECKRATES", INCHECKRATES);
+                        cmd.Parameters.AddWithValue("@RULES", RULES);
+                        cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
+                       
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+
+
+        }
+
+          public void DELETE_TO_TBDB2(string ID)
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(ID))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        DELETE[TKRESEARCH].[dbo].[TBDB2]
+                                        WHERE ID=@ID
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", ID);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+        }
+
+        public void DELETE_TO_TBDB3(string ID)
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(ID))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        DELETE[TKRESEARCH].[dbo].[TBDB3]
+                                        WHERE ID=@ID
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", ID);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+        }
         #endregion
 
         #region BUTTON
@@ -2927,11 +3074,68 @@ namespace TKRESEARCH
 
         private void button14_Click(object sender, EventArgs e)
         {
+            string ID = textBox3B.Text;
+            string KINDS = comboBox2.Text;
 
+            string SUPPLYS = textBox331.Text;
+            string NAMES = textBox332.Text;
+            string ORIS = textBox333.Text;
+            string SPECS = textBox334.Text;
+            string PROALLGENS = textBox335.Text;
+            string MANUALLGENS = textBox336.Text;
+            string PLACES = textBox337.Text;
+            string OUTS = textBox338.Text;
+            string COLORS = textBox339.Text;
+            string TASTES = textBox340.Text;
+            string LOTS = textBox341.Text;
+            string CHECKS = textBox342.Text;
+            string SAVEDAYS = textBox343.Text;
+            string SAVECONDITIONS = textBox344.Text;
+            string BASEONS = textBox345.Text;
+            string COA = textBox346.Text;
+            string INCHECKRATES = textBox347.Text;
+            string RULES = textBox348.Text;
+            string COMMEMTS = textBox349.Text;
+
+            UPDATE_TO_TBDB3(
+                                ID
+                              , KINDS
+                              , SUPPLYS
+                              , NAMES
+                              , ORIS
+                              , SPECS
+                              , PROALLGENS
+                              , MANUALLGENS
+                              , PLACES
+                              , OUTS
+                              , COLORS
+                              , TASTES
+                              , LOTS
+                              , CHECKS
+                              , SAVEDAYS
+                              , SAVECONDITIONS
+                              , BASEONS
+                              , COA
+                              , INCHECKRATES
+                              , RULES
+                              , COMMEMTS
+
+                              );
+
+            SEARCH3(textBox3A.Text.Trim());
         }
         private void button15_Click(object sender, EventArgs e)
         {
-
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DELETE_TO_TBDB3(textBox3C.Text);
+                SEARCH3(textBox3A.Text.Trim());
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
         }
 
         #endregion
