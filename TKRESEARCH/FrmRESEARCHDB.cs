@@ -5026,6 +5026,242 @@ namespace TKRESEARCH
 
         }
 
+        public void UPDATE_TO_TBDB6(
+                                string ID
+                               , string KINDS
+                                , string IANUMERS
+                                , string REGISTERNO
+                                , string MANUNAMES
+                                , string ADDRESS
+                                , string CHECKS
+                                , string NAMES
+                                , string ORIS
+                                , string MANUS
+                                , string PROALLGENS
+                                , string MANUALLGENS
+                                , string PRIMES
+                                , string COLORS
+                                , string TASTES
+                                , string CHARS
+                                , string PACKAGES
+                                , string WEIGHTS
+                                , string SPECS
+                                , string SAVEDAYS
+                                , string SAVECONDITIONS
+                                , string COMMEMTS
+
+                               )
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(NAMES))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        UPDATE [TKRESEARCH].[dbo].[TBDB6]
+                                        SET
+                                        [KINDS]=@KINDS
+                                        ,[IANUMERS]=@IANUMERS
+                                        ,[REGISTERNO]=@REGISTERNO
+                                        ,[MANUNAMES]=@MANUNAMES
+                                        ,[ADDRESS]=@ADDRESS
+                                        ,[CHECKS]=@CHECKS
+                                        ,[NAMES]=@NAMES
+                                        ,[ORIS]=@ORIS
+                                        ,[MANUS]=@MANUS
+                                        ,[PROALLGENS]=@PROALLGENS
+                                        ,[MANUALLGENS]=@MANUALLGENS
+                                        ,[PRIMES]=@PRIMES
+                                        ,[COLORS]=@COLORS
+                                        ,[TASTES]=@TASTES
+                                        ,[CHARS]=@CHARS
+                                        ,[PACKAGES]=@PACKAGES
+                                        ,[WEIGHTS]=@WEIGHTS
+                                        ,[SPECS]=@SPECS
+                                        ,[SAVEDAYS]=@SAVEDAYS
+                                        ,[SAVECONDITIONS]=@SAVECONDITIONS
+                                        ,[COMMEMTS]=@COMMEMTS
+                                        WHERE [ID]=@ID
+                                       
+                                       
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", ID);
+                        cmd.Parameters.AddWithValue("@KINDS", KINDS);
+                        cmd.Parameters.AddWithValue("@IANUMERS", IANUMERS);
+                        cmd.Parameters.AddWithValue("@REGISTERNO", REGISTERNO);
+                        cmd.Parameters.AddWithValue("@MANUNAMES", MANUNAMES);
+                        cmd.Parameters.AddWithValue("@ADDRESS", ADDRESS);
+                        cmd.Parameters.AddWithValue("@CHECKS", CHECKS);
+                        cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                        cmd.Parameters.AddWithValue("@ORIS", ORIS);
+                        cmd.Parameters.AddWithValue("@MANUS", MANUS);
+                        cmd.Parameters.AddWithValue("@PROALLGENS", PROALLGENS);
+                        cmd.Parameters.AddWithValue("@MANUALLGENS", MANUALLGENS);
+                        cmd.Parameters.AddWithValue("@PRIMES", PRIMES);
+                        cmd.Parameters.AddWithValue("@COLORS", COLORS);
+                        cmd.Parameters.AddWithValue("@TASTES", TASTES);
+                        cmd.Parameters.AddWithValue("@CHARS", CHARS);
+                        cmd.Parameters.AddWithValue("@PACKAGES", PACKAGES);
+                        cmd.Parameters.AddWithValue("@WEIGHTS", WEIGHTS);
+                        cmd.Parameters.AddWithValue("@SPECS", SPECS);
+                        cmd.Parameters.AddWithValue("@SAVEDAYS", SAVEDAYS);
+                        cmd.Parameters.AddWithValue("@SAVECONDITIONS", SAVECONDITIONS);
+                        cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+
+
+        }
+
+        public void DELETE_TO_TBDB6(string ID)
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(ID))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        DELETE[TKRESEARCH].[dbo].[TBDB6]
+                                        WHERE ID=@ID
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", ID);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+        }
+        private void dataGridView6_SelectionChanged(object sender, EventArgs e)
+        {
+            textBox6B.Text = null;
+            textBox6C.Text = null;
+            textBox631.Text = null;
+            textBox632.Text = null;
+            textBox633.Text = null;
+            textBox634.Text = null;
+            textBox635.Text = null;
+            textBox636.Text = null;
+            textBox637.Text = null;
+            textBox638.Text = null;
+            textBox639.Text = null;
+            textBox640.Text = null;
+            textBox641.Text = null;
+            textBox642.Text = null;
+            textBox643.Text = null;
+            textBox644.Text = null;
+            textBox645.Text = null;
+            textBox646.Text = null;
+            textBox647.Text = null;
+            textBox648.Text = null;
+            textBox649.Text = null;
+            textBox650.Text = null;
+            textBox661.Text = null;
+
+            if (dataGridView6.CurrentRow != null)
+            {
+                int rowindex = dataGridView6.CurrentRow.Index;
+
+                if (rowindex >= 0)
+                {
+                    DataGridViewRow row = dataGridView6.Rows[rowindex];
+                    textBox6B.Text = row.Cells["ID"].Value.ToString();
+                    textBox6C.Text = row.Cells["ID"].Value.ToString();
+                    
+                    comboBox6.Text = row.Cells["分類"].Value.ToString();
+                    textBox631.Text = row.Cells["國際條碼"].Value.ToString();
+                    textBox632.Text = row.Cells["食品業者登錄字號"].Value.ToString();
+                    textBox633.Text = row.Cells["製造商名稱"].Value.ToString();
+                    textBox634.Text = row.Cells["製造商地址"].Value.ToString();
+                    textBox635.Text = row.Cells["品質認證"].Value.ToString();
+                    textBox636.Text = row.Cells["產品品名"].Value.ToString();
+                    textBox637.Text = row.Cells["產品成分"].Value.ToString();
+                    textBox638.Text = row.Cells["製造流程"].Value.ToString();
+                    textBox639.Text = row.Cells["產品過敏原"].Value.ToString();
+                    textBox640.Text = row.Cells["產線及生產設備過敏原"].Value.ToString();
+                    textBox641.Text = row.Cells["素別"].Value.ToString();
+                    textBox642.Text = row.Cells["色澤"].Value.ToString();
+                    textBox643.Text = row.Cells["風味"].Value.ToString();
+                    textBox644.Text = row.Cells["性狀"].Value.ToString();
+                    textBox645.Text = row.Cells["材質"].Value.ToString();
+                    textBox646.Text = row.Cells["淨重量"].Value.ToString();
+                    textBox647.Text = row.Cells["規格"].Value.ToString();
+                    textBox648.Text = row.Cells["保存期限"].Value.ToString();
+                    textBox649.Text = row.Cells["保存條件"].Value.ToString();
+                    textBox650.Text = row.Cells["備註"].Value.ToString();
+                    textBox661.Text = row.Cells["產品品名"].Value.ToString();
+
+                }
+                else
+                {
+
+                    textBox6B.Text = null;
+                    textBox6C.Text = null;
+                    textBox631.Text = null;
+                    textBox632.Text = null;
+                    textBox633.Text = null;
+                    textBox634.Text = null;
+                    textBox635.Text = null;
+                    textBox636.Text = null;
+                    textBox637.Text = null;
+                    textBox638.Text = null;
+                    textBox639.Text = null;
+                    textBox640.Text = null;
+                    textBox641.Text = null;
+                    textBox642.Text = null;
+                    textBox643.Text = null;
+                    textBox644.Text = null;
+                    textBox645.Text = null;
+                    textBox646.Text = null;
+                    textBox647.Text = null;
+                    textBox648.Text = null;
+                    textBox649.Text = null;
+                    textBox650.Text = null;
+                    textBox661.Text = null;
+                }
+
+            }
+        }
 
         #endregion
 
@@ -5694,9 +5930,78 @@ namespace TKRESEARCH
         {
             OPEN62();
         }
+        private void button38_Click(object sender, EventArgs e)
+        {
+            string ID = textBox6B.Text;
+
+            string KINDS = comboBox6.Text;
+            string IANUMERS = textBox631.Text;
+            string REGISTERNO = textBox632.Text;
+            string MANUNAMES = textBox633.Text;
+            string ADDRESS = textBox634.Text;
+            string CHECKS = textBox635.Text;
+            string NAMES = textBox636.Text;
+            string ORIS = textBox637.Text;
+            string MANUS = textBox638.Text;
+            string PROALLGENS = textBox639.Text;
+            string MANUALLGENS = textBox640.Text;
+            string PRIMES = textBox641.Text;
+            string COLORS = textBox642.Text;
+            string TASTES = textBox643.Text;
+            string CHARS = textBox644.Text;
+            string PACKAGES = textBox645.Text;
+            string WEIGHTS = textBox646.Text;
+            string SPECS = textBox647.Text;
+            string SAVEDAYS = textBox648.Text;
+            string SAVECONDITIONS = textBox649.Text;
+            string COMMEMTS = textBox650.Text;
+          
+
+            UPDATE_TO_TBDB6(
+                            ID
+                            , KINDS
+                            , IANUMERS
+                            , REGISTERNO
+                            , MANUNAMES
+                            , ADDRESS
+                            , CHECKS
+                            , NAMES
+                            , ORIS
+                            , MANUS
+                            , PROALLGENS
+                            , MANUALLGENS
+                            , PRIMES
+                            , COLORS
+                            , TASTES
+                            , CHARS
+                            , PACKAGES
+                            , WEIGHTS
+                            , SPECS
+                            , SAVEDAYS
+                            , SAVECONDITIONS
+                            , COMMEMTS
+                               );
+
+            SEARCH6(textBox6A.Text);
+        }
+        private void button43_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DELETE_TO_TBDB6(textBox6C.Text);
+                SEARCH6(textBox6A.Text);
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+          
+        }
+
         #endregion
 
-
+        
     }
 }
 
