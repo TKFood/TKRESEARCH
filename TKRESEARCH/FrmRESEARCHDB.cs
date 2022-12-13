@@ -874,6 +874,203 @@ namespace TKRESEARCH
            
         }
 
+        private void dataGridView2_SelectionChanged(object sender, EventArgs e)
+        {
+
+            textBox2B.Text = null;
+            textBox2C.Text = null;
+            textBox221.Text = null;
+            textBox222.Text = null;
+            textBox223.Text = null;
+            textBox224.Text = null;
+            textBox225.Text = null;
+            textBox226.Text = null;
+            textBox227.Text = null;
+            textBox228.Text = null;
+            textBox229.Text = null;
+            textBox230.Text = null;
+            textBox231.Text = null;
+            textBox232.Text = null;
+            textBox233.Text = null;
+            textBox234.Text = null;
+            textBox235.Text = null;
+            textBox241.Text = null;
+
+
+            if (dataGridView2.CurrentRow != null)
+            {
+                int rowindex = dataGridView2.CurrentRow.Index;               
+
+                if (rowindex >= 0)
+                {
+                    DataGridViewRow row = dataGridView2.Rows[rowindex];
+                    textBox2B.Text = row.Cells["ID"].Value.ToString();
+                    textBox2C.Text = row.Cells["ID"].Value.ToString();
+                    textBox221.Text = row.Cells["產品品名"].Value.ToString();
+                    textBox222.Text = row.Cells["產品特色"].Value.ToString();
+                    textBox223.Text = row.Cells["產品成分"].Value.ToString();
+                    textBox224.Text = row.Cells["產品規格"].Value.ToString();
+                    textBox225.Text = row.Cells["售價"].Value.ToString();
+                    textBox226.Text = row.Cells["保存期限"].Value.ToString();
+                    textBox227.Text = row.Cells["保存方式"].Value.ToString();
+                    textBox228.Text = row.Cells["素別"].Value.ToString();
+                    textBox229.Text = row.Cells["過敏原"].Value.ToString();
+                    textBox230.Text = row.Cells["負責廠商"].Value.ToString();
+                    textBox231.Text = row.Cells["建議食用方式"].Value.ToString();
+                    textBox232.Text = row.Cells["驗證單位"].Value.ToString();
+                    textBox233.Text = row.Cells["驗證證書字號"].Value.ToString();
+                    textBox234.Text = row.Cells["其他口味"].Value.ToString();
+                    textBox235.Text = row.Cells["備註"].Value.ToString();
+                    textBox241.Text = row.Cells["產品品名"].Value.ToString();
+
+                }
+                else
+                {
+                    textBox2B.Text = null;
+                    textBox2C.Text = null;
+                    textBox221.Text = null;
+                    textBox222.Text = null;
+                    textBox223.Text = null;
+                    textBox224.Text = null;
+                    textBox225.Text = null;
+                    textBox226.Text = null;
+                    textBox227.Text = null;
+                    textBox228.Text = null;
+                    textBox229.Text = null;
+                    textBox230.Text = null;
+                    textBox231.Text = null;
+                    textBox232.Text = null;
+                    textBox233.Text = null;
+                    textBox234.Text = null;
+                    textBox235.Text = null;
+                    textBox241.Text = null;
+
+                }
+            }
+        }
+
+        public void UPDATE_TO_TBDB2(string ID
+                                , string NAMES
+                                , string CHARS
+                                , string ORIS
+                                , string SPECS
+                                , string PRICES
+                                , string SAVEDAYS
+                                , string SAVEMETHODS
+                                , string PRIMES
+                                , string ALLERGENS
+                                , string OWNERS
+                                , string EATES
+                                , string CHECKSUNITS
+                                , string CHECKS
+                                , string OTHERS
+                                , string COMMENTS
+                                )
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(ID))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        UPDATE [TKRESEARCH].[dbo].[TBDB2]
+                                        SET [NAMES]=@NAMES
+                                        ,[CHARS]=@CHARS
+                                        ,[ORIS]=@ORIS
+                                        ,[SPECS]=@SPECS
+                                        ,[PRICES]=@PRICES
+                                        ,[SAVEDAYS]=@SAVEDAYS
+                                        ,[SAVEMETHODS]=@SAVEMETHODS
+                                        ,[PRIMES]=@PRIMES
+                                        ,[ALLERGENS]=@ALLERGENS
+                                        ,[OWNERS]=@OWNERS
+                                        ,[EATES]=@EATES
+                                        ,[CHECKSUNITS]=@CHECKSUNITS
+                                        ,[CHECKS]=@CHECKS
+                                        ,[OTHERS]=@OTHERS
+                                        ,[COMMENTS]=@COMMENTS
+                                 
+                                        WHERE ID=@ID
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", ID);
+                        cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                        cmd.Parameters.AddWithValue("@CHARS", CHARS);
+                        cmd.Parameters.AddWithValue("@ORIS", ORIS);
+                        cmd.Parameters.AddWithValue("@SPECS", SPECS);
+                        cmd.Parameters.AddWithValue("@PRICES", PRICES);
+                        cmd.Parameters.AddWithValue("@SAVEDAYS", SAVEDAYS);
+                        cmd.Parameters.AddWithValue("@SAVEMETHODS", SAVEMETHODS);
+                        cmd.Parameters.AddWithValue("@PRIMES", PRIMES);
+                        cmd.Parameters.AddWithValue("@ALLERGENS", ALLERGENS);
+                        cmd.Parameters.AddWithValue("@OWNERS", OWNERS);
+                        cmd.Parameters.AddWithValue("@EATES", EATES);
+                        cmd.Parameters.AddWithValue("@CHECKSUNITS", CHECKSUNITS);
+                        cmd.Parameters.AddWithValue("@CHECKS", CHECKS);
+                        cmd.Parameters.AddWithValue("@OTHERS", OTHERS);
+                        cmd.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+        }
+
+        public void DELETE_TO_TBDB2(string ID)
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(ID))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        DELETE[TKRESEARCH].[dbo].[TBDB2]
+                                        WHERE ID=@ID
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", ID);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+        }
 
         #endregion
 
@@ -960,6 +1157,42 @@ namespace TKRESEARCH
                                 );
             SEARCH2(textBox2A.Text.Trim());
         }
+        private void button11_Click(object sender, EventArgs e)
+        {
+            string ID = textBox2B.Text;
+            string NAMES = textBox221.Text;
+            string CHARS = textBox222.Text;
+            string ORIS = textBox223.Text;
+            string SPECS = textBox224.Text;
+            string PRICES = textBox225.Text;
+            string SAVEDAYS = textBox226.Text;
+            string SAVEMETHODS = textBox227.Text;
+            string PRIMES = textBox228.Text;
+            string ALLERGENS = textBox229.Text;
+            string OWNERS = textBox230.Text;
+            string EATES = textBox231.Text;
+            string CHECKSUNITS = textBox232.Text;
+            string CHECKS = textBox233.Text;
+            string OTHERS = textBox234.Text;
+            string COMMENTS = textBox235.Text;
+
+            UPDATE_TO_TBDB2(ID, NAMES, CHARS, ORIS, SPECS, PRICES, SAVEDAYS, SAVEMETHODS, PRIMES, ALLERGENS, OWNERS, EATES, CHECKSUNITS, CHECKS, OTHERS, COMMENTS);
+            SEARCH2(textBox2A.Text.Trim());
+        }
+        private void button10_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DELETE_TO_TBDB2(textBox2C.Text);
+                SEARCH2(textBox2A.Text.Trim());
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+        }
+
         #endregion
 
 
