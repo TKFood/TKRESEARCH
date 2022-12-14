@@ -7175,7 +7175,7 @@ namespace TKRESEARCH
                                         ,[NAMES] AS '名稱'
                                         ,[CONTENTS] AS '文件內容敘述'
                                         ,[COMMEMTS] AS '備註'
-                                        ,[CREATEDATES] AS '填表日期'
+                                        ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'
                                         ,[DOCNAMES1] AS '檔案'
 
                                         FROM [TKRESEARCH].[dbo].[TBDB9]
@@ -7192,7 +7192,7 @@ namespace TKRESEARCH
                                         ,[NAMES] AS '名稱'
                                         ,[CONTENTS] AS '文件內容敘述'
                                         ,[COMMEMTS] AS '備註'
-                                        ,[CREATEDATES] AS '填表日期'
+                                         ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'
                                         ,[DOCNAMES1] AS '檔案'
 
                                         FROM [TKRESEARCH].[dbo].[TBDB9]
