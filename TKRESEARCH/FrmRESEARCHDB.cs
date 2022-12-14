@@ -150,6 +150,7 @@ namespace TKRESEARCH
             comboBox5load();
             comboBox6load();
             comboBox7load();
+            comboBox8load();
         }
 
         #region FUNCTION
@@ -355,6 +356,36 @@ namespace TKRESEARCH
             comboBox7.DataSource = dt.DefaultView;
             comboBox7.ValueMember = "PARAID";
             comboBox7.DisplayMember = "PARAID";
+            sqlConn.Close();
+
+
+        }
+
+        public void comboBox8load()
+        {
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder Sequel = new StringBuilder();
+            Sequel.AppendFormat(@" SELECT  [ID],[KIND],[PARAID],[PARANAME]  FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='成品'  ORDER BY ID ");
+            SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+            DataTable dt = new DataTable();
+            sqlConn.Open();
+
+            dt.Columns.Add("PARAID", typeof(string));
+            dt.Columns.Add("PARANAME", typeof(string));
+            da.Fill(dt);
+            comboBox8.DataSource = dt.DefaultView;
+            comboBox8.ValueMember = "PARAID";
+            comboBox8.DisplayMember = "PARAID";
             sqlConn.Close();
 
 
@@ -5823,7 +5854,7 @@ namespace TKRESEARCH
                                        SELECT 
                                         [ID]
                                         ,[KINDS] AS '分類'
-                                        ,[NAMES] AS '品名'
+                                        ,[NAMES] AS '產品品名'
                                         ,[COMMEMTS] AS '備註'
                                         ,CONVERT(NVARCHAR,[CREATEDATES],112)  AS '填表日期'
                                         ,[DOCNAMES1]  AS '產前會議'
@@ -5842,7 +5873,7 @@ namespace TKRESEARCH
                                         SELECT 
                                         [ID]
                                         ,[KINDS] AS '分類'
-                                        ,[NAMES] AS '品名'
+                                        ,[NAMES] AS '產品品名'
                                         ,[COMMEMTS] AS '備註'
                                         ,CONVERT(NVARCHAR,[CREATEDATES],112)  AS '填表日期'
                                         ,[DOCNAMES1]  AS '產前會議'
@@ -5983,6 +6014,133 @@ namespace TKRESEARCH
             }
 
 
+        }
+
+        private void dataGridView7_SelectionChanged(object sender, EventArgs e)
+        {
+            textBox7B.Text = null;
+            textBox7C.Text = null;
+            textBox721.Text = null;
+            textBox722.Text = null;
+            textBox731.Text = null;
+
+            if (dataGridView7.CurrentRow != null)
+            {
+                int rowindex = dataGridView7.CurrentRow.Index;
+
+                if (rowindex >= 0)
+                {
+                    DataGridViewRow row = dataGridView7.Rows[rowindex];
+                    textBox7B.Text = row.Cells["ID"].Value.ToString();
+                    textBox7C.Text = row.Cells["ID"].Value.ToString();
+                    textBox721.Text = row.Cells["產品品名"].Value.ToString();
+                    textBox722.Text = row.Cells["備註"].Value.ToString();
+                    textBox731.Text = row.Cells["產品品名"].Value.ToString();
+
+                }
+                else
+                {
+                    textBox7B.Text = null;
+                    textBox7C.Text = null;
+                    textBox721.Text = null;
+                    textBox722.Text = null;
+                    textBox731.Text = null;
+
+                }
+            }
+        }
+
+        public void UPDATE_TO_TBDB7(
+                              string ID
+                             , string KINDS                           
+                              , string NAMES                            
+                              , string COMMEMTS
+
+                             )
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(NAMES))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        UPDATE [TKRESEARCH].[dbo].[TBDB7]
+                                        SET
+                                        [KINDS]=@KINDS                                        
+                                        ,[NAMES]=@NAMES                                      
+                                        ,[COMMEMTS]=@COMMEMTS
+                                        WHERE [ID]=@ID
+                                       
+                                       
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", ID);
+                        cmd.Parameters.AddWithValue("@KINDS", KINDS);                        
+                        cmd.Parameters.AddWithValue("@NAMES", NAMES);                      
+                        cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+
+
+        }
+
+        public void DELETE_TO_TBDB7(string ID)
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(ID))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        DELETE[TKRESEARCH].[dbo].[TBDB7]
+                                        WHERE ID=@ID
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", ID);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
         }
 
         #endregion
@@ -6795,6 +6953,39 @@ namespace TKRESEARCH
         {
             OPEN73();
         }
+        private void button48_Click(object sender, EventArgs e)
+        {
+            string ID = textBox7B.Text;
+            string KINDS = comboBox8.Text.ToString();
+            string NAMES = textBox721.Text.ToString();
+            string COMMEMTS = textBox722.Text.ToString();
+    
+
+
+            UPDATE_TO_TBDB7(
+                        ID
+                        ,KINDS
+                        , NAMES
+                        , COMMEMTS                     
+                        );
+
+            SEARCH7(textBox7A.Text);
+        }
+
+        private void button45_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DELETE_TO_TBDB7(textBox7C.Text);
+                SEARCH7(textBox7A.Text);
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+        }
+
         #endregion
 
 
