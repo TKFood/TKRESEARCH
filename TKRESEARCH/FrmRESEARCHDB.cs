@@ -152,10 +152,12 @@ namespace TKRESEARCH
             SETdataGridView71();
             SETdataGridView72();
             SETdataGridView73();
-            SEARCH8(textBox7A.Text);
+            SEARCH8(textBox8A.Text);
             SETdataGridView81();
             SETdataGridView82();
             SETdataGridView83();
+            SEARCH9(textBox9A.Text);
+            SETdataGridView91();
 
             comboBox1load();
             comboBox2load();
@@ -2953,6 +2955,95 @@ namespace TKRESEARCH
                             bytes = (byte[])sdr["DATAS3"];
                             contentType = sdr["CONTENTTYPES3"].ToString();
                             fileName = sdr["DOCNAMES3"].ToString();
+
+                            Stream stream;
+                            SaveFileDialog saveFileDialog = new SaveFileDialog();
+                            saveFileDialog.Filter = "All files (*.*)|*.*";
+                            saveFileDialog.FilterIndex = 1;
+                            saveFileDialog.RestoreDirectory = true;
+                            saveFileDialog.FileName = fileName;
+                            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                stream = saveFileDialog.OpenFile();
+                                stream.Write(bytes, 0, bytes.Length);
+                                stream.Close();
+                            }
+                        }
+                    }
+                    con.Close();
+                }
+            }
+        }
+
+        public void SETdataGridView91()
+        {
+            DataGridViewLinkColumn lnkDownload = new DataGridViewLinkColumn();
+            lnkDownload.UseColumnTextForLinkValue = true;
+            lnkDownload.LinkBehavior = LinkBehavior.SystemDefault;
+            lnkDownload.Name = "lnkDownload91";
+            lnkDownload.HeaderText = "檔案Download";
+            lnkDownload.Text = "Download";
+
+            dataGridView9.Columns.Insert(dataGridView9.ColumnCount, lnkDownload);
+            dataGridView9.CellContentClick += new DataGridViewCellEventHandler(DataGridView91_CellClick);
+
+        }
+        private void DataGridView91_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            StringBuilder SQL = new StringBuilder();
+
+            DataGridView dgv = (DataGridView)sender;
+            string columnName = dgv.Columns[e.ColumnIndex].Name;
+
+            if (e.RowIndex >= 0 && columnName.Equals("lnkDownload91"))
+            {
+                DataGridViewRow row = dataGridView8.Rows[e.RowIndex];
+
+                int ID = Convert.ToInt16((row.Cells["ID"].Value));
+                byte[] bytes;
+                string fileName, contentType;
+
+                // 20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                using (SqlConnection con = sqlConn)
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        SQL.AppendFormat(@"
+                                         SELECT 
+                                            [ID]
+                                            ,[NAMES]
+                                            ,[CONTENTS]
+                                            ,[COMMEMTS]
+                                            ,[CREATEDATES]
+                                            ,[DOCNAMES1]
+                                            ,[CONTENTTYPES1]
+                                            ,[DATAS1]
+                                            FROM [TKRESEARCH].[dbo].[TBDB9]
+                                            WHERE ID=@ID
+                                            ORDER BY [ID] 
+                                       
+                                            ");
+                        cmd.CommandText = SQL.ToString();
+                        cmd.Parameters.AddWithValue("@ID", ID);
+                        cmd.Connection = con;
+                        con.Open();
+
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            sdr.Read();
+                            bytes = (byte[])sdr["DATAS1"];
+                            contentType = sdr["CONTENTTYPES1"].ToString();
+                            fileName = sdr["DOCNAMES1"].ToString();
 
                             Stream stream;
                             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -6994,6 +7085,98 @@ namespace TKRESEARCH
             }
         }
 
+        public void SEARCH9(string KEYS)
+        {
+            SqlDataAdapter adapter1 = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+
+            DataSet ds1 = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                if (!string.IsNullOrEmpty(KEYS))
+                {
+                    sbSql.AppendFormat(@"  
+                                        SELECT
+                                        [ID]
+                                        ,[NAMES] AS '名稱'
+                                        ,[CONTENTS] AS '文件內容敘述'
+                                        ,[COMMEMTS] AS '備註'
+                                        ,[CREATEDATES] AS '填表日期'
+                                        ,[DOCNAMES1] AS '檔案'
+
+                                        FROM [TKRESEARCH].[dbo].[TBDB9]
+
+                                        WHERE NAMES LIKE '%{0}%'
+                                        ORDER BY  [ID]
+                                    ", KEYS);
+                }
+                else
+                {
+                    sbSql.AppendFormat(@"                                          
+                                         SELECT
+                                         [ID]
+                                        ,[NAMES] AS '名稱'
+                                        ,[CONTENTS] AS '文件內容敘述'
+                                        ,[COMMEMTS] AS '備註'
+                                        ,[CREATEDATES] AS '填表日期'
+                                        ,[DOCNAMES1] AS '檔案'
+
+                                        FROM [TKRESEARCH].[dbo].[TBDB9]
+
+                                        ORDER BY  [ID]
+                                    ");
+                }
+
+
+                adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+                sqlConn.Open();
+                ds1.Clear();
+                adapter1.Fill(ds1, "ds1");
+                sqlConn.Close();
+
+
+                if (ds1.Tables["ds1"].Rows.Count >= 1)
+                {
+                    dataGridView9.DataSource = ds1.Tables["ds1"];
+
+                    dataGridView9.AutoResizeColumns();
+
+                }
+                else
+                {
+                    dataGridView9.DataSource = null;
+
+                }
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+
+        }
+
         #endregion
 
         #region BUTTON
@@ -7952,10 +8135,14 @@ namespace TKRESEARCH
                 //do something else
             }
         }
+        private void button54_Click(object sender, EventArgs e)
+        {
+            SEARCH9(textBox9A.Text);
+        }
 
         #endregion
 
-       
+
     }
 }
 
