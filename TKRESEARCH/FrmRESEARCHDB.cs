@@ -6539,6 +6539,8 @@ namespace TKRESEARCH
                     DataGridViewRow row = dataGridView7.Rows[rowindex];
                     textBox7B.Text = row.Cells["ID"].Value.ToString();
                     textBox7C.Text = row.Cells["ID"].Value.ToString();
+
+                    comboBox8.Text = row.Cells["分類"].Value.ToString();
                     textBox721.Text = row.Cells["產品品名"].Value.ToString();
                     textBox722.Text = row.Cells["備註"].Value.ToString();
                     textBox731.Text = row.Cells["產品品名"].Value.ToString();
@@ -6849,6 +6851,147 @@ namespace TKRESEARCH
             }
 
 
+        }
+
+        public void UPDATE_TO_TBDB8(
+                              string ID
+                             , string KINDS
+                              , string NAMES
+                             , string RECORDS
+                             , string REPORTS
+                              , string COMMEMTS
+
+                             )
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(NAMES))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        UPDATE [TKRESEARCH].[dbo].[TBDB8]
+                                        SET
+                                        [KINDS]=@KINDS                                        
+                                        ,[NAMES]=@NAMES                                      
+                                        ,[RECORDS]=@RECORDS
+                                       ,[REPORTS]=@REPORTS
+                                       ,[COMMEMTS]=@COMMEMTS
+                                        WHERE [ID]=@ID
+                                       
+                                       
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", ID);
+                        cmd.Parameters.AddWithValue("@KINDS", KINDS);
+                        cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                        cmd.Parameters.AddWithValue("@RECORDS", RECORDS);
+                        cmd.Parameters.AddWithValue("@REPORTS", REPORTS);
+                        cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+
+
+        }
+
+        public void DELETE_TO_TBDB8(string ID)
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(ID))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        DELETE[TKRESEARCH].[dbo].[TBDB8]
+                                        WHERE ID=@ID
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", ID);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+        }
+        private void dataGridView8_SelectionChanged(object sender, EventArgs e)
+        {
+            textBox8B.Text = null;
+            textBox8C.Text = null;
+            textBox821.Text = null;
+            textBox822.Text = null;
+            textBox823.Text = null;
+            textBox824.Text = null;
+            textBox831.Text = null;
+
+            if (dataGridView8.CurrentRow != null)
+            {
+                int rowindex = dataGridView8.CurrentRow.Index;
+
+                if (rowindex >= 0)
+                {
+                    DataGridViewRow row = dataGridView8.Rows[rowindex];
+                    
+
+                    textBox8B.Text = row.Cells["ID"].Value.ToString();
+                    textBox8C.Text = row.Cells["ID"].Value.ToString();
+
+                    comboBox10.Text= row.Cells["分類"].Value.ToString();
+                    textBox821.Text = row.Cells["產品品名"].Value.ToString();
+                    textBox822.Text = row.Cells["產品品評回饋"].Value.ToString();
+                    textBox823.Text = row.Cells["產品測試報告"].Value.ToString();
+                    textBox824.Text = row.Cells["備註"].Value.ToString();
+                    textBox831.Text = row.Cells["產品品名"].Value.ToString();
+
+                }
+                else
+                {
+                    textBox8B.Text = null;
+                    textBox8C.Text = null;
+                    textBox821.Text = null;
+                    textBox822.Text = null;
+                    textBox823.Text = null;
+                    textBox824.Text = null;
+                    textBox831.Text = null;
+                }
+            }
         }
 
         #endregion
@@ -7773,9 +7916,46 @@ namespace TKRESEARCH
         {
             OPEN83();
         }
+        private void button52_Click(object sender, EventArgs e)
+        {
+            string ID = textBox8B.Text;
+            string KINDS = comboBox10.Text.ToString();
+            string NAMES = textBox821.Text.ToString();
+            string RECORDS = textBox822.Text.ToString();
+            string REPORTS = textBox823.Text.ToString();
+            string COMMEMTS = textBox824.Text.ToString();
+
+
+
+            UPDATE_TO_TBDB8(
+                        ID
+                        , KINDS
+                        , NAMES
+                        , RECORDS
+                        , REPORTS
+                        , COMMEMTS
+                        );
+
+            SEARCH8(textBox8A.Text);
+        }
+
+        private void button53_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DELETE_TO_TBDB8(textBox8C.Text);
+                SEARCH8(textBox8A.Text);
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+        }
+
         #endregion
 
-
+       
     }
 }
 
