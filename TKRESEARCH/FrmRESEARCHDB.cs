@@ -171,6 +171,8 @@ namespace TKRESEARCH
             comboBox7load();
             comboBox8load();
             comboBox9load();
+            comboBox10load();
+            comboBox11load();
 
         }
 
@@ -437,6 +439,65 @@ namespace TKRESEARCH
             comboBox9.DataSource = dt.DefaultView;
             comboBox9.ValueMember = "PARAID";
             comboBox9.DisplayMember = "PARAID";
+            sqlConn.Close();
+
+
+        }
+        public void comboBox10load()
+        {
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder Sequel = new StringBuilder();
+            Sequel.AppendFormat(@" SELECT  [ID],[KIND],[PARAID],[PARANAME]  FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND] IN ('成品','原料','物料' ) ORDER BY [KIND],ID  ");
+            SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+            DataTable dt = new DataTable();
+            sqlConn.Open();
+
+            dt.Columns.Add("PARAID", typeof(string));
+            dt.Columns.Add("PARANAME", typeof(string));
+            da.Fill(dt);
+            comboBox10.DataSource = dt.DefaultView;
+            comboBox10.ValueMember = "PARAID";
+            comboBox10.DisplayMember = "PARAID";
+            sqlConn.Close();
+
+
+        }
+
+        public void comboBox11load()
+        {
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder Sequel = new StringBuilder();
+            Sequel.AppendFormat(@" SELECT [KIND] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND] IN ('原料','成品','物料') GROUP BY [KIND] ORDER BY [KIND] ");
+            SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+            DataTable dt = new DataTable();
+            sqlConn.Open();
+
+            dt.Columns.Add("KIND", typeof(string));
+         
+            da.Fill(dt);
+            comboBox11.DataSource = dt.DefaultView;
+            comboBox11.ValueMember = "KIND";
+            comboBox11.DisplayMember = "KIND";
             sqlConn.Close();
 
 
@@ -7440,6 +7501,148 @@ namespace TKRESEARCH
             }
         }
 
+        public void SEARCH10(string KEYS)
+        {
+            SqlDataAdapter adapter1 = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+
+            DataSet ds1 = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                if (!string.IsNullOrEmpty(KEYS))
+                {
+                    sbSql.AppendFormat(@"  
+                                        SELECT 
+                                        [ID]
+                                        ,[KIND] AS '分類'
+                                        ,[PARAID] AS '名稱'
+                                        ,[PARANAME] AS '內容'
+                                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                                        WHERE [KIND] IN ('原料','成品','物料')                                  
+
+                                        AND  PARAID LIKE '%{0}%'
+
+                                        ORDER BY [KIND],[ID]
+                                    ", KEYS);
+                }
+                else
+                {
+                    sbSql.AppendFormat(@"                                          
+                                        SELECT 
+                                        [ID]
+                                        ,[KIND] AS '分類'
+                                        ,[PARAID] AS '名稱'
+                                        ,[PARANAME] AS '內容'
+                                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                                        WHERE [KIND] IN ('原料','成品','物料')
+
+                                        ORDER BY [KIND],[ID]
+
+                                       
+                                    ");
+                }
+
+
+                adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+                sqlConn.Open();
+                ds1.Clear();
+                adapter1.Fill(ds1, "ds1");
+                sqlConn.Close();
+
+
+                if (ds1.Tables["ds1"].Rows.Count >= 1)
+                {
+                    dataGridView10.DataSource = ds1.Tables["ds1"];
+
+                    dataGridView10.AutoResizeColumns();
+
+                }
+                else
+                {
+                    dataGridView10.DataSource = null;
+
+                }
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+
+        }
+
+        public void ADD_TO_TBPARA(string KIND, string PARAID, string PARANAME)
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(PARAID))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        INSERT INTO  [TKRESEARCH].[dbo].[TBPARA]
+                                        (
+                                        [KIND] 
+                                        ,[PARAID] 
+                                        ,[PARANAME] 
+                                        )
+                                        VALUES
+                                        (
+                                        @KIND
+                                        ,@PARAID
+                                        ,@PARANAME
+                                        )
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@KIND", KIND);
+                        cmd.Parameters.AddWithValue("@PARAID", PARAID);
+                        cmd.Parameters.AddWithValue("@PARANAME", PARANAME);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+        }
+
+
         #endregion
 
         #region BUTTON
@@ -8477,6 +8680,21 @@ namespace TKRESEARCH
                 //do something else
             }
         }
+
+        private void button58_Click(object sender, EventArgs e)
+        {
+            SEARCH10(textBox10A.Text);
+        }
+        private void button59_Click(object sender, EventArgs e)
+        {
+            string KIND = comboBox11.Text;
+            string PARAID = textBoxA1.Text;
+            string PARANAME = textBoxA2.Text;
+
+            ADD_TO_TBPARA(KIND, PARAID, PARANAME);
+            SEARCH10(textBox10A.Text);
+        }
+
         #endregion
 
 
