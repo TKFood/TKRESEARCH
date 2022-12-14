@@ -578,8 +578,7 @@ namespace TKRESEARCH
                                         ,[OTHERS] AS '其他口味'
                                         ,[COMMENTS] AS '備註'
                                         ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'
-                                        ,[DOCNAMES] AS '產品圖片'
-                                        ,[CONTENTTYPES] 
+                                        ,[DOCNAMES] AS '產品圖片' 
                                       
                                         FROM [TKRESEARCH].[dbo].[TBDB2]
                                         WHERE [NAMES] LIKE '%{0}%'
@@ -609,7 +608,6 @@ namespace TKRESEARCH
                                         ,[COMMENTS] AS '備註'
                                         ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'
                                         ,[DOCNAMES] AS '產品圖片'
-                                        ,[CONTENTTYPES] 
                                        
                                         FROM [TKRESEARCH].[dbo].[TBDB2]                                       
                                         ORDER BY [ID] 
@@ -895,7 +893,7 @@ namespace TKRESEARCH
 
             if (e.RowIndex >= 0 && columnName.Equals("lnkDownload31"))
             {
-                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+                DataGridViewRow row = dataGridView2.Rows[e.RowIndex];
                 int ID = Convert.ToInt16((row.Cells["ID"].Value));
                 byte[] bytes;
                 string fileName, contentType;
