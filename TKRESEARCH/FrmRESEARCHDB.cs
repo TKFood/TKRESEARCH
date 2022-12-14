@@ -122,6 +122,9 @@ namespace TKRESEARCH
         string CONTENTTYPES83 = null;
         string DOCNAMES83 = null;
 
+        byte[] BYTES91 = null;
+        string CONTENTTYPES91 = null;
+        string DOCNAMES91 = null;
 
         public FrmRESEARCHDB()
         {
@@ -2997,7 +3000,7 @@ namespace TKRESEARCH
 
             if (e.RowIndex >= 0 && columnName.Equals("lnkDownload91"))
             {
-                DataGridViewRow row = dataGridView8.Rows[e.RowIndex];
+                DataGridViewRow row = dataGridView9.Rows[e.RowIndex];
 
                 int ID = Convert.ToInt16((row.Cells["ID"].Value));
                 byte[] bytes;
@@ -4279,6 +4282,63 @@ namespace TKRESEARCH
                 }
             }
         }
+
+        public void OPEN91()
+        {
+            string FILETYPE = null;
+            CONTENTTYPES91 = "";
+            BYTES91 = null;
+            DOCNAMES91 = null;
+
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = openFileDialog1.FileName;
+
+                    DOCNAMES91 = Path.GetFileName(fileName);
+                    textBox904.Text = fileName;
+
+                    BYTES91 = File.ReadAllBytes(fileName);
+
+                    //Set the contenttype based on File Extension
+
+                    switch (Path.GetExtension(fileName))
+                    {
+                        case ".docx":
+                            CONTENTTYPES91 = "application/msword";
+                            break;
+                        case ".doc":
+                            CONTENTTYPES91 = "application/msword";
+                            break;
+                        case ".xls":
+                            CONTENTTYPES91 = "application/vnd.ms-excel";
+                            break;
+                        case ".xlsx":
+                            CONTENTTYPES91 = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            break;
+                        case ".pdf":
+                            CONTENTTYPES91 = "application/pdf";
+                            break;
+                        case ".jpg":
+                            CONTENTTYPES91 = "image/jpeg";
+                            break;
+                        case ".png":
+                            CONTENTTYPES91 = "image/png";
+                            break;
+                        case ".gif":
+                            CONTENTTYPES91 = "image/gif";
+                            break;
+                        case ".bmp":
+                            CONTENTTYPES91 = "image/bmp";
+                            break;
+                    }
+
+
+                }
+            }
+        }
+
 
         public void ADD_TO_TBDB1(string DOCID,string COMMENTS, string DOCNAMES, string CONTENTTYPES,byte[] BYTES)
         {
@@ -7177,6 +7237,81 @@ namespace TKRESEARCH
 
         }
 
+        public void ADD_TO_TBDB9(
+                         string NAMES
+                         , string CONTENTS                       
+                         , string COMMEMTS
+                         , string DOCNAMES1
+                         , string CONTENTTYPES1
+                         , byte[] DATAS1                         
+
+                          )
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(NAMES))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"   
+                                        INSERT INTO [TKRESEARCH].[dbo].[TBDB9]
+                                        (
+                                       [NAMES]   
+                                        ,[CONTENTS]                                                                          
+                                        ,[COMMEMTS]
+                                        ,[DOCNAMES1]
+                                        ,[CONTENTTYPES1]
+                                        ,[DATAS1]
+                                     
+                                        )
+                                        VALUES
+                                        (
+                                       @NAMES    
+                                        ,@CONTENTS                                  
+                                        ,@COMMEMTS
+                                        ,@DOCNAMES1
+                                        ,@CONTENTTYPES1
+                                        ,@DATAS1
+                                       
+                                        )
+                                       
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+
+                        
+                        cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                        cmd.Parameters.AddWithValue("@CONTENTS", CONTENTS);                      
+                        cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
+
+                        cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
+                        cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
+                        cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
+                
+
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+
+
+        }
         #endregion
 
         #region BUTTON
@@ -8138,6 +8273,47 @@ namespace TKRESEARCH
         private void button54_Click(object sender, EventArgs e)
         {
             SEARCH9(textBox9A.Text);
+        }
+        private void button55_Click(object sender, EventArgs e)
+        {            
+            string NAMES = textBox901.Text.ToString();
+            string CONTENTS = textBox902.Text.ToString();        
+            string COMMEMTS = textBox903.Text.ToString();
+
+            string DOCNAMES1 = "";
+            string CONTENTTYPES1 = "";
+            byte[] DATAS1 = new byte[] { 1 };
+       
+
+
+
+            if (!string.IsNullOrEmpty(DOCNAMES91))
+            {
+                DOCNAMES1 = DOCNAMES91;
+                CONTENTTYPES1 = CONTENTTYPES91;
+                DATAS1 = BYTES91;
+            }
+          
+
+
+            ADD_TO_TBDB9(
+                        NAMES
+                        , CONTENTS                     
+                        , COMMEMTS
+                        , DOCNAMES1
+                        , CONTENTTYPES1
+                        , DATAS1
+                       
+                        );
+
+            SEARCH9(textBox9A.Text);
+
+
+        }
+
+        private void button57_Click(object sender, EventArgs e)
+        {
+            OPEN91();
         }
 
         #endregion
