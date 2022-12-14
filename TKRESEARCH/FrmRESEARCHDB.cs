@@ -102,6 +102,17 @@ namespace TKRESEARCH
         string DOCNAMES62 = null;
 
 
+        byte[] BYTES71 = null;
+        string CONTENTTYPES71 = null;
+        string DOCNAMES71 = null;
+        byte[] BYTES72 = null;
+        string CONTENTTYPES72 = null;
+        string DOCNAMES72 = null;
+        byte[] BYTES73 = null;
+        string CONTENTTYPES73 = null;
+        string DOCNAMES73 = null;
+
+
         public FrmRESEARCHDB()
         {
             InitializeComponent();
@@ -137,6 +148,8 @@ namespace TKRESEARCH
             comboBox3load();
             comboBox4load();
             comboBox5load();
+            comboBox6load();
+            comboBox7load();
         }
 
         #region FUNCTION
@@ -282,6 +295,66 @@ namespace TKRESEARCH
             comboBox5.DataSource = dt.DefaultView;
             comboBox5.ValueMember = "PARAID";
             comboBox5.DisplayMember = "PARAID";
+            sqlConn.Close();
+
+
+        }
+
+        public void comboBox6load()
+        {
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder Sequel = new StringBuilder();
+            Sequel.AppendFormat(@" SELECT  [ID],[KIND],[PARAID],[PARANAME]  FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='成品'  ORDER BY ID ");
+            SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+            DataTable dt = new DataTable();
+            sqlConn.Open();
+
+            dt.Columns.Add("PARAID", typeof(string));
+            dt.Columns.Add("PARANAME", typeof(string));
+            da.Fill(dt);
+            comboBox6.DataSource = dt.DefaultView;
+            comboBox6.ValueMember = "PARAID";
+            comboBox6.DisplayMember = "PARAID";
+            sqlConn.Close();
+
+
+        }
+
+        public void comboBox7load()
+        {
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder Sequel = new StringBuilder();
+            Sequel.AppendFormat(@" SELECT  [ID],[KIND],[PARAID],[PARANAME]  FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='成品'  ORDER BY ID ");
+            SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+            DataTable dt = new DataTable();
+            sqlConn.Open();
+
+            dt.Columns.Add("PARAID", typeof(string));
+            dt.Columns.Add("PARANAME", typeof(string));
+            da.Fill(dt);
+            comboBox7.DataSource = dt.DefaultView;
+            comboBox7.ValueMember = "PARAID";
+            comboBox7.DisplayMember = "PARAID";
             sqlConn.Close();
 
 
@@ -3411,6 +3484,174 @@ namespace TKRESEARCH
             }
         }
 
+        public void OPEN71()
+        {
+            string FILETYPE = null;
+            CONTENTTYPES71 = "";
+            BYTES71 = null;
+            DOCNAMES71 = null;
+
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = openFileDialog1.FileName;
+
+                    DOCNAMES71 = Path.GetFileName(fileName);
+                    textBox703.Text = fileName;
+
+                    BYTES71 = File.ReadAllBytes(fileName);
+
+                    //Set the contenttype based on File Extension
+
+                    switch (Path.GetExtension(fileName))
+                    {
+                        case ".docx":
+                            CONTENTTYPES71 = "application/msword";
+                            break;
+                        case ".doc":
+                            CONTENTTYPES71 = "application/msword";
+                            break;
+                        case ".xls":
+                            CONTENTTYPES71 = "application/vnd.ms-excel";
+                            break;
+                        case ".xlsx":
+                            CONTENTTYPES71 = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            break;
+                        case ".pdf":
+                            CONTENTTYPES71 = "application/pdf";
+                            break;
+                        case ".jpg":
+                            CONTENTTYPES71 = "image/jpeg";
+                            break;
+                        case ".png":
+                            CONTENTTYPES71 = "image/png";
+                            break;
+                        case ".gif":
+                            CONTENTTYPES71 = "image/gif";
+                            break;
+                        case ".bmp":
+                            CONTENTTYPES71 = "image/bmp";
+                            break;
+                    }
+
+
+                }
+            }
+        }
+
+        public void OPEN72()
+        {
+            string FILETYPE = null;
+            CONTENTTYPES72= "";
+            BYTES72 = null;
+            DOCNAMES72 = null;
+
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = openFileDialog1.FileName;
+
+                    DOCNAMES72 = Path.GetFileName(fileName);
+                    textBox704.Text = fileName;
+
+                    BYTES72 = File.ReadAllBytes(fileName);
+
+                    //Set the contenttype based on File Extension
+
+                    switch (Path.GetExtension(fileName))
+                    {
+                        case ".docx":
+                            CONTENTTYPES72 = "application/msword";
+                            break;
+                        case ".doc":
+                            CONTENTTYPES72 = "application/msword";
+                            break;
+                        case ".xls":
+                            CONTENTTYPES72 = "application/vnd.ms-excel";
+                            break;
+                        case ".xlsx":
+                            CONTENTTYPES72 = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            break;
+                        case ".pdf":
+                            CONTENTTYPES72 = "application/pdf";
+                            break;
+                        case ".jpg":
+                            CONTENTTYPES72 = "image/jpeg";
+                            break;
+                        case ".png":
+                            CONTENTTYPES72 = "image/png";
+                            break;
+                        case ".gif":
+                            CONTENTTYPES72 = "image/gif";
+                            break;
+                        case ".bmp":
+                            CONTENTTYPES72 = "image/bmp";
+                            break;
+                    }
+
+
+                }
+            }
+        }
+
+        public void OPEN73()
+        {
+            string FILETYPE = null;
+            CONTENTTYPES73 = "";
+            BYTES73 = null;
+            DOCNAMES73 = null;
+
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = openFileDialog1.FileName;
+
+                    DOCNAMES73 = Path.GetFileName(fileName);
+                    textBox705.Text = fileName;
+
+                    BYTES73 = File.ReadAllBytes(fileName);
+
+                    //Set the contenttype based on File Extension
+
+                    switch (Path.GetExtension(fileName))
+                    {
+                        case ".docx":
+                            CONTENTTYPES73 = "application/msword";
+                            break;
+                        case ".doc":
+                            CONTENTTYPES73 = "application/msword";
+                            break;
+                        case ".xls":
+                            CONTENTTYPES73 = "application/vnd.ms-excel";
+                            break;
+                        case ".xlsx":
+                            CONTENTTYPES73 = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            break;
+                        case ".pdf":
+                            CONTENTTYPES73 = "application/pdf";
+                            break;
+                        case ".jpg":
+                            CONTENTTYPES73 = "image/jpeg";
+                            break;
+                        case ".png":
+                            CONTENTTYPES73 = "image/png";
+                            break;
+                        case ".gif":
+                            CONTENTTYPES73 = "image/gif";
+                            break;
+                        case ".bmp":
+                            CONTENTTYPES73 = "image/bmp";
+                            break;
+                    }
+
+
+                }
+            }
+        }
+
         public void ADD_TO_TBDB1(string DOCID,string COMMENTS, string DOCNAMES, string CONTENTTYPES,byte[] BYTES)
         {
             // 20210902密
@@ -5648,6 +5889,102 @@ namespace TKRESEARCH
 
         }
 
+        public void ADD_TO_TBDB7(
+                          string KINDS                         
+                          , string NAMES
+                          , string COMMEMTS
+                          , string DOCNAMES1
+                          , string CONTENTTYPES1
+                          , byte[] DATAS1
+                          , string DOCNAMES2
+                          , string CONTENTTYPES2
+                          , byte[] DATAS2
+                          , string DOCNAMES3
+                          , string CONTENTTYPES3
+                          , byte[] DATAS3
+
+                           )
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(NAMES))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"   
+                                        INSERT INTO [TKRESEARCH].[dbo].[TBDB7]
+                                        (
+                                        [KINDS]                                       
+                                        ,[NAMES]                                       
+                                        ,[COMMEMTS]
+                                        ,[DOCNAMES1]
+                                        ,[CONTENTTYPES1]
+                                        ,[DATAS1]
+                                        ,[DOCNAMES2]
+                                        ,[CONTENTTYPES2]
+                                        ,[DATAS2]
+                                        ,[DOCNAMES3]
+                                        ,[CONTENTTYPES3]
+                                        ,[DATAS3]
+                                        )
+                                        VALUES
+                                        (
+                                        @KINDS                                       
+                                        ,@NAMES                                       
+                                        ,@COMMEMTS
+                                        ,@DOCNAMES1
+                                        ,@CONTENTTYPES1
+                                        ,@DATAS1
+                                        ,@DOCNAMES2
+                                        ,@CONTENTTYPES2
+                                        ,@DATAS2
+                                        ,@DOCNAMES3
+                                        ,@CONTENTTYPES3
+                                        ,@DATAS3
+                                        )
+                                       
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+
+                        cmd.Parameters.AddWithValue("@KINDS", KINDS);                       
+                        cmd.Parameters.AddWithValue("@NAMES", NAMES);                       
+                        cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
+
+                        cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
+                        cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
+                        cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
+                        cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
+                        cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
+                        cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
+                        cmd.Parameters.AddWithValue("@DOCNAMES3", DOCNAMES3);
+                        cmd.Parameters.AddWithValue("@CONTENTTYPES3", CONTENTTYPES3);
+                        cmd.Parameters.AddWithValue("@DATAS3", DATAS3);
+
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+
+
+        }
+
         #endregion
 
         #region BUTTON
@@ -6387,6 +6724,76 @@ namespace TKRESEARCH
         private void button36_Click(object sender, EventArgs e)
         {
             SEARCH7(textBox7A.Text);
+        }
+        private void button42_Click(object sender, EventArgs e)
+        {
+            string KINDS = comboBox7.Text.ToString();    
+            string NAMES = textBox701.Text.ToString();      
+            string COMMEMTS = textBox702.Text.ToString();
+
+            string DOCNAMES1 = "";
+            string CONTENTTYPES1 = "";
+            byte[] DATAS1 = new byte[] { 1 };
+            string DOCNAMES2 = "";
+            string CONTENTTYPES2 = "";
+            byte[] DATAS2 = new byte[] { 1 };
+            string DOCNAMES3 = "";
+            string CONTENTTYPES3 = "";
+            byte[] DATAS3 = new byte[] { 1 };
+
+
+
+            if (!string.IsNullOrEmpty(DOCNAMES71))
+            {
+                DOCNAMES1 = DOCNAMES71;
+                CONTENTTYPES1 = CONTENTTYPES71;
+                DATAS1 = BYTES71;
+            }
+            if (!string.IsNullOrEmpty(DOCNAMES72))
+            {
+                DOCNAMES2 = DOCNAMES72;
+                CONTENTTYPES2 = CONTENTTYPES72;
+                DATAS2 = BYTES72;
+            }
+            if (!string.IsNullOrEmpty(DOCNAMES73))
+            {
+                DOCNAMES3 = DOCNAMES73;
+                CONTENTTYPES3 = CONTENTTYPES73;
+                DATAS3 = BYTES73;
+            }
+            
+
+            ADD_TO_TBDB7(
+                        KINDS                       
+                        , NAMES
+                        , COMMEMTS
+                        , DOCNAMES1
+                        , CONTENTTYPES1
+                        , DATAS1
+                        , DOCNAMES2
+                        , CONTENTTYPES2
+                        , DATAS2
+                        , DOCNAMES3
+                        , CONTENTTYPES3
+                        , DATAS3
+                        );
+
+            SEARCH7(textBox7A.Text);
+        }
+
+        private void button37_Click(object sender, EventArgs e)
+        {
+            OPEN71();
+        }
+
+        private void button39_Click(object sender, EventArgs e)
+        {
+            OPEN72();
+        }
+
+        private void button44_Click(object sender, EventArgs e)
+        {
+            OPEN73();
         }
         #endregion
 
