@@ -127,6 +127,10 @@ namespace TKRESEARCH
             SEARCH6(textBox6A.Text);
             SETdataGridView61();
             SETdataGridView62();
+            SEARCH7(textBox7A.Text);
+            SETdataGridView71();
+            SETdataGridView72();
+            SETdataGridView73();
 
             comboBox1load();
             comboBox2load();
@@ -2223,6 +2227,291 @@ namespace TKRESEARCH
                             bytes = (byte[])sdr["DATAS2"];
                             contentType = sdr["CONTENTTYPES2"].ToString();
                             fileName = sdr["DOCNAMES2"].ToString();
+
+                            Stream stream;
+                            SaveFileDialog saveFileDialog = new SaveFileDialog();
+                            saveFileDialog.Filter = "All files (*.*)|*.*";
+                            saveFileDialog.FilterIndex = 1;
+                            saveFileDialog.RestoreDirectory = true;
+                            saveFileDialog.FileName = fileName;
+                            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                stream = saveFileDialog.OpenFile();
+                                stream.Write(bytes, 0, bytes.Length);
+                                stream.Close();
+                            }
+                        }
+                    }
+                    con.Close();
+                }
+            }
+        }
+
+        public void SETdataGridView71()
+        {
+            DataGridViewLinkColumn lnkDownload = new DataGridViewLinkColumn();
+            lnkDownload.UseColumnTextForLinkValue = true;
+            lnkDownload.LinkBehavior = LinkBehavior.SystemDefault;
+            lnkDownload.Name = "lnkDownload71";
+            lnkDownload.HeaderText = "產前會議Download";
+            lnkDownload.Text = "Download";
+
+            dataGridView7.Columns.Insert(dataGridView7.ColumnCount, lnkDownload);
+            dataGridView7.CellContentClick += new DataGridViewCellEventHandler(DataGridView71_CellClick);
+
+        }
+        private void DataGridView71_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            StringBuilder SQL = new StringBuilder();
+
+            DataGridView dgv = (DataGridView)sender;
+            string columnName = dgv.Columns[e.ColumnIndex].Name;
+
+            if (e.RowIndex >= 0 && columnName.Equals("lnkDownload71"))
+            {
+                DataGridViewRow row = dataGridView7.Rows[e.RowIndex];
+
+                int ID = Convert.ToInt16((row.Cells["ID"].Value));
+                byte[] bytes;
+                string fileName, contentType;
+
+                // 20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                using (SqlConnection con = sqlConn)
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        SQL.AppendFormat(@"
+                                         SELECT 
+                                         [ID]
+                                        ,[KINDS]
+                                        ,[NAMES]
+                                        ,[COMMEMTS]
+                                        ,[CREATEDATES]
+                                        ,[DOCNAMES1]
+                                        ,[CONTENTTYPES1]
+                                        ,[DATAS1]
+                                        ,[DOCNAMES2]
+                                        ,[CONTENTTYPES2]
+                                        ,[DATAS2]
+                                        ,[DOCNAMES3]
+                                        ,[CONTENTTYPES3]
+                                        ,[DATAS3]
+                                        FROM [TKRESEARCH].[dbo].[TBDB7]
+                                            WHERE ID=@ID
+                                            ORDER BY [ID] 
+                                       
+                                            ");
+                        cmd.CommandText = SQL.ToString();
+                        cmd.Parameters.AddWithValue("@ID", ID);
+                        cmd.Connection = con;
+                        con.Open();
+
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            sdr.Read();
+                            bytes = (byte[])sdr["DATAS1"];
+                            contentType = sdr["CONTENTTYPES1"].ToString();
+                            fileName = sdr["DOCNAMES1"].ToString();
+
+                            Stream stream;
+                            SaveFileDialog saveFileDialog = new SaveFileDialog();
+                            saveFileDialog.Filter = "All files (*.*)|*.*";
+                            saveFileDialog.FilterIndex = 1;
+                            saveFileDialog.RestoreDirectory = true;
+                            saveFileDialog.FileName = fileName;
+                            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                stream = saveFileDialog.OpenFile();
+                                stream.Write(bytes, 0, bytes.Length);
+                                stream.Close();
+                            }
+                        }
+                    }
+                    con.Close();
+                }
+            }
+        }
+
+        public void SETdataGridView72()
+        {
+            DataGridViewLinkColumn lnkDownload = new DataGridViewLinkColumn();
+            lnkDownload.UseColumnTextForLinkValue = true;
+            lnkDownload.LinkBehavior = LinkBehavior.SystemDefault;
+            lnkDownload.Name = "lnkDownload72";
+            lnkDownload.HeaderText = "技術移轉表Download";
+            lnkDownload.Text = "Download";
+
+            dataGridView7.Columns.Insert(dataGridView7.ColumnCount, lnkDownload);
+            dataGridView7.CellContentClick += new DataGridViewCellEventHandler(DataGridView72_CellClick);
+
+        }
+        private void DataGridView72_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            StringBuilder SQL = new StringBuilder();
+
+            DataGridView dgv = (DataGridView)sender;
+            string columnName = dgv.Columns[e.ColumnIndex].Name;
+
+            if (e.RowIndex >= 0 && columnName.Equals("lnkDownload72"))
+            {
+                DataGridViewRow row = dataGridView7.Rows[e.RowIndex];
+
+                int ID = Convert.ToInt16((row.Cells["ID"].Value));
+                byte[] bytes;
+                string fileName, contentType;
+
+                // 20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                using (SqlConnection con = sqlConn)
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        SQL.AppendFormat(@"
+                                        SELECT 
+                                         [ID]
+                                        ,[KINDS]
+                                        ,[NAMES]
+                                        ,[COMMEMTS]
+                                        ,[CREATEDATES]
+                                        ,[DOCNAMES1]
+                                        ,[CONTENTTYPES1]
+                                        ,[DATAS1]
+                                        ,[DOCNAMES2]
+                                        ,[CONTENTTYPES2]
+                                        ,[DATAS2]
+                                        ,[DOCNAMES3]
+                                        ,[CONTENTTYPES3]
+                                        ,[DATAS3]
+                                        FROM [TKRESEARCH].[dbo].[TBDB7]
+                                            WHERE ID=@ID
+                                            ORDER BY [ID] 
+                                       
+                                            ");
+                        cmd.CommandText = SQL.ToString();
+                        cmd.Parameters.AddWithValue("@ID", ID);
+                        cmd.Connection = con;
+                        con.Open();
+
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            sdr.Read();
+                            bytes = (byte[])sdr["DATAS2"];
+                            contentType = sdr["CONTENTTYPES2"].ToString();
+                            fileName = sdr["DOCNAMES2"].ToString();
+
+                            Stream stream;
+                            SaveFileDialog saveFileDialog = new SaveFileDialog();
+                            saveFileDialog.Filter = "All files (*.*)|*.*";
+                            saveFileDialog.FilterIndex = 1;
+                            saveFileDialog.RestoreDirectory = true;
+                            saveFileDialog.FileName = fileName;
+                            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                stream = saveFileDialog.OpenFile();
+                                stream.Write(bytes, 0, bytes.Length);
+                                stream.Close();
+                            }
+                        }
+                    }
+                    con.Close();
+                }
+            }
+        }
+
+        public void SETdataGridView73()
+        {
+            DataGridViewLinkColumn lnkDownload = new DataGridViewLinkColumn();
+            lnkDownload.UseColumnTextForLinkValue = true;
+            lnkDownload.LinkBehavior = LinkBehavior.SystemDefault;
+            lnkDownload.Name = "lnkDownload73";
+            lnkDownload.HeaderText = "產品圖片Download";
+            lnkDownload.Text = "Download";
+
+            dataGridView7.Columns.Insert(dataGridView7.ColumnCount, lnkDownload);
+            dataGridView7.CellContentClick += new DataGridViewCellEventHandler(DataGridView73_CellClick);
+
+        }
+        private void DataGridView73_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            StringBuilder SQL = new StringBuilder();
+
+            DataGridView dgv = (DataGridView)sender;
+            string columnName = dgv.Columns[e.ColumnIndex].Name;
+
+            if (e.RowIndex >= 0 && columnName.Equals("lnkDownload73"))
+            {
+                DataGridViewRow row = dataGridView7.Rows[e.RowIndex];
+
+                int ID = Convert.ToInt16((row.Cells["ID"].Value));
+                byte[] bytes;
+                string fileName, contentType;
+
+                // 20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                using (SqlConnection con = sqlConn)
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        SQL.AppendFormat(@"
+                                         SELECT 
+                                         [ID]
+                                        ,[KINDS]
+                                        ,[NAMES]
+                                        ,[COMMEMTS]
+                                        ,[CREATEDATES]
+                                        ,[DOCNAMES1]
+                                        ,[CONTENTTYPES1]
+                                        ,[DATAS1]
+                                        ,[DOCNAMES2]
+                                        ,[CONTENTTYPES2]
+                                        ,[DATAS2]
+                                        ,[DOCNAMES3]
+                                        ,[CONTENTTYPES3]
+                                        ,[DATAS3]
+                                        FROM [TKRESEARCH].[dbo].[TBDB7]
+                                            WHERE ID=@ID
+                                            ORDER BY [ID] 
+                                       
+                                            ");
+                        cmd.CommandText = SQL.ToString();
+                        cmd.Parameters.AddWithValue("@ID", ID);
+                        cmd.Connection = con;
+                        con.Open();
+
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            sdr.Read();
+                            bytes = (byte[])sdr["DATAS3"];
+                            contentType = sdr["CONTENTTYPES3"].ToString();
+                            fileName = sdr["DOCNAMES3"].ToString();
 
                             Stream stream;
                             SaveFileDialog saveFileDialog = new SaveFileDialog();
