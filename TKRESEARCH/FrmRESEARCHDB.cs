@@ -3132,6 +3132,7 @@ namespace TKRESEARCH
             textBox1C.Text = null;
             textBox14.Text = null;
             textBox15.Text = null;
+            textBox131.Text = null;
 
             if (dataGridView1.CurrentRow != null)
             {
@@ -3152,7 +3153,7 @@ namespace TKRESEARCH
                     textBox1C.Text = row.Cells["ID"].Value.ToString();
                     textBox14.Text = row.Cells["文件編號"].Value.ToString();
                     textBox15.Text = row.Cells["備註"].Value.ToString();
-
+                    textBox131.Text = row.Cells["文件編號"].Value.ToString();
 
                 }
                 else
@@ -3161,6 +3162,7 @@ namespace TKRESEARCH
                     textBox1C.Text = null;
                     textBox14.Text = null;
                     textBox15.Text = null;
+                    textBox131.Text = null;
 
                 }
             }
