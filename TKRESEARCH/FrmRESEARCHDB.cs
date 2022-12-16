@@ -4579,22 +4579,25 @@ namespace TKRESEARCH
                                 byte[] BYTES
                                 )
         {
-            // 20210902密
-            Class1 TKID = new Class1();//用new 建立類別實體
-            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
 
-            //資料庫使用者密碼解密
-            sqlsb.Password = TKID.Decryption(sqlsb.Password);
-            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
-
-            String connectionString;
-            sqlConn = new SqlConnection(sqlsb.ConnectionString);
-            using (SqlConnection conn = sqlConn)
+            try
             {
-                if (!string.IsNullOrEmpty(NAMES))
+                // 20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+                using (SqlConnection conn = sqlConn)
                 {
-                    StringBuilder ADDSQL = new StringBuilder();
-                    ADDSQL.AppendFormat(@"
+                    if (!string.IsNullOrEmpty(NAMES))
+                    {
+                        StringBuilder ADDSQL = new StringBuilder();
+                        ADDSQL.AppendFormat(@"
                                        
                                         INSERT INTO [TKRESEARCH].[dbo].[TBDB2]
                                         (
@@ -4640,35 +4643,42 @@ namespace TKRESEARCH
                                         )
                                         ");
 
-                    string sql = ADDSQL.ToString();
+                        string sql = ADDSQL.ToString();
 
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@NAMES", NAMES);
-                        cmd.Parameters.AddWithValue("@CHARS", CHARS);
-                        cmd.Parameters.AddWithValue("@ORIS", ORIS);
-                        cmd.Parameters.AddWithValue("@SPECS", SPECS);
-                        cmd.Parameters.AddWithValue("@PRICES", PRICES);
-                        cmd.Parameters.AddWithValue("@SAVEDAYS", SAVEDAYS);
-                        cmd.Parameters.AddWithValue("@SAVEMETHODS", SAVEMETHODS);
-                        cmd.Parameters.AddWithValue("@PRIMES", PRIMES);
-                        cmd.Parameters.AddWithValue("@ALLERGENS", ALLERGENS);
-                        cmd.Parameters.AddWithValue("@OWNERS", OWNERS);
-                        cmd.Parameters.AddWithValue("@EATES", EATES);
-                        cmd.Parameters.AddWithValue("@CHECKSUNITS", CHECKSUNITS);
-                        cmd.Parameters.AddWithValue("@CHECKS", CHECKS);
-                        cmd.Parameters.AddWithValue("@OTHERS", OTHERS);
-                        cmd.Parameters.AddWithValue("@COMMENTS", COMMENTS);
-                        cmd.Parameters.AddWithValue("@DOCNAMES", DOCNAMES);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES", CONTENTTYPES);
-                        cmd.Parameters.AddWithValue("@DATAS", BYTES);
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                            cmd.Parameters.AddWithValue("@CHARS", CHARS);
+                            cmd.Parameters.AddWithValue("@ORIS", ORIS);
+                            cmd.Parameters.AddWithValue("@SPECS", SPECS);
+                            cmd.Parameters.AddWithValue("@PRICES", PRICES);
+                            cmd.Parameters.AddWithValue("@SAVEDAYS", SAVEDAYS);
+                            cmd.Parameters.AddWithValue("@SAVEMETHODS", SAVEMETHODS);
+                            cmd.Parameters.AddWithValue("@PRIMES", PRIMES);
+                            cmd.Parameters.AddWithValue("@ALLERGENS", ALLERGENS);
+                            cmd.Parameters.AddWithValue("@OWNERS", OWNERS);
+                            cmd.Parameters.AddWithValue("@EATES", EATES);
+                            cmd.Parameters.AddWithValue("@CHECKSUNITS", CHECKSUNITS);
+                            cmd.Parameters.AddWithValue("@CHECKS", CHECKS);
+                            cmd.Parameters.AddWithValue("@OTHERS", OTHERS);
+                            cmd.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+                            cmd.Parameters.AddWithValue("@DOCNAMES", DOCNAMES);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES", CONTENTTYPES);
+                            cmd.Parameters.AddWithValue("@DATAS", BYTES);
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                        }
                     }
-                }
 
+                }
             }
+            catch
+            {
+                MessageBox.Show("新增失敗");
+            }
+
+            
 
            
         }
@@ -4877,22 +4887,25 @@ namespace TKRESEARCH
                                 , byte[] DATAS6
                                 )
         {
-            // 20210902密
-            Class1 TKID = new Class1();//用new 建立類別實體
-            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
 
-            //資料庫使用者密碼解密
-            sqlsb.Password = TKID.Decryption(sqlsb.Password);
-            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
-
-            String connectionString;
-            sqlConn = new SqlConnection(sqlsb.ConnectionString);
-            using (SqlConnection conn = sqlConn)
+            try
             {
-                if (!string.IsNullOrEmpty(NAMES))
+                // 20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+                using (SqlConnection conn = sqlConn)
                 {
-                    StringBuilder ADDSQL = new StringBuilder();
-                    ADDSQL.AppendFormat(@"
+                    if (!string.IsNullOrEmpty(NAMES))
+                    {
+                        StringBuilder ADDSQL = new StringBuilder();
+                        ADDSQL.AppendFormat(@"
                                        
                                         INSERT INTO [TKRESEARCH].[dbo].[TBDB3]
                                         (
@@ -4980,56 +4993,62 @@ namespace TKRESEARCH
                                         
                                         ");
 
-                    string sql = ADDSQL.ToString();
+                        string sql = ADDSQL.ToString();
 
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@KINDS", KINDS);
-                        cmd.Parameters.AddWithValue("@SUPPLYS", SUPPLYS);
-                        cmd.Parameters.AddWithValue("@NAMES", NAMES);
-                        cmd.Parameters.AddWithValue("@ORIS", ORIS);
-                        cmd.Parameters.AddWithValue("@SPECS", SPECS);
-                        cmd.Parameters.AddWithValue("@PROALLGENS", PROALLGENS);
-                        cmd.Parameters.AddWithValue("@MANUALLGENS", MANUALLGENS);
-                        cmd.Parameters.AddWithValue("@PLACES", PLACES);
-                        cmd.Parameters.AddWithValue("@OUTS", OUTS);
-                        cmd.Parameters.AddWithValue("@COLORS", COLORS);
-                        cmd.Parameters.AddWithValue("@TASTES", TASTES);
-                        cmd.Parameters.AddWithValue("@LOTS", LOTS);
-                        cmd.Parameters.AddWithValue("@CHECKS", CHECKS);
-                        cmd.Parameters.AddWithValue("@SAVEDAYS", SAVEDAYS);
-                        cmd.Parameters.AddWithValue("@SAVECONDITIONS", SAVECONDITIONS);
-                        cmd.Parameters.AddWithValue("@BASEONS", BASEONS);
-                        cmd.Parameters.AddWithValue("@COA", COA);
-                        cmd.Parameters.AddWithValue("@INCHECKRATES", INCHECKRATES);
-                        cmd.Parameters.AddWithValue("@RULES", RULES);
-                        cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
-                        cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
-                        cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
-                        cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
-                        cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
-                        cmd.Parameters.AddWithValue("@DOCNAMES3", DOCNAMES3);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES3", CONTENTTYPES3);
-                        cmd.Parameters.AddWithValue("@DATAS3", DATAS3);
-                        cmd.Parameters.AddWithValue("@DOCNAMES4", DOCNAMES4);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES4", CONTENTTYPES4);
-                        cmd.Parameters.AddWithValue("@DATAS4", DATAS4);
-                        cmd.Parameters.AddWithValue("@DOCNAMES5", DOCNAMES5);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES5", CONTENTTYPES5);
-                        cmd.Parameters.AddWithValue("@DATAS5", DATAS5);
-                        cmd.Parameters.AddWithValue("@DOCNAMES6", DOCNAMES6);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES6", CONTENTTYPES6);
-                        cmd.Parameters.AddWithValue("@DATAS6", DATAS6);
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@KINDS", KINDS);
+                            cmd.Parameters.AddWithValue("@SUPPLYS", SUPPLYS);
+                            cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                            cmd.Parameters.AddWithValue("@ORIS", ORIS);
+                            cmd.Parameters.AddWithValue("@SPECS", SPECS);
+                            cmd.Parameters.AddWithValue("@PROALLGENS", PROALLGENS);
+                            cmd.Parameters.AddWithValue("@MANUALLGENS", MANUALLGENS);
+                            cmd.Parameters.AddWithValue("@PLACES", PLACES);
+                            cmd.Parameters.AddWithValue("@OUTS", OUTS);
+                            cmd.Parameters.AddWithValue("@COLORS", COLORS);
+                            cmd.Parameters.AddWithValue("@TASTES", TASTES);
+                            cmd.Parameters.AddWithValue("@LOTS", LOTS);
+                            cmd.Parameters.AddWithValue("@CHECKS", CHECKS);
+                            cmd.Parameters.AddWithValue("@SAVEDAYS", SAVEDAYS);
+                            cmd.Parameters.AddWithValue("@SAVECONDITIONS", SAVECONDITIONS);
+                            cmd.Parameters.AddWithValue("@BASEONS", BASEONS);
+                            cmd.Parameters.AddWithValue("@COA", COA);
+                            cmd.Parameters.AddWithValue("@INCHECKRATES", INCHECKRATES);
+                            cmd.Parameters.AddWithValue("@RULES", RULES);
+                            cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
+                            cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
+                            cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
+                            cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
+                            cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
+                            cmd.Parameters.AddWithValue("@DOCNAMES3", DOCNAMES3);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES3", CONTENTTYPES3);
+                            cmd.Parameters.AddWithValue("@DATAS3", DATAS3);
+                            cmd.Parameters.AddWithValue("@DOCNAMES4", DOCNAMES4);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES4", CONTENTTYPES4);
+                            cmd.Parameters.AddWithValue("@DATAS4", DATAS4);
+                            cmd.Parameters.AddWithValue("@DOCNAMES5", DOCNAMES5);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES5", CONTENTTYPES5);
+                            cmd.Parameters.AddWithValue("@DATAS5", DATAS5);
+                            cmd.Parameters.AddWithValue("@DOCNAMES6", DOCNAMES6);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES6", CONTENTTYPES6);
+                            cmd.Parameters.AddWithValue("@DATAS6", DATAS6);
 
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                        }
                     }
-                }
 
+                }
             }
+            catch
+            {
+                MessageBox.Show("新增失敗");
+            }
+            
 
 
         }
@@ -5439,22 +5458,26 @@ namespace TKRESEARCH
                           
                                )
         {
-            // 20210902密
-            Class1 TKID = new Class1();//用new 建立類別實體
-            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
 
-            //資料庫使用者密碼解密
-            sqlsb.Password = TKID.Decryption(sqlsb.Password);
-            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
-
-            String connectionString;
-            sqlConn = new SqlConnection(sqlsb.ConnectionString);
-            using (SqlConnection conn = sqlConn)
+            try
             {
-                if (!string.IsNullOrEmpty(NAMES))
+
+                // 20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+                using (SqlConnection conn = sqlConn)
                 {
-                    StringBuilder ADDSQL = new StringBuilder();
-                    ADDSQL.AppendFormat(@"                                      
+                    if (!string.IsNullOrEmpty(NAMES))
+                    {
+                        StringBuilder ADDSQL = new StringBuilder();
+                        ADDSQL.AppendFormat(@"                                      
                                         
                                         INSERT INTO  [TKRESEARCH].[dbo].[TBDB4]
                                         (
@@ -5496,36 +5519,42 @@ namespace TKRESEARCH
                                         )
                                         ");
 
-                    string sql = ADDSQL.ToString();
+                        string sql = ADDSQL.ToString();
 
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@KINDS", KINDS);
-                        cmd.Parameters.AddWithValue("@SUPPLYS", SUPPLYS);
-                        cmd.Parameters.AddWithValue("@NAMES", NAMES);                        
-                        cmd.Parameters.AddWithValue("@SPECS", SPECS);  
-                        cmd.Parameters.AddWithValue("@OUTS", OUTS);
-                        cmd.Parameters.AddWithValue("@COLORS", COLORS);
-                        cmd.Parameters.AddWithValue("@CHECKS", CHECKS);
-                        cmd.Parameters.AddWithValue("@SAVEDAYS", SAVEDAYS);
-                        cmd.Parameters.AddWithValue("@COA", COA);
-                        cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
-                        cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
-                        cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
-                        cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
-                        cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
-                      
-                        
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@KINDS", KINDS);
+                            cmd.Parameters.AddWithValue("@SUPPLYS", SUPPLYS);
+                            cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                            cmd.Parameters.AddWithValue("@SPECS", SPECS);
+                            cmd.Parameters.AddWithValue("@OUTS", OUTS);
+                            cmd.Parameters.AddWithValue("@COLORS", COLORS);
+                            cmd.Parameters.AddWithValue("@CHECKS", CHECKS);
+                            cmd.Parameters.AddWithValue("@SAVEDAYS", SAVEDAYS);
+                            cmd.Parameters.AddWithValue("@COA", COA);
+                            cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
+                            cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
+                            cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
+                            cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
+                            cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
 
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
+
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                        }
                     }
-                }
 
+                }
             }
+            catch
+            {
+                MessageBox.Show("新增失敗");
+            }
+            
 
 
         }
@@ -5820,22 +5849,24 @@ namespace TKRESEARCH
 
                              )
         {
-            // 20210902密
-            Class1 TKID = new Class1();//用new 建立類別實體
-            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
-
-            //資料庫使用者密碼解密
-            sqlsb.Password = TKID.Decryption(sqlsb.Password);
-            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
-
-            String connectionString;
-            sqlConn = new SqlConnection(sqlsb.ConnectionString);
-            using (SqlConnection conn = sqlConn)
+            try
             {
-                if (!string.IsNullOrEmpty(NAMES))
+                // 20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+                using (SqlConnection conn = sqlConn)
                 {
-                    StringBuilder ADDSQL = new StringBuilder();
-                    ADDSQL.AppendFormat(@"                                      
+                    if (!string.IsNullOrEmpty(NAMES))
+                    {
+                        StringBuilder ADDSQL = new StringBuilder();
+                        ADDSQL.AppendFormat(@"                                      
                                         
                                         INSERT INTO [TKRESEARCH].[dbo].[TBDB5]
                                         (
@@ -5870,33 +5901,42 @@ namespace TKRESEARCH
                                        
                                         ");
 
-                    string sql = ADDSQL.ToString();
+                        string sql = ADDSQL.ToString();
 
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                      
-                        cmd.Parameters.AddWithValue("@SUPPLYS", SUPPLYS);
-                        cmd.Parameters.AddWithValue("@NAMES", NAMES);                     
-                        cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
-                        cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
-                        cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
-                        cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
-                        cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
-                        cmd.Parameters.AddWithValue("@DOCNAMES3", DOCNAMES3);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES3", CONTENTTYPES3);
-                        cmd.Parameters.AddWithValue("@DATAS3", DATAS3);
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
+                        {
+
+                            cmd.Parameters.AddWithValue("@SUPPLYS", SUPPLYS);
+                            cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                            cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
+                            cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
+                            cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
+                            cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
+                            cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
+                            cmd.Parameters.AddWithValue("@DOCNAMES3", DOCNAMES3);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES3", CONTENTTYPES3);
+                            cmd.Parameters.AddWithValue("@DATAS3", DATAS3);
 
 
 
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                        }
                     }
+
                 }
 
             }
+            catch
+            {
+                MessageBox.Show("新增失敗");
+            }
+
+
+           
 
 
         }
@@ -6198,22 +6238,25 @@ namespace TKRESEARCH
 
                              )
         {
-            // 20210902密
-            Class1 TKID = new Class1();//用new 建立類別實體
-            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
 
-            //資料庫使用者密碼解密
-            sqlsb.Password = TKID.Decryption(sqlsb.Password);
-            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
-
-            String connectionString;
-            sqlConn = new SqlConnection(sqlsb.ConnectionString);
-            using (SqlConnection conn = sqlConn)
+            try
             {
-                if (!string.IsNullOrEmpty(NAMES))
+                // 20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+                using (SqlConnection conn = sqlConn)
                 {
-                    StringBuilder ADDSQL = new StringBuilder();
-                    ADDSQL.AppendFormat(@"   
+                    if (!string.IsNullOrEmpty(NAMES))
+                    {
+                        StringBuilder ADDSQL = new StringBuilder();
+                        ADDSQL.AppendFormat(@"   
                                         INSERT INTO [TKRESEARCH].[dbo].[TBDB6]
                                         (
                                         [KINDS]
@@ -6277,49 +6320,57 @@ namespace TKRESEARCH
                                        
                                         ");
 
-                    string sql = ADDSQL.ToString();
+                        string sql = ADDSQL.ToString();
 
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
+                        {
 
-                        cmd.Parameters.AddWithValue("@KINDS", KINDS);
-                        cmd.Parameters.AddWithValue("@IANUMERS", IANUMERS);
-                        cmd.Parameters.AddWithValue("@REGISTERNO", REGISTERNO);
-                        cmd.Parameters.AddWithValue("@MANUNAMES", MANUNAMES);
-                        cmd.Parameters.AddWithValue("@ADDRESS", ADDRESS);
-                        cmd.Parameters.AddWithValue("@CHECKS", CHECKS);
-                        cmd.Parameters.AddWithValue("@NAMES", NAMES);
-                        cmd.Parameters.AddWithValue("@ORIS", ORIS);
-                        cmd.Parameters.AddWithValue("@MANUS", MANUS);
-                        cmd.Parameters.AddWithValue("@PROALLGENS", PROALLGENS);
-                        cmd.Parameters.AddWithValue("@MANUALLGENS", MANUALLGENS);
-                        cmd.Parameters.AddWithValue("@PRIMES", PRIMES);
-                        cmd.Parameters.AddWithValue("@COLORS", COLORS);
-                        cmd.Parameters.AddWithValue("@TASTES", TASTES);
-                        cmd.Parameters.AddWithValue("@CHARS", CHARS);
-                        cmd.Parameters.AddWithValue("@PACKAGES", PACKAGES);
-                        cmd.Parameters.AddWithValue("@WEIGHTS", WEIGHTS);
-                        cmd.Parameters.AddWithValue("@SPECS", SPECS);
-                        cmd.Parameters.AddWithValue("@SAVEDAYS", SAVEDAYS);
-                        cmd.Parameters.AddWithValue("@SAVECONDITIONS", SAVECONDITIONS);
-                        cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);                      
+                            cmd.Parameters.AddWithValue("@KINDS", KINDS);
+                            cmd.Parameters.AddWithValue("@IANUMERS", IANUMERS);
+                            cmd.Parameters.AddWithValue("@REGISTERNO", REGISTERNO);
+                            cmd.Parameters.AddWithValue("@MANUNAMES", MANUNAMES);
+                            cmd.Parameters.AddWithValue("@ADDRESS", ADDRESS);
+                            cmd.Parameters.AddWithValue("@CHECKS", CHECKS);
+                            cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                            cmd.Parameters.AddWithValue("@ORIS", ORIS);
+                            cmd.Parameters.AddWithValue("@MANUS", MANUS);
+                            cmd.Parameters.AddWithValue("@PROALLGENS", PROALLGENS);
+                            cmd.Parameters.AddWithValue("@MANUALLGENS", MANUALLGENS);
+                            cmd.Parameters.AddWithValue("@PRIMES", PRIMES);
+                            cmd.Parameters.AddWithValue("@COLORS", COLORS);
+                            cmd.Parameters.AddWithValue("@TASTES", TASTES);
+                            cmd.Parameters.AddWithValue("@CHARS", CHARS);
+                            cmd.Parameters.AddWithValue("@PACKAGES", PACKAGES);
+                            cmd.Parameters.AddWithValue("@WEIGHTS", WEIGHTS);
+                            cmd.Parameters.AddWithValue("@SPECS", SPECS);
+                            cmd.Parameters.AddWithValue("@SAVEDAYS", SAVEDAYS);
+                            cmd.Parameters.AddWithValue("@SAVECONDITIONS", SAVECONDITIONS);
+                            cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
 
-                        cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
-                        cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
-                        cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
-                        cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
-                     
+                            cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
+                            cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
+                            cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
+                            cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
 
 
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                        }
                     }
-                }
 
+                }
             }
+            catch
+            {
+                MessageBox.Show("新增失敗");
+            }
+
+
+            
 
 
         }
@@ -6673,22 +6724,25 @@ namespace TKRESEARCH
 
                            )
         {
-            // 20210902密
-            Class1 TKID = new Class1();//用new 建立類別實體
-            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
 
-            //資料庫使用者密碼解密
-            sqlsb.Password = TKID.Decryption(sqlsb.Password);
-            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
-
-            String connectionString;
-            sqlConn = new SqlConnection(sqlsb.ConnectionString);
-            using (SqlConnection conn = sqlConn)
+            try
             {
-                if (!string.IsNullOrEmpty(NAMES))
+                // 20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+                using (SqlConnection conn = sqlConn)
                 {
-                    StringBuilder ADDSQL = new StringBuilder();
-                    ADDSQL.AppendFormat(@"   
+                    if (!string.IsNullOrEmpty(NAMES))
+                    {
+                        StringBuilder ADDSQL = new StringBuilder();
+                        ADDSQL.AppendFormat(@"   
                                         INSERT INTO [TKRESEARCH].[dbo].[TBDB7]
                                         (
                                         [KINDS]                                       
@@ -6722,33 +6776,40 @@ namespace TKRESEARCH
                                        
                                         ");
 
-                    string sql = ADDSQL.ToString();
+                        string sql = ADDSQL.ToString();
 
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
+                        {
 
-                        cmd.Parameters.AddWithValue("@KINDS", KINDS);                       
-                        cmd.Parameters.AddWithValue("@NAMES", NAMES);                       
-                        cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
+                            cmd.Parameters.AddWithValue("@KINDS", KINDS);
+                            cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                            cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
 
-                        cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
-                        cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
-                        cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
-                        cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
-                        cmd.Parameters.AddWithValue("@DOCNAMES3", DOCNAMES3);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES3", CONTENTTYPES3);
-                        cmd.Parameters.AddWithValue("@DATAS3", DATAS3);
+                            cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
+                            cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
+                            cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
+                            cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
+                            cmd.Parameters.AddWithValue("@DOCNAMES3", DOCNAMES3);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES3", CONTENTTYPES3);
+                            cmd.Parameters.AddWithValue("@DATAS3", DATAS3);
 
 
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                        }
                     }
-                }
 
+                }
             }
+            catch
+            {
+                MessageBox.Show("新增失敗");
+            }
+
+            
 
 
         }
@@ -6998,22 +7059,25 @@ namespace TKRESEARCH
 
                            )
         {
-            // 20210902密
-            Class1 TKID = new Class1();//用new 建立類別實體
-            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
 
-            //資料庫使用者密碼解密
-            sqlsb.Password = TKID.Decryption(sqlsb.Password);
-            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
-
-            String connectionString;
-            sqlConn = new SqlConnection(sqlsb.ConnectionString);
-            using (SqlConnection conn = sqlConn)
+            try
             {
-                if (!string.IsNullOrEmpty(NAMES))
+                // 20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+                using (SqlConnection conn = sqlConn)
                 {
-                    StringBuilder ADDSQL = new StringBuilder();
-                    ADDSQL.AppendFormat(@"   
+                    if (!string.IsNullOrEmpty(NAMES))
+                    {
+                        StringBuilder ADDSQL = new StringBuilder();
+                        ADDSQL.AppendFormat(@"   
                                         INSERT INTO [TKRESEARCH].[dbo].[TBDB8]
                                         (
                                         [KINDS]                                       
@@ -7051,35 +7115,41 @@ namespace TKRESEARCH
                                        
                                         ");
 
-                    string sql = ADDSQL.ToString();
+                        string sql = ADDSQL.ToString();
 
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
+                        {
 
-                        cmd.Parameters.AddWithValue("@KINDS", KINDS);
-                        cmd.Parameters.AddWithValue("@NAMES", NAMES);
-                        cmd.Parameters.AddWithValue("@RECORDS", RECORDS);
-                        cmd.Parameters.AddWithValue("@REPORTS", REPORTS);
-                        cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
+                            cmd.Parameters.AddWithValue("@KINDS", KINDS);
+                            cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                            cmd.Parameters.AddWithValue("@RECORDS", RECORDS);
+                            cmd.Parameters.AddWithValue("@REPORTS", REPORTS);
+                            cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
 
-                        cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
-                        cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
-                        cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
-                        cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
-                        cmd.Parameters.AddWithValue("@DOCNAMES3", DOCNAMES3);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES3", CONTENTTYPES3);
-                        cmd.Parameters.AddWithValue("@DATAS3", DATAS3);
+                            cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
+                            cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
+                            cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
+                            cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
+                            cmd.Parameters.AddWithValue("@DOCNAMES3", DOCNAMES3);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES3", CONTENTTYPES3);
+                            cmd.Parameters.AddWithValue("@DATAS3", DATAS3);
 
 
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                        }
                     }
-                }
 
+                }
             }
+            catch
+            {
+                MessageBox.Show("新增失敗");
+            }
+          
 
 
         }
@@ -7327,22 +7397,25 @@ namespace TKRESEARCH
 
                           )
         {
-            // 20210902密
-            Class1 TKID = new Class1();//用new 建立類別實體
-            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
 
-            //資料庫使用者密碼解密
-            sqlsb.Password = TKID.Decryption(sqlsb.Password);
-            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
-
-            String connectionString;
-            sqlConn = new SqlConnection(sqlsb.ConnectionString);
-            using (SqlConnection conn = sqlConn)
+            try
             {
-                if (!string.IsNullOrEmpty(NAMES))
+                // 20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+                using (SqlConnection conn = sqlConn)
                 {
-                    StringBuilder ADDSQL = new StringBuilder();
-                    ADDSQL.AppendFormat(@"   
+                    if (!string.IsNullOrEmpty(NAMES))
+                    {
+                        StringBuilder ADDSQL = new StringBuilder();
+                        ADDSQL.AppendFormat(@"   
                                         INSERT INTO [TKRESEARCH].[dbo].[TBDB9]
                                         (
                                        [NAMES]   
@@ -7366,29 +7439,36 @@ namespace TKRESEARCH
                                        
                                         ");
 
-                    string sql = ADDSQL.ToString();
+                        string sql = ADDSQL.ToString();
 
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-
-                        
-                        cmd.Parameters.AddWithValue("@NAMES", NAMES);
-                        cmd.Parameters.AddWithValue("@CONTENTS", CONTENTS);                      
-                        cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
-
-                        cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
-                        cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
-                
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
+                        {
 
 
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
+                            cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                            cmd.Parameters.AddWithValue("@CONTENTS", CONTENTS);
+                            cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
+
+                            cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
+                            cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
+
+
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                        }
                     }
-                }
 
+                }
             }
+            catch
+            {
+                MessageBox.Show("新增失敗");
+            }
+
+           
 
 
         }
