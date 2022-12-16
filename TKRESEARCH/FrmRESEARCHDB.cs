@@ -7758,7 +7758,22 @@ namespace TKRESEARCH
         }
         private void button4_Click(object sender, EventArgs e)
         {
-            ADD_TO_TBDB1(textBox11.Text, textBox12.Text, DOCNAMES1, CONTENTTYPES1, BYTES1);
+            string DOCID = textBox11.Text;
+            string COMMENTS = textBox12.Text;
+            string DOCNAMES = "";
+            string CONTENTTYPES = "";
+            byte[] DATAS = new byte[] { 1 };
+        
+
+            if (!string.IsNullOrEmpty(DOCNAMES1))
+            {
+                DOCNAMES = DOCNAMES1;
+                CONTENTTYPES = CONTENTTYPES1;
+                DATAS = BYTES1;
+            }
+         
+
+            ADD_TO_TBDB1(DOCID, COMMENTS, DOCNAMES, CONTENTTYPES, DATAS);
             SEARCH(textBox1A.Text.Trim());
         }
         private void button6_Click(object sender, EventArgs e)
@@ -7807,6 +7822,17 @@ namespace TKRESEARCH
             string OTHERS = textBox214.Text;
             string COMMENTS = textBox215.Text;
 
+            string DOCNAMES1 = "";
+            string CONTENTTYPES1 = "";
+            byte[] DATAS1 = new byte[] { 1 };
+
+            if (!string.IsNullOrEmpty(DOCNAMES2))
+            {
+                DOCNAMES1 = DOCNAMES2;
+                CONTENTTYPES1 = CONTENTTYPES2;
+                DATAS1 = BYTES2;
+            }
+
 
             ADD_TO_TBDB2( NAMES
                                 ,  CHARS
@@ -7823,9 +7849,9 @@ namespace TKRESEARCH
                                 ,  CHECKS
                                 ,  OTHERS
                                 ,  COMMENTS
-                                ,  DOCNAMES2
-                                ,  CONTENTTYPES2
-                                ,  BYTES2
+                                ,  DOCNAMES1
+                                ,  CONTENTTYPES1
+                                ,  DATAS1
                                 );
             SEARCH2(textBox2A.Text.Trim());
         }
