@@ -866,29 +866,31 @@ namespace TKRESEARCH
             DataGridView dgv = (DataGridView)sender;
             string columnName = dgv.Columns[e.ColumnIndex].Name;
 
-            if (e.RowIndex >= 0 && columnName.Equals("lnkDownload"))
+            try
             {
-                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
-                int ID = Convert.ToInt16((row.Cells["ID"].Value));
-                byte[] bytes;
-                string fileName, contentType;
-
-                // 20210902密
-                Class1 TKID = new Class1();//用new 建立類別實體
-                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
-
-                //資料庫使用者密碼解密
-                sqlsb.Password = TKID.Decryption(sqlsb.Password);
-                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
-
-                String connectionString;
-                sqlConn = new SqlConnection(sqlsb.ConnectionString);
-
-                using (SqlConnection con = sqlConn)
+                if (e.RowIndex >= 0 && columnName.Equals("lnkDownload"))
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+                    int ID = Convert.ToInt16((row.Cells["ID"].Value));
+                    byte[] bytes;
+                    string fileName, contentType;
+
+                    // 20210902密
+                    Class1 TKID = new Class1();//用new 建立類別實體
+                    SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                    //資料庫使用者密碼解密
+                    sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                    sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                    String connectionString;
+                    sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                    using (SqlConnection con = sqlConn)
                     {
-                        SQL.AppendFormat(@"
+                        using (SqlCommand cmd = new SqlCommand())
+                        {
+                            SQL.AppendFormat(@"
                                             SELECT
                                              [ID] 
                                             ,[DOCID] AS '文件編號'
@@ -902,35 +904,42 @@ namespace TKRESEARCH
                                             ORDER BY [ID] 
                                        
                                             ");
-                        cmd.CommandText = SQL.ToString();
-                        cmd.Parameters.AddWithValue("@ID", ID);
-                        cmd.Connection = con;
-                        con.Open();
+                            cmd.CommandText = SQL.ToString();
+                            cmd.Parameters.AddWithValue("@ID", ID);
+                            cmd.Connection = con;
+                            con.Open();
 
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
-                        {
-                            sdr.Read();
-                            bytes = (byte[])sdr["DATAS"];
-                            contentType = sdr["CONTENTTYPES"].ToString();
-                            fileName = sdr["DOCNAMES"].ToString();
-
-                            Stream stream;
-                            SaveFileDialog saveFileDialog = new SaveFileDialog();
-                            saveFileDialog.Filter = "All files (*.*)|*.*";
-                            saveFileDialog.FilterIndex = 1;
-                            saveFileDialog.RestoreDirectory = true;
-                            saveFileDialog.FileName = fileName;
-                            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                            using (SqlDataReader sdr = cmd.ExecuteReader())
                             {
-                                stream = saveFileDialog.OpenFile();
-                                stream.Write(bytes, 0, bytes.Length);
-                                stream.Close();
+                                sdr.Read();
+                                bytes = (byte[])sdr["DATAS"];
+                                contentType = sdr["CONTENTTYPES"].ToString();
+                                fileName = sdr["DOCNAMES"].ToString();
+
+                                Stream stream;
+                                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                                saveFileDialog.Filter = "All files (*.*)|*.*";
+                                saveFileDialog.FilterIndex = 1;
+                                saveFileDialog.RestoreDirectory = true;
+                                saveFileDialog.FileName = fileName;
+                                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                                {
+                                    stream = saveFileDialog.OpenFile();
+                                    stream.Write(bytes, 0, bytes.Length);
+                                    stream.Close();
+                                }
                             }
                         }
+                        con.Close();
                     }
-                    con.Close();
                 }
             }
+            catch
+            {
+                MessageBox.Show("下載失敗-附件檔異常");
+            }
+
+            
         }
 
         public void SETdataGridView2()
@@ -4403,22 +4412,24 @@ namespace TKRESEARCH
 
         public void ADD_TO_TBDB1(string DOCID,string COMMENTS, string DOCNAMES, string CONTENTTYPES,byte[] BYTES)
         {
-            // 20210902密
-            Class1 TKID = new Class1();//用new 建立類別實體
-            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
-
-            //資料庫使用者密碼解密
-            sqlsb.Password = TKID.Decryption(sqlsb.Password);
-            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
-
-            String connectionString;
-            sqlConn = new SqlConnection(sqlsb.ConnectionString);
-            using (SqlConnection conn = sqlConn)
+            try
             {
-                if(!string.IsNullOrEmpty(DOCID))
+                // 20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+                using (SqlConnection conn = sqlConn)
                 {
-                    StringBuilder ADDSQL = new StringBuilder();
-                    ADDSQL.AppendFormat(@"
+                    if (!string.IsNullOrEmpty(DOCID))
+                    {
+                        StringBuilder ADDSQL = new StringBuilder();
+                        ADDSQL.AppendFormat(@"
                                         INSERT INTO [TKRESEARCH].[dbo].[TBDB1]
                                         (
                                         [DOCID]
@@ -4437,22 +4448,30 @@ namespace TKRESEARCH
                                         )
                                         ");
 
-                    string sql = ADDSQL.ToString();
+                        string sql = ADDSQL.ToString();
 
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@DOCID", DOCID);
-                        cmd.Parameters.AddWithValue("@COMMENTS", COMMENTS);
-                        cmd.Parameters.AddWithValue("@DOCNAMES", DOCNAMES);
-                        cmd.Parameters.AddWithValue("@CONTENTTYPES", CONTENTTYPES);
-                        cmd.Parameters.AddWithValue("@DATAS", BYTES);
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@DOCID", DOCID);
+                            cmd.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+                            cmd.Parameters.AddWithValue("@DOCNAMES", DOCNAMES);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES", CONTENTTYPES);
+                            cmd.Parameters.AddWithValue("@DATAS", BYTES);
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                        }
                     }
                 }
-                
             }
+            catch
+            {
+                MessageBox.Show("新增失敗");
+            }
+            
+           
+                
+            
 
           
         }
