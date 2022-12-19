@@ -2184,9 +2184,9 @@
             // tabPage17
             // 
             this.tabPage17.Controls.Add(this.tableLayoutPanel8);
-            this.tabPage17.Location = new System.Drawing.Point(4, 22);
+            this.tabPage17.Location = new System.Drawing.Point(4, 26);
             this.tabPage17.Name = "tabPage17";
-            this.tabPage17.Size = new System.Drawing.Size(958, 343);
+            this.tabPage17.Size = new System.Drawing.Size(958, 339);
             this.tabPage17.TabIndex = 2;
             this.tabPage17.Text = "刪除";
             this.tabPage17.UseVisualStyleBackColor = true;
@@ -2218,7 +2218,7 @@
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(958, 343);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(958, 339);
             this.tableLayoutPanel8.TabIndex = 5;
             // 
             // button10
@@ -3550,9 +3550,9 @@
             // tabPage20
             // 
             this.tabPage20.Controls.Add(this.tableLayoutPanel12);
-            this.tabPage20.Location = new System.Drawing.Point(4, 22);
+            this.tabPage20.Location = new System.Drawing.Point(4, 26);
             this.tabPage20.Name = "tabPage20";
-            this.tabPage20.Size = new System.Drawing.Size(964, 463);
+            this.tabPage20.Size = new System.Drawing.Size(964, 459);
             this.tabPage20.TabIndex = 2;
             this.tabPage20.Text = "刪除";
             this.tabPage20.UseVisualStyleBackColor = true;
@@ -3584,7 +3584,7 @@
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel12.Size = new System.Drawing.Size(964, 463);
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(964, 459);
             this.tableLayoutPanel12.TabIndex = 5;
             // 
             // label80
@@ -4363,9 +4363,9 @@
             // tabPage23
             // 
             this.tabPage23.Controls.Add(this.tableLayoutPanel16);
-            this.tabPage23.Location = new System.Drawing.Point(4, 22);
+            this.tabPage23.Location = new System.Drawing.Point(4, 26);
             this.tabPage23.Name = "tabPage23";
-            this.tabPage23.Size = new System.Drawing.Size(964, 431);
+            this.tabPage23.Size = new System.Drawing.Size(964, 427);
             this.tabPage23.TabIndex = 2;
             this.tabPage23.Text = "刪除";
             this.tabPage23.UseVisualStyleBackColor = true;
@@ -4397,7 +4397,7 @@
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel16.Size = new System.Drawing.Size(964, 431);
+            this.tableLayoutPanel16.Size = new System.Drawing.Size(964, 427);
             this.tableLayoutPanel16.TabIndex = 6;
             // 
             // label110
@@ -4905,9 +4905,9 @@
             // tabPage26
             // 
             this.tabPage26.Controls.Add(this.tableLayoutPanel20);
-            this.tabPage26.Location = new System.Drawing.Point(4, 22);
+            this.tabPage26.Location = new System.Drawing.Point(4, 26);
             this.tabPage26.Name = "tabPage26";
-            this.tabPage26.Size = new System.Drawing.Size(964, 354);
+            this.tabPage26.Size = new System.Drawing.Size(964, 350);
             this.tabPage26.TabIndex = 2;
             this.tabPage26.Text = "刪除";
             this.tabPage26.UseVisualStyleBackColor = true;
@@ -4939,7 +4939,7 @@
             this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel20.Size = new System.Drawing.Size(964, 354);
+            this.tableLayoutPanel20.Size = new System.Drawing.Size(964, 350);
             this.tableLayoutPanel20.TabIndex = 6;
             // 
             // label136
@@ -6176,9 +6176,9 @@
             // tabPage29
             // 
             this.tabPage29.Controls.Add(this.tableLayoutPanel24);
-            this.tabPage29.Location = new System.Drawing.Point(4, 22);
+            this.tabPage29.Location = new System.Drawing.Point(4, 26);
             this.tabPage29.Name = "tabPage29";
-            this.tabPage29.Size = new System.Drawing.Size(964, 497);
+            this.tabPage29.Size = new System.Drawing.Size(964, 493);
             this.tabPage29.TabIndex = 2;
             this.tabPage29.Text = "刪除";
             this.tabPage29.UseVisualStyleBackColor = true;
@@ -6210,7 +6210,7 @@
             this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel24.Size = new System.Drawing.Size(964, 497);
+            this.tableLayoutPanel24.Size = new System.Drawing.Size(964, 493);
             this.tableLayoutPanel24.TabIndex = 5;
             // 
             // label171
@@ -6723,9 +6723,9 @@
             // tabPage31
             // 
             this.tabPage31.Controls.Add(this.tableLayoutPanel28);
-            this.tabPage31.Location = new System.Drawing.Point(4, 22);
+            this.tabPage31.Location = new System.Drawing.Point(4, 26);
             this.tabPage31.Name = "tabPage31";
-            this.tabPage31.Size = new System.Drawing.Size(964, 328);
+            this.tabPage31.Size = new System.Drawing.Size(964, 324);
             this.tabPage31.TabIndex = 2;
             this.tabPage31.Text = "刪除";
             this.tabPage31.UseVisualStyleBackColor = true;
@@ -6757,7 +6757,7 @@
             this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel28.Size = new System.Drawing.Size(964, 328);
+            this.tableLayoutPanel28.Size = new System.Drawing.Size(964, 324);
             this.tableLayoutPanel28.TabIndex = 6;
             // 
             // label193
@@ -7358,9 +7358,9 @@
             // tabPage34
             // 
             this.tabPage34.Controls.Add(this.tableLayoutPanel32);
-            this.tabPage34.Location = new System.Drawing.Point(4, 22);
+            this.tabPage34.Location = new System.Drawing.Point(4, 26);
             this.tabPage34.Name = "tabPage34";
-            this.tabPage34.Size = new System.Drawing.Size(964, 364);
+            this.tabPage34.Size = new System.Drawing.Size(964, 360);
             this.tabPage34.TabIndex = 2;
             this.tabPage34.Text = "刪除";
             this.tabPage34.UseVisualStyleBackColor = true;
@@ -7392,7 +7392,7 @@
             this.tableLayoutPanel32.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel32.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel32.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel32.Size = new System.Drawing.Size(964, 364);
+            this.tableLayoutPanel32.Size = new System.Drawing.Size(964, 360);
             this.tableLayoutPanel32.TabIndex = 6;
             // 
             // label190
@@ -7839,9 +7839,9 @@
             // tabPage37
             // 
             this.tabPage37.Controls.Add(this.tableLayoutPanel36);
-            this.tabPage37.Location = new System.Drawing.Point(4, 22);
+            this.tabPage37.Location = new System.Drawing.Point(4, 26);
             this.tabPage37.Name = "tabPage37";
-            this.tabPage37.Size = new System.Drawing.Size(964, 364);
+            this.tabPage37.Size = new System.Drawing.Size(964, 360);
             this.tabPage37.TabIndex = 2;
             this.tabPage37.Text = "刪除";
             this.tabPage37.UseVisualStyleBackColor = true;
@@ -7873,7 +7873,7 @@
             this.tableLayoutPanel36.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel36.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel36.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel36.Size = new System.Drawing.Size(964, 364);
+            this.tableLayoutPanel36.Size = new System.Drawing.Size(964, 360);
             this.tableLayoutPanel36.TabIndex = 6;
             // 
             // label210
