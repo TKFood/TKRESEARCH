@@ -8163,7 +8163,7 @@ namespace TKRESEARCH
                                         [USERNAMES]
                                         ,[DBNAMES]
                                         ,[DOCID]
-                                        .[NAMES]
+                                        ,[NAMES]
                                         ,[ACTION]
                                         ,[ATTACHNAMES]
                                         )
@@ -8172,7 +8172,7 @@ namespace TKRESEARCH
                                         @USERNAMES
                                         ,@DBNAMES
                                         ,@DOCID
-                                        .@NAMES
+                                        ,@NAMES
                                         ,@ACTION
                                         ,@ATTACHNAMES
                                         )
