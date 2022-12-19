@@ -8140,7 +8140,7 @@ namespace TKRESEARCH
             }
         }
 
-        public void ADD_TO_TBDBLOG(string USERNAMES,string DBNAMES, string DOCID, string ACTION, string ATTACHNAMES)
+        public void ADD_TO_TBDBLOG(string USERNAMES,string DBNAMES, string DOCID,string NAMES, string ACTION, string ATTACHNAMES)
         {
             // 20210902密
             Class1 TKID = new Class1();//用new 建立類別實體
@@ -8163,6 +8163,7 @@ namespace TKRESEARCH
                                         [USERNAMES]
                                         ,[DBNAMES]
                                         ,[DOCID]
+                                        .[NAMES]
                                         ,[ACTION]
                                         ,[ATTACHNAMES]
                                         )
@@ -8171,6 +8172,7 @@ namespace TKRESEARCH
                                         @USERNAMES
                                         ,@DBNAMES
                                         ,@DOCID
+                                        .@NAMES
                                         ,@ACTION
                                         ,@ATTACHNAMES
                                         )
@@ -8184,6 +8186,7 @@ namespace TKRESEARCH
                         cmd.Parameters.AddWithValue("@USERNAMES", USERNAMES);
                         cmd.Parameters.AddWithValue("@DBNAMES", DBNAMES);
                         cmd.Parameters.AddWithValue("@DOCID", DOCID);
+                        cmd.Parameters.AddWithValue("@NAMES", NAMES);
                         cmd.Parameters.AddWithValue("@ACTION", ACTION);
                         cmd.Parameters.AddWithValue("@ATTACHNAMES", ATTACHNAMES);
 
@@ -8229,7 +8232,7 @@ namespace TKRESEARCH
             ADD_TO_TBDB1(DOCID, COMMENTS, DOCNAMES, CONTENTTYPES, DATAS);
             SEARCH(textBox1A.Text.Trim());
 
-            ADD_TO_TBDBLOG(shareArea.UserName, "DB1", DOCID, "ADD", DOCNAMES);
+            ADD_TO_TBDBLOG(shareArea.UserName, "DB1", "", DOCID, "ADD", DOCNAMES);
         }
         private void button6_Click(object sender, EventArgs e)
         {
@@ -8242,7 +8245,7 @@ namespace TKRESEARCH
             DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                ADD_TO_TBDBLOG(shareArea.UserName, "DB1", textBox1C.Text, "DELETE", "");
+                ADD_TO_TBDBLOG(shareArea.UserName, "DB1", textBox1C.Text,textBox131.Text, "DELETE", "");
 
                 DELETE_TO_TBDB1(textBox1C.Text);
                 SEARCH(textBox1A.Text.Trim());
@@ -8315,7 +8318,7 @@ namespace TKRESEARCH
                                 );
             SEARCH2(textBox2A.Text.Trim());
 
-            ADD_TO_TBDBLOG(shareArea.UserName, "DB2", NAMES, "ADD", DOCNAMES1);
+            ADD_TO_TBDBLOG(shareArea.UserName, "DB2", "", NAMES, "ADD", DOCNAMES1);
         }
         private void button11_Click(object sender, EventArgs e)
         {
@@ -8344,7 +8347,7 @@ namespace TKRESEARCH
             DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                ADD_TO_TBDBLOG(shareArea.UserName, "DB2", textBox2C.Text, "DELETE", "");
+                ADD_TO_TBDBLOG(shareArea.UserName, "DB2", textBox2C.Text,textBox241.Text, "DELETE", "");
 
                 DELETE_TO_TBDB2(textBox2C.Text);
                 SEARCH2(textBox2A.Text.Trim());
@@ -8483,7 +8486,7 @@ namespace TKRESEARCH
             SEARCH3(textBox3A.Text);
 
 
-            ADD_TO_TBDBLOG(shareArea.UserName, "DB3", NAMES, "ADD", DOCNAMES1+","+ DOCNAMES2+ "," + DOCNAMES3+ "," + DOCNAMES4+ "," + DOCNAMES5+ "," + DOCNAMES6);
+            ADD_TO_TBDBLOG(shareArea.UserName, "DB3", "", NAMES, "ADD", DOCNAMES1+","+ DOCNAMES2+ "," + DOCNAMES3+ "," + DOCNAMES4+ "," + DOCNAMES5+ "," + DOCNAMES6);
         }
 
         private void button12_Click(object sender, EventArgs e)
@@ -8573,7 +8576,7 @@ namespace TKRESEARCH
             DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                ADD_TO_TBDBLOG(shareArea.UserName, "DB3", textBox3C.Text, "DELETE", "");
+                ADD_TO_TBDBLOG(shareArea.UserName, "DB3", textBox3C.Text,textBox350.Text, "DELETE", "");
 
                 DELETE_TO_TBDB3(textBox3C.Text);
                 SEARCH3(textBox3A.Text.Trim());
@@ -8656,7 +8659,7 @@ namespace TKRESEARCH
 
             SEARCH4(textBox4A.Text);
 
-            ADD_TO_TBDBLOG(shareArea.UserName, "DB4", NAMES, "ADD", DOCNAMES1 + "," + DOCNAMES2);
+            ADD_TO_TBDBLOG(shareArea.UserName, "DB4", "", NAMES, "ADD", DOCNAMES1 + "," + DOCNAMES2);
         }
         private void button25_Click(object sender, EventArgs e)
         {
@@ -8694,7 +8697,7 @@ namespace TKRESEARCH
             DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                ADD_TO_TBDBLOG(shareArea.UserName, "DB4", textBox4C.Text, "DELETE", "");
+                ADD_TO_TBDBLOG(shareArea.UserName, "DB4", textBox4C.Text,textBox430.Text, "DELETE", "");
 
                 DELETE_TO_TBDB4(textBox4C.Text);
                 SEARCH4(textBox4A.Text);
@@ -8767,7 +8770,7 @@ namespace TKRESEARCH
 
             SEARCH5(textBox5A.Text);
 
-            ADD_TO_TBDBLOG(shareArea.UserName, "DB5", NAMES, "ADD", DOCNAMES1 + "," + DOCNAMES2 + "," + DOCNAMES3);
+            ADD_TO_TBDBLOG(shareArea.UserName, "DB5", "", NAMES, "ADD", DOCNAMES1 + "," + DOCNAMES2 + "," + DOCNAMES3);
         }
         private void button26_Click(object sender, EventArgs e)
         {
@@ -8805,7 +8808,7 @@ namespace TKRESEARCH
             DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                ADD_TO_TBDBLOG(shareArea.UserName, "DB5", textBox5C.Text, "DELETE", "");
+                ADD_TO_TBDBLOG(shareArea.UserName, "DB5", textBox5C.Text,textBox531.Text, "DELETE", "");
 
                 DELETE_TO_TBDB5(textBox5C.Text);
                 SEARCH5(textBox5A.Text);
@@ -8904,7 +8907,7 @@ namespace TKRESEARCH
 
             SEARCH6(textBox6A.Text);
 
-            ADD_TO_TBDBLOG(shareArea.UserName, "DB6", NAMES, "ADD", DOCNAMES1 + "," + DOCNAMES2 );
+            ADD_TO_TBDBLOG(shareArea.UserName, "DB6", "", NAMES, "ADD", DOCNAMES1 + "," + DOCNAMES2 );
         }
 
         private void button35_Click(object sender, EventArgs e)
@@ -8975,7 +8978,7 @@ namespace TKRESEARCH
             DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                ADD_TO_TBDBLOG(shareArea.UserName, "DB6", textBox6C.Text, "DELETE", "");
+                ADD_TO_TBDBLOG(shareArea.UserName, "DB6", textBox6C.Text,textBox661.Text, "DELETE", "");
 
                 DELETE_TO_TBDB6(textBox6C.Text);
                 SEARCH6(textBox6A.Text);
@@ -9046,7 +9049,7 @@ namespace TKRESEARCH
 
             SEARCH7(textBox7A.Text);
 
-            ADD_TO_TBDBLOG(shareArea.UserName, "DB7", NAMES, "ADD", DOCNAMES1 + "," + DOCNAMES2 + "," + DOCNAMES3);
+            ADD_TO_TBDBLOG(shareArea.UserName, "DB7", "", NAMES, "ADD", DOCNAMES1 + "," + DOCNAMES2 + "," + DOCNAMES3);
         }
 
         private void button37_Click(object sender, EventArgs e)
@@ -9087,7 +9090,7 @@ namespace TKRESEARCH
             DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                ADD_TO_TBDBLOG(shareArea.UserName, "DB7", textBox7C.Text, "DELETE", "");
+                ADD_TO_TBDBLOG(shareArea.UserName, "DB7", textBox7C.Text,textBox731.Text, "DELETE", "");
 
                 DELETE_TO_TBDB7(textBox7C.Text);
                 SEARCH7(textBox7A.Text);
@@ -9162,7 +9165,7 @@ namespace TKRESEARCH
 
             SEARCH8(textBox8A.Text);
 
-            ADD_TO_TBDBLOG(shareArea.UserName, "DB8", NAMES, "ADD", DOCNAMES1 + "," + DOCNAMES2 + "," + DOCNAMES3);
+            ADD_TO_TBDBLOG(shareArea.UserName, "DB8", "", NAMES, "ADD", DOCNAMES1 + "," + DOCNAMES2 + "," + DOCNAMES3);
         }
 
         private void button47_Click(object sender, EventArgs e)
@@ -9207,7 +9210,7 @@ namespace TKRESEARCH
             DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                ADD_TO_TBDBLOG(shareArea.UserName, "DB8", textBox8C.Text, "DELETE", "");
+                ADD_TO_TBDBLOG(shareArea.UserName, "DB8", textBox8C.Text,textBox831.Text, "DELETE", "");
 
                 DELETE_TO_TBDB8(textBox8C.Text);
                 SEARCH8(textBox8A.Text);
@@ -9255,7 +9258,7 @@ namespace TKRESEARCH
 
             SEARCH9(textBox9A.Text);
 
-            ADD_TO_TBDBLOG(shareArea.UserName, "DB9", NAMES, "ADD", DOCNAMES1);
+            ADD_TO_TBDBLOG(shareArea.UserName, "DB9", "", NAMES, "ADD", DOCNAMES1);
         }
 
         private void button57_Click(object sender, EventArgs e)
@@ -9288,7 +9291,7 @@ namespace TKRESEARCH
             DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                ADD_TO_TBDBLOG(shareArea.UserName, "DB9", textBox9C.Text, "DELETE", "");
+                ADD_TO_TBDBLOG(shareArea.UserName, "DB9", textBox9C.Text,textBox931.Text, "DELETE", "");
 
                 DELETE_TO_TBDB9(textBox9C.Text);
                 SEARCH9(textBox9A.Text);
