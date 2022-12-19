@@ -3539,6 +3539,13 @@ namespace TKRESEARCH
                             break;
                     }
 
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
+
+
+                    }
 
                 }
             }
@@ -3593,6 +3600,14 @@ namespace TKRESEARCH
                         case ".bmp":
                             CONTENTTYPES31 = "image/bmp";
                             break;
+                    }
+
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
+
+
                     }
 
 
@@ -3651,6 +3666,14 @@ namespace TKRESEARCH
                             break;
                     }
 
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
+
+
+                    }
+
 
                 }
             }
@@ -3705,6 +3728,14 @@ namespace TKRESEARCH
                         case ".bmp":
                             CONTENTTYPES33 = "image/bmp";
                             break;
+                    }
+
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
+
+
                     }
 
 
@@ -3763,6 +3794,14 @@ namespace TKRESEARCH
                             break;
                     }
 
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
+
+
+                    }
+
 
                 }
             }
@@ -3819,6 +3858,13 @@ namespace TKRESEARCH
                             break;
                     }
 
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
+
+
+                    }
 
                 }
             }
@@ -3875,6 +3921,13 @@ namespace TKRESEARCH
                             break;
                     }
 
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
+
+
+                    }
 
                 }
             }
@@ -3929,6 +3982,14 @@ namespace TKRESEARCH
                         case ".bmp":
                             CONTENTTYPES41 = "image/bmp";
                             break;
+                    }
+
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
+
+
                     }
 
 
@@ -3987,6 +4048,13 @@ namespace TKRESEARCH
                             break;
                     }
 
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
+
+
+                    }
 
                 }
             }
@@ -4042,6 +4110,13 @@ namespace TKRESEARCH
                             break;
                     }
 
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
+
+
+                    }
 
                 }
             }
@@ -4097,6 +4172,13 @@ namespace TKRESEARCH
                             break;
                     }
 
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
+
+
+                    }
 
                 }
             }
@@ -4152,6 +4234,13 @@ namespace TKRESEARCH
                             break;
                     }
 
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
+
+
+                    }
 
                 }
             }
@@ -4208,6 +4297,13 @@ namespace TKRESEARCH
                             break;
                     }
 
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
+
+
+                    }
 
                 }
             }
@@ -4263,6 +4359,13 @@ namespace TKRESEARCH
                             break;
                     }
 
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
+
+
+                    }
 
                 }
             }
@@ -4318,7 +4421,13 @@ namespace TKRESEARCH
                             CONTENTTYPES71 = "image/bmp";
                             break;
                     }
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
 
+
+                    }
 
                 }
             }
@@ -4375,7 +4484,13 @@ namespace TKRESEARCH
                             break;
                     }
 
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
 
+
+                    }
                 }
             }
         }
@@ -4431,7 +4546,13 @@ namespace TKRESEARCH
                             break;
                     }
 
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
 
+
+                    }
                 }
             }
         }
@@ -4487,7 +4608,13 @@ namespace TKRESEARCH
                             break;
                     }
 
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
 
+
+                    }
                 }
             }
         }
@@ -4544,7 +4671,13 @@ namespace TKRESEARCH
                             break;
                     }
 
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
 
+
+                    }
                 }
             }
         }
@@ -4600,7 +4733,13 @@ namespace TKRESEARCH
                             break;
                     }
 
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
 
+
+                    }
                 }
             }
         }
@@ -4656,7 +4795,13 @@ namespace TKRESEARCH
                             break;
                     }
 
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
 
+
+                    }
                 }
             }
         }
