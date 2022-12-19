@@ -126,9 +126,13 @@ namespace TKRESEARCH
         string CONTENTTYPES91 = null;
         string DOCNAMES91 = null;
 
+        long FILESIZE=0;
+
         public FrmRESEARCHDB()
         {
             InitializeComponent();
+
+            FILESIZE = FIND_FILESIZE();
 
             SEARCH(textBox1A.Text.Trim());
             SETdataGridView1();
@@ -177,6 +181,51 @@ namespace TKRESEARCH
         }
 
         #region FUNCTION
+        public long FIND_FILESIZE()
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                StringBuilder Sequel = new StringBuilder();
+                Sequel.AppendFormat(@" SELECT  [ID],[KIND],[PARAID],[PARANAME]  FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='上傳檔案最大'  ORDER BY ID ");
+                SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+                DataTable dt = new DataTable();
+                sqlConn.Open();
+
+                dt.Columns.Add("PARAID", typeof(string));
+                dt.Columns.Add("PARANAME", typeof(string));
+                da.Fill(dt);
+                sqlConn.Close();
+
+                if(dt.Rows.Count>0)
+                {
+                    return Convert.ToInt64(dt.Rows[0]["PARAID"].ToString());
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch
+            {
+                return 0;
+            }
+            finally
+            {
+                sqlConn.Close();
+            }
+           
+        }
         public void comboBox1load()
         {
             //20210902密
@@ -3425,7 +3474,16 @@ namespace TKRESEARCH
                             break;
                     }
 
-                
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if(LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1+" 檔案超過10M，無法上傳");
+
+                       
+                    }
+
+
+
                 }
             }
         }
