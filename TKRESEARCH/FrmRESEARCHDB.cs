@@ -8140,6 +8140,62 @@ namespace TKRESEARCH
             }
         }
 
+        public void ADD_TO_TBDBLOG(string USERNAMES,string DBNAMES, string DOCID, string ACTION, string ATTACHNAMES)
+        {
+            // 20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+            using (SqlConnection conn = sqlConn)
+            {
+                if (!string.IsNullOrEmpty(USERNAMES))
+                {
+                    StringBuilder ADDSQL = new StringBuilder();
+                    ADDSQL.AppendFormat(@"
+                                        INSERT INTO  [TKRESEARCH].[dbo].[TBDBLOG]
+                                        (
+                                        [USERNAMES]
+                                        ,[DBNAMES]
+                                        ,[DOCID]
+                                        ,[ACTION]
+                                        ,[ATTACHNAMES]
+                                        )
+                                        VALUES
+                                        (
+                                        @USERNAMES
+                                        ,@DBNAMES
+                                        ,@DOCID
+                                        ,@ACTION
+                                        ,@ATTACHNAMES
+                                        )
+                                        
+                                        ");
+
+                    string sql = ADDSQL.ToString();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@USERNAMES", USERNAMES);
+                        cmd.Parameters.AddWithValue("@DBNAMES", DBNAMES);
+                        cmd.Parameters.AddWithValue("@DOCID", DOCID);
+                        cmd.Parameters.AddWithValue("@ACTION", ACTION);
+                        cmd.Parameters.AddWithValue("@ATTACHNAMES", ATTACHNAMES);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+
+            }
+        }
+
 
         #endregion
 
@@ -8172,6 +8228,8 @@ namespace TKRESEARCH
 
             ADD_TO_TBDB1(DOCID, COMMENTS, DOCNAMES, CONTENTTYPES, DATAS);
             SEARCH(textBox1A.Text.Trim());
+
+            ADD_TO_TBDBLOG(shareArea.UserName, "DB1", DOCID, "ADD", DOCNAMES);
         }
         private void button6_Click(object sender, EventArgs e)
         {
@@ -8184,8 +8242,13 @@ namespace TKRESEARCH
             DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
+                ADD_TO_TBDBLOG(shareArea.UserName, "DB1", textBox1C.Text, "DELETE", "");
+
                 DELETE_TO_TBDB1(textBox1C.Text);
                 SEARCH(textBox1A.Text.Trim());
+
+            
+               
             }
             else if (dialogResult == DialogResult.No)
             {

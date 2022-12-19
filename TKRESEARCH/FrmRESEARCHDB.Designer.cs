@@ -1094,10 +1094,10 @@
             // tabPage13
             // 
             this.tabPage13.Controls.Add(this.tableLayoutPanel4);
-            this.tabPage13.Location = new System.Drawing.Point(4, 22);
+            this.tabPage13.Location = new System.Drawing.Point(4, 26);
             this.tabPage13.Name = "tabPage13";
             this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage13.Size = new System.Drawing.Size(958, 316);
+            this.tabPage13.Size = new System.Drawing.Size(958, 312);
             this.tabPage13.TabIndex = 1;
             this.tabPage13.Text = "修改";
             this.tabPage13.UseVisualStyleBackColor = true;
@@ -1132,7 +1132,7 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(952, 310);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(952, 306);
             this.tableLayoutPanel4.TabIndex = 4;
             // 
             // label3
@@ -1197,9 +1197,9 @@
             // tabPage14
             // 
             this.tabPage14.Controls.Add(this.tableLayoutPanel5);
-            this.tabPage14.Location = new System.Drawing.Point(4, 22);
+            this.tabPage14.Location = new System.Drawing.Point(4, 26);
             this.tabPage14.Name = "tabPage14";
-            this.tabPage14.Size = new System.Drawing.Size(958, 316);
+            this.tabPage14.Size = new System.Drawing.Size(958, 312);
             this.tabPage14.TabIndex = 2;
             this.tabPage14.Text = "刪除";
             this.tabPage14.UseVisualStyleBackColor = true;
@@ -1232,7 +1232,7 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(958, 316);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(958, 312);
             this.tableLayoutPanel5.TabIndex = 5;
             // 
             // label7
