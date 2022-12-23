@@ -430,7 +430,7 @@
             this.textBox619 = new System.Windows.Forms.TextBox();
             this.label151 = new System.Windows.Forms.Label();
             this.label135 = new System.Windows.Forms.Label();
-            this.textBox31 = new System.Windows.Forms.TextBox();
+            this.textBox622 = new System.Windows.Forms.TextBox();
             this.button40 = new System.Windows.Forms.Button();
             this.label138 = new System.Windows.Forms.Label();
             this.textBox621 = new System.Windows.Forms.TextBox();
@@ -1094,10 +1094,10 @@
             // tabPage13
             // 
             this.tabPage13.Controls.Add(this.tableLayoutPanel4);
-            this.tabPage13.Location = new System.Drawing.Point(4, 26);
+            this.tabPage13.Location = new System.Drawing.Point(4, 22);
             this.tabPage13.Name = "tabPage13";
             this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage13.Size = new System.Drawing.Size(958, 312);
+            this.tabPage13.Size = new System.Drawing.Size(958, 316);
             this.tabPage13.TabIndex = 1;
             this.tabPage13.Text = "修改";
             this.tabPage13.UseVisualStyleBackColor = true;
@@ -1132,7 +1132,7 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(952, 306);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(952, 310);
             this.tableLayoutPanel4.TabIndex = 4;
             // 
             // label3
@@ -1197,9 +1197,9 @@
             // tabPage14
             // 
             this.tabPage14.Controls.Add(this.tableLayoutPanel5);
-            this.tabPage14.Location = new System.Drawing.Point(4, 26);
+            this.tabPage14.Location = new System.Drawing.Point(4, 22);
             this.tabPage14.Name = "tabPage14";
-            this.tabPage14.Size = new System.Drawing.Size(958, 312);
+            this.tabPage14.Size = new System.Drawing.Size(958, 316);
             this.tabPage14.TabIndex = 2;
             this.tabPage14.Text = "刪除";
             this.tabPage14.UseVisualStyleBackColor = true;
@@ -1232,7 +1232,7 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(958, 312);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(958, 316);
             this.tableLayoutPanel5.TabIndex = 5;
             // 
             // label7
@@ -2184,9 +2184,9 @@
             // tabPage17
             // 
             this.tabPage17.Controls.Add(this.tableLayoutPanel8);
-            this.tabPage17.Location = new System.Drawing.Point(4, 26);
+            this.tabPage17.Location = new System.Drawing.Point(4, 22);
             this.tabPage17.Name = "tabPage17";
-            this.tabPage17.Size = new System.Drawing.Size(958, 339);
+            this.tabPage17.Size = new System.Drawing.Size(958, 343);
             this.tabPage17.TabIndex = 2;
             this.tabPage17.Text = "刪除";
             this.tabPage17.UseVisualStyleBackColor = true;
@@ -2218,7 +2218,7 @@
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(958, 339);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(958, 343);
             this.tableLayoutPanel8.TabIndex = 5;
             // 
             // button10
@@ -2916,7 +2916,7 @@
             // 
             this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(3, 50);
+            this.comboBox1.Location = new System.Drawing.Point(3, 48);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(114, 24);
             this.comboBox1.TabIndex = 45;
@@ -3394,7 +3394,7 @@
             // 
             this.comboBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(3, 48);
+            this.comboBox2.Location = new System.Drawing.Point(3, 50);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(114, 24);
             this.comboBox2.TabIndex = 45;
@@ -3550,9 +3550,9 @@
             // tabPage20
             // 
             this.tabPage20.Controls.Add(this.tableLayoutPanel12);
-            this.tabPage20.Location = new System.Drawing.Point(4, 26);
+            this.tabPage20.Location = new System.Drawing.Point(4, 22);
             this.tabPage20.Name = "tabPage20";
-            this.tabPage20.Size = new System.Drawing.Size(964, 459);
+            this.tabPage20.Size = new System.Drawing.Size(964, 463);
             this.tabPage20.TabIndex = 2;
             this.tabPage20.Text = "刪除";
             this.tabPage20.UseVisualStyleBackColor = true;
@@ -3584,7 +3584,7 @@
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel12.Size = new System.Drawing.Size(964, 459);
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(964, 463);
             this.tableLayoutPanel12.TabIndex = 5;
             // 
             // label80
@@ -3883,7 +3883,7 @@
             // 
             this.comboBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(3, 48);
+            this.comboBox3.Location = new System.Drawing.Point(3, 50);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(114, 24);
             this.comboBox3.TabIndex = 45;
@@ -4202,7 +4202,7 @@
             // 
             this.comboBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(3, 50);
+            this.comboBox4.Location = new System.Drawing.Point(3, 48);
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(114, 24);
             this.comboBox4.TabIndex = 45;
@@ -4363,9 +4363,9 @@
             // tabPage23
             // 
             this.tabPage23.Controls.Add(this.tableLayoutPanel16);
-            this.tabPage23.Location = new System.Drawing.Point(4, 26);
+            this.tabPage23.Location = new System.Drawing.Point(4, 22);
             this.tabPage23.Name = "tabPage23";
-            this.tabPage23.Size = new System.Drawing.Size(964, 427);
+            this.tabPage23.Size = new System.Drawing.Size(964, 431);
             this.tabPage23.TabIndex = 2;
             this.tabPage23.Text = "刪除";
             this.tabPage23.UseVisualStyleBackColor = true;
@@ -4397,7 +4397,7 @@
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel16.Size = new System.Drawing.Size(964, 427);
+            this.tableLayoutPanel16.Size = new System.Drawing.Size(964, 431);
             this.tableLayoutPanel16.TabIndex = 6;
             // 
             // label110
@@ -4905,9 +4905,9 @@
             // tabPage26
             // 
             this.tabPage26.Controls.Add(this.tableLayoutPanel20);
-            this.tabPage26.Location = new System.Drawing.Point(4, 26);
+            this.tabPage26.Location = new System.Drawing.Point(4, 22);
             this.tabPage26.Name = "tabPage26";
-            this.tabPage26.Size = new System.Drawing.Size(964, 350);
+            this.tabPage26.Size = new System.Drawing.Size(964, 354);
             this.tabPage26.TabIndex = 2;
             this.tabPage26.Text = "刪除";
             this.tabPage26.UseVisualStyleBackColor = true;
@@ -4939,7 +4939,7 @@
             this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel20.Size = new System.Drawing.Size(964, 350);
+            this.tableLayoutPanel20.Size = new System.Drawing.Size(964, 354);
             this.tableLayoutPanel20.TabIndex = 6;
             // 
             // label136
@@ -5170,7 +5170,7 @@
             this.tableLayoutPanel22.Controls.Add(this.textBox619, 0, 7);
             this.tableLayoutPanel22.Controls.Add(this.label151, 0, 6);
             this.tableLayoutPanel22.Controls.Add(this.label135, 7, 4);
-            this.tableLayoutPanel22.Controls.Add(this.textBox31, 7, 5);
+            this.tableLayoutPanel22.Controls.Add(this.textBox622, 7, 5);
             this.tableLayoutPanel22.Controls.Add(this.button40, 3, 10);
             this.tableLayoutPanel22.Controls.Add(this.label138, 0, 10);
             this.tableLayoutPanel22.Controls.Add(this.textBox621, 1, 10);
@@ -5300,7 +5300,7 @@
             // 
             this.comboBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(3, 48);
+            this.comboBox5.Location = new System.Drawing.Point(3, 50);
             this.comboBox5.Name = "comboBox5";
             this.comboBox5.Size = new System.Drawing.Size(114, 24);
             this.comboBox5.TabIndex = 45;
@@ -5590,13 +5590,13 @@
             this.label135.Text = "保存條件";
             this.label135.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBox31
+            // textBox622
             // 
-            this.textBox31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox31.Location = new System.Drawing.Point(843, 206);
-            this.textBox31.Name = "textBox31";
-            this.textBox31.Size = new System.Drawing.Size(114, 27);
-            this.textBox31.TabIndex = 64;
+            this.textBox622.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox622.Location = new System.Drawing.Point(843, 206);
+            this.textBox622.Name = "textBox622";
+            this.textBox622.Size = new System.Drawing.Size(114, 27);
+            this.textBox622.TabIndex = 64;
             // 
             // button40
             // 
@@ -5857,7 +5857,7 @@
             // 
             this.comboBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(3, 50);
+            this.comboBox6.Location = new System.Drawing.Point(3, 48);
             this.comboBox6.Name = "comboBox6";
             this.comboBox6.Size = new System.Drawing.Size(114, 24);
             this.comboBox6.TabIndex = 45;
@@ -6176,9 +6176,9 @@
             // tabPage29
             // 
             this.tabPage29.Controls.Add(this.tableLayoutPanel24);
-            this.tabPage29.Location = new System.Drawing.Point(4, 26);
+            this.tabPage29.Location = new System.Drawing.Point(4, 22);
             this.tabPage29.Name = "tabPage29";
-            this.tabPage29.Size = new System.Drawing.Size(964, 493);
+            this.tabPage29.Size = new System.Drawing.Size(964, 497);
             this.tabPage29.TabIndex = 2;
             this.tabPage29.Text = "刪除";
             this.tabPage29.UseVisualStyleBackColor = true;
@@ -6210,7 +6210,7 @@
             this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel24.Size = new System.Drawing.Size(964, 493);
+            this.tableLayoutPanel24.Size = new System.Drawing.Size(964, 497);
             this.tableLayoutPanel24.TabIndex = 5;
             // 
             // label171
@@ -6448,7 +6448,7 @@
             // 
             this.comboBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Location = new System.Drawing.Point(3, 50);
+            this.comboBox7.Location = new System.Drawing.Point(3, 48);
             this.comboBox7.Name = "comboBox7";
             this.comboBox7.Size = new System.Drawing.Size(114, 24);
             this.comboBox7.TabIndex = 45;
@@ -6656,7 +6656,7 @@
             // 
             this.comboBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox8.FormattingEnabled = true;
-            this.comboBox8.Location = new System.Drawing.Point(3, 48);
+            this.comboBox8.Location = new System.Drawing.Point(3, 50);
             this.comboBox8.Name = "comboBox8";
             this.comboBox8.Size = new System.Drawing.Size(114, 24);
             this.comboBox8.TabIndex = 45;
@@ -6723,9 +6723,9 @@
             // tabPage31
             // 
             this.tabPage31.Controls.Add(this.tableLayoutPanel28);
-            this.tabPage31.Location = new System.Drawing.Point(4, 26);
+            this.tabPage31.Location = new System.Drawing.Point(4, 22);
             this.tabPage31.Name = "tabPage31";
-            this.tabPage31.Size = new System.Drawing.Size(964, 324);
+            this.tabPage31.Size = new System.Drawing.Size(964, 328);
             this.tabPage31.TabIndex = 2;
             this.tabPage31.Text = "刪除";
             this.tabPage31.UseVisualStyleBackColor = true;
@@ -6757,7 +6757,7 @@
             this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel28.Size = new System.Drawing.Size(964, 324);
+            this.tableLayoutPanel28.Size = new System.Drawing.Size(964, 328);
             this.tableLayoutPanel28.TabIndex = 6;
             // 
             // label193
@@ -6999,7 +6999,7 @@
             // 
             this.comboBox9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox9.FormattingEnabled = true;
-            this.comboBox9.Location = new System.Drawing.Point(3, 48);
+            this.comboBox9.Location = new System.Drawing.Point(3, 50);
             this.comboBox9.Name = "comboBox9";
             this.comboBox9.Size = new System.Drawing.Size(114, 24);
             this.comboBox9.TabIndex = 45;
@@ -7251,7 +7251,7 @@
             // 
             this.comboBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox10.FormattingEnabled = true;
-            this.comboBox10.Location = new System.Drawing.Point(3, 48);
+            this.comboBox10.Location = new System.Drawing.Point(3, 50);
             this.comboBox10.Name = "comboBox10";
             this.comboBox10.Size = new System.Drawing.Size(114, 24);
             this.comboBox10.TabIndex = 45;
@@ -7358,9 +7358,9 @@
             // tabPage34
             // 
             this.tabPage34.Controls.Add(this.tableLayoutPanel32);
-            this.tabPage34.Location = new System.Drawing.Point(4, 26);
+            this.tabPage34.Location = new System.Drawing.Point(4, 22);
             this.tabPage34.Name = "tabPage34";
-            this.tabPage34.Size = new System.Drawing.Size(964, 360);
+            this.tabPage34.Size = new System.Drawing.Size(964, 364);
             this.tabPage34.TabIndex = 2;
             this.tabPage34.Text = "刪除";
             this.tabPage34.UseVisualStyleBackColor = true;
@@ -7392,7 +7392,7 @@
             this.tableLayoutPanel32.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel32.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel32.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel32.Size = new System.Drawing.Size(964, 360);
+            this.tableLayoutPanel32.Size = new System.Drawing.Size(964, 364);
             this.tableLayoutPanel32.TabIndex = 6;
             // 
             // label190
@@ -7839,9 +7839,9 @@
             // tabPage37
             // 
             this.tabPage37.Controls.Add(this.tableLayoutPanel36);
-            this.tabPage37.Location = new System.Drawing.Point(4, 26);
+            this.tabPage37.Location = new System.Drawing.Point(4, 22);
             this.tabPage37.Name = "tabPage37";
-            this.tabPage37.Size = new System.Drawing.Size(964, 360);
+            this.tabPage37.Size = new System.Drawing.Size(964, 364);
             this.tabPage37.TabIndex = 2;
             this.tabPage37.Text = "刪除";
             this.tabPage37.UseVisualStyleBackColor = true;
@@ -7873,7 +7873,7 @@
             this.tableLayoutPanel36.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel36.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel36.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel36.Size = new System.Drawing.Size(964, 360);
+            this.tableLayoutPanel36.Size = new System.Drawing.Size(964, 364);
             this.tableLayoutPanel36.TabIndex = 6;
             // 
             // label210
@@ -8085,7 +8085,7 @@
             // 
             this.comboBox11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox11.FormattingEnabled = true;
-            this.comboBox11.Location = new System.Drawing.Point(123, 50);
+            this.comboBox11.Location = new System.Drawing.Point(123, 48);
             this.comboBox11.Name = "comboBox11";
             this.comboBox11.Size = new System.Drawing.Size(114, 24);
             this.comboBox11.TabIndex = 46;
@@ -8801,7 +8801,7 @@
         private System.Windows.Forms.TextBox textBox616;
         private System.Windows.Forms.TextBox textBox617;
         private System.Windows.Forms.TextBox textBox618;
-        private System.Windows.Forms.TextBox textBox31;
+        private System.Windows.Forms.TextBox textBox622;
         private System.Windows.Forms.Label label144;
         private System.Windows.Forms.TextBox textBox603;
         private System.Windows.Forms.Label label143;
