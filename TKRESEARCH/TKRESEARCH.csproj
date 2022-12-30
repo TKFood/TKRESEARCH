@@ -108,6 +108,12 @@
     <Compile Include="FrmParent.Designer.cs">
       <DependentUpon>FrmParent.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmREPORTSALES.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmREPORTSALES.Designer.cs">
+      <DependentUpon>FrmREPORTSALES.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmRESEARCHDB.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,6 +140,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmParent.resx">
       <DependentUpon>FrmParent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmREPORTSALES.resx">
+      <DependentUpon>FrmREPORTSALES.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmRESEARCHDB.resx">
       <DependentUpon>FrmRESEARCHDB.cs</DependentUpon>
