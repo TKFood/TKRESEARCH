@@ -44,11 +44,57 @@ namespace TKRESEARCH
 
         int result;
 
+        string SUBJECTS = null;
+
         public FrmUOFMESSAGES()
         {
             InitializeComponent();
 
             SETETXT();
+        }
+        private void FrmUOFMESSAGES_Load(object sender, EventArgs e)
+        {
+            dataGridView1.AlternatingRowsDefaultCellStyle.BackColor = Color.PaleTurquoise;
+            dataGridView2.AlternatingRowsDefaultCellStyle.BackColor = Color.PaleTurquoise;
+            dataGridView3.AlternatingRowsDefaultCellStyle.BackColor = Color.PaleTurquoise;
+
+
+            //先建立個 CheckBox 欄
+            DataGridViewCheckBoxColumn cbCol = new DataGridViewCheckBoxColumn();
+            cbCol.Width = 20;   //設定寬度
+            cbCol.HeaderText = "　全選";
+            cbCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;   //置中
+            cbCol.TrueValue = true;
+            cbCol.FalseValue = false;
+            dataGridView3.Columns.Insert(0, cbCol);
+
+
+            //建立个矩形，等下计算 CheckBox 嵌入 GridView 的位置
+            Rectangle rect = dataGridView3.GetCellDisplayRectangle(0, -1, true);
+            rect.X = rect.Location.X + rect.Width / 4 - 8;
+            rect.Y = rect.Location.Y + (rect.Height / 2 - 1);
+
+            CheckBox cbHeader = new CheckBox();
+            cbHeader.Name = "checkboxHeader";
+            cbHeader.Size = new Size(18, 18);
+            cbHeader.Location = rect.Location;
+
+            //全选要设定的事件
+            cbHeader.CheckedChanged += new EventHandler(cbHeader_CheckedChanged);
+
+            //将 CheckBox 加入到 dataGridView
+            dataGridView3.Controls.Add(cbHeader);
+        }
+        private void cbHeader_CheckedChanged(object sender, EventArgs e)
+        {
+            dataGridView3.EndEdit();
+
+            foreach (DataGridViewRow dr in dataGridView3.Rows)
+            {
+                dr.Cells[0].Value = ((CheckBox)dataGridView3.Controls.Find("checkboxHeader", true)[0]).Checked;
+
+            }
+
         }
 
         #region FUNCTION
@@ -151,6 +197,7 @@ namespace TKRESEARCH
                     DataGridViewRow row = dataGridView1.Rows[rowindex];
                     string DEVOLVE_GUID = row.Cells["DEVOLVE_GUID"].Value.ToString().Trim();
                     string SUBJECT = row.Cells["校稿區內容"].Value.ToString().Trim();
+                    SUBJECTS = row.Cells["校稿區內容"].Value.ToString().Trim();
 
                     SEARCH_TB_EIP_SCH_DEVOLVE_DETAIL(DEVOLVE_GUID);
 
@@ -339,6 +386,183 @@ namespace TKRESEARCH
 
             }
         }
+
+        public void NEW_MESSAGE()
+        {
+            string MESSAGE_TO = "";
+            string MESSAGE_FROM = "916e213c-7b2e-46e3-8821-b7066378042b";
+
+            StringBuilder TEXTBOX = new StringBuilder();
+
+            for (int i = 0; i < textBox2.Lines.Length; i++)
+            {
+                TEXTBOX.AppendFormat("<p>" + textBox2.Lines[i] + "</p>");
+            }
+
+            foreach (DataGridViewRow DR in dataGridView3.Rows)
+            {
+                if (Convert.ToBoolean(DR.Cells[0].Value) == true)
+                {
+                    MESSAGE_TO = DR.Cells["USER_GUID"].Value.ToString();
+
+                    StringBuilder MESSAGE_CONTENT = new StringBuilder();
+
+                    MESSAGE_CONTENT.AppendFormat(TEXTBOX.ToString());
+                   
+
+
+                    ADD_UOF_TB_EIP_PRIV_MESS(
+                    Guid.NewGuid().ToString("")
+                    , "校和完成通知: "+ SUBJECTS
+                    , MESSAGE_CONTENT.ToString()
+                    , MESSAGE_TO
+                    , MESSAGE_FROM
+                    , ""
+                    , DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffffK")
+                    , ""
+                    , ""
+                    , "0"
+                    , "0"
+                    , ""
+                    , Guid.NewGuid().ToString("")
+                    , ""
+                    );
+                }
+            }
+
+            //強制送給研發
+            //210018	陳奕廷	
+
+            ADD_UOF_TB_EIP_PRIV_MESS(
+            Guid.NewGuid().ToString("")
+            , "校和完成通知: " + SUBJECTS
+            , TEXTBOX.ToString()
+            , "58902b6b-ba4c-4dc0-b13b-427892786941"
+            , MESSAGE_FROM
+            , ""
+            , DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffffK")
+            , ""
+            , ""
+            , "0"
+            , "0"
+            , ""
+            , Guid.NewGuid().ToString("")
+            , ""
+            );
+
+        }
+
+        public void ADD_UOF_TB_EIP_PRIV_MESS(
+            string MESSAGE_GUID
+            , string TOPIC
+            , string MESSAGE_CONTENT
+            , string MESSAGE_TO
+            , string MESSAGE_FROM
+            , string REPLY_MESSAGE_GUID
+            , string CREATE_TIME
+            , string READED_TIME
+            , string REPLY_TIME
+            , string FROM_DELETED
+            , string TO_DELETED
+            , string FILE_GROUP_ID
+            , string MASTER_GUID
+            , string EVENT_ID
+
+            )
+        {
+            try
+            {
+                // 20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbUOF"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+                using (SqlConnection conn = sqlConn)
+                {
+                    if (!string.IsNullOrEmpty(MESSAGE_TO))
+                    {
+                        StringBuilder SBSQL = new StringBuilder();
+                        SBSQL.AppendFormat(@" 
+                                            INSERT INTO [UOF].[dbo].[TB_EIP_PRIV_MESS]
+                                            (
+                                            [MESSAGE_GUID]
+                                            ,[TOPIC]
+                                            ,[MESSAGE_CONTENT]
+                                            ,[MESSAGE_TO]
+                                            ,[MESSAGE_FROM]
+                                            ,[REPLY_MESSAGE_GUID]
+                                            ,[CREATE_TIME]
+                                            ,[READED_TIME]
+                                            ,[REPLY_TIME]
+                                            ,[FROM_DELETED]
+                                            ,[TO_DELETED]
+                                            ,[FILE_GROUP_ID]
+                                            ,[MASTER_GUID]
+                                            ,[EVENT_ID]
+                                            )
+                                            VALUES
+                                            (
+                                            NEWID()
+                                            ,@TOPIC
+                                            ,@MESSAGE_CONTENT
+                                            ,@MESSAGE_TO
+                                            ,@MESSAGE_FROM
+                                            ,''
+                                            ,@CREATE_TIME
+                                            ,NULL
+                                            ,NULL
+                                            ,'0'
+                                            ,'0'
+                                            ,''
+                                            ,NEWID()
+                                            ,''
+                                            )
+
+                                            ");
+
+                        string sql = SBSQL.ToString();
+
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
+                        {
+
+                            cmd.Parameters.AddWithValue("@MESSAGE_GUID", MESSAGE_GUID);
+                            cmd.Parameters.AddWithValue("@TOPIC", TOPIC);
+                            cmd.Parameters.AddWithValue("@MESSAGE_CONTENT", MESSAGE_CONTENT);
+                            cmd.Parameters.AddWithValue("@MESSAGE_TO", MESSAGE_TO);
+                            cmd.Parameters.AddWithValue("@MESSAGE_FROM", MESSAGE_FROM);
+                            cmd.Parameters.AddWithValue("@REPLY_MESSAGE_GUID", REPLY_MESSAGE_GUID);
+                            cmd.Parameters.AddWithValue("@CREATE_TIME", CREATE_TIME);
+                            cmd.Parameters.AddWithValue("@READED_TIME", READED_TIME);
+                            cmd.Parameters.AddWithValue("@REPLY_TIME", REPLY_TIME);
+                            cmd.Parameters.AddWithValue("@FROM_DELETED", FROM_DELETED);
+                            cmd.Parameters.AddWithValue("@TO_DELETED", TO_DELETED);
+                            cmd.Parameters.AddWithValue("@FILE_GROUP_ID", FILE_GROUP_ID);
+                            cmd.Parameters.AddWithValue("@MASTER_GUID", MASTER_GUID);
+
+
+
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                        }
+                    }
+
+                }
+            }
+            catch
+            {
+                MessageBox.Show("失敗");
+            }
+        }
+
+        
+
         #endregion
 
         #region BUTTON
@@ -354,10 +578,13 @@ namespace TKRESEARCH
 
         private void button2_Click(object sender, EventArgs e)
         {
+            NEW_MESSAGE();
 
+            MessageBox.Show("完成");
         }
+
         #endregion
 
-
+       
     }
 }

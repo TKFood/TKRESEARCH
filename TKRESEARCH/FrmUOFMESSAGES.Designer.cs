@@ -311,7 +311,6 @@
             this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView3.Location = new System.Drawing.Point(0, 0);
             this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.ReadOnly = true;
             this.dataGridView3.RowTemplate.Height = 24;
             this.dataGridView3.Size = new System.Drawing.Size(435, 278);
             this.dataGridView3.TabIndex = 6;
@@ -431,6 +430,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmUOFMESSAGES";
             this.Text = "FrmUOFMESSAGES";
+            this.Load += new System.EventHandler(this.FrmUOFMESSAGES_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
