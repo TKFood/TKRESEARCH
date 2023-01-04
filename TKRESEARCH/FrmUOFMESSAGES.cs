@@ -150,7 +150,13 @@ namespace TKRESEARCH
                 {
                     DataGridViewRow row = dataGridView1.Rows[rowindex];
                     string DEVOLVE_GUID = row.Cells["DEVOLVE_GUID"].Value.ToString().Trim();
+                    string SUBJECT = row.Cells["校稿區內容"].Value.ToString().Trim();
+
                     SEARCH_TB_EIP_SCH_DEVOLVE_DETAIL(DEVOLVE_GUID);
+
+                    textBox2.Text = "通知: "+ Environment.NewLine+ Environment.NewLine;
+                    textBox2.Text = textBox2.Text + SUBJECT+ Environment.NewLine+ Environment.NewLine;
+                    textBox2.Text = textBox2.Text + "完成";
 
                 }
                 else
