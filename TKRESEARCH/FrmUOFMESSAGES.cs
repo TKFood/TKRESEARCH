@@ -252,6 +252,87 @@ namespace TKRESEARCH
             }
         }
 
+        public void SEARCH_TB_EB_USER(string NAME)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbUOF"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+                sbSqlQuery.Clear();
+
+                if (!string.IsNullOrEmpty(NAME))
+                {
+                    sbSqlQuery.AppendFormat(@" 
+                                            AND TB_EB_USER.NAME LIKE '%{0}%'
+                                            ", NAME);
+                }
+
+                sbSql.AppendFormat(@"  
+                                     SELECT TB_EB_USER.ACCOUNT AS '工號',TB_EB_USER.NAME AS '姓名',TB_EB_USER.USER_GUID
+                                    FROM [UOF].[dbo].TB_EB_USER,[UOF].[dbo].TB_EB_EMPL
+                                    WHERE 1=1
+                                    AND TB_EB_USER.USER_GUID=TB_EB_EMPL.USER_GUID
+                                    AND TB_EB_USER.IS_SUSPENDED<>'1'
+                                    AND ISNULL(TB_EB_EMPL.BIRTHDAY,'')<>''
+                                    AND  TB_EB_USER.ACCOUNT  COLLATE Chinese_Taiwan_Stroke_BIN   IN (SELECT [ID] FROM [192.168.1.105].[TKRESEARCH].[dbo].[TKUOFSNEDUSERS])        
+                                    {0}
+
+                                    ORDER BY NAME
+
+                                    ", sbSqlQuery.ToString());
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "TEMPds1");
+                sqlConn.Close();
+
+
+                if (ds.Tables["TEMPds1"].Rows.Count == 0)
+                {
+                    dataGridView3.DataSource = null;
+                }
+                else
+                {
+                    if (ds.Tables["TEMPds1"].Rows.Count >= 1)
+                    {
+                        dataGridView3.DataSource = ds.Tables["TEMPds1"];
+                        dataGridView3.AutoResizeColumns();
+
+
+                    }
+
+                }
+
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+        }
         #endregion
 
         #region BUTTON
@@ -260,9 +341,17 @@ namespace TKRESEARCH
             SEARCH_TB_EIP_SCH_DEVOLVE(textBox6.Text, textBox1.Text);
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SEARCH_TB_EB_USER(textBox3.Text);
+        }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
         #endregion
 
-       
+
     }
 }
