@@ -1241,6 +1241,7 @@
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(304, 27);
             this.textBox10.TabIndex = 30;
+            this.textBox10.TextChanged += new System.EventHandler(this.textBox10_TextChanged);
             // 
             // tableLayoutPanel6
             // 
@@ -1655,6 +1656,7 @@
             this.textBox21.Name = "textBox21";
             this.textBox21.Size = new System.Drawing.Size(304, 27);
             this.textBox21.TabIndex = 32;
+            this.textBox21.TextChanged += new System.EventHandler(this.textBox21_TextChanged);
             // 
             // textBox22
             // 

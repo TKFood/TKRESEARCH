@@ -697,7 +697,11 @@ namespace TKRESEARCH
 
         private void textBox9_TextChanged(object sender, EventArgs e)
         {
-            textBox11.Text = (Convert.ToDecimal(textBox9.Text) * Convert.ToDecimal(textBox10.Text)).ToString();
+            if(!string.IsNullOrEmpty(textBox9.Text) && !string.IsNullOrEmpty(textBox10.Text))
+            {
+                textBox11.Text = (Convert.ToDecimal(textBox9.Text) * Convert.ToDecimal(textBox10.Text)).ToString();
+            }
+            
         }
         public string FINDMB002(string MB001)
         {
@@ -860,7 +864,7 @@ namespace TKRESEARCH
         }
 
         public void DELCALCOSTPRODS1RAW(string MID                                     
-                                     , string MB001
+                                     , string MB002
                                      
                                      )
         {
@@ -887,9 +891,9 @@ namespace TKRESEARCH
                 sbSql.AppendFormat(@" 
                                    
                                     DELETE  [TKRESEARCH].[dbo].[CALCOSTPRODS1RAW]
-                                    WHERE [MID]='{0}' AND [MB001]='{1}'
+                                    WHERE [MID]='{0}' AND [MB002]='{1}'
                                     ", MID                                       
-                                        , MB001
+                                        , MB002
                                        );
 
                 cmd.Connection = sqlConn;
@@ -1124,7 +1128,7 @@ namespace TKRESEARCH
         }
 
         public void DELCALCOSTPRODS2MATERIL(string MID
-                                    , string MB001
+                                    , string MB002
 
                                     )
         {
@@ -1151,9 +1155,9 @@ namespace TKRESEARCH
                 sbSql.AppendFormat(@" 
                                    
                                     DELETE  [TKRESEARCH].[dbo].[CALCOSTPRODS2MATERIL]
-                                    WHERE [MID]='{0}' AND [MB001]='{1}'
+                                    WHERE [MID]='{0}' AND [MB002]='{1}'
                                     ", MID
-                                        , MB001
+                                        , MB002
                                        );
 
                 cmd.Connection = sqlConn;
@@ -1192,7 +1196,11 @@ namespace TKRESEARCH
 
         private void textBox20_TextChanged(object sender, EventArgs e)
         {
-            textBox22.Text = (Convert.ToDecimal(textBox20.Text) * Convert.ToDecimal(textBox21.Text)).ToString();
+            if(!string.IsNullOrEmpty(textBox20.Text) && !string.IsNullOrEmpty(textBox21.Text))
+            {
+                textBox22.Text = (Convert.ToDecimal(textBox20.Text) * Convert.ToDecimal(textBox21.Text)).ToString();
+            }
+            
         }
 
         public void SEARCHDG4(string PRODNAMES)
@@ -4579,6 +4587,22 @@ namespace TKRESEARCH
 
         }
 
+        private void textBox10_TextChanged(object sender, EventArgs e)
+        {
+
+            if (!string.IsNullOrEmpty(textBox9.Text) && !string.IsNullOrEmpty(textBox10.Text))
+            {
+                textBox11.Text = (Convert.ToDecimal(textBox9.Text) * Convert.ToDecimal(textBox10.Text)).ToString();
+            }
+        }
+
+        private void textBox21_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBox20.Text) && !string.IsNullOrEmpty(textBox21.Text))
+            {
+                textBox22.Text = (Convert.ToDecimal(textBox20.Text) * Convert.ToDecimal(textBox21.Text)).ToString();
+            }
+        }
         #endregion
 
         #region BUTTON
@@ -4616,7 +4640,7 @@ namespace TKRESEARCH
             DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                DELCALCOSTPRODS1RAW(textBoxID3.Text.Trim(), textBox14.Text.Trim());
+                DELCALCOSTPRODS1RAW(textBoxID3.Text.Trim(), textBox15.Text.Trim());
                 SEARCHDG2(textBox5.Text.Trim());
 
 
@@ -4643,7 +4667,7 @@ namespace TKRESEARCH
             DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                DELCALCOSTPRODS2MATERIL(textBoxID5.Text.Trim(), textBox26.Text.Trim());
+                DELCALCOSTPRODS2MATERIL(textBoxID5.Text.Trim(), textBox27.Text.Trim());
                 SEARCHDG3(textBox16.Text.Trim());
 
 
@@ -4765,6 +4789,8 @@ namespace TKRESEARCH
         {
             SETFASTREPORT(dateTimePicker1.Value.ToString("yyyy"), textBox123.Text, textBox124.Text);
         }
+
+      
     }
 
 
