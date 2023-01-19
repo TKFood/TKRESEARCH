@@ -703,6 +703,71 @@ namespace TKRESEARCH
             }
             
         }
+        public string FINDMB001(string MB002)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+                sbSql.Clear();
+
+                if (!string.IsNullOrEmpty(MB002))
+                {
+                    sbSql.AppendFormat(@"  
+                                        SELECT MB001,MB002 
+                                        FROM [TK].dbo.INVMB
+                                        WHERE (MB001 LIKE '1%' OR MB001 LIKE '2%')
+                                        AND MB002 LIKE '%{0}%'
+
+                                        ", MB002);
+                }
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    return ds.Tables["ds"].Rows[0]["MB001"].ToString();
+
+                }
+                else
+                {
+                    return "";
+                }
+
+            }
+            catch
+            {
+                return "";
+            }
+            finally
+            {
+
+            }
+        }
         public string FINDMB002(string MB001)
         {
             SqlDataAdapter adapter = new SqlDataAdapter();
@@ -4603,6 +4668,32 @@ namespace TKRESEARCH
                 textBox22.Text = (Convert.ToDecimal(textBox20.Text) * Convert.ToDecimal(textBox21.Text)).ToString();
             }
         }
+        private void textBox8_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox8_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                textBox7.Text = FINDMB001(textBox8.Text.ToString());
+                textBox10.Text = FINDPRICES(textBox7.Text.ToString());
+                textBox9.Text = "0";
+            }
+        }
+
+        private void textBox19_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                textBox18.Text = FINDMB001(textBox19.Text.ToString());
+                textBox21.Text = FINDPRICES(textBox18.Text.ToString());
+                textBox20.Text = "0";
+            }
+        }
+
+
         #endregion
 
         #region BUTTON
@@ -4790,7 +4881,7 @@ namespace TKRESEARCH
             SETFASTREPORT(dateTimePicker1.Value.ToString("yyyy"), textBox123.Text, textBox124.Text);
         }
 
-      
+     
     }
 
 
