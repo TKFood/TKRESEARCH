@@ -4693,6 +4693,25 @@ namespace TKRESEARCH
             }
         }
 
+        private void button27_Click(object sender, EventArgs e)
+        {
+            FrmINVMBCALCOSTSUB SUB_FrmINVMBCALCOSTSUB = new FrmINVMBCALCOSTSUB();
+            SUB_FrmINVMBCALCOSTSUB.ShowDialog();
+            textBox8.Text = SUB_FrmINVMBCALCOSTSUB.TextBoxMsg;
+            textBox7.Text = FINDMB001(textBox8.Text.ToString());
+            textBox10.Text = FINDPRICES(textBox7.Text.ToString());
+            textBox9.Text = "0";
+        }
+
+        private void button28_Click(object sender, EventArgs e)
+        {
+            FrmINVMBCALCOSTSUB SUB_FrmINVMBCALCOSTSUB = new FrmINVMBCALCOSTSUB();
+            SUB_FrmINVMBCALCOSTSUB.ShowDialog();
+            textBox19.Text = SUB_FrmINVMBCALCOSTSUB.TextBoxMsg;
+            textBox18.Text = FINDMB001(textBox19.Text.ToString());
+            textBox21.Text = FINDPRICES(textBox18.Text.ToString());
+            textBox20.Text = "0";
+        }
 
         #endregion
 
@@ -4881,7 +4900,7 @@ namespace TKRESEARCH
             SETFASTREPORT(dateTimePicker1.Value.ToString("yyyy"), textBox123.Text, textBox124.Text);
         }
 
-     
+       
     }
 
 
