@@ -412,6 +412,8 @@
             this.label209 = new System.Windows.Forms.Label();
             this.textBox124 = new System.Windows.Forms.TextBox();
             this.previewControl2 = new FastReport.Preview.PreviewControl();
+            this.label128 = new System.Windows.Forms.Label();
+            this.label129 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -1073,6 +1075,7 @@
             this.tableLayoutPanel5.Controls.Add(this.textBoxID2, 2, 0);
             this.tableLayoutPanel5.Controls.Add(this.textBox8, 1, 2);
             this.tableLayoutPanel5.Controls.Add(this.textBox10, 1, 4);
+            this.tableLayoutPanel5.Controls.Add(this.label129, 2, 2);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
@@ -1506,6 +1509,7 @@
             this.tableLayoutPanel8.Controls.Add(this.textBox21, 1, 4);
             this.tableLayoutPanel8.Controls.Add(this.textBox22, 1, 5);
             this.tableLayoutPanel8.Controls.Add(this.textBox23, 1, 6);
+            this.tableLayoutPanel8.Controls.Add(this.label128, 2, 2);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
@@ -5387,6 +5391,28 @@
             this.previewControl2.Size = new System.Drawing.Size(972, 527);
             this.previewControl2.TabIndex = 10;
             // 
+            // label128
+            // 
+            this.label128.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label128.AutoSize = true;
+            this.label128.Location = new System.Drawing.Point(433, 84);
+            this.label128.Name = "label128";
+            this.label128.Size = new System.Drawing.Size(77, 32);
+            this.label128.TabIndex = 34;
+            this.label128.Text = "按ENTER查";
+            this.label128.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label129
+            // 
+            this.label129.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label129.AutoSize = true;
+            this.label129.Location = new System.Drawing.Point(433, 84);
+            this.label129.Name = "label129";
+            this.label129.Size = new System.Drawing.Size(77, 32);
+            this.label129.TabIndex = 35;
+            this.label129.Text = "按ENTER查";
+            this.label129.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // FrmINVMBCALCOST
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
@@ -5975,5 +6001,7 @@
         private System.Windows.Forms.Label label209;
         private System.Windows.Forms.TextBox textBox124;
         private FastReport.Preview.PreviewControl previewControl2;
+        private System.Windows.Forms.Label label128;
+        private System.Windows.Forms.Label label129;
     }
 }
