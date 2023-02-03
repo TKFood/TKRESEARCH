@@ -101,6 +101,13 @@ namespace TKRESEARCH
         string CONTENTTYPES62 = null;
         string DOCNAMES62 = null;
 
+        byte[] BYTES641 = null;
+        string CONTENTTYPES641 = null;
+        string DOCNAMES641 = null;
+        byte[] BYTES642 = null;
+        string CONTENTTYPES642 = null;
+        string DOCNAMES642 = null;
+
 
         byte[] BYTES71 = null;
         string CONTENTTYPES71 = null;
@@ -4371,6 +4378,133 @@ namespace TKRESEARCH
             }
         }
 
+        public void OPEN641()
+        {
+            string FILETYPE = null;
+            CONTENTTYPES641 = "";
+            BYTES641 = null;
+            DOCNAMES641 = null;
+
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = openFileDialog1.FileName;
+
+                    DOCNAMES641 = Path.GetFileName(fileName);
+                    textBox6643.Text = fileName;
+
+                    BYTES641 = File.ReadAllBytes(fileName);
+
+                    //Set the contenttype based on File Extension
+
+                    switch (Path.GetExtension(fileName))
+                    {
+                        case ".docx":
+                            CONTENTTYPES641 = "application/msword";
+                            break;
+                        case ".doc":
+                            CONTENTTYPES641 = "application/msword";
+                            break;
+                        case ".xls":
+                            CONTENTTYPES641 = "application/vnd.ms-excel";
+                            break;
+                        case ".xlsx":
+                            CONTENTTYPES641 = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            break;
+                        case ".pdf":
+                            CONTENTTYPES641 = "application/pdf";
+                            break;
+                        case ".jpg":
+                            CONTENTTYPES641 = "image/jpeg";
+                            break;
+                        case ".png":
+                            CONTENTTYPES641 = "image/png";
+                            break;
+                        case ".gif":
+                            CONTENTTYPES641 = "image/gif";
+                            break;
+                        case ".bmp":
+                            CONTENTTYPES641 = "image/bmp";
+                            break;
+                    }
+
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
+
+
+                    }
+
+                }
+            }
+        }
+
+        public void OPEN642()
+        {
+            string FILETYPE = null;
+            CONTENTTYPES642 = "";
+            BYTES642 = null;
+            DOCNAMES642 = null;
+
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = openFileDialog1.FileName;
+
+                    DOCNAMES642 = Path.GetFileName(fileName);
+                    textBox6644.Text = fileName;
+
+                    BYTES642 = File.ReadAllBytes(fileName);
+
+                    //Set the contenttype based on File Extension
+
+                    switch (Path.GetExtension(fileName))
+                    {
+                        case ".docx":
+                            CONTENTTYPES642 = "application/msword";
+                            break;
+                        case ".doc":
+                            CONTENTTYPES642 = "application/msword";
+                            break;
+                        case ".xls":
+                            CONTENTTYPES642 = "application/vnd.ms-excel";
+                            break;
+                        case ".xlsx":
+                            CONTENTTYPES642 = "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            break;
+                        case ".pdf":
+                            CONTENTTYPES642 = "application/pdf";
+                            break;
+                        case ".jpg":
+                            CONTENTTYPES642 = "image/jpeg";
+                            break;
+                        case ".png":
+                            CONTENTTYPES642 = "image/png";
+                            break;
+                        case ".gif":
+                            CONTENTTYPES642 = "image/gif";
+                            break;
+                        case ".bmp":
+                            CONTENTTYPES642 = "image/bmp";
+                            break;
+                    }
+
+                    long LONG_FILESIZE = openFileDialog1.OpenFile().Length;
+                    if (LONG_FILESIZE > FILESIZE)
+                    {
+                        MessageBox.Show(DOCNAMES1 + " 檔案超過10M，無法上傳");
+
+
+                    }
+
+                }
+            }
+        }
+
+
         public void OPEN71()
         {
             string FILETYPE = null;
@@ -6881,6 +7015,82 @@ namespace TKRESEARCH
 
         }
 
+        public void UPDATE_TO_TBDB6_ATTACHS(
+                            string ID                           
+                            , string DOCNAMES1
+                            , string CONTENTTYPES1
+                            , byte[] DATAS1
+                            , string DOCNAMES2
+                            , string CONTENTTYPES2
+                            , byte[] DATAS2
+
+                             )
+        {
+
+            try
+            {
+                // 20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+                using (SqlConnection conn = sqlConn)
+                {
+                    if (!string.IsNullOrEmpty(ID))
+                    {
+                        StringBuilder ADDSQL = new StringBuilder();
+                        ADDSQL.AppendFormat(@"   
+                                        UPDATE  [TKRESEARCH].[dbo].[TBDB6]
+                                        SET [DOCNAMES1]=@DOCNAMES1
+                                        ,[CONTENTTYPES1]=@CONTENTTYPES1
+                                        ,[DATAS1]=@DATAS1
+                                        ,[DOCNAMES2]=@DOCNAMES2
+                                        ,[CONTENTTYPES2]=@CONTENTTYPES2
+                                        ,[DATAS2]=@DATAS2
+                                        WHERE [ID]=@ID
+                                       
+                                       
+                                        ");
+
+                        string sql = ADDSQL.ToString();
+
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
+                        {
+
+                            cmd.Parameters.AddWithValue("@ID", ID);                        
+
+                            cmd.Parameters.AddWithValue("@DOCNAMES1", DOCNAMES1);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES1", CONTENTTYPES1);
+                            cmd.Parameters.AddWithValue("@DATAS1", DATAS1);
+                            cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
+                            cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
+                            cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
+
+
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                        }
+                    }
+
+                }
+            }
+            catch
+            {
+                MessageBox.Show("新增失敗");
+            }
+
+
+
+
+
+        }
         public void DELETE_TO_TBDB6(string ID)
         {
             // 20210902密
@@ -6943,6 +7153,10 @@ namespace TKRESEARCH
             textBox649.Text = null;
             textBox650.Text = null;
             textBox661.Text = null;
+            textBox6641.Text = null;
+            textBox6642.Text = null;
+            textBox6643.Text = null;
+            textBox6644.Text = null;
 
             if (dataGridView6.CurrentRow != null)
             {
@@ -6977,6 +7191,8 @@ namespace TKRESEARCH
                     textBox650.Text = row.Cells["備註"].Value.ToString();
                     textBox661.Text = row.Cells["產品品名"].Value.ToString();
 
+                    textBox6641.Text = row.Cells["ID"].Value.ToString();
+                    textBox6642.Text = row.Cells["產品品名"].Value.ToString();
                 }
                 else
                 {
@@ -7004,6 +7220,11 @@ namespace TKRESEARCH
                     textBox649.Text = null;
                     textBox650.Text = null;
                     textBox661.Text = null;
+
+                    textBox6641.Text = null;
+                    textBox6642.Text = null;
+                    textBox6643.Text = null;
+                    textBox6644.Text = null;
                 }
 
             }
@@ -9314,6 +9535,45 @@ namespace TKRESEARCH
 
             ADD_TO_TBPARA(KIND, PARAID, PARANAME);
             SEARCH10(textBox10A.Text);
+        }
+        private void button62_Click(object sender, EventArgs e)
+        {
+            OPEN641();
+        }
+
+        private void button61_Click(object sender, EventArgs e)
+        {
+            OPEN642();
+        }
+
+        private void button63_Click(object sender, EventArgs e)
+        {
+            string ID = textBox6641.Text;
+            string DOCNAMES1 = "";
+            string CONTENTTYPES1 = "";
+            byte[] DATAS1 = new byte[] { 1 };
+            string DOCNAMES2 = "";
+            string CONTENTTYPES2 = "";
+            byte[] DATAS2 = new byte[] { 1 };
+
+
+
+            if (!string.IsNullOrEmpty(DOCNAMES641))
+            {
+                DOCNAMES1 = DOCNAMES641;
+                CONTENTTYPES1 = CONTENTTYPES641;
+                DATAS1 = BYTES641;
+            }
+            if (!string.IsNullOrEmpty(DOCNAMES642))
+            {
+                DOCNAMES2 = DOCNAMES642;
+                CONTENTTYPES2 = CONTENTTYPES642;
+                DATAS2 = BYTES642;
+            }
+
+
+
+            UPDATE_TO_TBDB6_ATTACHS(ID, DOCNAMES1, CONTENTTYPES1, DATAS1, DOCNAMES2, CONTENTTYPES2, DATAS2);
         }
 
         #endregion
