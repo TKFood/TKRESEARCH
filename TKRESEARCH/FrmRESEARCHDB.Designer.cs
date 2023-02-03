@@ -654,6 +654,8 @@
             this.button63 = new System.Windows.Forms.Button();
             this.label208 = new System.Windows.Forms.Label();
             this.textBox6641 = new System.Windows.Forms.TextBox();
+            this.label209 = new System.Windows.Forms.Label();
+            this.comboBox12 = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -5036,9 +5038,11 @@
             this.tableLayoutPanel21.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel21.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel21.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 252F));
+            this.tableLayoutPanel21.Controls.Add(this.label209, 0, 1);
             this.tableLayoutPanel21.Controls.Add(this.label114, 0, 0);
             this.tableLayoutPanel21.Controls.Add(this.textBox6A, 1, 0);
-            this.tableLayoutPanel21.Controls.Add(this.button34, 2, 0);
+            this.tableLayoutPanel21.Controls.Add(this.comboBox12, 1, 1);
+            this.tableLayoutPanel21.Controls.Add(this.button34, 2, 1);
             this.tableLayoutPanel21.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel21.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel21.Name = "tableLayoutPanel21";
@@ -5070,7 +5074,7 @@
             // 
             // button34
             // 
-            this.button34.Location = new System.Drawing.Point(243, 3);
+            this.button34.Location = new System.Drawing.Point(243, 43);
             this.button34.Name = "button34";
             this.button34.Size = new System.Drawing.Size(114, 34);
             this.button34.TabIndex = 0;
@@ -8340,6 +8344,27 @@
             this.textBox6641.Size = new System.Drawing.Size(114, 27);
             this.textBox6641.TabIndex = 52;
             // 
+            // label209
+            // 
+            this.label209.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label209.AutoSize = true;
+            this.label209.Location = new System.Drawing.Point(3, 52);
+            this.label209.Name = "label209";
+            this.label209.Size = new System.Drawing.Size(114, 16);
+            this.label209.TabIndex = 18;
+            this.label209.Text = "是否停用";
+            this.label209.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // comboBox12
+            // 
+            this.comboBox12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox12.FormattingEnabled = true;
+            this.comboBox12.Location = new System.Drawing.Point(123, 50);
+            this.comboBox12.Name = "comboBox12";
+            this.comboBox12.Size = new System.Drawing.Size(114, 24);
+            this.comboBox12.TabIndex = 19;
+            this.comboBox12.Text = "N";
+            // 
             // FrmRESEARCHDB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
@@ -9200,5 +9225,7 @@
         private System.Windows.Forms.Button button63;
         private System.Windows.Forms.Label label208;
         private System.Windows.Forms.TextBox textBox6641;
+        private System.Windows.Forms.Label label209;
+        private System.Windows.Forms.ComboBox comboBox12;
     }
 }

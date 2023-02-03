@@ -159,7 +159,7 @@ namespace TKRESEARCH
             SETdataGridView51();
             SETdataGridView52();
             SETdataGridView53();
-            SEARCH6(textBox6A.Text);
+            SEARCH6(textBox6A.Text, comboBox12.Text);
             SETdataGridView61();
             SETdataGridView62();
             SEARCH7(textBox7A.Text);
@@ -184,6 +184,7 @@ namespace TKRESEARCH
             comboBox9load();
             comboBox10load();
             comboBox11load();
+            comboBox12load();
 
         }
 
@@ -558,7 +559,35 @@ namespace TKRESEARCH
 
 
         }
+        public void comboBox12load()
+        {
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
 
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder Sequel = new StringBuilder();
+            Sequel.AppendFormat(@" SELECT  'N' [PARAID] UNION ALL SELECT  'Y' [PARAID] ");
+            SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+            DataTable dt = new DataTable();
+            sqlConn.Open();
+
+            dt.Columns.Add("PARAID", typeof(string));
+         
+            da.Fill(dt);
+            comboBox12.DataSource = dt.DefaultView;
+            comboBox12.ValueMember = "PARAID";
+            comboBox12.DisplayMember = "PARAID";
+            sqlConn.Close();
+
+
+        }
         public void SEARCH(string KEYS)
         {
             SqlDataAdapter adapter1 = new SqlDataAdapter();
@@ -6606,10 +6635,11 @@ namespace TKRESEARCH
             }
         }
 
-        public void SEARCH6(string KEYS)
+        public void SEARCH6(string KEYS,string STATUS)
         {
             SqlDataAdapter adapter1 = new SqlDataAdapter();
             SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+            StringBuilder SQLUERY = new StringBuilder();
 
             DataSet ds1 = new DataSet();
 
@@ -6626,7 +6656,18 @@ namespace TKRESEARCH
                 String connectionString;
                 sqlConn = new SqlConnection(sqlsb.ConnectionString);
 
-
+                if(STATUS.Equals("N"))
+                {
+                    SQLUERY.AppendFormat(@"
+                                            AND [NAMES] NOT LIKE '%暫停%'
+                                            ");
+                }
+                else
+                {
+                    SQLUERY.AppendFormat(@"
+                                            AND [NAMES] LIKE '%暫停%'
+                                            ");
+                }
 
                 sbSql.Clear();
 
@@ -6664,8 +6705,9 @@ namespace TKRESEARCH
                                         FROM [TKRESEARCH].[dbo].[TBDB6]
 
                                         WHERE NAMES LIKE '%{0}%'
+                                        {1}
                                         ORDER BY  [ID]
-                                    ", KEYS);
+                                    ", KEYS, SQLUERY.ToString());
                 }
                 else
                 {
@@ -6699,9 +6741,10 @@ namespace TKRESEARCH
                                         ,[DOCNAMES2] AS '產品圖片'
                                        
                                         FROM [TKRESEARCH].[dbo].[TBDB6]
-
+                                        WHERE 1=1
+                                        {0}
                                         ORDER BY  [ID]
-                                    ");
+                                    ", SQLUERY.ToString());
                 }
 
 
@@ -9041,7 +9084,7 @@ namespace TKRESEARCH
         }
         private void button34_Click(object sender, EventArgs e)
         {
-            SEARCH6(textBox6A.Text);
+            SEARCH6(textBox6A.Text, comboBox12.Text);
         }
 
 
@@ -9126,7 +9169,7 @@ namespace TKRESEARCH
                         , DATAS2
                         );
 
-            SEARCH6(textBox6A.Text);
+            SEARCH6(textBox6A.Text, comboBox12.Text);
 
             ADD_TO_TBDBLOG(shareArea.UserName, "DB6", "", NAMES, "ADD", DOCNAMES1 + "," + DOCNAMES2 );
         }
@@ -9192,7 +9235,7 @@ namespace TKRESEARCH
                             , COMMEMTS
                                );
 
-            SEARCH6(textBox6A.Text);
+            SEARCH6(textBox6A.Text, comboBox12.Text);
         }
         private void button43_Click(object sender, EventArgs e)
         {
@@ -9202,7 +9245,7 @@ namespace TKRESEARCH
                 ADD_TO_TBDBLOG(shareArea.UserName, "DB6", textBox6C.Text,textBox661.Text, "DELETE", "");
 
                 DELETE_TO_TBDB6(textBox6C.Text);
-                SEARCH6(textBox6A.Text);
+                SEARCH6(textBox6A.Text, comboBox12.Text);
             }
             else if (dialogResult == DialogResult.No)
             {
@@ -9574,6 +9617,8 @@ namespace TKRESEARCH
 
 
             UPDATE_TO_TBDB6_ATTACHS(ID, DOCNAMES1, CONTENTTYPES1, DATAS1, DOCNAMES2, CONTENTTYPES2, DATAS2);
+
+            SEARCH6(textBox6A.Text, comboBox12.Text);
         }
 
         #endregion
