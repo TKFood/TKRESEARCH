@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="02/06/2023 11:28:30" ReportInfo.Modified="02/06/2023 15:10:25" ReportInfo.CreatorVersion="2016.4.4.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqHwzMSgwTFaHpjtG3vsOj8Zy6q+uhwpDsytgWqwZQZyEQUQyQ022aWUGqU90pHzzNjHuzu89K+RQ2LIBVx1fpgNkNJhwC4eetn2/Uy0fMrO7zDUE5AmRb+0bcYI+lxqpN+i5gA3VDGcwlcfm6L9ZMsLrZ3U+wEDtHCQtd9vw2XUFwhY1rTKFo8peBrU0ePD2+">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="SELECT &#13;&#10;[ID] &#13;&#10;,[KINDS] AS '分類'&#13;&#10;,[IANUMERS] AS '國際條碼'&#13;&#10;,[REGISTERNO] AS '食品業者登錄字號'&#13;&#10;,[MANUNAMES] AS '製造商名稱'&#13;&#10;,[ADDRESS] AS '製造商地址'&#13;&#10;,[CHECKS] AS '品質認證'&#13;&#10;,[NAMES] AS '產品品名'&#13;&#10;,[ORIS] AS '產品成分'&#13;&#10;,[MANUS] AS '製造流程'&#13;&#10;,[PROALLGENS] AS '產品過敏原'&#13;&#10;,[MANUALLGENS] AS '產線及生產設備過敏原'&#13;&#10;,[PRIMES] AS '素別'&#13;&#10;,[COLORS] AS '色澤'&#13;&#10;,[TASTES] AS '風味'&#13;&#10;,[CHARS] AS '性狀'&#13;&#10;,[PACKAGES] AS '材質'&#13;&#10;,[WEIGHTS] AS '淨重量'&#13;&#10;,[SPECS] AS '規格'&#13;&#10;,[SAVEDAYS] AS '保存期限'&#13;&#10;,[SAVECONDITIONS] AS '保存條件'&#13;&#10;,[COMMEMTS] AS '備註'&#13;&#10;,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'&#13;&#10;,[DOCNAMES1] AS '營養標示'&#13;&#10;                                    &#13;&#10;,[DOCNAMES2] AS '產品圖片'&#13;&#10;,[DATAS1]&#13;&#10;,[DATAS2]&#13;&#10;                                       &#13;&#10;FROM [TKRESEARCH].[dbo].[TBDB6]&#13;&#10;&#13;&#10;ORDER BY  [ID]">
+        <Column Name="ID" DataType="System.Decimal"/>
+        <Column Name="分類" DataType="System.String"/>
+        <Column Name="國際條碼" DataType="System.String"/>
+        <Column Name="食品業者登錄字號" DataType="System.String"/>
+        <Column Name="製造商名稱" DataType="System.String"/>
+        <Column Name="製造商地址" DataType="System.String"/>
+        <Column Name="品質認證" DataType="System.String"/>
+        <Column Name="產品品名" DataType="System.String"/>
+        <Column Name="產品成分" DataType="System.String"/>
+        <Column Name="製造流程" DataType="System.String"/>
+        <Column Name="產品過敏原" DataType="System.String"/>
+        <Column Name="產線及生產設備過敏原" DataType="System.String"/>
+        <Column Name="素別" DataType="System.String"/>
+        <Column Name="色澤" DataType="System.String"/>
+        <Column Name="風味" DataType="System.String"/>
+        <Column Name="性狀" DataType="System.String"/>
+        <Column Name="材質" DataType="System.String"/>
+        <Column Name="淨重量" DataType="System.String"/>
+        <Column Name="規格" DataType="System.String"/>
+        <Column Name="保存期限" DataType="System.String"/>
+        <Column Name="保存條件" DataType="System.String"/>
+        <Column Name="備註" DataType="System.String"/>
+        <Column Name="填表日期" DataType="System.String"/>
+        <Column Name="營養標示" DataType="System.String"/>
+        <Column Name="產品圖片" DataType="System.String"/>
+        <Column Name="DATAS1" DataType="System.Byte[]" BindableControl="Picture"/>
+        <Column Name="DATAS2" DataType="System.Byte[]" BindableControl="Picture"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <PageHeaderBand Name="PageHeader1" Width="718.2" Height="37.8">
+      <TextObject Name="Text5" Left="9.45" Width="708.75" Height="37.8" Text="老楊食品有限公司&#13;&#10;產品規格表" HorzAlign="Center" VertAlign="Center"/>
+    </PageHeaderBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="42.29" Width="718.2" Height="18.9" StartNewPage="true" RepeatOnEveryPage="true" Condition="[Table.ID]">
+      <DataBand Name="Data1" Top="65.69" Width="718.2" Height="765.45" DataSource="Table">
+        <TextObject Name="Text2" Width="103.95" Height="18.9" Border.Lines="All" Text="文件編號" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text6" Left="103.95" Width="425.25" Height="18.9" Border.Lines="All" Text="免填寫" VertAlign="Center"/>
+        <TextObject Name="Text7" Left="529.2" Width="94.5" Height="18.9" Border.Lines="All" Text="修訂日期" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text8" Left="623.7" Width="94.5" Height="18.9" Border.Lines="All" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text9" Top="18.9" Width="103.95" Height="18.9" Border.Lines="All" Text="品號" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text10" Left="103.95" Top="18.9" Width="425.25" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text11" Left="529.2" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="版次" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text12" Left="623.7" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text13" Top="37.8" Width="103.95" Height="18.9" Border.Lines="All" Text="中文品名 (英文)" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text14" Left="103.95" Top="37.8" Width="425.25" Height="18.9" Border.Lines="All" Text="[Table.產品品名]" VertAlign="Center"/>
+        <TextObject Name="Text15" Left="529.2" Top="37.8" Width="189" Height="18.9" Border.Lines="All" Text="產品圖片/內容物" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text16" Top="56.7" Width="103.95" Height="18.9" Border.Lines="All" Text="供應商名稱" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text17" Left="103.95" Top="56.7" Width="425.25" Height="18.9" Border.Lines="All" Text="[Table.製造商名稱]" VertAlign="Center"/>
+        <TextObject Name="Text18" Top="75.6" Width="103.95" Height="18.9" Border.Lines="All" Text="製造商/原產地" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text19" Left="103.95" Top="75.6" Width="425.25" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text20" Top="94.5" Width="103.95" Height="122.85" Border.Lines="All" Text="成份" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text21" Left="103.95" Top="94.5" Width="425.25" Height="122.85" Border.Lines="All" CanGrow="true" Text="[Table.產品成分]" VertAlign="Center"/>
+        <TextObject Name="Text22" Top="217.35" Width="103.95" Height="56.7" Border.Lines="All" Text="製造流程" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text23" Left="103.95" Top="217.35" Width="425.25" Height="56.7" Border.Lines="All" Text="[Table.製造流程]" VertAlign="Center"/>
+        <PictureObject Name="Picture1" Left="529.2" Top="56.7" Width="189" Height="217.35" Border.Lines="All" DataColumn="Table.DATAS1"/>
+        <TextObject Name="Text24" Top="274.05" Width="103.95" Height="66.15" Border.Lines="All" Text="食品添加物品名(E 編碼)" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text25" Left="103.95" Top="274.05" Width="614.25" Height="66.15" Border.Lines="All" Text="□無      □防腐劑 	□殺菌劑 	□抗氧化劑 	□漂白劑 	&#13;&#10;□保色劑 	□膨脹劑 	□品質改良劑 	□營養添加劑 	&#13;&#10;□著色劑 	□香料 	□調味劑 	□粘稠劑 	&#13;&#10;□結著劑 	□溶劑 	□乳化劑 	□其它 	&#13;&#10;" VertAlign="Center"/>
+        <TextObject Name="Text26" Top="340.2" Width="103.95" Height="18.9" Border.Lines="All" Text="原料素別" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text27" Left="103.95" Top="340.2" Width="614.25" Height="18.9" Border.Lines="All" Text="□葷食 □全素 □蛋素 □奶素 □蛋奶素 □植物五辛素" VertAlign="Center"/>
+        <TextObject Name="Text28" Top="359.1" Width="103.95" Height="75.6" Border.Lines="All" Text="過敏源	" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text29" Left="103.95" Top="359.1" Width="425.25" Height="75.6" Border.Lines="All" Text="[Table.產品過敏原]&#13;&#10;[Table.產線及生產設備過敏原]" VertAlign="Center"/>
+        <TextObject Name="Text30" Left="529.2" Top="359.1" Width="189" Height="37.8" Border.Lines="All" Text="營養標示	每 100 公克" VertAlign="Center"/>
+        <TextObject Name="Text31" Top="434.7" Width="103.95" Height="75.6" Border.Lines="All" Text="包裝型態" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text32" Left="103.95" Top="434.7" Width="66.15" Height="18.9" Border.Lines="All" Text="項目" VertAlign="Center"/>
+        <TextObject Name="Text33" Left="103.95" Top="453.6" Width="66.15" Height="18.9" Border.Lines="All" Text="內包裝" VertAlign="Center"/>
+        <TextObject Name="Text34" Left="103.95" Top="472.5" Width="66.15" Height="18.9" Border.Lines="All" Text="外包裝" VertAlign="Center"/>
+        <TextObject Name="Text35" Left="103.95" Top="491.4" Width="66.15" Height="18.9" Border.Lines="All" Text="淨重" VertAlign="Center"/>
+        <TextObject Name="Text36" Left="170.1" Top="434.7" Width="132.3" Height="18.9" Border.Lines="All" Text="重量/規格" VertAlign="Center"/>
+        <TextObject Name="Text38" Left="302.4" Top="434.7" Width="66.15" Height="18.9" Border.Lines="All" Text="材質" VertAlign="Center"/>
+        <TextObject Name="Text39" Left="368.55" Top="434.7" Width="160.65" Height="18.9" Border.Lines="All" Text="尺寸(長×寬×高)" VertAlign="Center"/>
+        <TextObject Name="Text40" Left="170.1" Top="453.6" Width="132.3" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text41" Left="170.1" Top="472.5" Width="132.3" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text42" Left="170.1" Top="491.4" Width="132.3" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text43" Left="302.4" Top="453.6" Width="66.15" Height="18.9" Border.Lines="All" Text="PE袋" VertAlign="Center"/>
+        <TextObject Name="Text44" Left="302.4" Top="472.5" Width="66.15" Height="18.9" Border.Lines="All" Text="瓦楞紙箱" VertAlign="Center"/>
+        <TextObject Name="Text45" Left="302.4" Top="491.4" Width="66.15" Height="18.9" Border.Lines="All" Text="材質" VertAlign="Center"/>
+        <TextObject Name="Text46" Left="368.55" Top="453.6" Width="160.65" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text47" Left="368.55" Top="472.5" Width="160.65" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text48" Left="368.55" Top="491.4" Width="160.65" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text49" Left="529.2" Top="396.9" Width="85.05" Height="18.9" Border.Lines="All" Text="熱量" VertAlign="Center"/>
+        <TextObject Name="Text50" Left="529.2" Top="415.8" Width="85.05" Height="18.9" Border.Lines="All" Text="蛋白質" VertAlign="Center"/>
+        <TextObject Name="Text51" Left="529.2" Top="434.7" Width="85.05" Height="18.9" Border.Lines="All" Text="脂肪" VertAlign="Center"/>
+        <TextObject Name="Text52" Left="529.2" Top="453.6" Width="85.05" Height="18.9" Border.Lines="All" Text="  飽和脂肪" VertAlign="Center"/>
+        <TextObject Name="Text53" Left="529.2" Top="472.5" Width="85.05" Height="18.9" Border.Lines="All" Text="  反式脂肪" VertAlign="Center"/>
+        <TextObject Name="Text54" Left="529.2" Top="491.4" Width="85.05" Height="18.9" Border.Lines="All" Text="碳水化合物" VertAlign="Center"/>
+        <TextObject Name="Text55" Left="529.2" Top="510.3" Width="85.05" Height="18.9" Border.Lines="All" Text="  糖" VertAlign="Center"/>
+        <TextObject Name="Text56" Left="529.2" Top="529.2" Width="85.05" Height="18.9" Border.Lines="All" Text="  膳食纖維" VertAlign="Center"/>
+        <TextObject Name="Text57" Left="529.2" Top="548.1" Width="85.05" Height="18.9" Border.Lines="All" Text="鈉" VertAlign="Center"/>
+        <TextObject Name="Text58" Left="614.25" Top="396.9" Width="103.95" Height="18.9" Border.Lines="All" Text="大卡" HorzAlign="Right" VertAlign="Center"/>
+        <TextObject Name="Text59" Left="614.25" Top="415.8" Width="103.95" Height="18.9" Border.Lines="All" Text="公克" HorzAlign="Right" VertAlign="Center"/>
+        <TextObject Name="Text60" Left="614.25" Top="434.7" Width="103.95" Height="18.9" Border.Lines="All" Text="公克" HorzAlign="Right" VertAlign="Center"/>
+        <TextObject Name="Text61" Left="614.25" Top="453.6" Width="103.95" Height="18.9" Border.Lines="All" Text="公克" HorzAlign="Right" VertAlign="Center"/>
+        <TextObject Name="Text62" Left="614.25" Top="472.5" Width="103.95" Height="18.9" Border.Lines="All" Text="公克" HorzAlign="Right" VertAlign="Center"/>
+        <TextObject Name="Text63" Left="614.25" Top="491.4" Width="103.95" Height="18.9" Border.Lines="All" Text="公克" HorzAlign="Right" VertAlign="Center"/>
+        <TextObject Name="Text64" Left="614.25" Top="510.3" Width="103.95" Height="18.9" Border.Lines="All" Text="公克" HorzAlign="Right" VertAlign="Center"/>
+        <TextObject Name="Text65" Left="614.25" Top="529.2" Width="103.95" Height="18.9" Border.Lines="All" Text="公克" HorzAlign="Right" VertAlign="Center"/>
+        <TextObject Name="Text66" Left="614.25" Top="548.1" Width="103.95" Height="18.9" Border.Lines="All" Text="毫克" HorzAlign="Right" VertAlign="Center"/>
+        <TextObject Name="Text67" Top="510.3" Width="103.95" Height="56.7" Border.Lines="All" Text="保存條件&#13;&#10;保存期限" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text68" Left="103.95" Top="510.3" Width="425.25" Height="18.9" Border.Lines="All" Text="[Table.保存條件]" VertAlign="Center"/>
+        <TextObject Name="Text69" Left="103.95" Top="529.2" Width="425.25" Height="18.9" Border.Lines="All" Text="[Table.保存期限]" VertAlign="Center"/>
+        <TextObject Name="Text70" Left="103.95" Top="548.1" Width="425.25" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text71" Top="567" Width="103.95" Height="37.8" Border.Lines="All" Text="一般物化標準" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text72" Left="103.95" Top="567" Width="85.05" Height="18.9" Border.Lines="All" Text="性狀" VertAlign="Center"/>
+        <TextObject Name="Text73" Left="103.95" Top="585.9" Width="85.05" Height="18.9" Border.Lines="All" Text="[Table.性狀]" VertAlign="Center"/>
+        <TextObject Name="Text74" Left="189" Top="567" Width="85.05" Height="18.9" Border.Lines="All" Text="顏色" VertAlign="Center"/>
+        <TextObject Name="Text75" Left="274.05" Top="567" Width="85.05" Height="18.9" Border.Lines="All" Text="風味" VertAlign="Center"/>
+        <TextObject Name="Text76" Left="359.1" Top="567" Width="85.05" Height="18.9" Border.Lines="All" Text="水份" VertAlign="Center"/>
+        <TextObject Name="Text77" Left="444.15" Top="567" Width="85.05" Height="18.9" Border.Lines="All" Text="其他" VertAlign="Center"/>
+        <TextObject Name="Text78" Left="529.2" Top="567" Width="85.05" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text79" Left="614.25" Top="567" Width="103.95" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text80" Left="189" Top="585.9" Width="85.05" Height="18.9" Border.Lines="All" Text="[Table.色澤]" VertAlign="Center"/>
+        <TextObject Name="Text81" Left="274.05" Top="585.9" Width="85.05" Height="18.9" Border.Lines="All" Text="[Table.風味]" VertAlign="Center"/>
+        <TextObject Name="Text82" Left="359.1" Top="585.9" Width="85.05" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text83" Left="444.15" Top="585.9" Width="85.05" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text84" Left="529.2" Top="585.9" Width="85.05" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text85" Left="614.25" Top="585.9" Width="103.95" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text86" Top="604.8" Width="103.95" Height="75.6" Border.Lines="All" Text="微生物標準&#13;&#10;(依貴司標準可更改、調整)" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text87" Left="103.95" Top="604.8" Width="170.1" Height="18.9" Border.Lines="All" Text="總生菌數(CFU/g)" VertAlign="Center"/>
+        <TextObject Name="Text88" Left="103.95" Top="623.7" Width="170.1" Height="18.9" Border.Lines="All" Text="大腸桿菌群(MPN/g)" VertAlign="Center"/>
+        <TextObject Name="Text89" Left="103.95" Top="642.6" Width="170.1" Height="18.9" Border.Lines="All" Text="大腸桿菌(MPN/g)" VertAlign="Center"/>
+        <TextObject Name="Text90" Left="103.95" Top="661.5" Width="170.1" Height="18.9" Border.Lines="All" Text="其他" VertAlign="Center"/>
+        <TextObject Name="Text91" Left="274.05" Top="604.8" Width="444.15" Height="18.9" Border.Lines="All" Text="□&lt;1×10^6 □&lt;1×10^5 □&lt;1×10^4 □其它&lt;5×10^4 " VertAlign="Center"/>
+        <TextObject Name="Text92" Left="274.05" Top="623.7" Width="444.15" Height="18.9" Border.Lines="All" Text="□ 陰性 □ &lt;1×10^3 □&lt;1×10^2 □其它&lt;1×10" VertAlign="Center"/>
+        <TextObject Name="Text93" Left="274.05" Top="642.6" Width="444.15" Height="18.9" Border.Lines="All" Text="□ 陰性	□ &lt;1×10^2 □&lt;1×10 □其它&lt;5×10" VertAlign="Center"/>
+        <TextObject Name="Text94" Left="274.05" Top="661.5" Width="444.15" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text95" Top="680.4" Width="103.95" Height="66.15" Border.Lines="All" Text="相關證明" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text96" Top="746.55" Width="103.95" Height="18.9" Border.Lines="All" Text="注意事項" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text97" Left="103.95" Top="680.4" Width="387.45" Height="66.15" Border.Lines="All" Text="[Table.品質認證]" VertAlign="Center"/>
+        <TextObject Name="Text98" Left="103.95" Top="746.55" Width="387.45" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text99" Left="491.4" Top="680.4" Width="113.4" Height="28.35" Border.Lines="All" Text="廠商確認(公司章)" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text100" Left="604.8" Top="680.4" Width="113.4" Height="28.35" Border.Lines="All" Text="填表人" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text101" Left="491.4" Top="708.75" Width="113.4" Height="56.7" Border.Lines="All" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text102" Left="604.8" Top="708.75" Width="113.4" Height="56.7" Border.Lines="All" HorzAlign="Center" VertAlign="Center"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter1" Top="835.63" Width="718.2" Height="37.8"/>
+    </GroupHeaderBand>
+    <PageFooterBand Name="PageFooter1" Top="877.93" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>

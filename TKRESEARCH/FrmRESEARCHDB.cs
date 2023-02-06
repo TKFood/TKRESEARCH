@@ -7201,6 +7201,9 @@ namespace TKRESEARCH
             textBox6643.Text = null;
             textBox6644.Text = null;
 
+            textBox6E.Text = null;
+            textBox6511.Text = null;
+
             if (dataGridView6.CurrentRow != null)
             {
                 int rowindex = dataGridView6.CurrentRow.Index;
@@ -7236,6 +7239,9 @@ namespace TKRESEARCH
 
                     textBox6641.Text = row.Cells["ID"].Value.ToString();
                     textBox6642.Text = row.Cells["產品品名"].Value.ToString();
+
+                    textBox6E.Text = row.Cells["ID"].Value.ToString();
+                    textBox6511.Text = row.Cells["產品品名"].Value.ToString();
                 }
                 else
                 {
@@ -7268,6 +7274,9 @@ namespace TKRESEARCH
                     textBox6642.Text = null;
                     textBox6643.Text = null;
                     textBox6644.Text = null;
+
+                    textBox6E.Text = null;
+                    textBox6511.Text = null;
                 }
 
             }
@@ -8463,6 +8472,86 @@ namespace TKRESEARCH
             }
         }
 
+        public void SETFASTREPORT(string ID)
+        {
+
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+
+            StringBuilder SQL1 = new StringBuilder();
+
+            SQL1 = SETSQL(ID);
+            Report report1 = new Report();
+            report1.Load(@"REPORT\產品規格表v2.frx");
+
+            report1.Dictionary.Connections[0].ConnectionString = sqlsb.ConnectionString;
+
+            TableDataSource table = report1.GetDataSource("Table") as TableDataSource;
+            table.SelectCommand = SQL1.ToString();
+
+            //report1.SetParameterValue("P1", dateTimePicker1.Value.ToString("yyyyMMdd"));
+            //report1.SetParameterValue("P2", dateTimePicker2.Value.ToString("yyyyMMdd"));
+            report1.Preview = previewControl1;
+            report1.Show();
+        }
+
+        public StringBuilder SETSQL(string ID)
+        {
+            StringBuilder SB = new StringBuilder();
+
+            SB.AppendFormat(@" 
+                                SELECT 
+                                [ID] 
+                                ,[KINDS] AS '分類'
+                                ,[IANUMERS] AS '國際條碼'
+                                ,[REGISTERNO] AS '食品業者登錄字號'
+                                ,[MANUNAMES] AS '製造商名稱'
+                                ,[ADDRESS] AS '製造商地址'
+                                ,[CHECKS] AS '品質認證'
+                                ,[NAMES] AS '產品品名'
+                                ,[ORIS] AS '產品成分'
+                                ,[MANUS] AS '製造流程'
+                                ,[PROALLGENS] AS '產品過敏原'
+                                ,[MANUALLGENS] AS '產線及生產設備過敏原'
+                                ,[PRIMES] AS '素別'
+                                ,[COLORS] AS '色澤'
+                                ,[TASTES] AS '風味'
+                                ,[CHARS] AS '性狀'
+                                ,[PACKAGES] AS '材質'
+                                ,[WEIGHTS] AS '淨重量'
+                                ,[SPECS] AS '規格'
+                                ,[SAVEDAYS] AS '保存期限'
+                                ,[SAVECONDITIONS] AS '保存條件'
+                                ,[COMMEMTS] AS '備註'
+                                ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'
+                                ,[DOCNAMES1] AS '營養標示'
+                                    
+                                ,[DOCNAMES2] AS '產品圖片'
+                                ,[DATAS1]
+                                ,[DATAS2]
+                                       
+                                FROM [TKRESEARCH].[dbo].[TBDB6]
+                                WHERE [ID]='{0}'
+                                ORDER BY  [ID]
+                           
+                           
+                            ", ID);
+
+            return SB;
+
+        }
+
 
         #endregion
 
@@ -9620,6 +9709,11 @@ namespace TKRESEARCH
 
             SEARCH6(textBox6A.Text, comboBox12.Text);
         }
+        private void button66_Click(object sender, EventArgs e)
+        {
+            SETFASTREPORT( textBox6E.Text);
+        }
+
 
         #endregion
 
