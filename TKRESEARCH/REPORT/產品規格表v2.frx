@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="02/06/2023 11:28:30" ReportInfo.Modified="02/06/2023 15:10:25" ReportInfo.CreatorVersion="2016.4.4.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="02/06/2023 11:28:30" ReportInfo.Modified="02/06/2023 15:19:36" ReportInfo.CreatorVersion="2016.4.4.0">
   <Dictionary>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqHwzMSgwTFaHpjtG3vsOj8Zy6q+uhwpDsytgWqwZQZyEQUQyQ022aWUGqU90pHzzNjHuzu89K+RQ2LIBVx1fpgNkNJhwC4eetn2/Uy0fMrO7zDUE5AmRb+0bcYI+lxqpN+i5gA3VDGcwlcfm6L9ZMsLrZ3U+wEDtHCQtd9vw2XUFwhY1rTKFo8peBrU0ePD2+">
-      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="SELECT &#13;&#10;[ID] &#13;&#10;,[KINDS] AS '分類'&#13;&#10;,[IANUMERS] AS '國際條碼'&#13;&#10;,[REGISTERNO] AS '食品業者登錄字號'&#13;&#10;,[MANUNAMES] AS '製造商名稱'&#13;&#10;,[ADDRESS] AS '製造商地址'&#13;&#10;,[CHECKS] AS '品質認證'&#13;&#10;,[NAMES] AS '產品品名'&#13;&#10;,[ORIS] AS '產品成分'&#13;&#10;,[MANUS] AS '製造流程'&#13;&#10;,[PROALLGENS] AS '產品過敏原'&#13;&#10;,[MANUALLGENS] AS '產線及生產設備過敏原'&#13;&#10;,[PRIMES] AS '素別'&#13;&#10;,[COLORS] AS '色澤'&#13;&#10;,[TASTES] AS '風味'&#13;&#10;,[CHARS] AS '性狀'&#13;&#10;,[PACKAGES] AS '材質'&#13;&#10;,[WEIGHTS] AS '淨重量'&#13;&#10;,[SPECS] AS '規格'&#13;&#10;,[SAVEDAYS] AS '保存期限'&#13;&#10;,[SAVECONDITIONS] AS '保存條件'&#13;&#10;,[COMMEMTS] AS '備註'&#13;&#10;,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'&#13;&#10;,[DOCNAMES1] AS '營養標示'&#13;&#10;                                    &#13;&#10;,[DOCNAMES2] AS '產品圖片'&#13;&#10;,[DATAS1]&#13;&#10;,[DATAS2]&#13;&#10;                                       &#13;&#10;FROM [TKRESEARCH].[dbo].[TBDB6]&#13;&#10;&#13;&#10;ORDER BY  [ID]">
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqHwzMSgwTFaHpjtG3vsOj8Zy6q+uhwpDsytgWqwZQZyEQUQyQ022aWUGqU90pHzzNjHuzu89K+RQ2LIBVx1fpgNkNJhwC4eetn2/Uy0fMrO7zDUE5AmRb+0bcYI+lxqpN+i5gA3VDGcwlcfm6L9ZMsLrZ3U+wEDtHCQtd9vw2XUEnJbkqtwDlQD5WEXHq9oPt">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="SELECT &#13;&#10;[ID] &#13;&#10; ,[MB001] AS '品號'&#13;&#10;,[KINDS] AS '分類'&#13;&#10;,[IANUMERS] AS '國際條碼'&#13;&#10;,[REGISTERNO] AS '食品業者登錄字號'&#13;&#10;,[MANUNAMES] AS '製造商名稱'&#13;&#10;,[ADDRESS] AS '製造商地址'&#13;&#10;,[CHECKS] AS '品質認證'&#13;&#10;,[NAMES] AS '產品品名'&#13;&#10;,[ORIS] AS '產品成分'&#13;&#10;,[MANUS] AS '製造流程'&#13;&#10;,[PROALLGENS] AS '產品過敏原'&#13;&#10;,[MANUALLGENS] AS '產線及生產設備過敏原'&#13;&#10;,[PRIMES] AS '素別'&#13;&#10;,[COLORS] AS '色澤'&#13;&#10;,[TASTES] AS '風味'&#13;&#10;,[CHARS] AS '性狀'&#13;&#10;,[PACKAGES] AS '材質'&#13;&#10;,[WEIGHTS] AS '淨重量'&#13;&#10;,[SPECS] AS '規格'&#13;&#10;,[SAVEDAYS] AS '保存期限'&#13;&#10;,[SAVECONDITIONS] AS '保存條件'&#13;&#10;,[COMMEMTS] AS '備註'&#13;&#10;,CONVERT(NVARCHAR,[CREATEDATES],112) AS '填表日期'&#13;&#10;,[DOCNAMES1] AS '營養標示'&#13;&#10;                                    &#13;&#10;,[DOCNAMES2] AS '產品圖片'&#13;&#10;,[DATAS1]&#13;&#10;,[DATAS2]&#13;&#10;                                       &#13;&#10;FROM [TKRESEARCH].[dbo].[TBDB6]&#13;&#10;&#13;&#10;ORDER BY  [ID]">
         <Column Name="ID" DataType="System.Decimal"/>
         <Column Name="分類" DataType="System.String"/>
         <Column Name="國際條碼" DataType="System.String"/>
@@ -30,6 +30,7 @@
         <Column Name="產品圖片" DataType="System.String"/>
         <Column Name="DATAS1" DataType="System.Byte[]" BindableControl="Picture"/>
         <Column Name="DATAS2" DataType="System.Byte[]" BindableControl="Picture"/>
+        <Column Name="品號" DataType="System.String"/>
       </TableDataSource>
     </MsSqlDataConnection>
   </Dictionary>
@@ -44,7 +45,7 @@
         <TextObject Name="Text7" Left="529.2" Width="94.5" Height="18.9" Border.Lines="All" Text="修訂日期" HorzAlign="Center" VertAlign="Center"/>
         <TextObject Name="Text8" Left="623.7" Width="94.5" Height="18.9" Border.Lines="All" HorzAlign="Center" VertAlign="Center"/>
         <TextObject Name="Text9" Top="18.9" Width="103.95" Height="18.9" Border.Lines="All" Text="品號" HorzAlign="Center" VertAlign="Center"/>
-        <TextObject Name="Text10" Left="103.95" Top="18.9" Width="425.25" Height="18.9" Border.Lines="All" VertAlign="Center"/>
+        <TextObject Name="Text10" Left="103.95" Top="18.9" Width="425.25" Height="18.9" Border.Lines="All" Text="[Table.品號]" VertAlign="Center"/>
         <TextObject Name="Text11" Left="529.2" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" Text="版次" HorzAlign="Center" VertAlign="Center"/>
         <TextObject Name="Text12" Left="623.7" Top="18.9" Width="94.5" Height="18.9" Border.Lines="All" HorzAlign="Center" VertAlign="Center"/>
         <TextObject Name="Text13" Top="37.8" Width="103.95" Height="18.9" Border.Lines="All" Text="中文品名 (英文)" HorzAlign="Center" VertAlign="Center"/>

@@ -6682,6 +6682,7 @@ namespace TKRESEARCH
                                         ,[MANUNAMES] AS '製造商名稱'
                                         ,[ADDRESS] AS '製造商地址'
                                         ,[CHECKS] AS '品質認證'
+                                        ,[MB001] AS '品號'
                                         ,[NAMES] AS '產品品名'
                                         ,[ORIS] AS '產品成分'
                                         ,[MANUS] AS '製造流程'
@@ -6808,7 +6809,8 @@ namespace TKRESEARCH
                             , byte[] DATAS1
                             , string DOCNAMES2
                             , string CONTENTTYPES2
-                            , byte[] DATAS2                       
+                            , byte[] DATAS2    
+                            ,string MB001
 
                              )
         {
@@ -6860,6 +6862,7 @@ namespace TKRESEARCH
                                         ,[DOCNAMES2]
                                         ,[CONTENTTYPES2]
                                         ,[DATAS2]
+                                        ,[MB001]
                                         )
                                         VALUES
                                         (
@@ -6890,6 +6893,7 @@ namespace TKRESEARCH
                                         ,@DOCNAMES2
                                         ,@CONTENTTYPES2
                                         ,@DATAS2
+                                        ,@MB001
                                         )
                                        
                                         ");
@@ -6927,6 +6931,7 @@ namespace TKRESEARCH
                             cmd.Parameters.AddWithValue("@DOCNAMES2", DOCNAMES2);
                             cmd.Parameters.AddWithValue("@CONTENTTYPES2", CONTENTTYPES2);
                             cmd.Parameters.AddWithValue("@DATAS2", DATAS2);
+                            cmd.Parameters.AddWithValue("@MB001", MB001);
 
 
 
@@ -6972,6 +6977,7 @@ namespace TKRESEARCH
                                 , string SAVEDAYS
                                 , string SAVECONDITIONS
                                 , string COMMEMTS
+                                , string MB001
 
                                )
         {
@@ -7014,6 +7020,7 @@ namespace TKRESEARCH
                                         ,[SAVEDAYS]=@SAVEDAYS
                                         ,[SAVECONDITIONS]=@SAVECONDITIONS
                                         ,[COMMEMTS]=@COMMEMTS
+                                        ,[MB001]=@MB001
                                         WHERE [ID]=@ID
                                        
                                        
@@ -7046,6 +7053,7 @@ namespace TKRESEARCH
                         cmd.Parameters.AddWithValue("@SAVEDAYS", SAVEDAYS);
                         cmd.Parameters.AddWithValue("@SAVECONDITIONS", SAVECONDITIONS);
                         cmd.Parameters.AddWithValue("@COMMEMTS", COMMEMTS);
+                        cmd.Parameters.AddWithValue("@MB001", MB001);
 
                         conn.Open();
                         cmd.ExecuteNonQuery();
@@ -8519,6 +8527,7 @@ namespace TKRESEARCH
                                 ,[MANUNAMES] AS '製造商名稱'
                                 ,[ADDRESS] AS '製造商地址'
                                 ,[CHECKS] AS '品質認證'
+                                ,[MB001] AS '品號'
                                 ,[NAMES] AS '產品品名'
                                 ,[ORIS] AS '產品成分'
                                 ,[MANUS] AS '製造流程'
@@ -9201,6 +9210,7 @@ namespace TKRESEARCH
             string SAVEDAYS = textBox618.Text.ToString();
             string SAVECONDITIONS = textBox622.Text.ToString();
             string COMMEMTS = textBox619.Text.ToString();
+            string MB001 = textBox623.Text.ToString();
 
             string DOCNAMES1 = "";
             string CONTENTTYPES1 = "";
@@ -9256,6 +9266,7 @@ namespace TKRESEARCH
                         , DOCNAMES2
                         , CONTENTTYPES2
                         , DATAS2
+                        ,MB001
                         );
 
             SEARCH6(textBox6A.Text, comboBox12.Text);
@@ -9297,7 +9308,8 @@ namespace TKRESEARCH
             string SAVEDAYS = textBox648.Text;
             string SAVECONDITIONS = textBox649.Text;
             string COMMEMTS = textBox650.Text;
-          
+            string MB001 = textBox651.Text;
+
 
             UPDATE_TO_TBDB6(
                             ID
@@ -9322,6 +9334,7 @@ namespace TKRESEARCH
                             , SAVEDAYS
                             , SAVECONDITIONS
                             , COMMEMTS
+                            , MB001
                                );
 
             SEARCH6(textBox6A.Text, comboBox12.Text);
