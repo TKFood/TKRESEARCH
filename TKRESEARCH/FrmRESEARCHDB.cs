@@ -6721,6 +6721,7 @@ namespace TKRESEARCH
                                         ,[MANUNAMES] AS '製造商名稱'
                                         ,[ADDRESS] AS '製造商地址'
                                         ,[CHECKS] AS '品質認證'
+                                        ,[MB001] AS '品號'
                                         ,[NAMES] AS '產品品名'
                                         ,[ORIS] AS '產品成分'
                                         ,[MANUS] AS '製造流程'
@@ -7203,6 +7204,7 @@ namespace TKRESEARCH
             textBox648.Text = null;
             textBox649.Text = null;
             textBox650.Text = null;
+            textBox651.Text = null;
             textBox661.Text = null;
             textBox6641.Text = null;
             textBox6642.Text = null;
@@ -7243,6 +7245,7 @@ namespace TKRESEARCH
                     textBox648.Text = row.Cells["保存期限"].Value.ToString();
                     textBox649.Text = row.Cells["保存條件"].Value.ToString();
                     textBox650.Text = row.Cells["備註"].Value.ToString();
+                    textBox651.Text = row.Cells["品號"].Value.ToString();
                     textBox661.Text = row.Cells["產品品名"].Value.ToString();
 
                     textBox6641.Text = row.Cells["ID"].Value.ToString();
@@ -7276,6 +7279,7 @@ namespace TKRESEARCH
                     textBox648.Text = null;
                     textBox649.Text = null;
                     textBox650.Text = null;
+                    textBox651.Text = null;
                     textBox661.Text = null;
 
                     textBox6641.Text = null;
