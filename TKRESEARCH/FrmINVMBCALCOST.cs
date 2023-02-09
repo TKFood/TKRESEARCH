@@ -4554,7 +4554,7 @@ namespace TKRESEARCH
             return SB;
         }
 
-        public void SETFASTREPORT2(string SDATE, string MB001, string MB003)
+        public void SETFASTREPORT2(string SDATE, string MB001, string MB003,string MB002)
         {
 
             //20210902密
@@ -4573,7 +4573,7 @@ namespace TKRESEARCH
 
             StringBuilder SQL1 = new StringBuilder();
 
-            SQL1 = SETSQL(SDATE, MB001, MB003);
+            SQL1 = SETSQL(SDATE, MB001, MB003, MB002);
             Report report1 = new Report();
             report1.Load(@"REPORT\平均成本.frx");
 
@@ -4588,7 +4588,7 @@ namespace TKRESEARCH
             report1.Show();
         }
 
-        public StringBuilder SETSQL(string YM, string MB001, string MB003)
+        public StringBuilder SETSQL(string YM, string MB001, string MB003,string MB002)
         {
             StringBuilder SB = new StringBuilder();
             StringBuilder SQUERY = new StringBuilder();
@@ -4596,7 +4596,7 @@ namespace TKRESEARCH
             if (!string.IsNullOrEmpty(MB001))
             {
                 SQUERY.AppendFormat(@"
-                                    AND (TA001 LIKE '%{0}%' OR MB002  LIKE '%{0}%')
+                                    AND TA001 LIKE '%{0}%'
                                     ", MB001);
             }
             else
@@ -4611,6 +4611,19 @@ namespace TKRESEARCH
                 SQUERY.AppendFormat(@"
                                      AND MB003 LIKE '%{0}%'
                                     ", MB003);
+            }
+            else
+            {
+                SQUERY.AppendFormat(@"
+
+                                    ");
+            }
+
+            if (!string.IsNullOrEmpty(MB002))
+            {
+                SQUERY.AppendFormat(@"
+                                     AND MB002 LIKE '%{0}%'
+                                    ", MB002);
             }
             else
             {
@@ -4711,6 +4724,23 @@ namespace TKRESEARCH
             textBox18.Text = FINDMB001(textBox19.Text.ToString());
             textBox21.Text = FINDPRICES(textBox18.Text.ToString());
             textBox20.Text = "0";
+        }
+
+        private void textBox123_TextChanged(object sender, EventArgs e)
+        {
+            if(!string.IsNullOrEmpty(textBox123.Text))
+            {
+                textBox125.Text = null;
+            }
+        }
+
+        private void textBox125_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBox125.Text))
+            {
+                textBox123.Text = null;
+            }
+
         }
 
         #endregion
@@ -4897,10 +4927,10 @@ namespace TKRESEARCH
 
         private void button61_Click(object sender, EventArgs e)
         {
-            SETFASTREPORT2(dateTimePicker1.Value.ToString("yyyy"), textBox123.Text, textBox124.Text);
+            SETFASTREPORT2(dateTimePicker1.Value.ToString("yyyy"), textBox123.Text, textBox124.Text, textBox125.Text);
         }
 
-       
+     
     }
 
 
