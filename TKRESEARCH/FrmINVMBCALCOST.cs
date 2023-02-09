@@ -4695,7 +4695,7 @@ namespace TKRESEARCH
 
             //report1.SetParameterValue("P1", dateTimePicker1.Value.ToString("yyyyMMdd"));
             //report1.SetParameterValue("P2", dateTimePicker2.Value.ToString("yyyyMMdd"));
-            report1.Preview = previewControl2;
+            report1.Preview = previewControl3;
             report1.Show();
         }
 
@@ -5086,11 +5086,13 @@ namespace TKRESEARCH
 
         private void button61_Click(object sender, EventArgs e)
         {
+            tabControl2.SelectedTab = tabControl2.TabPages["tabPage12"];
             SETFASTREPORT2(dateTimePicker1.Value.ToString("yyyy"), textBox123.Text, textBox124.Text, textBox125.Text);
         }
 
         private void button29_Click(object sender, EventArgs e)
         {
+            tabControl2.SelectedTab = tabControl2.TabPages["tabPage13"];
             SETFASTREPORT3(dateTimePicker1.Value.ToString("yyyy"), textBox123.Text , textBox125.Text);
         }
     }

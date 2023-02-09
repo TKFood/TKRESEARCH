@@ -413,10 +413,14 @@
             this.button61 = new System.Windows.Forms.Button();
             this.label209 = new System.Windows.Forms.Label();
             this.textBox124 = new System.Windows.Forms.TextBox();
-            this.previewControl2 = new FastReport.Preview.PreviewControl();
             this.label128 = new System.Windows.Forms.Label();
             this.textBox125 = new System.Windows.Forms.TextBox();
             this.button29 = new System.Windows.Forms.Button();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabPage12 = new System.Windows.Forms.TabPage();
+            this.tabPage13 = new System.Windows.Forms.TabPage();
+            this.previewControl2 = new FastReport.Preview.PreviewControl();
+            this.previewControl3 = new FastReport.Preview.PreviewControl();
             this.tabControl1.SuspendLayout();
             this.tabPage9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -578,6 +582,9 @@
             this.splitContainer28.Panel2.SuspendLayout();
             this.splitContainer28.SuspendLayout();
             this.tableLayoutPanel39.SuspendLayout();
+            this.tabControl2.SuspendLayout();
+            this.tabPage12.SuspendLayout();
+            this.tabPage13.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -5286,7 +5293,7 @@
             // 
             // splitContainer28.Panel2
             // 
-            this.splitContainer28.Panel2.Controls.Add(this.previewControl2);
+            this.splitContainer28.Panel2.Controls.Add(this.tabControl2);
             this.splitContainer28.Size = new System.Drawing.Size(976, 731);
             this.splitContainer28.SplitterDistance = 196;
             this.splitContainer28.TabIndex = 0;
@@ -5406,19 +5413,6 @@
             this.textBox124.Size = new System.Drawing.Size(144, 27);
             this.textBox124.TabIndex = 30;
             // 
-            // previewControl2
-            // 
-            this.previewControl2.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.previewControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.previewControl2.Font = new System.Drawing.Font("宋体", 9F);
-            this.previewControl2.Location = new System.Drawing.Point(0, 0);
-            this.previewControl2.Margin = new System.Windows.Forms.Padding(4);
-            this.previewControl2.Name = "previewControl2";
-            this.previewControl2.PageOffset = new System.Drawing.Point(10, 10);
-            this.previewControl2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.previewControl2.Size = new System.Drawing.Size(972, 527);
-            this.previewControl2.TabIndex = 10;
-            // 
             // label128
             // 
             this.label128.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -5451,6 +5445,65 @@
             this.button29.Text = "查詢分攤成本";
             this.button29.UseVisualStyleBackColor = true;
             this.button29.Click += new System.EventHandler(this.button29_Click);
+            // 
+            // tabControl2
+            // 
+            this.tabControl2.Controls.Add(this.tabPage12);
+            this.tabControl2.Controls.Add(this.tabPage13);
+            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl2.Location = new System.Drawing.Point(0, 0);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(972, 527);
+            this.tabControl2.TabIndex = 0;
+            // 
+            // tabPage12
+            // 
+            this.tabPage12.Controls.Add(this.previewControl2);
+            this.tabPage12.Location = new System.Drawing.Point(4, 26);
+            this.tabPage12.Name = "tabPage12";
+            this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage12.Size = new System.Drawing.Size(964, 497);
+            this.tabPage12.TabIndex = 0;
+            this.tabPage12.Text = "tabPage12";
+            this.tabPage12.UseVisualStyleBackColor = true;
+            // 
+            // tabPage13
+            // 
+            this.tabPage13.Controls.Add(this.previewControl3);
+            this.tabPage13.Location = new System.Drawing.Point(4, 26);
+            this.tabPage13.Name = "tabPage13";
+            this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage13.Size = new System.Drawing.Size(964, 497);
+            this.tabPage13.TabIndex = 1;
+            this.tabPage13.Text = "tabPage13";
+            this.tabPage13.UseVisualStyleBackColor = true;
+            // 
+            // previewControl2
+            // 
+            this.previewControl2.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.previewControl2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.previewControl2.Font = new System.Drawing.Font("宋体", 9F);
+            this.previewControl2.Location = new System.Drawing.Point(3, 3);
+            this.previewControl2.Margin = new System.Windows.Forms.Padding(4);
+            this.previewControl2.Name = "previewControl2";
+            this.previewControl2.PageOffset = new System.Drawing.Point(10, 10);
+            this.previewControl2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.previewControl2.Size = new System.Drawing.Size(958, 491);
+            this.previewControl2.TabIndex = 11;
+            // 
+            // previewControl3
+            // 
+            this.previewControl3.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.previewControl3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.previewControl3.Font = new System.Drawing.Font("宋体", 9F);
+            this.previewControl3.Location = new System.Drawing.Point(3, 3);
+            this.previewControl3.Margin = new System.Windows.Forms.Padding(4);
+            this.previewControl3.Name = "previewControl3";
+            this.previewControl3.PageOffset = new System.Drawing.Point(10, 10);
+            this.previewControl3.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.previewControl3.Size = new System.Drawing.Size(958, 491);
+            this.previewControl3.TabIndex = 12;
             // 
             // FrmINVMBCALCOST
             // 
@@ -5650,6 +5703,9 @@
             this.splitContainer28.ResumeLayout(false);
             this.tableLayoutPanel39.ResumeLayout(false);
             this.tableLayoutPanel39.PerformLayout();
+            this.tabControl2.ResumeLayout(false);
+            this.tabPage12.ResumeLayout(false);
+            this.tabPage13.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -6039,11 +6095,15 @@
         private System.Windows.Forms.Button button61;
         private System.Windows.Forms.Label label209;
         private System.Windows.Forms.TextBox textBox124;
-        private FastReport.Preview.PreviewControl previewControl2;
         private System.Windows.Forms.Button button27;
         private System.Windows.Forms.Button button28;
         private System.Windows.Forms.Label label128;
         private System.Windows.Forms.TextBox textBox125;
         private System.Windows.Forms.Button button29;
+        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabPage tabPage12;
+        private FastReport.Preview.PreviewControl previewControl2;
+        private System.Windows.Forms.TabPage tabPage13;
+        private FastReport.Preview.PreviewControl previewControl3;
     }
 }
