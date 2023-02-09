@@ -81,6 +81,7 @@
             this.textBoxID2 = new System.Windows.Forms.TextBox();
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
+            this.button27 = new System.Windows.Forms.Button();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.label15 = new System.Windows.Forms.Label();
             this.textBox13 = new System.Windows.Forms.TextBox();
@@ -116,6 +117,7 @@
             this.textBox21 = new System.Windows.Forms.TextBox();
             this.textBox22 = new System.Windows.Forms.TextBox();
             this.textBox23 = new System.Windows.Forms.TextBox();
+            this.button28 = new System.Windows.Forms.Button();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.label27 = new System.Windows.Forms.Label();
             this.textBox25 = new System.Windows.Forms.TextBox();
@@ -412,8 +414,6 @@
             this.label209 = new System.Windows.Forms.Label();
             this.textBox124 = new System.Windows.Forms.TextBox();
             this.previewControl2 = new FastReport.Preview.PreviewControl();
-            this.button27 = new System.Windows.Forms.Button();
-            this.button28 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -711,7 +711,7 @@
             // 
             this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(123, 50);
+            this.comboBox1.Location = new System.Drawing.Point(123, 48);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(114, 24);
             this.comboBox1.TabIndex = 19;
@@ -846,7 +846,7 @@
             // 
             this.comboBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(123, 88);
+            this.comboBox2.Location = new System.Drawing.Point(123, 90);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(141, 24);
             this.comboBox2.TabIndex = 23;
@@ -1247,6 +1247,16 @@
             this.textBox10.Size = new System.Drawing.Size(304, 27);
             this.textBox10.TabIndex = 30;
             this.textBox10.TextChanged += new System.EventHandler(this.textBox10_TextChanged);
+            // 
+            // button27
+            // 
+            this.button27.Location = new System.Drawing.Point(433, 83);
+            this.button27.Name = "button27";
+            this.button27.Size = new System.Drawing.Size(77, 34);
+            this.button27.TabIndex = 34;
+            this.button27.Text = "開窗";
+            this.button27.UseVisualStyleBackColor = true;
+            this.button27.Click += new System.EventHandler(this.button27_Click);
             // 
             // tableLayoutPanel6
             // 
@@ -1680,6 +1690,16 @@
             this.textBox23.Name = "textBox23";
             this.textBox23.Size = new System.Drawing.Size(304, 27);
             this.textBox23.TabIndex = 30;
+            // 
+            // button28
+            // 
+            this.button28.Location = new System.Drawing.Point(433, 83);
+            this.button28.Name = "button28";
+            this.button28.Size = new System.Drawing.Size(77, 34);
+            this.button28.TabIndex = 35;
+            this.button28.Text = "開窗";
+            this.button28.UseVisualStyleBackColor = true;
+            this.button28.Click += new System.EventHandler(this.button28_Click);
             // 
             // tableLayoutPanel9
             // 
@@ -5390,26 +5410,6 @@
             this.previewControl2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.previewControl2.Size = new System.Drawing.Size(972, 527);
             this.previewControl2.TabIndex = 10;
-            // 
-            // button27
-            // 
-            this.button27.Location = new System.Drawing.Point(433, 83);
-            this.button27.Name = "button27";
-            this.button27.Size = new System.Drawing.Size(77, 34);
-            this.button27.TabIndex = 34;
-            this.button27.Text = "開窗";
-            this.button27.UseVisualStyleBackColor = true;
-            this.button27.Click += new System.EventHandler(this.button27_Click);
-            // 
-            // button28
-            // 
-            this.button28.Location = new System.Drawing.Point(433, 83);
-            this.button28.Name = "button28";
-            this.button28.Size = new System.Drawing.Size(77, 34);
-            this.button28.TabIndex = 35;
-            this.button28.Text = "開窗";
-            this.button28.UseVisualStyleBackColor = true;
-            this.button28.Click += new System.EventHandler(this.button28_Click);
             // 
             // FrmINVMBCALCOST
             // 

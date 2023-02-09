@@ -4554,7 +4554,7 @@ namespace TKRESEARCH
             return SB;
         }
 
-        public void SETFASTREPORT(string SDATE, string MB001, string MB003)
+        public void SETFASTREPORT2(string SDATE, string MB001, string MB003)
         {
 
             //20210902密
@@ -4897,7 +4897,7 @@ namespace TKRESEARCH
 
         private void button61_Click(object sender, EventArgs e)
         {
-            SETFASTREPORT(dateTimePicker1.Value.ToString("yyyy"), textBox123.Text, textBox124.Text);
+            SETFASTREPORT2(dateTimePicker1.Value.ToString("yyyy"), textBox123.Text, textBox124.Text);
         }
 
        
