@@ -416,6 +416,7 @@
             this.previewControl2 = new FastReport.Preview.PreviewControl();
             this.label128 = new System.Windows.Forms.Label();
             this.textBox125 = new System.Windows.Forms.TextBox();
+            this.button29 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -5314,7 +5315,8 @@
             this.tableLayoutPanel39.Controls.Add(this.textBox124, 1, 3);
             this.tableLayoutPanel39.Controls.Add(this.label128, 0, 2);
             this.tableLayoutPanel39.Controls.Add(this.textBox125, 1, 2);
-            this.tableLayoutPanel39.Controls.Add(this.button61, 2, 3);
+            this.tableLayoutPanel39.Controls.Add(this.button61, 2, 2);
+            this.tableLayoutPanel39.Controls.Add(this.button29, 2, 3);
             this.tableLayoutPanel39.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel39.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel39.Margin = new System.Windows.Forms.Padding(4);
@@ -5375,12 +5377,12 @@
             // button61
             // 
             this.button61.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.button61.Location = new System.Drawing.Point(304, 124);
+            this.button61.Location = new System.Drawing.Point(304, 84);
             this.button61.Margin = new System.Windows.Forms.Padding(4);
             this.button61.Name = "button61";
             this.button61.Size = new System.Drawing.Size(142, 32);
             this.button61.TabIndex = 16;
-            this.button61.Text = "查詢";
+            this.button61.Text = "查詢成本";
             this.button61.UseVisualStyleBackColor = true;
             this.button61.Click += new System.EventHandler(this.button61_Click);
             // 
@@ -5437,6 +5439,18 @@
             this.textBox125.Size = new System.Drawing.Size(144, 27);
             this.textBox125.TabIndex = 32;
             this.textBox125.TextChanged += new System.EventHandler(this.textBox125_TextChanged);
+            // 
+            // button29
+            // 
+            this.button29.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.button29.Location = new System.Drawing.Point(304, 124);
+            this.button29.Margin = new System.Windows.Forms.Padding(4);
+            this.button29.Name = "button29";
+            this.button29.Size = new System.Drawing.Size(142, 32);
+            this.button29.TabIndex = 33;
+            this.button29.Text = "查詢分攤成本";
+            this.button29.UseVisualStyleBackColor = true;
+            this.button29.Click += new System.EventHandler(this.button29_Click);
             // 
             // FrmINVMBCALCOST
             // 
@@ -6030,5 +6044,6 @@
         private System.Windows.Forms.Button button28;
         private System.Windows.Forms.Label label128;
         private System.Windows.Forms.TextBox textBox125;
+        private System.Windows.Forms.Button button29;
     }
 }

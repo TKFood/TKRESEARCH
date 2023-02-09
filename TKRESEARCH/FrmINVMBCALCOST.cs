@@ -4573,7 +4573,7 @@ namespace TKRESEARCH
 
             StringBuilder SQL1 = new StringBuilder();
 
-            SQL1 = SETSQL(SDATE, MB001, MB003, MB002);
+            SQL1 = SETSQL2(SDATE, MB001, MB003, MB002);
             Report report1 = new Report();
             report1.Load(@"REPORT\平均成本.frx");
 
@@ -4588,7 +4588,7 @@ namespace TKRESEARCH
             report1.Show();
         }
 
-        public StringBuilder SETSQL(string YM, string MB001, string MB003,string MB002)
+        public StringBuilder SETSQL2(string YM, string MB001, string MB003,string MB002)
         {
             StringBuilder SB = new StringBuilder();
             StringBuilder SQUERY = new StringBuilder();
@@ -4660,6 +4660,165 @@ namespace TKRESEARCH
                             ORDER BY TA001,TA002
                               
                             ", YM, SQUERY.ToString()); 
+
+            return SB;
+
+        }
+
+        public void SETFASTREPORT3(string SDATE, string MB001, string MB002)
+        {
+
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+
+
+            StringBuilder SQL1 = new StringBuilder();
+
+            SQL1 = SETSQL3(SDATE, MB001, MB002);
+            Report report1 = new Report();
+            report1.Load(@"REPORT\品號平均年度單位成本.frx");
+
+            report1.Dictionary.Connections[0].ConnectionString = sqlsb.ConnectionString;
+
+            TableDataSource table = report1.GetDataSource("Table") as TableDataSource;
+            table.SelectCommand = SQL1.ToString();
+
+            //report1.SetParameterValue("P1", dateTimePicker1.Value.ToString("yyyyMMdd"));
+            //report1.SetParameterValue("P2", dateTimePicker2.Value.ToString("yyyyMMdd"));
+            report1.Preview = previewControl2;
+            report1.Show();
+        }
+
+        public StringBuilder SETSQL3(string YM, string MB001, string MB002)
+        {
+            StringBuilder SB = new StringBuilder();
+            StringBuilder SQUERY = new StringBuilder();
+
+            if (!string.IsNullOrEmpty(MB001))
+            {
+                SQUERY.AppendFormat(@"
+                                    AND 成品品號 LIKE '%{0}%'
+                                    ", MB001);
+            }
+            else
+            {
+                SQUERY.AppendFormat(@"
+
+                                    ");
+            }
+            
+
+            if (!string.IsNullOrEmpty(MB002))
+            {
+                SQUERY.AppendFormat(@"
+                                     AND 成品品名 LIKE '%{0}%'
+                                    ", MB002);
+            }
+            else
+            {
+                SQUERY.AppendFormat(@"
+
+                                    ");
+            }
+
+            SB.AppendFormat(@" 
+
+                            SELECT *
+                            ,(CASE WHEN 總成品平均成本>0 THEN 分攤成本/總成品平均成本 ELSE 0 END) AS '各百分比' 
+                            FROM 
+                            (
+                            SELECT '{0}'AS '年度',MC001 AS '成品品號',MB1.MB002  AS '成品品名' ,MC004,MD003  AS '使用品號',MB2.MB002  AS '使用品名',MD006,MD007
+                            ,總成品平均成本
+                            ,材料平均成本
+                            ,人工平均成本
+                            ,製造平均成本
+                            ,加工平均成本
+                            ,各採購單位成本
+                            ,總採購單位成本
+                            ,總半成品重
+                            ,(CASE WHEN 總成品平均成本>0 THEN (CASE WHEN MB2.MB001 LIKE '3%' THEN ((材料平均成本-總採購單位成本)*MD006/MD007/總半成品重) ELSE 各採購單位成本 END) ELSE 0 END) AS '分攤成本' 
+                            ,(CASE WHEN MD003 LIKE '1%' THEN '1原料'  WHEN MD003 LIKE '2%' THEN '2物料' WHEN MD003 LIKE '3%' THEN '3半成品'END ) AS '分類'
+                            FROM
+                            (
+                            SELECT MC001,MC004,MD003,MD006,MD007
+                            ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
+                            ,ISNULL((SELECT AVG((ME007)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND ME002 LIKE '{0}%'),0) AS '材料平均成本'
+                            ,ISNULL((SELECT AVG((ME008)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND ME002 LIKE '{0}%'),0) AS '人工平均成本'
+                            ,ISNULL((SELECT AVG((ME009)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND ME002 LIKE '{0}%'),0) AS '製造平均成本'
+                            ,ISNULL((SELECT AVG((ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND ME002 LIKE '{0}%'),0) AS '加工平均成本'
+                            ,(CASE WHEN ( MB2.MB001 LIKE '1%' OR MB2.MB001 LIKE '2%') AND MB2.MB064>0 AND MB2.MB065 >0 THEN MB2.MB065/MB2.MB064*MD006/MD007/MC004 ELSE MB2.MB050 END ) AS '各採購單位成本'
+                            ,(SELECT SUM (CASE WHEN  ( MB001 LIKE '1%' OR MB001 LIKE '2%') AND MB064>0 AND MB065 >0 THEN MB065/MB064*MD006/MD007/MC004 ELSE MB050 END) FROM [TK].dbo.BOMMC MC, [TK].dbo.BOMMD MD ,[TK].dbo.INVMB MB WHERE  MC.MC001=MD.MD001 AND MD.MD003=MB.MB001 AND MC.MC001=BOMMC.MC001)   AS '總採購單位成本'
+                            ,ISNULL((SELECT SUM (MD006/MD007) FROM [TK].dbo.BOMMC MC, [TK].dbo.BOMMD MD ,[TK].dbo.INVMB MB WHERE  MC.MC001=MD.MD001 AND MD.MD003=MB.MB001 AND MC.MC001=BOMMC.MC001 AND MB.MB001 LIKE '3%'),0)  AS '總半成品重'
+                            FROM [TK].dbo.BOMMC
+                            LEFT JOIN [TK].dbo.INVMB MB1 ON MB1.MB001=BOMMC.MC001
+                            , [TK].dbo.BOMMD
+                            LEFT JOIN [TK].dbo.INVMB MB2 ON MB2.MB001=BOMMD.MD003
+                            WHERE MC001=MD001
+                            ) AS TEMP
+                            LEFT JOIN [TK].dbo.INVMB MB1 ON MB1.MB001=TEMP.MC001
+                            LEFT JOIN [TK].dbo.INVMB MB2 ON MB2.MB001=TEMP.MD003
+                            UNION ALL
+                            SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',0 ,''  AS '使用品號','' AS '使用品名',0,0
+                            ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
+                            ,0
+                            ,0
+                            ,0
+                            ,0
+                            ,0
+                            ,0
+                            ,0
+                            ,ISNULL((SELECT AVG((ME008)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '成本'
+                            ,'4人工' AS '分類'
+                            FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
+                            WHERE  MC001=MB001
+                            AND (MC001 LIKE '3%' OR MC001 LIKE '4%' OR MC001 LIKE '5%') 
+                            UNION ALL
+                            SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',0 ,''  AS '使用品號','' AS '使用品名',0,0
+                            ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
+                            ,0
+                            ,0
+                            ,0
+                            ,0
+                            ,0
+                            ,0
+                            ,0
+                            ,ISNULL((SELECT AVG((ME009)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '成本'
+                            ,'5製造' AS '分類'
+                            FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
+                            WHERE  MC001=MB001
+                            AND (MC001 LIKE '3%' OR MC001 LIKE '4%' OR MC001 LIKE '5%') 
+                            UNION ALL
+                            SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',0 ,''  AS '使用品號','' AS '使用品名',0,0
+                            ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
+                            ,0
+                            ,0
+                            ,0
+                            ,0
+                            ,0
+                            ,0
+                            ,0
+                            ,ISNULL((SELECT AVG((ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '成本'
+                            ,'6加工' AS '分類'
+                            FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
+                            WHERE  MC001=MB001
+                            AND (MC001 LIKE '3%' OR MC001 LIKE '4%' OR MC001 LIKE '5%') 
+                            ) AS TEMP2
+                            WHERE 1=1
+                            {1}
+
+                            ORDER BY 成品品號,分類,使用品號
+                            
+                        ", YM, SQUERY.ToString());
 
             return SB;
 
@@ -4930,7 +5089,10 @@ namespace TKRESEARCH
             SETFASTREPORT2(dateTimePicker1.Value.ToString("yyyy"), textBox123.Text, textBox124.Text, textBox125.Text);
         }
 
-     
+        private void button29_Click(object sender, EventArgs e)
+        {
+            SETFASTREPORT3(dateTimePicker1.Value.ToString("yyyy"), textBox123.Text , textBox125.Text);
+        }
     }
 
 
