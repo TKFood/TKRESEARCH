@@ -410,16 +410,16 @@
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label211 = new System.Windows.Forms.Label();
             this.textBox123 = new System.Windows.Forms.TextBox();
-            this.button61 = new System.Windows.Forms.Button();
             this.label209 = new System.Windows.Forms.Label();
             this.textBox124 = new System.Windows.Forms.TextBox();
             this.label128 = new System.Windows.Forms.Label();
             this.textBox125 = new System.Windows.Forms.TextBox();
+            this.button61 = new System.Windows.Forms.Button();
             this.button29 = new System.Windows.Forms.Button();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage12 = new System.Windows.Forms.TabPage();
-            this.tabPage13 = new System.Windows.Forms.TabPage();
             this.previewControl2 = new FastReport.Preview.PreviewControl();
+            this.tabPage13 = new System.Windows.Forms.TabPage();
             this.previewControl3 = new FastReport.Preview.PreviewControl();
             this.tabControl1.SuspendLayout();
             this.tabPage9.SuspendLayout();
@@ -721,7 +721,7 @@
             // 
             this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(123, 48);
+            this.comboBox1.Location = new System.Drawing.Point(123, 50);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(114, 24);
             this.comboBox1.TabIndex = 19;
@@ -856,7 +856,7 @@
             // 
             this.comboBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(123, 90);
+            this.comboBox2.Location = new System.Drawing.Point(123, 88);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(141, 24);
             this.comboBox2.TabIndex = 23;
@@ -5381,18 +5381,6 @@
             this.textBox123.TabIndex = 28;
             this.textBox123.TextChanged += new System.EventHandler(this.textBox123_TextChanged);
             // 
-            // button61
-            // 
-            this.button61.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.button61.Location = new System.Drawing.Point(304, 84);
-            this.button61.Margin = new System.Windows.Forms.Padding(4);
-            this.button61.Name = "button61";
-            this.button61.Size = new System.Drawing.Size(142, 32);
-            this.button61.TabIndex = 16;
-            this.button61.Text = "查詢成本";
-            this.button61.UseVisualStyleBackColor = true;
-            this.button61.Click += new System.EventHandler(this.button61_Click);
-            // 
             // label209
             // 
             this.label209.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -5434,6 +5422,18 @@
             this.textBox125.TabIndex = 32;
             this.textBox125.TextChanged += new System.EventHandler(this.textBox125_TextChanged);
             // 
+            // button61
+            // 
+            this.button61.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.button61.Location = new System.Drawing.Point(304, 84);
+            this.button61.Margin = new System.Windows.Forms.Padding(4);
+            this.button61.Name = "button61";
+            this.button61.Size = new System.Drawing.Size(142, 32);
+            this.button61.TabIndex = 16;
+            this.button61.Text = "查詢成本";
+            this.button61.UseVisualStyleBackColor = true;
+            this.button61.Click += new System.EventHandler(this.button61_Click);
+            // 
             // button29
             // 
             this.button29.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -5468,17 +5468,6 @@
             this.tabPage12.Text = "tabPage12";
             this.tabPage12.UseVisualStyleBackColor = true;
             // 
-            // tabPage13
-            // 
-            this.tabPage13.Controls.Add(this.previewControl3);
-            this.tabPage13.Location = new System.Drawing.Point(4, 26);
-            this.tabPage13.Name = "tabPage13";
-            this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage13.Size = new System.Drawing.Size(964, 497);
-            this.tabPage13.TabIndex = 1;
-            this.tabPage13.Text = "tabPage13";
-            this.tabPage13.UseVisualStyleBackColor = true;
-            // 
             // previewControl2
             // 
             this.previewControl2.BackColor = System.Drawing.SystemColors.AppWorkspace;
@@ -5492,6 +5481,17 @@
             this.previewControl2.Size = new System.Drawing.Size(958, 491);
             this.previewControl2.TabIndex = 11;
             // 
+            // tabPage13
+            // 
+            this.tabPage13.Controls.Add(this.previewControl3);
+            this.tabPage13.Location = new System.Drawing.Point(4, 22);
+            this.tabPage13.Name = "tabPage13";
+            this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage13.Size = new System.Drawing.Size(964, 501);
+            this.tabPage13.TabIndex = 1;
+            this.tabPage13.Text = "tabPage13";
+            this.tabPage13.UseVisualStyleBackColor = true;
+            // 
             // previewControl3
             // 
             this.previewControl3.BackColor = System.Drawing.SystemColors.AppWorkspace;
@@ -5502,7 +5502,7 @@
             this.previewControl3.Name = "previewControl3";
             this.previewControl3.PageOffset = new System.Drawing.Point(10, 10);
             this.previewControl3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.previewControl3.Size = new System.Drawing.Size(958, 491);
+            this.previewControl3.Size = new System.Drawing.Size(958, 495);
             this.previewControl3.TabIndex = 12;
             // 
             // FrmINVMBCALCOST
