@@ -198,6 +198,7 @@ namespace TKRESEARCH
                                         ,[UNITCOSTS] AS '每單位原料成本'
                                         ,CONVERT(NVARCHAR,[CREATEDATE],112) AS '建立日期'
                                         ,[ISCLOESED] AS '結案'
+                                        ,[MB001] AS '品號'
                                         ,[ID]
 
                                         FROM [TKRESEARCH].[dbo].[CALCOSTPRODS]
@@ -219,6 +220,7 @@ namespace TKRESEARCH
                                         ,[COSTTOTALS] AS '單位成本合計'
                                         ,CONVERT(NVARCHAR,[CREATEDATE],112) AS '建立日期'
                                         ,[ISCLOESED] AS '結案'
+                                        ,[MB001] AS '品號'
                                         ,[ID]
 
                                         FROM [TKRESEARCH].[dbo].[CALCOSTPRODS]
@@ -553,7 +555,7 @@ namespace TKRESEARCH
                                         ,[TMONEYS] AS '金額'
                                         ,[REMARK] AS '備註'
                                         FROM [TKRESEARCH].[dbo].[CALCOSTPRODS1RAW]
-                                        WHERE [PRODNAMES] LIKE '%{0}%'
+                                        WHERE [PRODNAMES]='{0}'
                                         ORDER BY [MID],[PRODNAMES],[MB001]
                                         ", PRODNAMES);
                 }
@@ -1026,7 +1028,7 @@ namespace TKRESEARCH
                                         ,[TMONEYS] AS '金額'
                                         ,[REMARK] AS '備註'
                                         FROM [TKRESEARCH].[dbo].[CALCOSTPRODS2MATERIL]
-                                        WHERE [PRODNAMES] LIKE '%{0}%'
+                                        WHERE [PRODNAMES]='{0}'
                                         ORDER BY [MID],[PRODNAMES],[MB001]
 
                                         ", PRODNAMES);
@@ -1306,7 +1308,7 @@ namespace TKRESEARCH
                                         ,[PRICES] AS '單價'
                                         ,[TMONEYS] AS '金額'
                                         FROM [TKRESEARCH].[dbo].[CALCOSTPRODS3EGG]
-                                        WHERE [PRODNAMES] LIKE '%{0}%'
+                                        WHERE [PRODNAMES]='{0}'
                                         ORDER BY [MID],[PRODNAMES],[MB001]
 
                                         ", PRODNAMES);
@@ -1630,7 +1632,7 @@ namespace TKRESEARCH
                                         ,[ID]
 
                                         FROM [TKRESEARCH].[dbo].[CALCOSTPRODS]
-                                        WHERE [PRODNAMES] LIKE '%{0}%'                               
+                                        WHERE [PRODNAMES]='{0}'                          
                                         ORDER BY CONVERT(NVARCHAR,[CREATEDATE],112)
                                         ", PRODNAMES);
                 }
