@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="01/19/2023 09:17:59" ReportInfo.Modified="01/19/2023 10:29:24" ReportInfo.CreatorVersion="2016.4.4.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/19/2023 09:17:59" ReportInfo.Modified="04/27/2023 09:19:55" ReportInfo.CreatorVersion="2016.4.4.0">
   <Dictionary>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqHwzMSgwTFaHpjtG3vsOj8Zy6q+uhwpDsytgWqwZQZyEQUQyQ022aWUGqU90pHzzNjHuzu89K+RQ2LIBVx1fpgNkNJhwC4eetn2/Uy0fMrO7zDUE5AmRb+0bcYI+lxqpN+i5gA3VDGcwlcfm6L9ZMsLrZ3U+wEDtHCQtd9vw2XUG+oWFn/tm5DhFbIAPKzaeD">
-      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="&#13;&#10;SELECT TA002 AS '年月',TA001 AS '品號',MB002 AS '品名',MB003 AS '規格',生產入庫數,ME005 在製約量_材料,本階人工成本,本階製造費用,ME007 材料成本,ME008 人工成本,ME009 製造費用,ME010 加工費用&#13;&#10;,((ME007+ME008+ME009+ME010)/(生產入庫數+ME005)) 單位成本, ((ME007)/(生產入庫數+ME005)) 單位材料成本, ((ME008)/(生產入庫數+ME005)) 單位人工成本,((ME009)/(生產入庫數+ME005)) 單位製造成本,((ME010)/(生產入庫數+ME005)) 單位加工成本&#13;&#10;,MB068&#13;&#10;,(CASE WHEN MB068 IN ('09') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均包裝人工成本&#13;&#10;,(CASE WHEN MB068 IN ('09') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END ) 平均包裝製造費用&#13;&#10;,(CASE WHEN MB068 IN ('03') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均小線人工成本&#13;&#10;,(CASE WHEN MB068 IN ('03') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END ) 平均小線製造費用&#13;&#10;,(CASE WHEN MB068 IN ('02') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均大線人工成本&#13;&#10;,(CASE WHEN MB068 IN ('02') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END ) 平均大線製造費用&#13;&#10;FROM &#13;&#10;(&#13;&#10;SELECT TA002,TA001,SUM(TA012) '生產入庫數',SUM(TA016-TA019) AS '本階人工成本',SUM(TA017-TA020) AS '本階製造費用'&#13;&#10;FROM [TK].dbo.CSTTA&#13;&#10;WHERE TA002 LIKE '2022%'&#13;&#10;GROUP BY TA002,TA001&#13;&#10;) AS TEMP&#13;&#10;LEFT JOIN [TK].dbo.CSTME ON ME001=TA001 AND ME002=TA002&#13;&#10;LEFT JOIN [TK].dbo.INVMB ON MB001=TA001&#13;&#10;WHERE 1=1&#13;&#10;&#13;&#10;AND (TA001 LIKE '%3010100101%' OR MB002  LIKE '%3010100101%')&#13;&#10;--AND MB003 LIKE '%280%'&#13;&#10;AND (生產入庫數+ME005)&gt;0&#13;&#10;ORDER BY TA001,TA002">
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqHwzMSgwTFaHpjtG3vsOj8Zy6q+uhwpDsytgWqwZQZyEQUQyQ022aWUGqU90pHzzNjHuzu89K+RQ2LIBVx1fpgNkNJhwC4eetn2/Uy0fMrO7zDUE5AmRb+0bcYI+lxqpN+i5gA3VDGcwlcfm6L9ZMsLrZ3U+wEDtHCQtd9vw2XUGDIWI4TOvMSIdKbCVYXCO/">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="&#13;&#10;SELECT *&#13;&#10;FROM &#13;&#10;(&#13;&#10;SELECT TA002 AS '年月',TA001 AS '品號',MB002 AS '品名',MB003 AS '規格',生產入庫數,ME005 在製約量_材料,本階人工成本,本階製造費用,ME007 材料成本,ME008 人工成本,ME009 製造費用,ME010 加工費用&#13;&#10;,CONVERT(DECIMAL(16,2),((ME007+ME008+ME009+ME010)/(生產入庫數+ME005))) 單位成本, CONVERT(DECIMAL(16,2),((ME007)/(生產入庫數+ME005))) 單位材料成本, CONVERT(DECIMAL(16,2),((ME008)/(生產入庫數+ME005))) 單位人工成本,CONVERT(DECIMAL(16,2),((ME009)/(生產入庫數+ME005))) 單位製造成本,CONVERT(DECIMAL(16,2),((ME010)/(生產入庫數+ME005))) 單位加工成本&#13;&#10;,MB068&#13;&#10;,(CASE WHEN MB068 IN ('09') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均包裝人工成本&#13;&#10;,(CASE WHEN MB068 IN ('09') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END ) 平均包裝製造費用&#13;&#10;,(CASE WHEN MB068 IN ('03') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均小線人工成本&#13;&#10;,(CASE WHEN MB068 IN ('03') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END ) 平均小線製造費用&#13;&#10;,(CASE WHEN MB068 IN ('02') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均大線人工成本&#13;&#10;,(CASE WHEN MB068 IN ('02') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END ) 平均大線製造費用&#13;&#10;,MB047&#13;&#10;FROM &#13;&#10;(&#13;&#10;SELECT TA002,TA001,SUM(TA012) '生產入庫數',SUM(TA016-TA019) AS '本階人工成本',SUM(TA017-TA020) AS '本階製造費用'&#13;&#10;FROM [TK].dbo.CSTTA&#13;&#10;WHERE TA002 LIKE '2023%'&#13;&#10;GROUP BY TA002,TA001&#13;&#10;) AS TEMP&#13;&#10;LEFT JOIN [TK].dbo.CSTME ON ME001=TA001 AND ME002=TA002&#13;&#10;LEFT JOIN [TK].dbo.INVMB ON MB001=TA001&#13;&#10;WHERE 1=1&#13;&#10;    AND MB002 LIKE '%瑪芬%' &#13;&#10;&#13;&#10;AND (生產入庫數+ME005)&gt;0&#13;&#10;&#13;&#10;&#13;&#10;) AS TEMP2&#13;&#10;ORDER BY  品號,年月&#13;&#10;&#13;&#10; &#13;&#10;&#13;&#10;                                    ">
         <Column Name="生產入庫數" DataType="System.Decimal"/>
         <Column Name="在製約量_材料" DataType="System.Decimal"/>
         <Column Name="本階人工成本" DataType="System.Decimal"/>
@@ -27,6 +27,7 @@
         <Column Name="品號" DataType="System.String"/>
         <Column Name="品名" DataType="System.String"/>
         <Column Name="規格" DataType="System.String"/>
+        <Column Name="MB047" DataType="System.Decimal"/>
       </TableDataSource>
     </MsSqlDataConnection>
     <Total Name="AVG單位材料成本" TotalType="Avg" Expression="[Table.單位材料成本]" Evaluator="Data1" PrintOn="GroupFooter1"/>
@@ -45,7 +46,7 @@
     <ReportTitleBand Name="ReportTitle1" Width="2192.4" Height="103.95">
       <TextObject Name="Text43" Top="9.45" Width="708.75" Height="94.5" Text="單位成本=單位材料成本+單位人工成本+單位製造成本+單位加工成本&#13;&#10;&#13;&#10;提供各線別的參考:&#13;&#10;平均大線人工成本、平均大線製造費用&#13;&#10;平均小線人工成本、平均小線製造費用&#13;&#10;平均包裝人工成本、平均包裝製造費用" VertAlign="Center"/>
     </ReportTitleBand>
-    <PageHeaderBand Name="PageHeader1" Top="108.44" Width="2192.4" Height="18.9">
+    <PageHeaderBand Name="PageHeader1" Top="108.55" Width="2192.4" Height="18.9">
       <TextObject Name="Text2" Width="94.5" Height="18.9" Border.Lines="All" Text="年月" HorzAlign="Center" VertAlign="Center"/>
       <TextObject Name="Text4" Left="94.5" Width="151.2" Height="18.9" Border.Lines="All" Text="品號" HorzAlign="Center" VertAlign="Center"/>
       <TextObject Name="Text6" Left="245.7" Width="292.95" Height="18.9" Border.Lines="All" Text="品名" HorzAlign="Center" VertAlign="Center"/>
@@ -62,8 +63,8 @@
       <TextObject Name="Text28" Left="1795.5" Width="113.4" Height="18.9" Border.Lines="All" Text="平均包裝製造費用" HorzAlign="Center" VertAlign="Center"/>
       <TextObject Name="Text41" Left="737.1" Width="113.4" Height="18.9" Border.Lines="All" Text="單位成本" HorzAlign="Center" VertAlign="Center"/>
     </PageHeaderBand>
-    <GroupHeaderBand Name="GroupHeader1" Top="131.84" Width="2192.4" Condition="[Table.品號]">
-      <DataBand Name="Data1" Top="136.33" Width="2192.4" Height="18.9" CanGrow="true" DataSource="Table">
+    <GroupHeaderBand Name="GroupHeader1" Top="132.05" Width="2192.4" Condition="[Table.品號]">
+      <DataBand Name="Data1" Top="136.64" Width="2192.4" Height="18.9" CanGrow="true" DataSource="Table">
         <TextObject Name="Text1" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.年月]" HorzAlign="Center" VertAlign="Center"/>
         <TextObject Name="Text3" Left="94.5" Width="151.2" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.品號]" VertAlign="Center"/>
         <TextObject Name="Text5" Left="245.7" Width="292.95" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.品名]" VertAlign="Center"/>
@@ -83,7 +84,7 @@
           <Sort Expression="[Table.年月]"/>
         </Sort>
       </DataBand>
-      <GroupFooterBand Name="GroupFooter1" Top="159.73" Width="2192.4" Height="18.9">
+      <GroupFooterBand Name="GroupFooter1" Top="160.14" Width="2192.4" Height="18.9">
         <TextObject Name="Text29" Left="850.5" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="Orange" Text="[AVG單位材料成本]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="4" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center"/>
         <TextObject Name="Text30" Left="945" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="Orange" Text="[AVG單位人工成本]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="4" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center"/>
         <TextObject Name="Text31" Left="1039.5" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="Orange" Text="[AVG單位製造成本]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="4" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center"/>
@@ -98,6 +99,6 @@
         <TextObject Name="Text42" Left="737.1" Width="113.4" Height="18.9" Border.Lines="All" Fill.Color="Orange" Text="[AVG單位成本]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="4" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center"/>
       </GroupFooterBand>
     </GroupHeaderBand>
-    <PageFooterBand Name="PageFooter1" Top="183.12" Width="2192.4" Height="18.9"/>
+    <PageFooterBand Name="PageFooter1" Top="183.64" Width="2192.4" Height="18.9"/>
   </ReportPage>
 </Report>

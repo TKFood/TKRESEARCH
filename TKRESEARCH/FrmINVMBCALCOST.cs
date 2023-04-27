@@ -4273,7 +4273,7 @@ namespace TKRESEARCH
             sqlsb.Password = TKID.Decryption(sqlsb.Password);
             sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
 
-            String connectionString;
+            String connectionString;  
             sqlConn = new SqlConnection(sqlsb.ConnectionString);
 
             report1.Dictionary.Connections[0].ConnectionString = sqlsb.ConnectionString;
@@ -4595,73 +4595,71 @@ namespace TKRESEARCH
             StringBuilder SB = new StringBuilder();
             StringBuilder SQUERY = new StringBuilder();
 
+            //查詢條件
             if (!string.IsNullOrEmpty(MB001))
             {
-                SQUERY.AppendFormat(@"
-                                    AND TA001 LIKE '%{0}%'
-                                    ", MB001);
+                SQUERY.AppendFormat(@" AND TA001 LIKE '%{0}%' ", MB001);
             }
             else
             {
-                SQUERY.AppendFormat(@"
-
-                                    ");
-            }
-
-            if (!string.IsNullOrEmpty(MB003))
-            {
-                SQUERY.AppendFormat(@"
-                                     AND MB003 LIKE '%{0}%'
-                                    ", MB003);
-            }
-            else
-            {
-                SQUERY.AppendFormat(@"
-
-                                    ");
+                SQUERY.AppendFormat(@"");
             }
 
             if (!string.IsNullOrEmpty(MB002))
             {
-                SQUERY.AppendFormat(@"
-                                     AND MB002 LIKE '%{0}%'
-                                    ", MB002);
+                SQUERY.AppendFormat(@" AND MB002 LIKE '%{0}%' ", MB002);
             }
             else
             {
-                SQUERY.AppendFormat(@"
-
-                                    ");
+                SQUERY.AppendFormat(@"");
+            }
+            if (!string.IsNullOrEmpty(MB003))
+            {
+                SQUERY.AppendFormat(@" AND MB003 LIKE '%{0}%' ", MB003);
+            }
+            else
+            {
+                SQUERY.AppendFormat(@"");
             }
 
-            SB.AppendFormat(@" 
+            if (!string.IsNullOrEmpty(YM) && !string.IsNullOrEmpty(SQUERY.ToString()))
+            {
+                SB.AppendFormat(@"
+                                    SELECT *
+                                    FROM 
+                                    (
+                                    SELECT TA002 AS '年月',TA001 AS '品號',MB002 AS '品名',MB003 AS '規格',生產入庫數,ME005 在製約量_材料,本階人工成本,本階製造費用,ME007 材料成本,ME008 人工成本,ME009 製造費用,ME010 加工費用
+                                    ,CONVERT(DECIMAL(16,2),((ME007+ME008+ME009+ME010)/(生產入庫數+ME005))) 單位成本, CONVERT(DECIMAL(16,2),((ME007)/(生產入庫數+ME005))) 單位材料成本, CONVERT(DECIMAL(16,2),((ME008)/(生產入庫數+ME005))) 單位人工成本,CONVERT(DECIMAL(16,2),((ME009)/(生產入庫數+ME005))) 單位製造成本,CONVERT(DECIMAL(16,2),((ME010)/(生產入庫數+ME005))) 單位加工成本
+                                    ,MB068
+                                    ,(CASE WHEN MB068 IN ('09') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均包裝人工成本
+                                    ,(CASE WHEN MB068 IN ('09') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END ) 平均包裝製造費用
+                                    ,(CASE WHEN MB068 IN ('03') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均小線人工成本
+                                    ,(CASE WHEN MB068 IN ('03') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END ) 平均小線製造費用
+                                    ,(CASE WHEN MB068 IN ('02') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均大線人工成本
+                                    ,(CASE WHEN MB068 IN ('02') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END ) 平均大線製造費用
+                                    ,MB047
+                                    FROM 
+                                    (
+                                    SELECT TA002,TA001,SUM(TA012) '生產入庫數',SUM(TA016-TA019) AS '本階人工成本',SUM(TA017-TA020) AS '本階製造費用'
+                                    FROM [TK].dbo.CSTTA
+                                    WHERE TA002 LIKE '{0}%'
+                                    GROUP BY TA002,TA001
+                                    ) AS TEMP
+                                    LEFT JOIN [TK].dbo.CSTME ON ME001=TA001 AND ME002=TA002
+                                    LEFT JOIN [TK].dbo.INVMB ON MB001=TA001
+                                    WHERE 1=1
+                                    {1}
 
-                            SELECT TA002 AS '年月',TA001 AS '品號',MB002 AS '品名',MB003 AS '規格',生產入庫數,ME005 在製約量_材料,本階人工成本,本階製造費用,ME007 材料成本,ME008 人工成本,ME009 製造費用,ME010 加工費用
-                            ,((ME007+ME008+ME009+ME010)/(生產入庫數+ME005)) 單位成本, ((ME007)/(生產入庫數+ME005)) 單位材料成本, ((ME008)/(生產入庫數+ME005)) 單位人工成本,((ME009)/(生產入庫數+ME005)) 單位製造成本,((ME010)/(生產入庫數+ME005)) 單位加工成本
-                            ,MB068
-                            ,(CASE WHEN MB068 IN ('09') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均包裝人工成本
-                            ,(CASE WHEN MB068 IN ('09') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END ) 平均包裝製造費用
-                            ,(CASE WHEN MB068 IN ('03') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均小線人工成本
-                            ,(CASE WHEN MB068 IN ('03') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END ) 平均小線製造費用
-                            ,(CASE WHEN MB068 IN ('02') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均大線人工成本
-                            ,(CASE WHEN MB068 IN ('02') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END ) 平均大線製造費用
-                            FROM 
-                            (
-                            SELECT TA002,TA001,SUM(TA012) '生產入庫數',SUM(TA016-TA019) AS '本階人工成本',SUM(TA017-TA020) AS '本階製造費用'
-                            FROM [TK].dbo.CSTTA
-                            WHERE TA002 LIKE '{0}%'
-                            GROUP BY TA002,TA001
-                            ) AS TEMP
-                            LEFT JOIN [TK].dbo.CSTME ON ME001=TA001 AND ME002=TA002
-                            LEFT JOIN [TK].dbo.INVMB ON MB001=TA001
-                            WHERE 1=1
+                                    AND (生產入庫數+ME005)>0
+                                   
+                                    ) AS TEMP2
+                                    ORDER BY  品號,年月
 
-                           {1} 
-                          
-                            AND (生產入庫數+ME005)>0
-                            ORDER BY TA001,TA002
-                              
-                            ", YM, SQUERY.ToString()); 
+ 
+
+                                    ", YM, SQUERY.ToString());
+            }
+            
 
             return SB;
 
