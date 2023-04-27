@@ -4706,135 +4706,187 @@ namespace TKRESEARCH
 
             if (!string.IsNullOrEmpty(MB001))
             {
+                //SQUERY.AppendFormat(@"   AND 成品品號 LIKE '%{0}%'", MB001);
                 SQUERY.AppendFormat(@"
-                                    AND 成品品號 LIKE '%{0}%'
-                                    ", MB001);
+                                    AND 成品品號 IN
+                                    (
+                                    SELECT TA001 
+                                    FROM 
+                                    (
+                                    SELECT TA002,TA001,SUM(TA012) '生產入庫數'
+                                    FROM [TK].dbo.CSTTA
+                                    WHERE TA002 LIKE '{0}%'
+                                    GROUP BY TA002,TA001
+                                    ) AS TEMP
+                                    LEFT JOIN [TK].dbo.CSTME ON ME001=TA001 AND ME002=TA002
+                                    LEFT JOIN [TK].dbo.INVMB ON MB001=TA001
+                                    WHERE 1=1
+                                    AND MB001 LIKE '%{1}%'
+
+                                    AND (生產入庫數+ME005)>0
+                                    GROUP BY TA001
+                                    )
+                                    ", YM, MB001);
             }
             else
             {
-                SQUERY.AppendFormat(@"
-
-                                    ");
+                SQUERY.AppendFormat(@"");
             }
-            
 
             if (!string.IsNullOrEmpty(MB002))
             {
+                //SQUERY.AppendFormat(@"  AND 成品品名 LIKE '%{0}%'", MB002);
+
                 SQUERY.AppendFormat(@"
-                                     AND 成品品名 LIKE '%{0}%'
-                                    ", MB002);
+                                    AND 成品品號 IN
+                                    (
+                                    SELECT TA001 
+                                    FROM 
+                                    (
+                                    SELECT TA002,TA001,SUM(TA012) '生產入庫數'
+                                    FROM [TK].dbo.CSTTA
+                                    WHERE TA002 LIKE '{0}%'
+                                    GROUP BY TA002,TA001
+                                    ) AS TEMP
+                                    LEFT JOIN [TK].dbo.CSTME ON ME001=TA001 AND ME002=TA002
+                                    LEFT JOIN [TK].dbo.INVMB ON MB001=TA001
+                                    WHERE 1=1
+                                    AND MB002 LIKE '%{1}%'
+
+                                    AND (生產入庫數+ME005)>0
+                                    GROUP BY TA001
+                                    )
+                                    ", YM, MB002);
             }
             else
             {
-                SQUERY.AppendFormat(@"
-
-                                    ");
+                SQUERY.AppendFormat(@"");
             }
-
             if (!string.IsNullOrEmpty(MB003))
             {
+                //SQUERY.AppendFormat(@"  AND 成品品名 LIKE '%{0}%'", MB002);
+
                 SQUERY.AppendFormat(@"
-                                     AND 成品規格 LIKE '%{0}%'
-                                    ", MB003);
+                                    AND 成品品號 IN
+                                    (
+                                    SELECT TA001 
+                                    FROM 
+                                    (
+                                    SELECT TA002,TA001,SUM(TA012) '生產入庫數'
+                                    FROM [TK].dbo.CSTTA
+                                    WHERE TA002 LIKE '{0}%'
+                                    GROUP BY TA002,TA001
+                                    ) AS TEMP
+                                    LEFT JOIN [TK].dbo.CSTME ON ME001=TA001 AND ME002=TA002
+                                    LEFT JOIN [TK].dbo.INVMB ON MB001=TA001
+                                    WHERE 1=1
+                                    AND MB003 LIKE '%{1}%'
+
+                                    AND (生產入庫數+ME005)>0
+                                    GROUP BY TA001
+                                    )
+                                    ", YM, MB003);
             }
             else
             {
-                SQUERY.AppendFormat(@"
-
-                                    ");
+                SQUERY.AppendFormat(@"");
             }
+            if (!string.IsNullOrEmpty(YM) && !string.IsNullOrEmpty(SQUERY.ToString()))
+            {
+                SB.AppendFormat(@"
 
-            SB.AppendFormat(@"   
 
-                            SELECT *
-                            ,(CASE WHEN 總成品平均成本>0 THEN 分攤成本/總成品平均成本 ELSE 0 END) AS '各百分比' 
-                            FROM 
-                            (
-                            SELECT '{0}'AS '年度',MC001 AS '成品品號',MB1.MB002  AS '成品品名',MB1.MB003  AS '成品規格' ,MC004,MD003  AS '使用品號',MB2.MB002  AS '使用品名',MD006,MD007
-                            ,總成品平均成本
-                            ,材料平均成本
-                            ,人工平均成本
-                            ,製造平均成本
-                            ,加工平均成本
-                            ,各採購單位成本
-                            ,總採購單位成本
-                            ,總半成品重
-                            ,(CASE WHEN 總成品平均成本>0 THEN (CASE WHEN (MB2.MB001 LIKE '3%' OR MB2.MB001 LIKE '4%')THEN ((材料平均成本-總採購單位成本)*MD006/MD007/總半成品重) ELSE 各採購單位成本 END) ELSE 0 END) AS '分攤成本' 
-                            ,(CASE WHEN MD003 LIKE '1%' THEN '1原料'  WHEN MD003 LIKE '2%' THEN '2物料' WHEN (MD003 LIKE '3%' OR MD003 LIKE '4%') THEN '3半成品'END ) AS '分類'
-                            FROM
-                            (
-                           SELECT MC001,MC004,MD003,MD006,MD007
-                            ,ISNULL((SELECT AVG(NULLIF(ME007+ME008+ME009+ME010,0)/NULLIF(ME003+ME005+ME004,0)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND ME002 LIKE '2022%'),0) AS '總成品平均成本'
-                            ,ISNULL((SELECT AVG(NULLIF(ME007,0)/NULLIF(ME003+ME005+ME004,0)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND ME002 LIKE '2022%'),0) AS '材料平均成本'
-                            ,ISNULL((SELECT AVG(NULLIF(ME008,0)/NULLIF(ME003+ME005+ME004,0)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND ME002 LIKE '2022%'),0) AS '人工平均成本'
-                            ,ISNULL((SELECT AVG(NULLIF(ME009,0)/NULLIF(ME003+ME005+ME004,0)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND ME002 LIKE '2022%'),0) AS '製造平均成本'
-                            ,ISNULL((SELECT AVG(NULLIF(ME010,0)/NULLIF(ME003+ME005+ME004,0)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND ME002 LIKE '2022%'),0) AS '加工平均成本'
-                            ,(CASE WHEN ( MB2.MB001 LIKE '1%' OR MB2.MB001 LIKE '2%') AND MB2.MB064>0 AND MB2.MB065 >0 THEN MB2.MB065/MB2.MB064*MD006/MD007/MC004 ELSE MB2.MB050*MD006/MD007/MC004 END ) AS '各採購單位成本'
-                            ,(SELECT SUM (CASE WHEN  ( MB001 LIKE '1%' OR MB001 LIKE '2%') AND MB064>0 AND MB065 >0 THEN MB065/MB064*MD006/MD007/MC004 ELSE MB050*MD006/MD007/MC004 END) FROM [TK].dbo.BOMMC MC, [TK].dbo.BOMMD MD ,[TK].dbo.INVMB MB WHERE  MC.MC001=MD.MD001 AND MD.MD003=MB.MB001 AND MC.MC001=BOMMC.MC001)   AS '總採購單位成本'
-                            ,ISNULL((SELECT SUM (NULLIF(MD006,0)/NULLIF(MD007,0)) FROM [TK].dbo.BOMMC MC, [TK].dbo.BOMMD MD ,[TK].dbo.INVMB MB WHERE  MC.MC001=MD.MD001 AND MD.MD003=MB.MB001 AND MC.MC001=BOMMC.MC001 AND (MB.MB001 LIKE '3%' OR MB.MB001 LIKE '4%')),0)  AS '總半成品重'
-                            FROM [TK].dbo.BOMMC
+                                    SELECT *
+                                    ,CONVERT(NVARCHAR,CONVERT(DECIMAL(16,4),(CASE WHEN 總成品平均成本>0 THEN 分攤成本/總成品平均成本 ELSE 0 END))*100)+'%' AS '各百分比' 
+                                    ,CONVERT(DECIMAL(16,2),分攤成本) AS 分攤成本
+                                    FROM 
+                                    (
+                                    SELECT '{0}'AS '年度',MC001 AS '成品品號',MB1.MB002  AS '成品品名' ,MC004,MD003  AS '使用品號',MB2.MB002  AS '使用品名',MD006,MD007
+                                    ,總成品平均成本
+                                    ,材料平均成本
+                                    ,人工平均成本
+                                    ,製造平均成本
+                                    ,加工平均成本
+                                    ,各採購單位成本
+                                    ,總採購單位成本
+                                    ,總半成品重
+                                    ,(CASE WHEN 總成品平均成本>0 THEN (CASE WHEN (MB2.MB001 LIKE '3%' OR MB2.MB001 LIKE '4%')THEN ((材料平均成本-總採購單位成本)*MD006/MD007/總半成品重) ELSE 各採購單位成本*MD006/MD007/MC004 END) ELSE 0 END) AS '分攤成本' 
+                                    ,(CASE WHEN MD003 LIKE '1%' THEN '1原料'  WHEN MD003 LIKE '2%' THEN '2物料' WHEN (MD003 LIKE '3%' OR MD003 LIKE '4%') THEN '3半成品'END ) AS '分類'
+                                    FROM
+                                    (
+                                    SELECT MC001,MC004,MD003,MD006,MD007
+                                    ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
+                                    ,ISNULL((SELECT AVG((ME007)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '材料平均成本'
+                                    ,ISNULL((SELECT AVG((ME008)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '人工平均成本'
+                                    ,ISNULL((SELECT AVG((ME009)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '製造平均成本'
+                                    ,ISNULL((SELECT AVG((ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '加工平均成本'
+                                    ,(CASE WHEN ( MB2.MB001 LIKE '1%' OR MB2.MB001 LIKE '2%') AND MB2.MB064>0 AND MB2.MB065 >0 THEN MB2.MB065/MB2.MB064*MD006/MD007/MC004 ELSE MB2.MB050*MD006/MD007/MC004 END ) AS '各採購單位成本'
+                                    ,(SELECT SUM (CASE WHEN  ( MB001 LIKE '1%' OR MB001 LIKE '2%') AND MB064>0 AND MB065 >0 THEN MB065/MB064*MD006/MD007/MC004 ELSE MB050*MD006/MD007/MC004 END) FROM [TK].dbo.BOMMC MC, [TK].dbo.BOMMD MD ,[TK].dbo.INVMB MB WHERE  MC.MC001=MD.MD001 AND MD.MD003=MB.MB001 AND MC.MC001=BOMMC.MC001)   AS '總採購單位成本'
+                                    ,ISNULL((SELECT SUM (MD006/MD007) FROM [TK].dbo.BOMMC MC, [TK].dbo.BOMMD MD ,[TK].dbo.INVMB MB WHERE  MC.MC001=MD.MD001 AND MD.MD003=MB.MB001 AND MC.MC001=BOMMC.MC001 AND (MB.MB001 LIKE '3%' OR MB.MB001 LIKE '4%')),0)  AS '總半成品重'
+                                    FROM [TK].dbo.BOMMC
+                                    LEFT JOIN [TK].dbo.INVMB MB1 ON MB1.MB001=BOMMC.MC001
+                                    , [TK].dbo.BOMMD
+                                    LEFT JOIN [TK].dbo.INVMB MB2 ON MB2.MB001=BOMMD.MD003
+                                    WHERE MC001=MD001
+                                    ) AS TEMP
+                                    LEFT JOIN [TK].dbo.INVMB MB1 ON MB1.MB001=TEMP.MC001
+                                    LEFT JOIN [TK].dbo.INVMB MB2 ON MB2.MB001=TEMP.MD003
+                                    UNION ALL
+                                    SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',0 ,''  AS '使用品號','' AS '使用品名',0,0
+                                    ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
+                                    ,0
+                                    ,0
+                                    ,0
+                                    ,0
+                                    ,0
+                                    ,0
+                                    ,0
+                                    ,ISNULL((SELECT AVG((ME008)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '成本'
+                                    ,'4人工' AS '分類'
+                                    FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
+                                    WHERE  MC001=MB001
+                                    AND (MC001 LIKE '3%' OR MC001 LIKE '4%' OR MC001 LIKE '5%') 
+                                    UNION ALL
+                                    SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',0 ,''  AS '使用品號','' AS '使用品名',0,0
+                                    ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
+                                    ,0
+                                    ,0
+                                    ,0
+                                    ,0
+                                    ,0
+                                    ,0
+                                    ,0
+                                    ,ISNULL((SELECT AVG((ME009)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '成本'
+                                    ,'5製造' AS '分類'
+                                    FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
+                                    WHERE  MC001=MB001
+                                    AND (MC001 LIKE '3%' OR MC001 LIKE '4%' OR MC001 LIKE '5%') 
+                                    UNION ALL
+                                    SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',0 ,''  AS '使用品號','' AS '使用品名',0,0
+                                    ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
+                                    ,0
+                                    ,0
+                                    ,0
+                                    ,0
+                                    ,0
+                                    ,0
+                                    ,0
+                                    ,ISNULL((SELECT AVG((ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '成本'
+                                    ,'6加工' AS '分類'
+                                    FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
+                                    WHERE  MC001=MB001
+                                    AND (MC001 LIKE '3%' OR MC001 LIKE '4%' OR MC001 LIKE '5%') 
 
-                            LEFT JOIN [TK].dbo.INVMB MB1 ON MB1.MB001=BOMMC.MC001
-                            , [TK].dbo.BOMMD
-                            LEFT JOIN [TK].dbo.INVMB MB2 ON MB2.MB001=BOMMD.MD003
-                            WHERE MC001=MD001
-                            ) AS TEMP
-                            LEFT JOIN [TK].dbo.INVMB MB1 ON MB1.MB001=TEMP.MC001
-                            LEFT JOIN [TK].dbo.INVMB MB2 ON MB2.MB001=TEMP.MD003
-                            UNION ALL
-                            SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',MB003  AS '成品規格',0 ,''  AS '使用品號','' AS '使用品名',0,0
-                            ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
-                            ,0
-                            ,0
-                            ,0
-                            ,0
-                            ,0
-                            ,0
-                            ,0
-                            ,ISNULL((SELECT AVG((ME008)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '成本'
-                            ,'4人工' AS '分類'
-                            FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
-                            WHERE  MC001=MB001
-                            AND (MC001 LIKE '3%' OR MC001 LIKE '4%' OR MC001 LIKE '5%') 
-                            UNION ALL
-                            SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',MB003  AS '成品規格',0 ,''  AS '使用品號','' AS '使用品名',0,0
-                            ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
-                            ,0
-                            ,0
-                            ,0
-                            ,0
-                            ,0
-                            ,0
-                            ,0
-                            ,ISNULL((SELECT AVG((ME009)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '成本'
-                            ,'5製造' AS '分類'
-                            FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
-                            WHERE  MC001=MB001
-                            AND (MC001 LIKE '3%' OR MC001 LIKE '4%' OR MC001 LIKE '5%') 
-                            UNION ALL
-                            SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',MB003  AS '成品規格',0 ,''  AS '使用品號','' AS '使用品名',0,0
-                            ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
-                            ,0
-                            ,0
-                            ,0
-                            ,0
-                            ,0
-                            ,0
-                            ,0
-                            ,ISNULL((SELECT AVG((ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '成本'
-                            ,'6加工' AS '分類'
-                            FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
-                            WHERE  MC001=MB001
-                            AND (MC001 LIKE '3%' OR MC001 LIKE '4%' OR MC001 LIKE '5%') 
-                            ) AS TEMP2
-                            WHERE 1=1
-                            {1}
+                                  
+                                    ) AS TEMP2
+                                    WHERE 1=1
+                                    {1}
+                                    ORDER BY 成品品號,分類,使用品號
 
-                            ORDER BY 成品品號,分類,使用品號
-                            
-                        ", YM, SQUERY.ToString());
+                                    ", YM, SQUERY.ToString());
+                }
 
-            return SB;
+                return SB;
 
         }
 
