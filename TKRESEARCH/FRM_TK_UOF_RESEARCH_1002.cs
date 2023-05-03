@@ -264,7 +264,11 @@ namespace TKRESEARCH
                             ,[RDFrm1002CS] AS '設計別'
                             ,[RDFrm1002DP] AS '需求部門'
                             ,[RDFrm1002PD] AS '產品名稱'
-                            ,[RDFrm1002ST] AS '產品規格'
+
+                            ,[ISCLOSED] AS '是否結案'
+                            ,[INPROCESSING] AS '處理進度'
+
+                            ,[RDFrm1002ST] AS '產品規格' 
                             ,[RDFrm1002G7T1] AS '預計出貨日期'
                             ,[RDFrm1002G7T2] AS '預計上市日期'
                             ,[RDFrm1002G7T3] AS '預計銷售通路/國家別'
@@ -272,8 +276,7 @@ namespace TKRESEARCH
                             ,[RDFrm1002G7T5] AS '商品屬性'
                             ,[RDFrm1002G5T6] AS '產品包裝形式'
                             ,[RDFrm1002DS] AS '設計需求具體內容'
-                            ,[INPROCESSING] AS '處理進度'
-                            ,[ISCLOSED] AS '是否結案'
+                      
  
                             FROM [TKRESEARCH].[dbo].[TK_UOF_RESEARCH_1002]
                             WHERE 1=1
