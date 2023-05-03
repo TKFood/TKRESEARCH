@@ -59,6 +59,8 @@ namespace TKRESEARCH
             SET_DATES();
             comboBox1load();
             comboBox2load();
+            comboBox3load();
+
         }
 
         #region FUNCTION
@@ -134,6 +136,45 @@ namespace TKRESEARCH
             comboBox2.DataSource = dt.DefaultView;
             comboBox2.ValueMember = "PARANAME";
             comboBox2.DisplayMember = "PARANAME";
+            sqlConn.Close();
+
+
+        }
+
+        public void comboBox3load()
+        {
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder Sequel = new StringBuilder();
+            Sequel.AppendFormat(@"
+                                SELECT 
+                                 [ID]
+                                ,[KIND]
+                                ,[PARAID]
+                                ,[PARANAME]
+                                FROM [TKRESEARCH].[dbo].[TBPARA]
+                                WHERE [KIND]='TK_UOF_RESEARCH_1002'
+                                ORDER BY [ID]
+                                ");
+            SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+            DataTable dt = new DataTable();
+            sqlConn.Open();
+
+            dt.Columns.Add("PARANAME", typeof(string));
+
+            da.Fill(dt);
+            comboBox3.DataSource = dt.DefaultView;
+            comboBox3.ValueMember = "PARANAME";
+            comboBox3.DisplayMember = "PARANAME";
             sqlConn.Close();
 
 
@@ -843,10 +884,127 @@ namespace TKRESEARCH
             }
         }
 
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            SET_NULL();
+
+            if (dataGridView1.CurrentRow != null)
+            {
+                int rowindex = dataGridView1.CurrentRow.Index;
+
+                if (rowindex >= 0)
+                {
+                    DataGridViewRow row = dataGridView1.Rows[rowindex];
+                    textBox5.Text = row.Cells["表單編號"].Value.ToString();
+                    textBox6.Text = row.Cells["申請人"].Value.ToString();
+                    textBox7.Text = row.Cells["預計設計須完成日(需求單位填寫)"].Value.ToString();
+                    textBox8.Text = row.Cells["預計設計上校稿日(行銷單位填寫)"].Value.ToString();
+                    textBox9.Text = row.Cells["設計別"].Value.ToString();
+                    textBox10.Text = row.Cells["需求部門"].Value.ToString();
+                    textBox11.Text = row.Cells["產品名稱"].Value.ToString();
+                    textBox12.Text = row.Cells["產品規格"].Value.ToString();
+                    textBox13.Text = row.Cells["預計出貨日期"].Value.ToString();
+                    textBox14.Text = row.Cells["預計上市日期"].Value.ToString();
+                    textBox15.Text = row.Cells["預計銷售通路/國家別"].Value.ToString();
+                    textBox16.Text = row.Cells["預估量（最小單位）"].Value.ToString();
+                    textBox17.Text = row.Cells["商品屬性"].Value.ToString();
+                    textBox18.Text = row.Cells["產品包裝形式"].Value.ToString();
+                    textBox19.Text = row.Cells["設計需求具體內容"].Value.ToString();
+                    textBox20.Text = row.Cells["處理進度"].Value.ToString();
+                    comboBox3.Text = row.Cells["是否結案"].Value.ToString();
+
+                }
+                else
+                {
+                    
+                }
+            }
+
+        }
+
+        public void SET_NULL()
+        {
+            textBox5.Text = null;
+            textBox6.Text = null;
+            textBox7.Text = null;
+            textBox8.Text = null;
+            textBox9.Text = null;
+            textBox10.Text = null;
+            textBox11.Text = null;
+            textBox12.Text = null;
+            textBox13.Text = null;
+            textBox14.Text = null;
+            textBox15.Text = null;
+            textBox16.Text = null;
+            textBox17.Text = null;
+            textBox18.Text = null;
+            textBox19.Text = null;
+            textBox20.Text = null;
+
+         
+        }
+
+        public void UPDATE_TK_UOF_RESEARCH_1002(string RDF1002SN,string INPROCESSING,string ISCLOSED)
+        {          
+        
+                try
+                {
+                    //20210902密
+                    Class1 TKID = new Class1();//用new 建立類別實體
+                    SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                    //資料庫使用者密碼解密
+                    sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                    sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                    String connectionString;
+                    sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                    sqlConn.Close();
+                    sqlConn.Open();
+                    tran = sqlConn.BeginTransaction();
+
+                    sbSql.Clear();
+
+                    sbSql.AppendFormat(@" 
+                                        UPDATE [TKRESEARCH].[dbo].[TK_UOF_RESEARCH_1002]
+                                        SET [INPROCESSING]='{1}',[ISCLOSED]='{2}'
+                                        WHERE [RDF1002SN]='{0}'
+
+                                        ", RDF1002SN, INPROCESSING, ISCLOSED);
+
+                    cmd.Connection = sqlConn;
+                    cmd.CommandTimeout = 60;
+                    cmd.CommandText = sbSql.ToString();
+                    cmd.Transaction = tran;
+                    result = cmd.ExecuteNonQuery();
+
+                    if (result == 0)
+                    {
+                        tran.Rollback();    //交易取消
+                    }
+                    else
+                    {
+                        tran.Commit();      //執行交易  
+                    }
+
+                }
+                catch
+                {
+
+                }
+
+                finally
+                {
+                    sqlConn.Close();
+                }
+
+            }
 
         #endregion
 
-        #region BUTTON
+            #region BUTTON
         private void button1_Click(object sender, EventArgs e)
         {
             SETFASTREPORT(textBox1.Text,textBox2.Text,comboBox1.Text.ToString());
@@ -860,6 +1018,12 @@ namespace TKRESEARCH
         {
             NEW_TKRESEARCH_TK_UOF_RESEARCH_1002();
         }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            UPDATE_TK_UOF_RESEARCH_1002(textBox5.Text,textBox20.Text,comboBox3.Text);
+            SEARCH(textBox3.Text.Trim(), textBox4.Text, comboBox2.Text.ToString());
+        }
+
         #endregion
 
 
