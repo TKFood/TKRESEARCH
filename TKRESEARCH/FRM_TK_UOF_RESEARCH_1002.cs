@@ -93,7 +93,7 @@ namespace TKRESEARCH
         public StringBuilder SETSQL()
         {
             StringBuilder SB = new StringBuilder();
-
+             
 
             SB.AppendFormat(@" 
                             
@@ -113,6 +113,9 @@ namespace TKRESEARCH
                             ,[RDFrm1002G7T5] AS '商品屬性'
                             ,[RDFrm1002G5T6] AS '產品包裝形式'
                             ,[RDFrm1002DS] AS '設計需求具體內容'
+                            ,[INPROCESSING] AS '處理進度'
+                            ,[ISCLOSED] AS '是否結案'
+ 
                             FROM [TKRESEARCH].[dbo].[TK_UOF_RESEARCH_1002]
                             ORDER BY [RDF1002SN]
 
