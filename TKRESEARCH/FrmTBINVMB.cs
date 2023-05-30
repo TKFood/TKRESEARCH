@@ -178,6 +178,11 @@ namespace TKRESEARCH
                                     [MB013] AS '條碼'
                                     ,[MB002] AS '品名'
                                     ,[MB001] AS '品號'
+                                    ,[MB003] AS '規格(重量)'
+                                    ,[MB004] AS '單位'
+                                    ,[MODIDATE] AS '日期'
+                                    ,[COMMENTS] AS '備註'
+
                                     FROM [TKRESEARCH].[dbo].[TBINVMB]
                                     WHERE 1=1
                                     {0}
