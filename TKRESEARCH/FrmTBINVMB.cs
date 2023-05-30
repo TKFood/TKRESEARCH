@@ -501,6 +501,8 @@ namespace TKRESEARCH
             }
         }
 
+       
+
         public void FIND_ERP_INVMB(string MB001,string MB013)
         {
             SqlDataAdapter adapter = new SqlDataAdapter();
@@ -705,6 +707,126 @@ namespace TKRESEARCH
 
             }
         }
+
+        public void UPDATE_MB001_NULL(string MB013, string MB001)
+        {
+            if (!string.IsNullOrEmpty(MB013))
+            {
+                try
+                {
+                    //20210902密
+                    Class1 TKID = new Class1();//用new 建立類別實體
+                    SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                    //資料庫使用者密碼解密
+                    sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                    sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                    String connectionString;
+                    sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                    sqlConn.Close();
+                    sqlConn.Open();
+                    tran = sqlConn.BeginTransaction();
+
+                    sbSql.Clear();
+
+                    sbSql.AppendFormat(@" 
+                                        UPDATE  [TKRESEARCH].[dbo].[TBINVMB]
+                                        SET MB001=NULL
+                                        WHERE MB013='{0}'
+                                        ", MB013, MB001);
+
+                    cmd.Connection = sqlConn;
+                    cmd.CommandTimeout = 60;
+                    cmd.CommandText = sbSql.ToString();
+                    cmd.Transaction = tran;
+                    result = cmd.ExecuteNonQuery();
+
+                    if (result == 0)
+                    {
+                        tran.Rollback();    //交易取消
+                        //MessageBox.Show("失敗");
+                    }
+                    else
+                    {
+                        tran.Commit();      //執行交易  
+                        //MessageBox.Show("完成");
+                    }
+
+                }
+                catch
+                {
+
+                }
+
+                finally
+                {
+                    sqlConn.Close();
+                }
+            }
+        }
+
+        public void UPDATE_MB002_NULL(string MB013, string MB002)
+        {
+            if (!string.IsNullOrEmpty(MB013))
+            {
+                try
+                {
+                    //20210902密
+                    Class1 TKID = new Class1();//用new 建立類別實體
+                    SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                    //資料庫使用者密碼解密
+                    sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                    sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                    String connectionString;
+                    sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                    sqlConn.Close();
+                    sqlConn.Open();
+                    tran = sqlConn.BeginTransaction();
+
+                    sbSql.Clear();
+
+                    sbSql.AppendFormat(@" 
+                                        UPDATE  [TKRESEARCH].[dbo].[TBINVMB]
+                                        SET MB002=NULL
+                                        WHERE MB013='{0}'
+                                        ", MB013, MB002);
+
+                    cmd.Connection = sqlConn;
+                    cmd.CommandTimeout = 60;
+                    cmd.CommandText = sbSql.ToString();
+                    cmd.Transaction = tran;
+                    result = cmd.ExecuteNonQuery();
+
+                    if (result == 0)
+                    {
+                        tran.Rollback();    //交易取消
+                        //MessageBox.Show("失敗");
+                    }
+                    else
+                    {
+                        tran.Commit();      //執行交易  
+                        //MessageBox.Show("完成");
+                    }
+
+                }
+                catch
+                {
+
+                }
+
+                finally
+                {
+                    sqlConn.Close();
+                }
+            }
+        }
         #endregion
 
         #region BUTTON
@@ -733,8 +855,37 @@ namespace TKRESEARCH
             SEARCH(comboBox1.Text.ToString(), textBox1.Text.ToString(), textBox2.Text.ToString(), textBox3.Text.ToString());
         }
 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                UPDATE_MB001_NULL(textBox5.Text, "");
+                SEARCH(comboBox1.Text.ToString(), textBox1.Text.ToString(), textBox2.Text.ToString(), textBox3.Text.ToString());
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+
+           
+        }
+        private void button6_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                UPDATE_MB002_NULL(textBox5.Text, "");
+                SEARCH(comboBox1.Text.ToString(), textBox1.Text.ToString(), textBox2.Text.ToString(), textBox3.Text.ToString());
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+        }
+
         #endregion
 
-      
+
     }
 }
