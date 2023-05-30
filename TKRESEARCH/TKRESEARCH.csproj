@@ -126,6 +126,12 @@
     <Compile Include="FrmRESEARCHDB.Designer.cs">
       <DependentUpon>FrmRESEARCHDB.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmTBINVMB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTBINVMB.Designer.cs">
+      <DependentUpon>FrmTBINVMB.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmUOFMESSAGES.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +173,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmRESEARCHDB.resx">
       <DependentUpon>FrmRESEARCHDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTBINVMB.resx">
+      <DependentUpon>FrmTBINVMB.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmUOFMESSAGES.resx">
       <DependentUpon>FrmUOFMESSAGES.cs</DependentUpon>
