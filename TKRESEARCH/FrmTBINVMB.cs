@@ -360,7 +360,7 @@ namespace TKRESEARCH
         }
 
 
-        public void UPDATE_MB002(string MB013,string MB002)
+        public void UPDATE_MB002(string MB013,string MB002,string MB003,string MB004,string COMMENTS)
         {
             if(!string.IsNullOrEmpty(MB013)&&!string.IsNullOrEmpty(MB002))
             {
@@ -386,9 +386,9 @@ namespace TKRESEARCH
 
                     sbSql.AppendFormat(@" 
                                         UPDATE  [TKRESEARCH].[dbo].[TBINVMB]
-                                        SET MB002='{1}'
+                                        SET MB002='{1}',MB003='{2}',MB004='{3}',COMMENTS='{4}',[MODIDATE]=CONVERT(NVARCHAR,GETDATE(),112)
                                         WHERE MB013='{0}'
-                                        ", MB013,MB002);
+                                        ", MB013,MB002, MB003, MB004, COMMENTS);
 
                     cmd.Connection = sqlConn;
                     cmd.CommandTimeout = 60;
@@ -799,7 +799,7 @@ namespace TKRESEARCH
 
                     sbSql.AppendFormat(@" 
                                         UPDATE  [TKRESEARCH].[dbo].[TBINVMB]
-                                        SET MB002=NULL
+                                        SET MB002=NULL,MB003=NULL,MB004=NULL,COMMENTS=NULL
                                         WHERE MB013='{0}'
                                         ", MB013, MB002);
 
@@ -848,7 +848,7 @@ namespace TKRESEARCH
 
         private void button3_Click(object sender, EventArgs e)
         {
-            UPDATE_MB002(textBox5.Text, textBox6.Text);
+            UPDATE_MB002(textBox5.Text, textBox6.Text, textBox8.Text, textBox9.Text, textBox10.Text);
             SEARCH(comboBox1.Text.ToString(), textBox1.Text.ToString(), textBox2.Text.ToString(), textBox3.Text.ToString());
 
         }
@@ -862,7 +862,7 @@ namespace TKRESEARCH
 
         private void button5_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("清空?", "清空?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 UPDATE_MB001_NULL(textBox5.Text, "");
@@ -877,7 +877,7 @@ namespace TKRESEARCH
         }
         private void button6_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("清空?", "清空?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 UPDATE_MB002_NULL(textBox5.Text, "");
