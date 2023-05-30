@@ -49,6 +49,7 @@ namespace TKRESEARCH
             InitializeComponent();
 
             comboBox1load();
+            comboBox2load();
 
         }
 
@@ -87,6 +88,45 @@ namespace TKRESEARCH
             comboBox1.DataSource = dt.DefaultView;
             comboBox1.ValueMember = "PARANAME";
             comboBox1.DisplayMember = "PARANAME";
+            sqlConn.Close();
+
+
+        }
+
+        public void comboBox2load()
+        {
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder Sequel = new StringBuilder();
+            Sequel.AppendFormat(@"
+                                SELECT 
+                                 [ID]
+                                ,[KIND]
+                                ,[PARAID]
+                                ,[PARANAME]
+                                FROM [TKRESEARCH].[dbo].[TBPARA]
+                                WHERE [KIND]='UPDATEUSER'
+                                ORDER BY [ID]
+                                ");
+            SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+            DataTable dt = new DataTable();
+            sqlConn.Open();
+
+            dt.Columns.Add("PARANAME", typeof(string));
+
+            da.Fill(dt);
+            comboBox2.DataSource = dt.DefaultView;
+            comboBox2.ValueMember = "PARANAME";
+            comboBox2.DisplayMember = "PARANAME";
             sqlConn.Close();
 
 
@@ -182,6 +222,7 @@ namespace TKRESEARCH
                                     ,[MB004] AS '單位'
                                     ,[MODIDATE] AS '日期'
                                     ,[COMMENTS] AS '備註'
+                                    ,[UPDATEUSER] AS '更新人員'
 
                                     FROM [TKRESEARCH].[dbo].[TBINVMB]
                                     WHERE 1=1
@@ -233,7 +274,7 @@ namespace TKRESEARCH
             }
         }
 
-        public void CHECK_MB013(string MB013)
+        public void CHECK_MB013(string MB013,string UPDATEUSER)
         {
             string STR = MB013;
             char[] CHARS = STR.ToCharArray();
@@ -293,14 +334,14 @@ namespace TKRESEARCH
                 }
                 else if (CHECKCODE.Equals(GET_CHECKCODE))
                 {
-                    ADD_MB013(MB013);
+                    ADD_MB013(MB013, UPDATEUSER);
                 }
             }
            
 
         }
 
-        public void ADD_MB013(string MB013)
+        public void ADD_MB013(string MB013,string UPDATEUSER)
         {
             try
             {
@@ -324,11 +365,11 @@ namespace TKRESEARCH
 
                 sbSql.AppendFormat(@" 
                                        INSERT INTO [TKRESEARCH].[dbo].[TBINVMB]
-                                        ([MB013],[MB002],[MB001])
+                                        ([MB013],[MB002],[MB001],[UPDATEUSER])
                                         VALUES
-                                        ('{0}','','')
+                                        ('{0}','','','{1}')
 
-                                        ", MB013);
+                                        ", MB013, UPDATEUSER);
 
                 cmd.Connection = sqlConn;
                 cmd.CommandTimeout = 60;
@@ -360,7 +401,7 @@ namespace TKRESEARCH
         }
 
 
-        public void UPDATE_MB002(string MB013,string MB002,string MB003,string MB004,string COMMENTS)
+        public void UPDATE_MB002(string MB013,string MB002,string MB003,string MB004,string COMMENTS,string UPDATEUSER)
         {
             if(!string.IsNullOrEmpty(MB013)&&!string.IsNullOrEmpty(MB002))
             {
@@ -386,9 +427,9 @@ namespace TKRESEARCH
 
                     sbSql.AppendFormat(@" 
                                         UPDATE  [TKRESEARCH].[dbo].[TBINVMB]
-                                        SET MB002='{1}',MB003='{2}',MB004='{3}',COMMENTS='{4}',[MODIDATE]=CONVERT(NVARCHAR,GETDATE(),112)
+                                        SET MB002='{1}',MB003='{2}',MB004='{3}',COMMENTS='{4}',[UPDATEUSER]='{5}',[MODIDATE]=CONVERT(NVARCHAR,GETDATE(),112)
                                         WHERE MB013='{0}'
-                                        ", MB013,MB002, MB003, MB004, COMMENTS);
+                                        ", MB013,MB002, MB003, MB004, COMMENTS, UPDATEUSER);
 
                     cmd.Connection = sqlConn;
                     cmd.CommandTimeout = 60;
@@ -842,13 +883,13 @@ namespace TKRESEARCH
 
         private void button2_Click(object sender, EventArgs e)
         {
-            CHECK_MB013(textBox4.Text.Trim());
+            CHECK_MB013(textBox4.Text.Trim(),comboBox2.Text.ToString());
             SEARCH(comboBox1.Text.ToString(), textBox1.Text.ToString(), textBox2.Text.ToString(), textBox3.Text.ToString());
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            UPDATE_MB002(textBox5.Text, textBox6.Text, textBox8.Text, textBox9.Text, textBox10.Text);
+            UPDATE_MB002(textBox5.Text, textBox6.Text, textBox8.Text, textBox9.Text, textBox10.Text,comboBox2.Text.ToString());
             SEARCH(comboBox1.Text.ToString(), textBox1.Text.ToString(), textBox2.Text.ToString(), textBox3.Text.ToString());
 
         }
