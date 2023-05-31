@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="05/31/2023 16:21:35" ReportInfo.Modified="05/31/2023 16:41:16" ReportInfo.CreatorVersion="2016.4.4.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqHwzMSgwTFaHpjtG3vsOj8Zy6q+uhwpDsytgWqwZQZyEQUQyQ022aWUGqU90pHzzNjHuzu89K+RQ2LIBVx1fpgNkNJhwC4eetn2/Uy0fMrO7zDUE5AmRb+0bcYI+lxqpN+i5gA3VDGcwlcfm6L9ZMsLrZ3U+wEDtHCQtd9vw2XUGNelU1GbUTm7dZB+BKRGa6">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="--20230531 非採購單位成本&#13;&#10;SELECT MC001 AS '成品品號',MB1.MB002 AS '成品品名',MD003 AS '組件品號',MB2.MB002 AS '組件品名',MB2.MB004 AS '組件單位',CONVERT(decimal(16,4),MB2.MB050) AS '最近進價',MB2.MB102  AS '進價是否含稅',MC004 AS '標準批量',MD006 AS '組成用量',MD007 AS '底數',MD008 AS '損秏率'&#13;&#10;,(SELECT TOP 1 '最近進貨日:'+TG003+' 廠商:'+TG005+' '+MA002 FROM [TK].dbo.PURTG,[TK].dbo.PURTH,[TK].dbo.PURMA WHERE TG001=TH001 AND TG002=TH002 AND TG005=MA001 AND TH004=MD003 ORDER BY TG003 DESC) AS 'MA002'&#13;&#10;,(CASE WHEN MD003 LIKE '1%' OR MD003 LIKE '2%' THEN(CONVERT(decimal(16,4),MB2.MB050*MD006/MD007*(1+MD008)/MC004)) ELSE 0 END) AS '分攤單位進貨成本'&#13;&#10;,CONVERT(decimal(16,2),(CASE WHEN MD003 NOT LIKE '1%' THEN &#13;&#10;(CASE WHEN MD003 NOT LIKE '2%' THEN &#13;&#10;((SELECT AVG(LB010) FROM [TK].dbo.INVLB WHERE LB001=MD003 AND LB002 LIKE '2023%' GROUP BY LB001)*MD006/MD007*(1+MD008)/MC004) &#13;&#10;ELSE 0 END)&#13;&#10;ELSE 0 END)) AS '非採購單位成本'&#13;&#10;&#13;&#10;,CONVERT(decimal(16,2),(SELECT SUM(MB050*MD006/MD007*(1+MD008)/MC004) FROM [TK].dbo.BOMMC MC,[TK].dbo.BOMMD MD,[TK].dbo.INVMB MB WHERE MC.MC001=MD.MD001 AND MB.MB001=MD.MD003 AND MD.MD001=BOMMC.MC001 ))  AS '成品單位進貨成本'&#13;&#10;,CONVERT(decimal(16,2),(SELECT AVG(LB010) LB010&#13;&#10;FROM [TK].dbo.INVLB&#13;&#10;WHERE LB001=MC001&#13;&#10;AND LB002 LIKE '2023%'&#13;&#10;GROUP BY LB001)) AS '單位成本-材料'&#13;&#10;FROM [TK].dbo.BOMMC&#13;&#10;LEFT JOIN [TK].dbo.INVMB MB1 ON MB1.MB001=MC001&#13;&#10;,[TK].dbo.BOMMD&#13;&#10;LEFT JOIN [TK].dbo.INVMB MB2 ON MB2.MB001=MD003&#13;&#10;WHERE MC001=MD001&#13;&#10;AND (MC001 LIKE '%40710020705016%' OR MB1.MB002 LIKE '%{0}%')&#13;&#10;ORDER BY MC001,MD003">
+        <Column Name="成品品號" DataType="System.String"/>
+        <Column Name="成品品名" DataType="System.String"/>
+        <Column Name="組件品號" DataType="System.String"/>
+        <Column Name="組件品名" DataType="System.String"/>
+        <Column Name="組件單位" DataType="System.String"/>
+        <Column Name="最近進價" DataType="System.Decimal"/>
+        <Column Name="進價是否含稅" DataType="System.String"/>
+        <Column Name="標準批量" DataType="System.Decimal"/>
+        <Column Name="組成用量" DataType="System.Decimal"/>
+        <Column Name="底數" DataType="System.Decimal"/>
+        <Column Name="損秏率" DataType="System.Decimal"/>
+        <Column Name="MA002" DataType="System.String"/>
+        <Column Name="分攤單位進貨成本" DataType="System.Decimal"/>
+        <Column Name="非採購單位成本" DataType="System.Decimal"/>
+        <Column Name="成品單位進貨成本" DataType="System.Decimal"/>
+        <Column Name="單位成本-材料" DataType="System.Decimal"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="560" PaperHeight="210">
+    <ColumnHeaderBand Name="ColumnHeader1" Width="2041.2" Height="18.9">
+      <TextObject Name="Text2" Width="151.2" Height="18.9" Border.Lines="All" Text="成品品號" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text4" Left="151.2" Width="396.9" Height="18.9" Border.Lines="All" Text="成品品名" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text6" Left="642.6" Width="141.75" Height="18.9" Border.Lines="All" Text="組件品號" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text8" Left="784.35" Width="217.35" Height="18.9" Border.Lines="All" Text="組件品名" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text10" Left="548.1" Width="94.5" Height="18.9" Border.Lines="All" Text="單位成本-材料" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text12" Left="1001.7" Width="113.4" Height="18.9" Border.Lines="All" Text="分攤單位進貨成本" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text14" Left="1115.1" Width="94.5" Height="18.9" Border.Lines="All" Text="非採購單位成本" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text16" Left="1209.6" Width="94.5" Height="18.9" Border.Lines="All" Text="組件單位" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text18" Left="1304.1" Width="94.5" Height="18.9" Border.Lines="All" Text="最近進價" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text20" Left="1398.6" Width="94.5" Height="18.9" Border.Lines="All" Text="進價是否含稅" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text22" Left="1493.1" Width="245.7" Height="18.9" Border.Lines="All" Text="進貨日期+廠商" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text24" Left="1738.8" Width="75.6" Height="18.9" Border.Lines="All" Text="標準批量" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text26" Left="1814.4" Width="75.6" Height="18.9" Border.Lines="All" Text="組成用量" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text28" Left="1890" Width="75.6" Height="18.9" Border.Lines="All" Text="底數" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text30" Left="1965.6" Width="75.6" Height="18.9" Border.Lines="All" Text="損秏率" HorzAlign="Center" VertAlign="Center"/>
+    </ColumnHeaderBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="23.5" Width="2041.2" Height="18.9" CanGrow="true" Condition="[Table.成品品號]">
+      <TextObject Name="Text1" Width="151.2" Height="18.9" Border.Lines="All" Fill.Color="LightGreen" CanGrow="true" GrowToBottom="true" Text="[Table.成品品號]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text3" Left="151.2" Width="396.9" Height="18.9" Border.Lines="All" Fill.Color="LightGreen" CanGrow="true" GrowToBottom="true" Text="[Table.成品品名]" VertAlign="Center"/>
+      <TextObject Name="Text9" Left="548.1" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="LightGreen" CanGrow="true" GrowToBottom="true" Text="[Table.單位成本-材料]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text34" Left="642.6" Width="141.75" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text35" Left="784.35" Width="217.35" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text36" Left="1001.7" Width="113.4" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text37" Left="1115.1" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text38" Left="1209.6" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text39" Left="1304.1" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text40" Left="1398.6" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text41" Left="1493.1" Width="245.7" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text42" Left="1738.8" Width="75.6" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text43" Left="1814.4" Width="75.6" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text44" Left="1890" Width="75.6" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text45" Left="1965.6" Width="75.6" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" HorzAlign="Center" VertAlign="Center"/>
+      <DataBand Name="Data1" Top="47" Width="2041.2" Height="18.9" CanGrow="true" DataSource="Table">
+        <TextObject Name="Text5" Left="642.6" Width="141.75" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.組件品號]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text7" Left="784.35" Width="217.35" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.組件品名]" VertAlign="Center"/>
+        <TextObject Name="Text11" Left="1001.7" Width="113.4" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.分攤單位進貨成本]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text13" Left="1115.1" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.非採購單位成本]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text15" Left="1209.6" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.組件單位]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text17" Left="1304.1" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.最近進價]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text19" Left="1398.6" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.進價是否含稅]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text21" Left="1493.1" Width="245.7" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.MA002]" VertAlign="Center"/>
+        <TextObject Name="Text23" Left="1738.8" Width="75.6" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.標準批量]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text25" Left="1814.4" Width="75.6" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.組成用量]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text27" Left="1890" Width="75.6" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.底數]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text29" Left="1965.6" Width="75.6" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.損秏率]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text31" Width="151.2" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text32" Left="151.2" Width="396.9" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" VertAlign="Center"/>
+        <TextObject Name="Text33" Left="548.1" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <Sort>
+          <Sort Expression="[Table.組件品號]"/>
+        </Sort>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter1" Top="70.49" Width="2041.2"/>
+    </GroupHeaderBand>
+    <PageFooterBand Name="PageFooter1" Top="75.09" Width="2041.2" Height="18.9"/>
+  </ReportPage>
+</Report>
