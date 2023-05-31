@@ -54,7 +54,7 @@ namespace TKRESEARCH
 
         public FrmREPORTCOST()
         {
-            InitializeComponent();
+            InitializeComponent(); 
         }
 
         #region FUNCTION

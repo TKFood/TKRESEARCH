@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="05/31/2023 16:21:35" ReportInfo.Modified="05/31/2023 16:41:16" ReportInfo.CreatorVersion="2016.4.4.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="05/31/2023 16:21:35" ReportInfo.Modified="05/31/2023 16:46:45" ReportInfo.CreatorVersion="2016.4.4.0">
   <Dictionary>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqHwzMSgwTFaHpjtG3vsOj8Zy6q+uhwpDsytgWqwZQZyEQUQyQ022aWUGqU90pHzzNjHuzu89K+RQ2LIBVx1fpgNkNJhwC4eetn2/Uy0fMrO7zDUE5AmRb+0bcYI+lxqpN+i5gA3VDGcwlcfm6L9ZMsLrZ3U+wEDtHCQtd9vw2XUGNelU1GbUTm7dZB+BKRGa6">
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqHwzMSgwTFaHpjtG3vsOj8Zy6q+uhwpDsytgWqwZQZyEQUQyQ022aWUGqU90pHzzNjHuzu89K+RQ2LIBVx1fpgNkNJhwC4eetn2/Uy0fMrO7zDUE5AmRb+0bcYI+lxqpN+i5gA3VDGcwlcfm6L9ZMsLrZ3U+wEDtHCQtd9vw2XUEopCKCEQjohy3LY0wPUhET">
       <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="--20230531 非採購單位成本&#13;&#10;SELECT MC001 AS '成品品號',MB1.MB002 AS '成品品名',MD003 AS '組件品號',MB2.MB002 AS '組件品名',MB2.MB004 AS '組件單位',CONVERT(decimal(16,4),MB2.MB050) AS '最近進價',MB2.MB102  AS '進價是否含稅',MC004 AS '標準批量',MD006 AS '組成用量',MD007 AS '底數',MD008 AS '損秏率'&#13;&#10;,(SELECT TOP 1 '最近進貨日:'+TG003+' 廠商:'+TG005+' '+MA002 FROM [TK].dbo.PURTG,[TK].dbo.PURTH,[TK].dbo.PURMA WHERE TG001=TH001 AND TG002=TH002 AND TG005=MA001 AND TH004=MD003 ORDER BY TG003 DESC) AS 'MA002'&#13;&#10;,(CASE WHEN MD003 LIKE '1%' OR MD003 LIKE '2%' THEN(CONVERT(decimal(16,4),MB2.MB050*MD006/MD007*(1+MD008)/MC004)) ELSE 0 END) AS '分攤單位進貨成本'&#13;&#10;,CONVERT(decimal(16,2),(CASE WHEN MD003 NOT LIKE '1%' THEN &#13;&#10;(CASE WHEN MD003 NOT LIKE '2%' THEN &#13;&#10;((SELECT AVG(LB010) FROM [TK].dbo.INVLB WHERE LB001=MD003 AND LB002 LIKE '2023%' GROUP BY LB001)*MD006/MD007*(1+MD008)/MC004) &#13;&#10;ELSE 0 END)&#13;&#10;ELSE 0 END)) AS '非採購單位成本'&#13;&#10;&#13;&#10;,CONVERT(decimal(16,2),(SELECT SUM(MB050*MD006/MD007*(1+MD008)/MC004) FROM [TK].dbo.BOMMC MC,[TK].dbo.BOMMD MD,[TK].dbo.INVMB MB WHERE MC.MC001=MD.MD001 AND MB.MB001=MD.MD003 AND MD.MD001=BOMMC.MC001 ))  AS '成品單位進貨成本'&#13;&#10;,CONVERT(decimal(16,2),(SELECT AVG(LB010) LB010&#13;&#10;FROM [TK].dbo.INVLB&#13;&#10;WHERE LB001=MC001&#13;&#10;AND LB002 LIKE '2023%'&#13;&#10;GROUP BY LB001)) AS '單位成本-材料'&#13;&#10;FROM [TK].dbo.BOMMC&#13;&#10;LEFT JOIN [TK].dbo.INVMB MB1 ON MB1.MB001=MC001&#13;&#10;,[TK].dbo.BOMMD&#13;&#10;LEFT JOIN [TK].dbo.INVMB MB2 ON MB2.MB001=MD003&#13;&#10;WHERE MC001=MD001&#13;&#10;AND (MC001 LIKE '%40710020705016%' OR MB1.MB002 LIKE '%{0}%')&#13;&#10;ORDER BY MC001,MD003">
         <Column Name="成品品號" DataType="System.String"/>
         <Column Name="成品品名" DataType="System.String"/>
@@ -23,7 +23,7 @@
     </MsSqlDataConnection>
   </Dictionary>
   <ReportPage Name="Page1" Landscape="true" PaperWidth="560" PaperHeight="210">
-    <ColumnHeaderBand Name="ColumnHeader1" Width="2041.2" Height="18.9">
+    <ReportTitleBand Name="ReportTitle1" Width="2041.2" Height="18.9">
       <TextObject Name="Text2" Width="151.2" Height="18.9" Border.Lines="All" Text="成品品號" HorzAlign="Center" VertAlign="Center"/>
       <TextObject Name="Text4" Left="151.2" Width="396.9" Height="18.9" Border.Lines="All" Text="成品品名" HorzAlign="Center" VertAlign="Center"/>
       <TextObject Name="Text6" Left="642.6" Width="141.75" Height="18.9" Border.Lines="All" Text="組件品號" HorzAlign="Center" VertAlign="Center"/>
@@ -39,7 +39,7 @@
       <TextObject Name="Text26" Left="1814.4" Width="75.6" Height="18.9" Border.Lines="All" Text="組成用量" HorzAlign="Center" VertAlign="Center"/>
       <TextObject Name="Text28" Left="1890" Width="75.6" Height="18.9" Border.Lines="All" Text="底數" HorzAlign="Center" VertAlign="Center"/>
       <TextObject Name="Text30" Left="1965.6" Width="75.6" Height="18.9" Border.Lines="All" Text="損秏率" HorzAlign="Center" VertAlign="Center"/>
-    </ColumnHeaderBand>
+    </ReportTitleBand>
     <GroupHeaderBand Name="GroupHeader1" Top="23.5" Width="2041.2" Height="18.9" CanGrow="true" Condition="[Table.成品品號]">
       <TextObject Name="Text1" Width="151.2" Height="18.9" Border.Lines="All" Fill.Color="LightGreen" CanGrow="true" GrowToBottom="true" Text="[Table.成品品號]" HorzAlign="Center" VertAlign="Center"/>
       <TextObject Name="Text3" Left="151.2" Width="396.9" Height="18.9" Border.Lines="All" Fill.Color="LightGreen" CanGrow="true" GrowToBottom="true" Text="[Table.成品品名]" VertAlign="Center"/>
