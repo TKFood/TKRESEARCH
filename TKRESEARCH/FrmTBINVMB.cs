@@ -1072,6 +1072,67 @@ namespace TKRESEARCH
             }
         }
 
+        private void dataGridView3_SelectionChanged(object sender, EventArgs e)
+        {
+            SET_GV2_TEXTBOX_NULL();
+
+            if (dataGridView3.CurrentRow != null)
+            {
+                int rowindex = dataGridView3.CurrentRow.Index;
+
+                if (rowindex >= 0)
+                {
+                    DataGridViewRow row = dataGridView3.Rows[rowindex];                 
+                    textBox14.Text = row.Cells["條碼"].Value.ToString();
+                    textBox15.Text = row.Cells["中文商品品牌"].Value.ToString();
+                    textBox16.Text = row.Cells["英文商品品牌"].Value.ToString();
+                    textBox17.Text = row.Cells["中文商品名稱"].Value.ToString();
+                    textBox18.Text = row.Cells["英文商品名稱"].Value.ToString();
+                    textBox19.Text = row.Cells["中文補充說明"].Value.ToString();
+                    textBox20.Text = row.Cells["英文補充說明"].Value.ToString();
+                    textBox21.Text = row.Cells["產地國"].Value.ToString();
+                    textBox22.Text = row.Cells["銷售國"].Value.ToString();
+                    textBox23.Text = row.Cells["全球商品分類碼"].Value.ToString();
+                    textBox24.Text = row.Cells["包裝型態"].Value.ToString();
+                    textBox25.Text = row.Cells["商品淨含量"].Value.ToString();
+                    textBox26.Text = row.Cells["淨含量單位"].Value.ToString();
+                    textBox27.Text = row.Cells["商品入數"].Value.ToString();
+                    textBox28.Text = row.Cells["深長"].Value.ToString();
+                    textBox29.Text = row.Cells["面寬"].Value.ToString();
+                    textBox30.Text = row.Cells["高度"].Value.ToString();
+                    textBox31.Text = row.Cells["產品公開設定(1:公開、3:不公開)"].Value.ToString();
+
+
+                }
+                else
+                {
+                    SET_GV2_TEXTBOX_NULL();
+                }
+            }
+        }
+
+        public void SET_GV2_TEXTBOX_NULL()
+        {
+            textBox14.Text = null;
+            textBox15.Text = null;
+            textBox16.Text = null;
+            textBox17.Text = null;
+            textBox18.Text = null;
+            textBox19.Text = null;
+            textBox20.Text = null;
+            textBox21.Text = null;
+            textBox22.Text = null;
+            textBox23.Text = null;
+            textBox24.Text = null;
+            textBox25.Text = null;
+            textBox26.Text = null;
+            textBox27.Text = null;
+            textBox28.Text = null;
+            textBox29.Text = null;
+            textBox30.Text = null;
+            textBox31.Text = null;
+        }
+
         #endregion
 
         #region BUTTON
@@ -1132,9 +1193,14 @@ namespace TKRESEARCH
         {
             SEARCH2(comboBox3.Text.ToString(), textBox11.Text.ToString(), textBox12.Text.ToString(), textBox13.Text.ToString());
         }
+        private void button8_Click(object sender, EventArgs e)
+        {
+
+        }
+
 
         #endregion
 
-
+       
     }
 }
