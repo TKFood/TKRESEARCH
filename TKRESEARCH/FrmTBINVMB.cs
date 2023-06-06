@@ -1004,6 +1004,23 @@ namespace TKRESEARCH
                                     ,[MODIDATE] AS '日期'
                                     ,[COMMENTS] AS '備註'
                                     ,[UPDATEUSER] AS '更新人員'
+                                    ,[CHINESEPRODUCTBRANDS] AS '中文商品品牌'
+                                    ,[ENGLISHPRODUCTBRANDS] AS '英文商品品牌'
+                                    ,[CHINESEPRODUCTNAMES] AS '中文商品名稱'
+                                    ,[ENGLISHPRODUCTNAMES] AS '英文商品名稱'
+                                    ,[CHINESESUPPLEMENTARYDESCRIPTION] AS '中文補充說明'
+                                    ,[ENGLISHSUPPLEMENTARYDESCRIPTION] AS '英文補充說明'
+                                    ,[COUNTRYOFORIGIN] AS '產地國'
+                                    ,[COUNTRYOFSALE] AS '銷售國'
+                                    ,[GLOBALCOMMODITYCLASSIFICATIONCODE] AS '全球商品分類碼'
+                                    ,[PACKAGINGTYPE] AS '包裝型態'
+                                    ,[NETCONTENTSOFTHEPRODUCT] AS '商品淨含量'
+                                    ,[UNITOFNETCONTENTS] AS '淨含量單位'
+                                    ,[PRODUCTCASEPACK] AS '商品入數'
+                                    ,[DEPTH] AS '深長'
+                                    ,[WIDTH] AS '面寬'
+                                    ,[HEIGHT] AS '高度'
+                                    ,[PRODUCTPUBLICSETTINGS] AS '產品公開設定(1:公開、3:不公開)'
 
                                     FROM [TKRESEARCH].[dbo].[TBINVMB]
                                     WHERE 1=1
