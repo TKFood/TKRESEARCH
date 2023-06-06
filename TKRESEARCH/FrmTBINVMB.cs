@@ -1133,6 +1133,116 @@ namespace TKRESEARCH
             textBox31.Text = null;
         }
 
+        public void UPDATE_TBINVMB_GS(string MB013
+                                    , string CHINESEPRODUCTBRANDS
+                                    , string ENGLISHPRODUCTBRANDS
+                                    , string CHINESEPRODUCTNAMES
+                                    , string ENGLISHPRODUCTNAMES
+                                    , string CHINESESUPPLEMENTARYDESCRIPTION
+                                    , string ENGLISHSUPPLEMENTARYDESCRIPTION
+                                    , string COUNTRYOFORIGIN
+                                    , string COUNTRYOFSALE
+                                    , string GLOBALCOMMODITYCLASSIFICATIONCODE
+                                    , string PACKAGINGTYPE
+                                    , string NETCONTENTSOFTHEPRODUCT
+                                    , string UNITOFNETCONTENTS
+                                    , string PRODUCTCASEPACK
+                                    , string DEPTH
+                                    , string WIDTH
+                                    , string HEIGHT
+                                    , string PRODUCTPUBLICSETTINGS
+                                    )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+
+                                    UPDATE [TKRESEARCH].[dbo].[TBINVMB]
+                                    SET 
+                                    [CHINESEPRODUCTBRANDS]='{1}'
+                                    ,[ENGLISHPRODUCTBRANDS]='{2}'
+                                    ,[CHINESEPRODUCTNAMES]='{3}'
+                                    ,[ENGLISHPRODUCTNAMES]='{4}'
+                                    ,[CHINESESUPPLEMENTARYDESCRIPTION]='{5}'
+                                    ,[ENGLISHSUPPLEMENTARYDESCRIPTION]='{6}'
+                                    ,[COUNTRYOFORIGIN]='{7}'
+                                    ,[COUNTRYOFSALE]='{8}'
+                                    ,[GLOBALCOMMODITYCLASSIFICATIONCODE]='{9}'
+                                    ,[PACKAGINGTYPE]='{10}'
+                                    ,[NETCONTENTSOFTHEPRODUCT]='{11}'
+                                    ,[UNITOFNETCONTENTS]='{12}'
+                                    ,[PRODUCTCASEPACK]='{13}'
+                                    ,[DEPTH]='{14}'
+                                    ,[WIDTH]='{15}'
+                                    ,[HEIGHT]='{16}'
+                                    ,[PRODUCTPUBLICSETTINGS]='{17}'
+                                    WHERE [MB013]='{0}'
+                                    "
+                                    , MB013
+                                    ,  CHINESEPRODUCTBRANDS
+                                    ,  ENGLISHPRODUCTBRANDS
+                                    ,  CHINESEPRODUCTNAMES
+                                    ,  ENGLISHPRODUCTNAMES
+                                    ,  CHINESESUPPLEMENTARYDESCRIPTION
+                                    ,  ENGLISHSUPPLEMENTARYDESCRIPTION
+                                    ,  COUNTRYOFORIGIN
+                                    ,  COUNTRYOFSALE
+                                    ,  GLOBALCOMMODITYCLASSIFICATIONCODE
+                                    ,  PACKAGINGTYPE
+                                    ,  NETCONTENTSOFTHEPRODUCT
+                                    ,  UNITOFNETCONTENTS
+                                    ,  PRODUCTCASEPACK
+                                    ,  DEPTH
+                                    ,  WIDTH
+                                    ,  HEIGHT
+                                    ,  PRODUCTPUBLICSETTINGS);
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                    MessageBox.Show("失敗");
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                    MessageBox.Show("完成");
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
         #endregion
 
         #region BUTTON
@@ -1195,7 +1305,26 @@ namespace TKRESEARCH
         }
         private void button8_Click(object sender, EventArgs e)
         {
-
+            UPDATE_TBINVMB_GS(
+                textBox14.Text.ToString()
+                , textBox15.Text.ToString()
+                , textBox16.Text.ToString()
+                , textBox17.Text.ToString()
+                , textBox18.Text.ToString()
+                , textBox19.Text.ToString()
+                , textBox20.Text.ToString()
+                , textBox21.Text.ToString()
+                , textBox22.Text.ToString()
+                , textBox23.Text.ToString()
+                , textBox24.Text.ToString()
+                , textBox25.Text.ToString()
+                , textBox26.Text.ToString()
+                , textBox27.Text.ToString()
+                , textBox28.Text.ToString()
+                , textBox29.Text.ToString()
+                , textBox30.Text.ToString()
+                , textBox31.Text.ToString());
+            SEARCH2(comboBox3.Text.ToString(), textBox11.Text.ToString(), textBox12.Text.ToString(), textBox13.Text.ToString());
         }
 
 
