@@ -131,7 +131,7 @@ namespace TKRESEARCH
                                     SELECT *
                                     FROM 
                                     (
-                                    SELECT TA002 AS '年月',TA001 AS '品號',MB002 AS '品名',MB003 AS '規格',生產入庫數,ME005 在製約量_材料,本階人工成本,本階製造費用,ME007 材料成本,ME008 人工成本,ME009 製造費用,ME010 加工費用
+                                    SELECT TA002 AS '年月',TA001 AS '品號',MB002 AS '品名',MB003 AS '規格',MB004 AS '單位',生產入庫數,ME005 在製約量_材料,本階人工成本,本階製造費用,ME007 材料成本,ME008 人工成本,ME009 製造費用,ME010 加工費用
                                     ,CONVERT(DECIMAL(16,2),((ME007+ME008+ME009+ME010)/(生產入庫數+ME005))) 單位成本, CONVERT(DECIMAL(16,2),((ME007)/(生產入庫數+ME005))) 單位材料成本, CONVERT(DECIMAL(16,2),((ME008)/(生產入庫數+ME005))) 單位人工成本,CONVERT(DECIMAL(16,2),((ME009)/(生產入庫數+ME005))) 單位製造成本,CONVERT(DECIMAL(16,2),((ME010)/(生產入庫數+ME005))) 單位加工成本
                                     ,MB068
                                     ,(CASE WHEN MB068 IN ('09') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均包裝人工成本
@@ -304,7 +304,7 @@ namespace TKRESEARCH
                                     ,CONVERT(DECIMAL(16,2),分攤成本) AS 分攤成本
                                     FROM 
                                     (
-                                    SELECT '{0}'AS '年度',MC001 AS '成品品號',MB1.MB002  AS '成品品名' ,MC004,MD003  AS '使用品號',MB2.MB002  AS '使用品名',MD006,MD007
+                                    SELECT '{0}'AS '年度',MC001 AS '成品品號',MB1.MB002  AS '成品品名' ,MB1.MB004  AS '成品單位',MC004,MD003  AS '使用品號',MB2.MB002  AS '使用品名',MD006,MD007
                                     ,總成品平均成本
                                     ,材料平均成本
                                     ,人工平均成本
@@ -317,7 +317,7 @@ namespace TKRESEARCH
                                     ,(CASE WHEN MD003 LIKE '1%' THEN '1原料'  WHEN MD003 LIKE '2%' THEN '2物料' WHEN (MD003 LIKE '3%' OR MD003 LIKE '4%') THEN '3半成品'END ) AS '分類'
                                     FROM
                                     (
-                                    SELECT MC001,MC004,MD003,MD006,MD007
+                                    SELECT MC001,MC004,'' AS '成品單位',MD003,MD006,MD007
                                     ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
                                     ,ISNULL((SELECT AVG((ME007)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '材料平均成本'
                                     ,ISNULL((SELECT AVG((ME008)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '人工平均成本'
@@ -335,7 +335,7 @@ namespace TKRESEARCH
                                     LEFT JOIN [TK].dbo.INVMB MB1 ON MB1.MB001=TEMP.MC001
                                     LEFT JOIN [TK].dbo.INVMB MB2 ON MB2.MB001=TEMP.MD003
                                     UNION ALL
-                                    SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',0 ,''  AS '使用品號','' AS '使用品名',0,0
+                                    SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',MB004 AS '成品單位',0 ,''  AS '使用品號','' AS '使用品名',0,0
                                     ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
                                     ,0
                                     ,0
@@ -350,7 +350,7 @@ namespace TKRESEARCH
                                     WHERE  MC001=MB001
                                     AND (MC001 LIKE '3%' OR MC001 LIKE '4%' OR MC001 LIKE '5%') 
                                     UNION ALL
-                                    SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',0 ,''  AS '使用品號','' AS '使用品名',0,0
+                                    SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',MB004 AS '成品單位',0 ,''  AS '使用品號','' AS '使用品名',0,0
                                     ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
                                     ,0
                                     ,0
@@ -365,7 +365,7 @@ namespace TKRESEARCH
                                     WHERE  MC001=MB001
                                     AND (MC001 LIKE '3%' OR MC001 LIKE '4%' OR MC001 LIKE '5%') 
                                     UNION ALL
-                                    SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',0 ,''  AS '使用品號','' AS '使用品名',0,0
+                                    SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',MB004 AS '成品單位',0 ,''  AS '使用品號','' AS '使用品名',0,0
                                     ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
                                     ,0
                                     ,0
