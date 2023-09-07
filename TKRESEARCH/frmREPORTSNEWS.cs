@@ -162,9 +162,9 @@ namespace TKRESEARCH
                             SELECT *
                             FROM 
                             (
-                            SELECT TA002 AS '年月',TA001 AS '品號',MB002 AS '品名',MB003 AS '規格',MB004 AS '單位'
-                            ,CONVERT(DECIMAL(16,2),((ME007+ME008+ME009+ME010)/(生產入庫數+ME005))) 單位成本
-                            , CONVERT(DECIMAL(16,2),((ME007)/(生產入庫數+ME005))) 單位材料成本, CONVERT(DECIMAL(16,2),((ME008)/(生產入庫數+ME005))) 單位人工成本,CONVERT(DECIMAL(16,2),((ME009)/(生產入庫數+ME005))) 單位製造成本,CONVERT(DECIMAL(16,2),((ME010)/(生產入庫數+ME005))) 單位加工成本
+                            SELECT TA001 AS '品號',MB002 AS '品名',MB003 AS '規格',MB004 AS '單位'
+                            ,CONVERT(DECIMAL(16,2),AVG((ME007+ME008+ME009+ME010)/(生產入庫數+ME005))) 單位成本
+                            ,CONVERT(DECIMAL(16,2),AVG((ME007)/(生產入庫數+ME005))) 單位材料成本, CONVERT(DECIMAL(16,2),AVG((ME008)/(生產入庫數+ME005))) 單位人工成本,CONVERT(DECIMAL(16,2),AVG((ME009)/(生產入庫數+ME005))) 單位製造成本,CONVERT(DECIMAL(16,2),AVG((ME010)/(生產入庫數+ME005))) 單位加工成本
                             FROM 
                             (
                             SELECT TA002,TA001,SUM(TA012) '生產入庫數',SUM(TA016-TA019) AS '本階人工成本',SUM(TA017-TA020) AS '本階製造費用'
@@ -175,7 +175,8 @@ namespace TKRESEARCH
                             LEFT JOIN [TK].dbo.CSTME ON ME001=TA001 AND ME002=TA002
                             LEFT JOIN [TK].dbo.INVMB ON MB001=TA001
                             WHERE 1=1
-                            AND (生產入庫數+ME005)>0                                   
+                            AND (生產入庫數+ME005)>0      
+                            GROUP BY  TA001 ,MB002 ,MB003,MB004                                 
                             ) AS TEMP2
                             ) AS TEMP3 ON TEMP3.品號=TEMP.MB001
                             ) AS TEMP2
