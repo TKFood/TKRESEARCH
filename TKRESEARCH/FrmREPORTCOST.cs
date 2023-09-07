@@ -74,7 +74,7 @@ namespace TKRESEARCH
             sqlConn = new SqlConnection(sqlsb.ConnectionString);
 
 
-
+             
 
             StringBuilder SQL1 = new StringBuilder();
 

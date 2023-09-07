@@ -120,12 +120,12 @@ namespace TKRESEARCH
                             ,TOPTB001 AS '第1天POS銷售日'
                             ,REPLACE(CONVERT(VARCHAR(20), CONVERT(MONEY,CONVERT(INT,SUMTB019)), 1), '.00', '') AS '累計-POS銷售數量'
                             ,REPLACE(CONVERT(VARCHAR(20), CONVERT(MONEY,CONVERT(INT,SUMTB031)), 1), '.00', '') AS '累計-POS銷售金額'
-                            ,REPLACE(CONVERT(VARCHAR(20), CONVERT(MONEY,CONVERT(DECIMAL(16,4),PERCOSTS)), 1), '.00', '') AS '平均單位成本'
+                            ,REPLACE(CONVERT(VARCHAR(20), CONVERT(MONEY,CONVERT(DECIMAL(16,4),單位成本)), 1), '.00', '') AS '平均單位成本'
                             ,REPLACE(CONVERT(VARCHAR(20), CONVERT(MONEY,CONVERT(INT,(SUMTH008-SUMTJ007+SUMTB019))), 1), '.00', '')  AS '累計-總銷售數量'
                             ,REPLACE(CONVERT(VARCHAR(20), CONVERT(MONEY,CONVERT(INT,(SUMTH037-SUMTJ033+SUMTB031))), 1), '.00', '')  AS '累計-總銷售未稅金額'
-                            ,REPLACE(CONVERT(VARCHAR(20), CONVERT(MONEY,CONVERT(INT,(PERCOSTS*(SUMTH008-SUMTJ007+SUMTB019)))), 1), '.00', '')  AS '累計-總成本'
-                            ,REPLACE(CONVERT(VARCHAR(20), CONVERT(MONEY,CONVERT(INT,(SUMTH037-SUMTJ033+SUMTB031-(PERCOSTS*(SUMTH008-SUMTJ007+SUMTB019))))), 1), '.00', '')  AS '累計-總毛利'
-                            ,CONVERT(NVARCHAR,CONVERT(DECIMAL(16,2),(CASE WHEN (SUMTH037-SUMTJ033+SUMTB031-(PERCOSTS*(SUMTH008-SUMTJ007+SUMTB019)))<>0 AND (SUMTH037-SUMTJ007+SUMTB031)<>0  THEN (SUMTH037-SUMTJ033+SUMTB031-(PERCOSTS*(SUMTH008-SUMTJ007+SUMTB019)))/(SUMTH037+SUMTB031) ELSE  0 END )*100))+'%'  AS '累計-毛利率'
+                            ,REPLACE(CONVERT(VARCHAR(20), CONVERT(MONEY,CONVERT(INT,(單位成本*(SUMTH008-SUMTJ007+SUMTB019)))), 1), '.00', '')  AS '累計-總成本'
+                            ,REPLACE(CONVERT(VARCHAR(20), CONVERT(MONEY,CONVERT(INT,(SUMTH037-SUMTJ033+SUMTB031-(單位成本*(SUMTH008-SUMTJ007+SUMTB019))))), 1), '.00', '')  AS '累計-總毛利'
+                            ,CONVERT(NVARCHAR,CONVERT(DECIMAL(16,2),(CASE WHEN (SUMTH037-SUMTJ033+SUMTB031-(單位成本*(SUMTH008-SUMTJ007+SUMTB019)))<>0 AND (SUMTH037-SUMTJ007+SUMTB031)<>0  THEN (SUMTH037-SUMTJ033+SUMTB031-(單位成本*(SUMTH008-SUMTJ007+SUMTB019)))/(SUMTH037+SUMTB031) ELSE  0 END )*100))+'%'  AS '累計-毛利率'
                             FROM 
                             (
                             SELECT *
@@ -157,9 +157,30 @@ namespace TKRESEARCH
                             AND ISNULL(MB002,'')<>''
                             AND CREATE_DATE>='{2}'
                             ) AS TEMP
+                            LEFT JOIN
+                            (
+                            SELECT *
+                            FROM 
+                            (
+                            SELECT TA002 AS '年月',TA001 AS '品號',MB002 AS '品名',MB003 AS '規格',MB004 AS '單位'
+                            ,CONVERT(DECIMAL(16,2),((ME007+ME008+ME009+ME010)/(生產入庫數+ME005))) 單位成本
+                            , CONVERT(DECIMAL(16,2),((ME007)/(生產入庫數+ME005))) 單位材料成本, CONVERT(DECIMAL(16,2),((ME008)/(生產入庫數+ME005))) 單位人工成本,CONVERT(DECIMAL(16,2),((ME009)/(生產入庫數+ME005))) 單位製造成本,CONVERT(DECIMAL(16,2),((ME010)/(生產入庫數+ME005))) 單位加工成本
+                            FROM 
+                            (
+                            SELECT TA002,TA001,SUM(TA012) '生產入庫數',SUM(TA016-TA019) AS '本階人工成本',SUM(TA017-TA020) AS '本階製造費用'
+                            FROM [TK].dbo.CSTTA
+                            WHERE TA002 LIKE '{3}%'
+                            GROUP BY TA002,TA001
+                            ) AS TEMP
+                            LEFT JOIN [TK].dbo.CSTME ON ME001=TA001 AND ME002=TA002
+                            LEFT JOIN [TK].dbo.INVMB ON MB001=TA001
+                            WHERE 1=1
+                            AND (生產入庫數+ME005)>0                                   
+                            ) AS TEMP2
+                            ) AS TEMP3 ON TEMP3.品號=TEMP.MB001
                             ) AS TEMP2
                             ORDER BY (SUMTH037-SUMTJ033+SUMTB031) DESC,新品建立日期
-                            ", SDAYS, EDAYS, ADD_DAYS);
+                            ", SDAYS, EDAYS, ADD_DAYS, ADDYEARSs);
 
 
             return SB;
