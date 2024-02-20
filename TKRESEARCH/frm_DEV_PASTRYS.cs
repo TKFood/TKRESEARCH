@@ -23,6 +23,7 @@ using FastReport;
 using FastReport.Data;
 using System.Net.Mail;
 using TKITDLL;
+using System.Globalization;
 
 namespace TKRESEARCH
 {
@@ -54,7 +55,7 @@ namespace TKRESEARCH
 
 
         #region FUNCTION
-        public void SEARCH_TB_DEV_PASTRYS(string NO,string NAMES)
+        public void SEARCH_TB_DEV_PASTRYS(string NO, string NAMES)
         {
             StringBuilder sbSql = new StringBuilder();
             StringBuilder sbSqlQuery = new StringBuilder();
@@ -77,7 +78,7 @@ namespace TKRESEARCH
                 StringBuilder SQLquery1 = new StringBuilder();
                 StringBuilder SQLquery2 = new StringBuilder();
 
-                if(!string.IsNullOrEmpty(NO))
+                if (!string.IsNullOrEmpty(NO))
                 {
                     SQLquery1.AppendFormat(@" AND CONVERT(NVARCHAR,[DEVCARESTEDATES],112) LIKE '%{0}%'", NO);
                 }
@@ -99,15 +100,15 @@ namespace TKRESEARCH
                 sbSql.AppendFormat(@"  
                                    SELECT 
                                     [NO] AS '編號'
-                                    ,[NAMES] AS '產品名稱 '
-                                    ,[SPECS] AS '規格(g) '
-                                    ,CONVERT(NVARCHAR,[DEVCARESTEDATES],112) AS '開發日期 '
-                                    ,[BEFROECOOKEDSPCS] AS '烤前長*寬*厚(cm) '
-                                    ,[AFERCOOKEDSPCS] AS '烤後長*寬*厚(cm) '
-                                    ,[BEFORECOOKEDWEIGHTS] AS '烤前重量(g) '
-                                    ,[AFTERCOOKEDWEIGHTS] AS '烤後重量(g) '
-                                    ,[COOKEDTEMP] AS '烘焙溫度(℃) '
-                                    ,[COOKEDTIMES] AS '烘焙時間(m) '
+                                    ,[NAMES] AS '產品名稱'
+                                    ,[SPECS] AS '規格(g)'
+                                    ,CONVERT(NVARCHAR,[DEVCARESTEDATES],112) AS '開發日期'
+                                    ,[BEFROECOOKEDSPCS] AS '烤前長*寬*厚(cm)'
+                                    ,[AFERCOOKEDSPCS] AS '烤後長*寬*厚(cm)'
+                                    ,[BEFORECOOKEDWEIGHTS] AS '烤前重量(g)'
+                                    ,[AFTERCOOKEDWEIGHTS] AS '烤後重量(g)'
+                                    ,[COOKEDTEMP] AS '烘焙溫度(℃)'
+                                    ,[COOKEDTIMES] AS '烘焙時間(m)'
                                     ,[TOTALS] AS '總產量(片or公斤)'
                                     ,[THICKNESS] AS '延壓厚度(cm)'
                                     ,[PCTS] AS '配比(水麵:油酥)'
@@ -167,8 +168,32 @@ namespace TKRESEARCH
                 NO = row.Cells["編號"].Value.ToString();
                 SEARCH_TB_DEV_PASTRYS_DETAILS(NO);
 
+                SETTEXT_TAB2();
+
+                textBox2T1.Text = row.Cells["編號"].Value.ToString();
+                textBox2T2.Text = row.Cells["產品名稱"].Value.ToString();
+                textBox2T3.Text = row.Cells["規格(g)"].Value.ToString();
+                textBox2T4.Text = row.Cells["烤前長*寬*厚(cm)"].Value.ToString();
+                textBox2T5.Text = row.Cells["烤後長*寬*厚(cm)"].Value.ToString();
+                textBox2T6.Text = row.Cells["烤前重量(g)"].Value.ToString();
+                textBox2T7.Text = row.Cells["烤後重量(g)"].Value.ToString();
+                textBox2T8.Text = row.Cells["烘焙溫度(℃)"].Value.ToString();
+                textBox2T9.Text = row.Cells["烘焙時間(m)"].Value.ToString();
+                textBox2T10.Text = row.Cells["總產量(片or公斤)"].Value.ToString();
+                textBox2T11.Text = row.Cells["延壓厚度(cm)"].Value.ToString();
+                textBox2T12.Text = row.Cells["配比(水麵:油酥)"].Value.ToString();
+                textBox2T13.Text = row.Cells["工作流程"].Value.ToString();
+
+                //dateTimePicker2.Value= row.Cells["開發日期"].Value.ToString();
+                DateTime dateTime;
+                if (DateTime.TryParseExact(row.Cells["開發日期"].Value.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
+                {
+                    //Console.WriteLine(dateTime.ToString()); // 输出转换后的日期时间
+                    dateTimePicker2.Value = dateTime;
+                }
             }
-            
+
+
         }
 
         public void SEARCH_TB_DEV_PASTRYS_DETAILS(string NO)
@@ -176,7 +201,7 @@ namespace TKRESEARCH
             StringBuilder sbSql = new StringBuilder();
             StringBuilder sbSqlQuery = new StringBuilder();
             SqlDataAdapter adapter = new SqlDataAdapter();
-            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();   
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
             DataSet ds = new DataSet();
 
             try
@@ -211,7 +236,7 @@ namespace TKRESEARCH
                                     WHERE [NO]='{0}'
                                     ORDER BY [KINDS],[CODE]
                                   
-                                    ",NO );
+                                    ", NO);
 
                 adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
 
@@ -245,6 +270,24 @@ namespace TKRESEARCH
             {
 
             }
+        }
+
+        public void SETTEXT_TAB2()
+        {
+            textBox2T1.Text = null;
+            textBox2T2.Text = null;
+            textBox2T3.Text = null;
+            textBox2T4.Text = null;
+            textBox2T5.Text = null;
+            textBox2T6.Text = null;
+            textBox2T7.Text = null;
+            textBox2T8.Text = null;
+            textBox2T9.Text = null;
+            textBox2T10.Text = null;
+            textBox2T11.Text = null;
+            textBox2T12.Text = null;
+            textBox2T13.Text = null;
+
         }
         #endregion
 
