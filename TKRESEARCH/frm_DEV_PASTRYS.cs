@@ -197,6 +197,102 @@ namespace TKRESEARCH
             }
 
         }
+
+        public void SEARCH_TB_DEV_PASTRYS2(string NO)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                StringBuilder SQLquery1 = new StringBuilder();
+                StringBuilder SQLquery2 = new StringBuilder();
+
+                if (!string.IsNullOrEmpty(NO))
+                {
+                    SQLquery1.AppendFormat(@" AND [NO] LIKE '%{0}%'", NO);
+                }
+                else
+                {
+                    SQLquery1.AppendFormat(@" ");
+                }
+              
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                   SELECT 
+                                    [NO] AS '編號'
+                                    ,[NAMES] AS '產品名稱'
+                                    ,[SPECS] AS '規格(g)'
+                                    ,CONVERT(NVARCHAR,[DEVCARESTEDATES],112) AS '開發日期'
+                                    ,[BEFROECOOKEDSPCS] AS '烤前長*寬*厚(cm)'
+                                    ,[AFERCOOKEDSPCS] AS '烤後長*寬*厚(cm)'
+                                    ,[BEFORECOOKEDWEIGHTS] AS '烤前重量(g)'
+                                    ,[AFTERCOOKEDWEIGHTS] AS '烤後重量(g)'
+                                    ,[COOKEDTEMP] AS '烘焙溫度(℃)'
+                                    ,[COOKEDTIMES] AS '烘焙時間(m)'
+                                    ,[TOTALS] AS '總產量(片or公斤)'
+                                    ,[THICKNESS] AS '延壓厚度(cm)'
+                                    ,[PCTS] AS '配比(水麵:油酥)'
+                                    ,[COMMETNS] AS '工作流程'
+                                    ,[ID] 
+                                    FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS]
+                                    WHERE 1=1
+                                    {0}
+                                   
+                                    ORDER BY [NO]
+                                    ", SQLquery1.ToString());
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count == 0)
+                {
+                    dataGridView1.DataSource = null;
+
+                }
+                else
+                {
+                    if (ds.Tables["ds"].Rows.Count >= 1)
+                    {
+                        dataGridView1.DataSource = ds.Tables["ds"];
+                        dataGridView1.AutoResizeColumns();
+                    }
+
+                }
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+
+        }
+
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             NO = "";
@@ -785,6 +881,165 @@ namespace TKRESEARCH
             }
 
         }
+
+        public void UPDATE_TB_DEV_PASTRYS(
+             string NO
+            , string NAMES
+            , string SPECS
+            , string DEVCARESTEDATES
+            , string BEFROECOOKEDSPCS
+            , string AFERCOOKEDSPCS
+            , string BEFORECOOKEDWEIGHTS
+            , string AFTERCOOKEDWEIGHTS
+            , string COOKEDTEMP
+            , string COOKEDTIMES
+            , string TOTALS
+            , string THICKNESS
+            , string PCTS
+            , string COMMETNS
+
+            )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"
+
+                                    UPDATE [TKRESEARCH].[dbo].[TB_DEV_PASTRYS]
+                                    SET
+                                    [NAMES]='{1}'
+                                    ,[SPECS]='{2}'
+                                    ,[DEVCARESTEDATES]='{3}'
+                                    ,[BEFROECOOKEDSPCS]='{4}'
+                                    ,[AFERCOOKEDSPCS]='{5}'
+                                    ,[BEFORECOOKEDWEIGHTS]='{6}'
+                                    ,[AFTERCOOKEDWEIGHTS]='{7}'
+                                    ,[COOKEDTEMP]='{8}'
+                                    ,[COOKEDTIMES]='{9}'
+                                    ,[TOTALS]='{10}'
+                                    ,[THICKNESS]='{11}'
+                                    ,[PCTS]='{12}'
+                                    ,[COMMETNS]='{13}'
+                                    WHERE  [NO]='{0}'                                    
+                                    "
+                                     , NO
+                                    , NAMES
+                                    , SPECS
+                                    , DEVCARESTEDATES
+                                    , BEFROECOOKEDSPCS
+                                    , AFERCOOKEDSPCS
+                                    , BEFORECOOKEDWEIGHTS
+                                    , AFTERCOOKEDWEIGHTS
+                                    , COOKEDTEMP
+                                    , COOKEDTIMES
+                                    , TOTALS
+                                    , THICKNESS
+                                    , PCTS
+                                    , COMMETNS
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
+
+        public void DELETE_TB_DEV_PASTRYS(string NO)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"
+                                    DELETE [TKRESEARCH].[dbo].[TB_DEV_PASTRYS]                                  
+                                    WHERE  [NO]='{0}'                                    
+                                    "
+                                     , NO
+                                
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
         public void SETTEXT_TAB2()
         {
             textBox2T1.Text = null;
@@ -836,19 +1091,48 @@ namespace TKRESEARCH
         }
         private void button3_Click(object sender, EventArgs e)
         {
-            SEARCH_TB_DEV_PASTRYS_DETAILS2(textBox2T1.Text);
+            SEARCH_TB_DEV_PASTRYS2(textBox2T1.Text);
 
-            button1.PerformClick();
+           
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
+            UPDATE_TB_DEV_PASTRYS(
+                 textBox2T1.Text
+                , textBox2T2.Text
+                , textBox2T3.Text
+                , dateTimePicker2.Value.ToString("yyyy/MM/dd")
+                , textBox2T4.Text
+                , textBox2T5.Text
+                , textBox2T6.Text
+                , textBox2T7.Text
+                , textBox2T8.Text
+                , textBox2T9.Text
+                , textBox2T10.Text
+                , textBox2T11.Text
+                , textBox2T12.Text
+                , textBox2T13.Text
+                );
 
+            SEARCH_TB_DEV_PASTRYS2(textBox2T1.Text);
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DELETE_TB_DEV_PASTRYS(textBox2T1.Text);
+                SEARCH_TB_DEV_PASTRYS2(textBox2T1.Text);
 
+                SETTEXT_TAB2();
+
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -870,7 +1154,8 @@ namespace TKRESEARCH
             , textBox2T13.Text
 
             );
-            SEARCH_TB_DEV_PASTRYS_DETAILS2(textBox2T1.Text);
+
+            SEARCH_TB_DEV_PASTRYS2(textBox2T1.Text);
         }
         private void button4_Click(object sender, EventArgs e)
         {
