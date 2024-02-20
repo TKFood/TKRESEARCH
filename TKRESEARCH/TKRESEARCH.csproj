@@ -58,6 +58,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -150,6 +151,12 @@
     <Compile Include="FrmUOFMESSAGES.Designer.cs">
       <DependentUpon>FrmUOFMESSAGES.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frm_DEV_PASTRYS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_DEV_PASTRYS.Designer.cs">
+      <DependentUpon>Frm_DEV_PASTRYS.cs</DependentUpon>
+    </Compile>
     <Compile Include="FRM_TK_UOF_RESEARCH_1002.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -197,6 +204,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmUOFMESSAGES.resx">
       <DependentUpon>FrmUOFMESSAGES.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_DEV_PASTRYS.resx">
+      <DependentUpon>Frm_DEV_PASTRYS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FRM_TK_UOF_RESEARCH_1002.resx">
       <DependentUpon>FRM_TK_UOF_RESEARCH_1002.cs</DependentUpon>
