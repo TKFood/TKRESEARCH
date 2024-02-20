@@ -107,6 +107,7 @@
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.button11 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -434,6 +435,7 @@
             this.tableLayoutPanel3.Controls.Add(this.button6, 6, 6);
             this.tableLayoutPanel3.Controls.Add(this.label13, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.dateTimePicker2, 3, 0);
+            this.tableLayoutPanel3.Controls.Add(this.button11, 4, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -1088,6 +1090,18 @@
             this.comboBox1.Size = new System.Drawing.Size(168, 24);
             this.comboBox1.TabIndex = 74;
             // 
+            // button11
+            // 
+            this.button11.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button11.ForeColor = System.Drawing.Color.Blue;
+            this.button11.Location = new System.Drawing.Point(483, 3);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(114, 34);
+            this.button11.TabIndex = 71;
+            this.button11.Text = "新編號";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
             // Frm_DEV_PASTRYS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
@@ -1216,5 +1230,6 @@
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button button11;
     }
 }
