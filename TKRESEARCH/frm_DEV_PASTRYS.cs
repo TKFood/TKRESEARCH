@@ -431,9 +431,42 @@ namespace TKRESEARCH
             SEARCH_TB_DEV_PASTRYS_DETAILS2(textBox2T1.Text);
         }
 
+        private void button7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void button4_Click(object sender, EventArgs e)
+        {
+            SEARCH_TB_DEV_PASTRYS_DETAILS2(textBox2T1.Text);
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+
+        }
 
         #endregion
 
-       
+
     }
 }

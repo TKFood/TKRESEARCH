@@ -832,6 +832,7 @@
             this.button4.TabIndex = 31;
             this.button4.Text = "查詢";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // label21
             // 
@@ -1023,6 +1024,7 @@
             this.button5.TabIndex = 68;
             this.button5.Text = "新增";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -1034,6 +1036,7 @@
             this.button6.TabIndex = 69;
             this.button6.Text = "刪除";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button7
             // 
@@ -1045,6 +1048,7 @@
             this.button7.TabIndex = 70;
             this.button7.Text = "修改";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button8
             // 
@@ -1056,6 +1060,7 @@
             this.button8.TabIndex = 71;
             this.button8.Text = "新增";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button9
             // 
@@ -1067,6 +1072,7 @@
             this.button9.TabIndex = 73;
             this.button9.Text = "修改";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button10
             // 
@@ -1078,6 +1084,7 @@
             this.button10.TabIndex = 72;
             this.button10.Text = "刪除";
             this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // Frm_DEV_PASTRYS
             // 
