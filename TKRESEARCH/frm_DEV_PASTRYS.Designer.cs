@@ -1003,6 +1003,7 @@
             this.textBox2T40.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox2T40.Location = new System.Drawing.Point(123, 406);
             this.textBox2T40.Name = "textBox2T40";
+            this.textBox2T40.ReadOnly = true;
             this.textBox2T40.Size = new System.Drawing.Size(168, 27);
             this.textBox2T40.TabIndex = 62;
             // 

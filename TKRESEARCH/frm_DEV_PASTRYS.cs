@@ -411,14 +411,103 @@ namespace TKRESEARCH
                 textBox2T36.Text = row.Cells["各自百分比(%)"].Value.ToString();
                 textBox2T37.Text = row.Cells["各自重量(g)"].Value.ToString();
                 textBox2T38.Text = row.Cells["加總後百分比(%)"].Value.ToString();
-                textBox2T39.Text = row.Cells["編號"].Value.ToString();
-                textBox2T40.Text = row.Cells["加總後重量(g)"].Value.ToString();
+                textBox2T39.Text = row.Cells["加總後重量(g)"].Value.ToString();
+                textBox2T40.Text = ID;
 
                 comboBox1.Text= row.Cells["品項"].Value.ToString();
 
 
 
             }
+        }
+
+        public void UPDATE_TB_DEV_PASTRYS_DETAILS(
+            string ID
+            , string NO
+            , string KINDS
+            , string SEQ
+            , string CODE
+            , string SUPPLIERS
+            , string NAMES
+            , string PCTS
+            , string WEIGHTS
+            , string TPCTS
+            , string TWEIGHTS
+            )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                    UPDATE  [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS]
+                                    SET
+                                    NO='{1}'
+                                    ,KINDS='{2}'
+                                    ,SEQ='{3}'
+                                    ,CODE='{4}'
+                                    ,SUPPLIERS='{5}'
+                                    ,NAMES='{6}'
+                                    ,PCTS='{7}'
+                                    ,WEIGHTS='{8}'
+                                    ,TPCTS='{9}'
+                                    ,TWEIGHTS='{10}'
+                                    WHERE ID='{0}'
+                                    ", ID
+                                    , NO
+                                    , KINDS
+                                    , SEQ
+                                    , CODE
+                                    , SUPPLIERS
+                                    , NAMES
+                                    , PCTS
+                                    , WEIGHTS
+                                    , TPCTS
+                                    , TWEIGHTS
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
         }
         public void SETTEXT_TAB2()
         {
@@ -500,7 +589,21 @@ namespace TKRESEARCH
 
         private void button9_Click(object sender, EventArgs e)
         {
+            UPDATE_TB_DEV_PASTRYS_DETAILS(
+            textBox2T40.Text
+            , textBox2T30.Text
+            , comboBox1.Text
+            , textBox2T32.Text
+            , textBox2T33.Text
+            , textBox2T34.Text
+            , textBox2T35.Text
+            , textBox2T36.Text
+            , textBox2T37.Text
+            , textBox2T38.Text
+            , textBox2T39.Text
+            );
 
+            SEARCH_TB_DEV_PASTRYS_DETAILS2(textBox2T1.Text);
         }
 
         private void button10_Click(object sender, EventArgs e)
