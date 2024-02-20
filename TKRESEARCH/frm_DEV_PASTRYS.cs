@@ -668,7 +668,123 @@ namespace TKRESEARCH
 
         }
 
+        public void INSERT_TB_DEV_PASTRYS(
+            string NO
+            , string NAMES
+            , string SPECS
+            , string DEVCARESTEDATES
+            , string BEFROECOOKEDSPCS
+            , string AFERCOOKEDSPCS
+            , string BEFORECOOKEDWEIGHTS
+            , string AFTERCOOKEDWEIGHTS
+            , string COOKEDTEMP
+            , string COOKEDTIMES
+            , string TOTALS
+            , string THICKNESS
+            , string PCTS
+            , string COMMETNS
 
+            )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"                                    
+                                    INSERT INTO [TKRESEARCH].[dbo].[TB_DEV_PASTRYS]
+                                    (
+                                    NO
+                                    ,NAMES
+                                    ,SPECS
+                                    ,DEVCARESTEDATES
+                                    ,BEFROECOOKEDSPCS
+                                    ,AFERCOOKEDSPCS
+                                    ,BEFORECOOKEDWEIGHTS
+                                    ,AFTERCOOKEDWEIGHTS
+                                    ,COOKEDTEMP
+                                    ,COOKEDTIMES
+                                    ,TOTALS
+                                    ,THICKNESS
+                                    ,PCTS
+                                    ,COMMETNS
+                                    )
+                                    VALUES
+                                    (
+                                    '{0}'
+                                    ,'{1}'
+                                    ,'{2}'
+                                    ,'{3}'
+                                    ,'{4}'
+                                    ,'{5}'
+                                    ,'{6}'
+                                    ,'{7}'
+                                    ,'{8}'
+                                    ,'{9}'
+                                    ,'{10}'
+                                    ,'{11}'
+                                    ,'{12}'
+                                    ,'{13}'
+                                    )
+                                    "
+                                     , NO
+                                    , NAMES
+                                    , SPECS
+                                    , DEVCARESTEDATES
+                                    , BEFROECOOKEDSPCS
+                                    , AFERCOOKEDSPCS
+                                    , BEFORECOOKEDWEIGHTS
+                                    , AFTERCOOKEDWEIGHTS
+                                    , COOKEDTEMP
+                                    , COOKEDTIMES
+                                    , TOTALS
+                                    , THICKNESS
+                                    , PCTS
+                                    , COMMETNS
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
         public void SETTEXT_TAB2()
         {
             textBox2T1.Text = null;
@@ -721,6 +837,8 @@ namespace TKRESEARCH
         private void button3_Click(object sender, EventArgs e)
         {
             SEARCH_TB_DEV_PASTRYS_DETAILS2(textBox2T1.Text);
+
+            button1.PerformClick();
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -735,7 +853,24 @@ namespace TKRESEARCH
 
         private void button5_Click(object sender, EventArgs e)
         {
+            INSERT_TB_DEV_PASTRYS(
+            textBox2T1.Text
+            , textBox2T2.Text
+            , textBox2T3.Text
+            , dateTimePicker2.Value.ToString("yyyy/MM/dd")
+            , textBox2T4.Text
+            , textBox2T5.Text
+            , textBox2T6.Text
+            , textBox2T7.Text
+            , textBox2T8.Text
+            , textBox2T9.Text
+            , textBox2T10.Text
+            , textBox2T11.Text
+            , textBox2T12.Text
+            , textBox2T13.Text
 
+            );
+            SEARCH_TB_DEV_PASTRYS_DETAILS2(textBox2T1.Text);
         }
         private void button4_Click(object sender, EventArgs e)
         {
