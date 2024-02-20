@@ -409,8 +409,6 @@
             this.tableLayoutPanel3.Controls.Add(this.textBox2T2, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.label7, 3, 1);
             this.tableLayoutPanel3.Controls.Add(this.textBox2T3, 4, 1);
-            this.tableLayoutPanel3.Controls.Add(this.dateTimePicker2, 7, 1);
-            this.tableLayoutPanel3.Controls.Add(this.label13, 6, 1);
             this.tableLayoutPanel3.Controls.Add(this.label15, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.label17, 2, 2);
             this.tableLayoutPanel3.Controls.Add(this.label8, 4, 2);
@@ -434,6 +432,8 @@
             this.tableLayoutPanel3.Controls.Add(this.button5, 6, 4);
             this.tableLayoutPanel3.Controls.Add(this.button7, 6, 5);
             this.tableLayoutPanel3.Controls.Add(this.button6, 6, 6);
+            this.tableLayoutPanel3.Controls.Add(this.label13, 2, 0);
+            this.tableLayoutPanel3.Controls.Add(this.dateTimePicker2, 3, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -520,7 +520,7 @@
             this.dateTimePicker2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dateTimePicker2.CustomFormat = "yyyy/MM/dd";
             this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker2.Location = new System.Drawing.Point(843, 46);
+            this.dateTimePicker2.Location = new System.Drawing.Point(363, 6);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(114, 27);
             this.dateTimePicker2.TabIndex = 40;
@@ -529,7 +529,7 @@
             // 
             this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(723, 52);
+            this.label13.Location = new System.Drawing.Point(243, 12);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(114, 16);
             this.label13.TabIndex = 51;
