@@ -1158,6 +1158,109 @@ namespace TKRESEARCH
         
 
         }
+        /// <summary>
+        ///  //計算百分比
+        /// </summary>
+        /// <param name="NO"></param>
+        /// <param name="KINDS"></param>
+        public void CAL_TB_DEV_PASTRYS_DETAILS_PCTS(string NO,string KINDS)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"
+                                   WITH CTE AS (
+                                        SELECT 
+                                            [ID],
+                                            [NO],
+                                            [KINDS],
+                                            [SEQ],
+                                            [CODE],
+                                            [SUPPLIERS],
+                                            [NAMES],
+                                            [PCTS],
+                                            [WEIGHTS],
+                                            [TPCTS],
+                                            [TWEIGHTS],
+                                            SUM([WEIGHTS]) OVER (PARTITION BY [NO], [KINDS]) AS SUMWEIGHTS,
+                                            CONVERT(decimal(16,4),([WEIGHTS]/SUM([WEIGHTS]) OVER (PARTITION BY [NO], [KINDS]))) AS CALPCTS,
+                                            MAX([SEQ]) OVER (PARTITION BY [NO], [KINDS]) AS MAXSEQ
+                                        FROM 
+                                            [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS]
+                                        WHERE 
+                                            [NO] = '{0}' AND [KINDS] = '{1}'
+                                    ) 
+
+                                    SELECT 
+                                        *,
+                                        (SELECT SUM(CALPCTS) FROM CTE CTE2 WHERE CTE2.SEQ<CTE.SEQ) AS SUMPERPCT,
+                                        CONVERT(decimal(16,4),(CASE WHEN CTE.SEQ<>MAXSEQ THEN CALPCTS ELSE 1-(SELECT SUM(CALPCTS) FROM CTE CTE2 WHERE CTE2.SEQ<CTE.SEQ) END)) AS FINALPCTS
+                                    INTO 
+                                        #TEMP_UPDATED_PASTRYS_DETAILS  -- 将结果插入临时表中
+                                    FROM  
+                                        CTE;
+
+                                    -- 使用临时表来更新原始表
+                                    UPDATE 
+                                        TKRESEARCH.dbo.TB_DEV_PASTRYS_DETAILS
+                                    SET 
+                                        TB_DEV_PASTRYS_DETAILS.PCTS = CTE.FINALPCTS
+                                    FROM 
+                                        #TEMP_UPDATED_PASTRYS_DETAILS CTE
+                                    WHERE 
+                                        CTE.ID = TB_DEV_PASTRYS_DETAILS.ID;
+
+                                    -- 删除临时表
+                                    DROP TABLE #TEMP_UPDATED_PASTRYS_DETAILS;
+                              
+                                    "
+                                     , NO, KINDS
+
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
         #endregion
 
         #region BUTTON
@@ -1176,8 +1279,8 @@ namespace TKRESEARCH
         private void button3_Click(object sender, EventArgs e)
         {
             SEARCH_TB_DEV_PASTRYS2(textBox2T1.Text);
+            SEARCH_TB_DEV_PASTRYS_DETAILS2(textBox2T1.Text);
 
-           
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -1261,7 +1364,8 @@ namespace TKRESEARCH
             , textBox2T38.Text
             , textBox2T39.Text
             );
-
+           
+            CAL_TB_DEV_PASTRYS_DETAILS_PCTS(textBox2T30.Text,comboBox1.Text);
             SEARCH_TB_DEV_PASTRYS_DETAILS2(textBox2T1.Text);
         }
 
@@ -1281,6 +1385,7 @@ namespace TKRESEARCH
             , textBox2T39.Text
             );
 
+            CAL_TB_DEV_PASTRYS_DETAILS_PCTS(textBox2T30.Text, comboBox1.Text);
             SEARCH_TB_DEV_PASTRYS_DETAILS2(textBox2T1.Text);
         }
 
@@ -1290,6 +1395,7 @@ namespace TKRESEARCH
             if (dialogResult == DialogResult.Yes)
             {
                 DELETE_TB_DEV_PASTRYS_DETAILS(textBox2T40.Text);
+                CAL_TB_DEV_PASTRYS_DETAILS_PCTS(textBox2T30.Text, comboBox1.Text);
                 SEARCH_TB_DEV_PASTRYS_DETAILS2(textBox2T1.Text);
 
             }
