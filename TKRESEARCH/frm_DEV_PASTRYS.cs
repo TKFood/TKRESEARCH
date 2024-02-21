@@ -24,6 +24,7 @@ using FastReport.Data;
 using System.Net.Mail;
 using TKITDLL;
 using System.Globalization;
+using System.Collections;
 
 namespace TKRESEARCH
 {
@@ -1158,13 +1159,14 @@ namespace TKRESEARCH
         
 
         }
-        /// <summary>
-        ///  //計算百分比
-        /// </summary>
-        /// <param name="NO"></param>
-        /// <param name="KINDS"></param>
-        public void CAL_TB_DEV_PASTRYS_DETAILS_PCTS(string NO,string KINDS)
+        public DataTable FIND_NO_KINDS(string NO)
         {
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlDataAdapter adapter1 = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+            DataSet ds1 = new DataSet();
+
             try
             {
                 //20210902密
@@ -1179,13 +1181,77 @@ namespace TKRESEARCH
                 sqlConn = new SqlConnection(sqlsb.ConnectionString);
 
 
-                sqlConn.Close();
-                sqlConn.Open();
-                tran = sqlConn.BeginTransaction();
-
                 sbSql.Clear();
+                sbSqlQuery.Clear();
+                ds1.Clear();
 
-                sbSql.AppendFormat(@"
+
+                sbSql.AppendFormat(@" 
+                                      SELECT [NO],[KINDS]
+                                        FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS]
+                                        WHERE [NO] = '24-02-001' 
+                                        GROUP BY [NO],[KINDS]
+                                        ", NO);
+
+                adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+                sqlConn.Open();
+                ds1.Clear();
+                adapter1.Fill(ds1, "ds1");
+                sqlConn.Close();
+
+
+                if (ds1.Tables["ds1"].Rows.Count >= 1)
+                {
+                    return ds1.Tables["ds1"];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+        /// <summary>
+        ///  //計算百分比
+        /// </summary>
+        /// <param name="NO"></param>
+        /// <param name="KINDS"></param>
+        public void CAL_TB_DEV_PASTRYS_DETAILS_PCTS(string NO)
+        {
+            DataTable DT=FIND_NO_KINDS(NO);
+
+            foreach (DataRow DR in DT.Rows)
+            {
+                try
+                {
+                    //20210902密
+                    Class1 TKID = new Class1();//用new 建立類別實體
+                    SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                    //資料庫使用者密碼解密
+                    sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                    sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                    String connectionString;
+                    sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                    sqlConn.Close();
+                    sqlConn.Open();
+                    tran = sqlConn.BeginTransaction();
+
+                    sbSql.Clear();
+
+                    sbSql.AppendFormat(@"
                                    WITH CTE AS (
                                         SELECT 
                                             [ID],
@@ -1231,35 +1297,37 @@ namespace TKRESEARCH
                                     DROP TABLE #TEMP_UPDATED_PASTRYS_DETAILS;
                               
                                     "
-                                     , NO, KINDS
+                                         , DR["NO"].ToString(), DR["KINDS"].ToString()
 
-                                    );
+                                        );
 
-                cmd.Connection = sqlConn;
-                cmd.CommandTimeout = 60;
-                cmd.CommandText = sbSql.ToString();
-                cmd.Transaction = tran;
-                result = cmd.ExecuteNonQuery();
+                    cmd.Connection = sqlConn;
+                    cmd.CommandTimeout = 60;
+                    cmd.CommandText = sbSql.ToString();
+                    cmd.Transaction = tran;
+                    result = cmd.ExecuteNonQuery();
 
-                if (result == 0)
-                {
-                    tran.Rollback();    //交易取消
+                    if (result == 0)
+                    {
+                        tran.Rollback();    //交易取消
+                    }
+                    else
+                    {
+                        tran.Commit();      //執行交易  
+                    }
+
                 }
-                else
+                catch
                 {
-                    tran.Commit();      //執行交易  
+
                 }
 
+                finally
+                {
+                    sqlConn.Close();
+                }
             }
-            catch
-            {
-
-            }
-
-            finally
-            {
-                sqlConn.Close();
-            }
+            
         }
         #endregion
 
@@ -1365,7 +1433,7 @@ namespace TKRESEARCH
             , textBox2T39.Text
             );
            
-            CAL_TB_DEV_PASTRYS_DETAILS_PCTS(textBox2T30.Text,comboBox1.Text);
+            CAL_TB_DEV_PASTRYS_DETAILS_PCTS(textBox2T30.Text);
             SEARCH_TB_DEV_PASTRYS_DETAILS2(textBox2T1.Text);
         }
 
@@ -1385,7 +1453,7 @@ namespace TKRESEARCH
             , textBox2T39.Text
             );
 
-            CAL_TB_DEV_PASTRYS_DETAILS_PCTS(textBox2T30.Text, comboBox1.Text);
+            CAL_TB_DEV_PASTRYS_DETAILS_PCTS(textBox2T30.Text);
             SEARCH_TB_DEV_PASTRYS_DETAILS2(textBox2T1.Text);
         }
 
@@ -1395,7 +1463,7 @@ namespace TKRESEARCH
             if (dialogResult == DialogResult.Yes)
             {
                 DELETE_TB_DEV_PASTRYS_DETAILS(textBox2T40.Text);
-                CAL_TB_DEV_PASTRYS_DETAILS_PCTS(textBox2T30.Text, comboBox1.Text);
+                CAL_TB_DEV_PASTRYS_DETAILS_PCTS(textBox2T30.Text);
                 SEARCH_TB_DEV_PASTRYS_DETAILS2(textBox2T1.Text);
 
             }
