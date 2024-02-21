@@ -1370,13 +1370,9 @@ namespace TKRESEARCH
                                 }
                             }
                         }
-
                     }
-
                 }
-            }
-
-            
+            }            
         }
 
         public DataTable FIND_TB_DEV_PASTRYS_BASES(string NO)
