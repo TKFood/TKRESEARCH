@@ -110,6 +110,7 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.button12 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -839,6 +840,7 @@
             this.tableLayoutPanel4.Controls.Add(this.button8, 3, 6);
             this.tableLayoutPanel4.Controls.Add(this.button9, 3, 7);
             this.tableLayoutPanel4.Controls.Add(this.comboBox1, 1, 1);
+            this.tableLayoutPanel4.Controls.Add(this.button12, 3, 1);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -1129,6 +1131,18 @@
             this.tableLayoutPanel5.Size = new System.Drawing.Size(104, 34);
             this.tableLayoutPanel5.TabIndex = 73;
             // 
+            // button12
+            // 
+            this.button12.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button12.ForeColor = System.Drawing.Color.Blue;
+            this.button12.Location = new System.Drawing.Point(363, 43);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(114, 34);
+            this.button12.TabIndex = 75;
+            this.button12.Text = "計算總桶用量";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
             // Frm_DEV_PASTRYS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
@@ -1262,5 +1276,6 @@
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.Button button12;
     }
 }

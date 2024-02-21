@@ -1189,7 +1189,7 @@ namespace TKRESEARCH
                 sbSql.AppendFormat(@" 
                                       SELECT [NO],[KINDS]
                                         FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS]
-                                        WHERE [NO] = '24-02-001' 
+                                        WHERE [NO] = '{0}' 
                                         GROUP BY [NO],[KINDS]
                                         ", NO);
 
@@ -1329,6 +1329,391 @@ namespace TKRESEARCH
             }
             
         }
+
+        public void CAL_MOC_USE(string NO)
+        {
+            string NAMES = "";
+            string BASESNUM = "0";
+            string MULTIS = "0";
+            string PASTRYSPCTS = "0";
+            string WATERSWEIGHTS = "0";
+
+            //找出要調的 油酥，基礎 麵粉
+            DataTable DT1 = FIND_TB_DEV_PASTRYS_BASES(NO);
+            if(DT1!= null && DT1.Rows.Count>=1)
+            {
+                foreach(DataRow DR in DT1.Rows)
+                {
+                    NAMES = DR["NAMES"].ToString();
+                    BASESNUM = DR["BASESNUM"].ToString();
+
+                    //在 油酥，找出 麵粉 的用量，用66計算出的倍數
+                    DataTable DT2 = FIND_TB_DEV_PASTRYS_DETAILS_BASES(NO, NAMES, BASESNUM);
+                    if(DT2!=null && DT2.Rows.Count>=1)
+                    {
+                        MULTIS = DT2.Rows[0]["MULTIS"].ToString();
+                        //在 油酥，用倍數計算除 麵粉 以外的用量，並更新總百分比
+                        if (Convert.ToDecimal(MULTIS) > 0)
+                        {
+                            //用 油酥 的總重，用水麵、油酥的佔比，再算出桶的總水麵用量是多少
+                            UPDATE_TB_DEV_PASTRYS_DETAILS_TWEIGHTS(NO, MULTIS, NAMES, BASESNUM);
+                            //用總水麵用量是多少乘各水麵的佔比，算出桶的用量，並更新總百分比
+                            DataTable DT3 = FIND_TB_DEV_PASTRYS_PCTS(NO);
+                            if(DT3!=null && DT3.Rows.Count>=1)
+                            {
+                                PASTRYSPCTS= DT3.Rows[0]["PCTS"].ToString();
+                                WATERSWEIGHTS = DT3.Rows[0]["WATERSWEIGHTS"].ToString();
+
+                                if (Convert.ToDecimal(WATERSWEIGHTS) >0)
+                                {
+                                    UPDATE_TB_DEV_PASTRYS_DETAILS_TWEIGHTS_WATERS(NO,NAMES, WATERSWEIGHTS);
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+            }
+
+            
+        }
+
+        public DataTable FIND_TB_DEV_PASTRYS_BASES(string NO)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlDataAdapter adapter1 = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+            DataSet ds1 = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sbSql.Clear();
+                sbSqlQuery.Clear();
+                ds1.Clear();
+
+
+                sbSql.AppendFormat(@" 
+                                      SELECT 
+                                    [TB_DEV_PASTRYS_BASES].[NAMES],[BASESNUM]
+                                    FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_BASES],[TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS]
+                                    WHERE [TB_DEV_PASTRYS_BASES].NAMES=[TB_DEV_PASTRYS_DETAILS].NAMES
+                                    AND [TB_DEV_PASTRYS_DETAILS].NO='{0}'
+                                        ", NO);
+
+                adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+                sqlConn.Open();
+                ds1.Clear();
+                adapter1.Fill(ds1, "ds1");
+                sqlConn.Close();
+
+
+                if (ds1.Tables["ds1"].Rows.Count >= 1)
+                {
+                    return ds1.Tables["ds1"];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
+        public DataTable FIND_TB_DEV_PASTRYS_DETAILS_BASES(string NO,string NAMES,string BASESNUM)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlDataAdapter adapter1 = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+            DataSet ds1 = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sbSql.Clear();
+                sbSqlQuery.Clear();
+                ds1.Clear();
+
+
+                sbSql.AppendFormat(@" 
+                                     SELECT 
+                                    [ID]
+                                    ,[NO]
+                                    ,[KINDS]
+                                    ,[SEQ]
+                                    ,[CODE]
+                                    ,[SUPPLIERS]
+                                    ,[NAMES]
+                                    ,[PCTS]
+                                    ,[WEIGHTS]
+                                    ,[TPCTS]
+                                    ,[TWEIGHTS]
+                                    ,CONVERT(decimal(16,4),{2}/[WEIGHTS]) AS 'MULTIS'
+                                    FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS]
+                                    WHERE [NO]='{0}' AND [KINDS]='油酥' AND [NAMES]='{1}'
+                                    AND EXISTS (SELECT * FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS] WHERE [NAMES]='{1}')
+                                        ", NO, NAMES, BASESNUM);
+
+                adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+                sqlConn.Open();
+                ds1.Clear();
+                adapter1.Fill(ds1, "ds1");
+                sqlConn.Close();
+
+
+                if (ds1.Tables["ds1"].Rows.Count >= 1)
+                {
+                    return ds1.Tables["ds1"];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
+        public void UPDATE_TB_DEV_PASTRYS_DETAILS_TWEIGHTS(string NO,string MULTIS ,string NAMES,string BASBASESNUM)
+        {
+            DataTable DT = FIND_NO_KINDS(NO);
+
+            foreach (DataRow DR in DT.Rows)
+            {
+                try
+                {
+                    //20210902密
+                    Class1 TKID = new Class1();//用new 建立類別實體
+                    SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                    //資料庫使用者密碼解密
+                    sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                    sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                    String connectionString;
+                    sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                    sqlConn.Close();
+                    sqlConn.Open();
+                    tran = sqlConn.BeginTransaction();
+
+                    sbSql.Clear();
+
+                    sbSql.AppendFormat(@"
+                                        UPDATE [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS]
+                                        SET [TWEIGHTS]=[WEIGHTS]*{2},[TPCTS]=[PCTS]
+                                        WHERE [NO]='{0}' AND [KINDS]='油酥' AND  [NAMES]<>'{1}'
+                                        AND EXISTS (SELECT * FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS] WHERE [NAMES]='{1}')
+
+                                        UPDATE [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS]
+                                        SET [TWEIGHTS]={3},[TPCTS]=[PCTS]
+                                        WHERE [NO]='{0}' AND [KINDS]='油酥' AND  [NAMES]='{1}'
+                                        ", NO, NAMES, MULTIS, BASBASESNUM
+
+
+                                        );
+
+                    cmd.Connection = sqlConn;
+                    cmd.CommandTimeout = 60;
+                    cmd.CommandText = sbSql.ToString();
+                    cmd.Transaction = tran;
+                    result = cmd.ExecuteNonQuery();
+
+                    if (result == 0)
+                    {
+                        tran.Rollback();    //交易取消
+                    }
+                    else
+                    {
+                        tran.Commit();      //執行交易  
+                    }
+
+                }
+                catch
+                {
+
+                }
+
+                finally
+                {
+                    sqlConn.Close();
+                }
+            }
+
+        }
+
+        public DataTable FIND_TB_DEV_PASTRYS_PCTS(string NO)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlDataAdapter adapter1 = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+            DataSet ds1 = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sbSql.Clear();
+                sbSqlQuery.Clear();
+                ds1.Clear();
+
+
+                sbSql.AppendFormat(@" 
+                                    SELECT *
+                                    ,(CASE WHEN [PCTS]>0 AND TWEIGHTS>0 THEN CONVERT(DECIMAL(16,4),TWEIGHTS/[PCTS]) ELSE 0 END ) AS 'WATERSWEIGHTS'
+                                    FROM 
+                                    (
+                                    SELECT 
+                                    [ID]
+                                    ,[NO]
+                                    ,[PCTS]
+                                    ,(SELECT SUM([TWEIGHTS]) FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS] WHERE [TB_DEV_PASTRYS_DETAILS].NO=[TB_DEV_PASTRYS].NO AND [TB_DEV_PASTRYS_DETAILS].[KINDS]='油酥') AS 'TWEIGHTS'
+                                    FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS]
+                                    WHERE [NO]='{0}'
+                                    ) AS TEMP
+                                        ", NO);
+
+                adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+                sqlConn.Open();
+                ds1.Clear();
+                adapter1.Fill(ds1, "ds1");
+                sqlConn.Close();
+
+
+                if (ds1.Tables["ds1"].Rows.Count >= 1)
+                {
+                    return ds1.Tables["ds1"];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+        public void UPDATE_TB_DEV_PASTRYS_DETAILS_TWEIGHTS_WATERS(string NO,string NAMES, string WATERSWEIGHTS)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"
+                                        UPDATE [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS]
+                                        SET [TWEIGHTS]=[PCTS]*{2},[TPCTS]=[PCTS]
+                                        WHERE [NO]='{0}' AND [KINDS]='水麵' 
+                                        AND EXISTS (SELECT * FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS] WHERE [NAMES]='{1}')
+                                        ", NO, NAMES, WATERSWEIGHTS
+
+
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
+
         #endregion
 
         #region BUTTON
@@ -1480,6 +1865,11 @@ namespace TKRESEARCH
             textBox2T1.Text = NO;
         }
 
+        private void button12_Click(object sender, EventArgs e)
+        {
+            CAL_MOC_USE(textBox2T1.Text);
+            SEARCH_TB_DEV_PASTRYS_DETAILS2(textBox2T1.Text);
+        }
         #endregion
 
 
