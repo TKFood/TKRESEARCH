@@ -1715,6 +1715,14 @@ namespace TKRESEARCH
 
         }
 
+        public void UPDATE_TB_DEV_PASTRYS_BASES_MB001(string NO,string MB001)
+        {
+
+        }
+        public void UPDATE_TB_DEV_PASTRYS_DETAILS_MB001(string ID, string MB001)
+        {
+
+        }
         #endregion
 
         #region BUTTON
@@ -1873,11 +1881,27 @@ namespace TKRESEARCH
         }
         private void button13_Click(object sender, EventArgs e)
         {
-
+            if (!string.IsNullOrEmpty(textBox2T14.Text.Trim()))
+            {
+                UPDATE_TB_DEV_PASTRYS_BASES_MB001(textBox2T1.Text.Trim(), textBox2T14.Text.Trim());
+            }  
+            else
+            {
+                MessageBox.Show("未填寫BOM品號");
+            }            
+        
         }
 
         private void button14_Click(object sender, EventArgs e)
         {
+            if(!string.IsNullOrEmpty(textBox2T41.Text.Trim()))
+            {
+                UPDATE_TB_DEV_PASTRYS_DETAILS_MB001(textBox2T40.Text.Trim(), textBox2T41.Text.Trim());
+            }
+            else
+            {
+                MessageBox.Show("未填寫BOM品號");
+            }
 
         }
         private void button15_Click(object sender, EventArgs e)
