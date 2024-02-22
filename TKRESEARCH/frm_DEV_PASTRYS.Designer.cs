@@ -112,7 +112,7 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button12 = new System.Windows.Forms.Button();
             this.label29 = new System.Windows.Forms.Label();
-            this.textBox2t14 = new System.Windows.Forms.TextBox();
+            this.textBox2T14 = new System.Windows.Forms.TextBox();
             this.label30 = new System.Windows.Forms.Label();
             this.textBox2T41 = new System.Windows.Forms.TextBox();
             this.button13 = new System.Windows.Forms.Button();
@@ -414,7 +414,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 108F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 145F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.tableLayoutPanel3.Controls.Add(this.textBox2t14, 7, 1);
+            this.tableLayoutPanel3.Controls.Add(this.textBox2T14, 7, 1);
             this.tableLayoutPanel3.Controls.Add(this.label2, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.label4, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.label6, 0, 4);
@@ -1168,13 +1168,13 @@
             this.label29.TabIndex = 74;
             this.label29.Text = "BOM品號";
             // 
-            // textBox2t14
+            // textBox2T14
             // 
-            this.textBox2t14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2t14.Location = new System.Drawing.Point(830, 46);
-            this.textBox2t14.Name = "textBox2t14";
-            this.textBox2t14.Size = new System.Drawing.Size(102, 27);
-            this.textBox2t14.TabIndex = 73;
+            this.textBox2T14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox2T14.Location = new System.Drawing.Point(830, 46);
+            this.textBox2T14.Name = "textBox2T14";
+            this.textBox2T14.Size = new System.Drawing.Size(102, 27);
+            this.textBox2T14.TabIndex = 73;
             // 
             // label30
             // 
@@ -1365,7 +1365,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.TextBox textBox2t14;
+        private System.Windows.Forms.TextBox textBox2T14;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.TextBox textBox2T41;
         private System.Windows.Forms.Button button13;

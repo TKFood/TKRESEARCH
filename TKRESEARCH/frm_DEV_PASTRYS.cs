@@ -155,6 +155,7 @@ namespace TKRESEARCH
                                     ,[THICKNESS] AS '延壓厚度(cm)'
                                     ,[PCTS] AS '配比(水麵:油酥)'
                                     ,[COMMETNS] AS '工作流程'
+                                    ,[MB001] AS '品號'
                                     ,[ID] 
                                     FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS]
                                     WHERE 1=1
@@ -321,6 +322,7 @@ namespace TKRESEARCH
                 textBox2T11.Text = row.Cells["延壓厚度(cm)"].Value.ToString();
                 textBox2T12.Text = row.Cells["配比(水麵:油酥)"].Value.ToString();
                 textBox2T13.Text = row.Cells["工作流程"].Value.ToString();
+                textBox2T14.Text = row.Cells["品號"].Value.ToString();
 
                 //dateTimePicker2.Value= row.Cells["開發日期"].Value.ToString();
                 DateTime dateTime;
@@ -371,6 +373,7 @@ namespace TKRESEARCH
                                     ,[WEIGHTS] AS '各自重量(g)'
                                     ,[TPCTS] AS '加總後百分比(%)'
                                     ,[TWEIGHTS] AS '加總後重量(g)'
+                                    ,[MB001] AS '品號'
                                     , [ID]
                                     FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS]
                                     WHERE [NO]='{0}'
@@ -447,6 +450,7 @@ namespace TKRESEARCH
                                     ,[WEIGHTS] AS '各自重量(g)'
                                     ,[TPCTS] AS '加總後百分比(%)'
                                     ,[TWEIGHTS] AS '加總後重量(g)'
+                                    ,[MB001] AS '品號'
                                     , [ID]
                                     FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS]
                                     WHERE [NO]='{0}'
@@ -510,6 +514,7 @@ namespace TKRESEARCH
                 textBox2T38.Text = row.Cells["加總後百分比(%)"].Value.ToString();
                 textBox2T39.Text = row.Cells["加總後重量(g)"].Value.ToString();
                 textBox2T40.Text = ID;
+                textBox2T41.Text = row.Cells["品號"].Value.ToString();
 
                 comboBox1.Text= row.Cells["品項"].Value.ToString();
 
