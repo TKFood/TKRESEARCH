@@ -1831,6 +1831,82 @@ namespace TKRESEARCH
                 sqlConn.Close();
             }
         }
+
+
+        public DataTable CHECK_MB001(string NO)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlDataAdapter adapter1 = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+            DataSet ds1 = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sbSql.Clear();
+                sbSqlQuery.Clear();
+                ds1.Clear();
+
+
+                sbSql.AppendFormat(@" 
+                                    SELECT *
+                                    FROM 
+                                    (
+                                    SELECT 
+                                    [ID]
+                                    ,[NO]
+                                    ,[MB001]
+                                    FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS]
+                                    WHERE NO='{0}' AND ISNULL([MB001],'')=''
+                                    UNION ALL
+                                    SELECT 
+                                    [ID]
+                                    ,[NO]
+                                    ,[MB001]
+                                    FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS]
+                                    WHERE NO='{0}' AND ISNULL([MB001],'')=''
+                                    ) AS TEMP
+                                        ", NO);
+
+                adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+                sqlConn.Open();
+                ds1.Clear();
+                adapter1.Fill(ds1, "ds1");
+                sqlConn.Close();
+
+
+                if (ds1.Tables["ds1"].Rows.Count >= 1)
+                {
+                    return ds1.Tables["ds1"];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
         #endregion
 
         #region BUTTON
@@ -2017,7 +2093,18 @@ namespace TKRESEARCH
         }
         private void button15_Click(object sender, EventArgs e)
         {
+            //CHECK_MB001
+            string NO = textBox2T1.Text.Trim();
+            DataTable DT =CHECK_MB001(NO);
 
+            if(DT!=null && DT.Rows.Count>=1)
+            {
+                MessageBox.Show(NO+Environment.NewLine+"有品號未填寫");
+            }
+            else
+            {
+
+            }
         }
         #endregion
 
