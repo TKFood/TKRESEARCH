@@ -1866,6 +1866,19 @@ namespace TKRESEARCH
             CAL_MOC_USE(textBox2T1.Text);
             SEARCH_TB_DEV_PASTRYS_DETAILS2(textBox2T1.Text);
         }
+        private void button13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void button15_Click(object sender, EventArgs e)
+        {
+
+        }
         #endregion
 
 
