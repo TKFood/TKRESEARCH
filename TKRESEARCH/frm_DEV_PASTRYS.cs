@@ -1908,7 +1908,7 @@ namespace TKRESEARCH
             }
         }
 
-        public void ADD_BOMMJ_BOMMJK(string NO)
+        public void ADD_BOMMJ_BOMMK(string NO)
         {
             try
             {
@@ -2161,7 +2161,7 @@ namespace TKRESEARCH
             }
             else
             {
-
+                ADD_BOMMJ_BOMMK(NO);
             }
         }
         #endregion
