@@ -748,6 +748,7 @@
             this.button11.TabIndex = 71;
             this.button11.Text = "新編號";
             this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // label29
             // 
