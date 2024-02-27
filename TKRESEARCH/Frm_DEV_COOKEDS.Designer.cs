@@ -107,7 +107,6 @@
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
             this.label30 = new System.Windows.Forms.Label();
             this.button14 = new System.Windows.Forms.Button();
             this.textBox2T41 = new System.Windows.Forms.TextBox();
@@ -851,7 +850,6 @@
             this.tableLayoutPanel4.Controls.Add(this.button8, 3, 1);
             this.tableLayoutPanel4.Controls.Add(this.button9, 3, 2);
             this.tableLayoutPanel4.Controls.Add(this.button10, 3, 3);
-            this.tableLayoutPanel4.Controls.Add(this.button12, 3, 4);
             this.tableLayoutPanel4.Controls.Add(this.label30, 2, 5);
             this.tableLayoutPanel4.Controls.Add(this.button14, 4, 5);
             this.tableLayoutPanel4.Controls.Add(this.textBox2T41, 3, 5);
@@ -1074,6 +1072,7 @@
             this.button4.TabIndex = 31;
             this.button4.Text = "查詢";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button8
             // 
@@ -1085,6 +1084,7 @@
             this.button8.TabIndex = 71;
             this.button8.Text = "新增";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button9
             // 
@@ -1096,6 +1096,7 @@
             this.button9.TabIndex = 73;
             this.button9.Text = "修改";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button10
             // 
@@ -1107,17 +1108,7 @@
             this.button10.TabIndex = 72;
             this.button10.Text = "刪除";
             this.button10.UseVisualStyleBackColor = true;
-            // 
-            // button12
-            // 
-            this.button12.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button12.ForeColor = System.Drawing.Color.Blue;
-            this.button12.Location = new System.Drawing.Point(365, 163);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(113, 34);
-            this.button12.TabIndex = 75;
-            this.button12.Text = "計算總桶用量";
-            this.button12.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // label30
             // 
@@ -1321,7 +1312,6 @@
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.TextBox textBox2T41;

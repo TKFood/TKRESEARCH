@@ -1234,29 +1234,31 @@ namespace TKRESEARCH
         {
             DataTable DT=FIND_NO_KINDS(NO);
 
-            foreach (DataRow DR in DT.Rows)
+            if (DT != null && DT.Rows.Count >= 1)
             {
-                try
+                foreach (DataRow DR in DT.Rows)
                 {
-                    //20210902密
-                    Class1 TKID = new Class1();//用new 建立類別實體
-                    SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+                    try
+                    {
+                        //20210902密
+                        Class1 TKID = new Class1();//用new 建立類別實體
+                        SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
 
-                    //資料庫使用者密碼解密
-                    sqlsb.Password = TKID.Decryption(sqlsb.Password);
-                    sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+                        //資料庫使用者密碼解密
+                        sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                        sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
 
-                    String connectionString;
-                    sqlConn = new SqlConnection(sqlsb.ConnectionString);
+                        String connectionString;
+                        sqlConn = new SqlConnection(sqlsb.ConnectionString);
 
 
-                    sqlConn.Close();
-                    sqlConn.Open();
-                    tran = sqlConn.BeginTransaction();
+                        sqlConn.Close();
+                        sqlConn.Open();
+                        tran = sqlConn.BeginTransaction();
 
-                    sbSql.Clear();
+                        sbSql.Clear();
 
-                    sbSql.AppendFormat(@"
+                        sbSql.AppendFormat(@"
                                    WITH CTE AS (
                                         SELECT 
                                             [ID],
@@ -1302,36 +1304,38 @@ namespace TKRESEARCH
                                     DROP TABLE #TEMP_UPDATED_PASTRYS_DETAILS;
                               
                                     "
-                                         , DR["NO"].ToString(), DR["KINDS"].ToString()
+                                             , DR["NO"].ToString(), DR["KINDS"].ToString()
 
-                                        );
+                                            );
 
-                    cmd.Connection = sqlConn;
-                    cmd.CommandTimeout = 60;
-                    cmd.CommandText = sbSql.ToString();
-                    cmd.Transaction = tran;
-                    result = cmd.ExecuteNonQuery();
+                        cmd.Connection = sqlConn;
+                        cmd.CommandTimeout = 60;
+                        cmd.CommandText = sbSql.ToString();
+                        cmd.Transaction = tran;
+                        result = cmd.ExecuteNonQuery();
 
-                    if (result == 0)
-                    {
-                        tran.Rollback();    //交易取消
+                        if (result == 0)
+                        {
+                            tran.Rollback();    //交易取消
+                        }
+                        else
+                        {
+                            tran.Commit();      //執行交易  
+                        }
+
                     }
-                    else
+                    catch
                     {
-                        tran.Commit();      //執行交易  
+
                     }
 
-                }
-                catch
-                {
-
-                }
-
-                finally
-                {
-                    sqlConn.Close();
+                    finally
+                    {
+                        sqlConn.Close();
+                    }
                 }
             }
+                
             
         }
 
