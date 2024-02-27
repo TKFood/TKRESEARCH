@@ -103,7 +103,6 @@
             this.textBox2T38 = new System.Windows.Forms.TextBox();
             this.textBox2T39 = new System.Windows.Forms.TextBox();
             this.textBox2T40 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
@@ -114,7 +113,7 @@
             this.textBox2T41 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.textBox2T11 = new System.Windows.Forms.TextBox();
             this.textBox2T12 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
@@ -431,7 +430,6 @@
             this.tableLayoutPanel3.Controls.Add(this.textBox2T8, 1, 3);
             this.tableLayoutPanel3.Controls.Add(this.textBox2T9, 3, 3);
             this.tableLayoutPanel3.Controls.Add(this.textBox2T10, 1, 4);
-            this.tableLayoutPanel3.Controls.Add(this.comboBox1, 1, 5);
             this.tableLayoutPanel3.Controls.Add(this.button3, 6, 3);
             this.tableLayoutPanel3.Controls.Add(this.button5, 6, 4);
             this.tableLayoutPanel3.Controls.Add(this.button7, 6, 5);
@@ -445,9 +443,9 @@
             this.tableLayoutPanel3.Controls.Add(this.textBox2T13, 1, 6);
             this.tableLayoutPanel3.Controls.Add(this.label5, 0, 6);
             this.tableLayoutPanel3.Controls.Add(this.label11, 0, 5);
-            this.tableLayoutPanel3.Controls.Add(this.label9, 3, 5);
-            this.tableLayoutPanel3.Controls.Add(this.textBox2T11, 2, 5);
-            this.tableLayoutPanel3.Controls.Add(this.textBox2T12, 4, 5);
+            this.tableLayoutPanel3.Controls.Add(this.textBox2T11, 1, 5);
+            this.tableLayoutPanel3.Controls.Add(this.label9, 2, 5);
+            this.tableLayoutPanel3.Controls.Add(this.textBox2T12, 3, 5);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -819,7 +817,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.tableLayoutPanel4.Controls.Add(this.comboBox2, 1, 1);
+            this.tableLayoutPanel4.Controls.Add(this.comboBox1, 1, 1);
             this.tableLayoutPanel4.Controls.Add(this.label27, 0, 10);
             this.tableLayoutPanel4.Controls.Add(this.label18, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.label21, 0, 0);
@@ -1058,15 +1056,6 @@
             this.textBox2T40.Size = new System.Drawing.Size(155, 27);
             this.textBox2T40.TabIndex = 62;
             // 
-            // comboBox1
-            // 
-            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(123, 208);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(114, 24);
-            this.comboBox1.TabIndex = 74;
-            // 
             // button4
             // 
             this.button4.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
@@ -1165,25 +1154,25 @@
             // 
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(363, 212);
+            this.label9.Location = new System.Drawing.Point(243, 212);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(114, 16);
             this.label9.TabIndex = 77;
             this.label9.Text = "模具";
             // 
-            // comboBox2
+            // comboBox1
             // 
-            this.comboBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(123, 48);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(155, 24);
-            this.comboBox2.TabIndex = 78;
+            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(123, 48);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(155, 24);
+            this.comboBox1.TabIndex = 78;
             // 
             // textBox2T11
             // 
             this.textBox2T11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2T11.Location = new System.Drawing.Point(243, 206);
+            this.textBox2T11.Location = new System.Drawing.Point(123, 206);
             this.textBox2T11.Name = "textBox2T11";
             this.textBox2T11.Size = new System.Drawing.Size(114, 27);
             this.textBox2T11.TabIndex = 64;
@@ -1191,9 +1180,9 @@
             // textBox2T12
             // 
             this.textBox2T12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2T12.Location = new System.Drawing.Point(483, 206);
+            this.textBox2T12.Location = new System.Drawing.Point(363, 206);
             this.textBox2T12.Name = "textBox2T12";
-            this.textBox2T12.Size = new System.Drawing.Size(124, 27);
+            this.textBox2T12.Size = new System.Drawing.Size(114, 27);
             this.textBox2T12.TabIndex = 78;
             // 
             // Frm_DEV_COOKEDS
@@ -1320,7 +1309,6 @@
         private System.Windows.Forms.TextBox textBox2T38;
         private System.Windows.Forms.TextBox textBox2T39;
         private System.Windows.Forms.TextBox textBox2T40;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
@@ -1331,7 +1319,7 @@
         private System.Windows.Forms.TextBox textBox2T41;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TextBox textBox2T11;
         private System.Windows.Forms.TextBox textBox2T12;
     }
