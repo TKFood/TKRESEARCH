@@ -772,6 +772,7 @@
             this.button13.TabIndex = 75;
             this.button13.Text = "新增BOM品號";
             this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // button15
             // 
@@ -1130,6 +1131,7 @@
             this.button14.TabIndex = 78;
             this.button14.Text = "新增BOM品號";
             this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
             // textBox2T41
             // 

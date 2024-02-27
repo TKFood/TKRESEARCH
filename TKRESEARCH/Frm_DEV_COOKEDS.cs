@@ -1161,7 +1161,122 @@ namespace TKRESEARCH
 
         }
 
+        public void UPDATE_TB_DEV_COOKEDS_BASES_MB001(string NO, string MB001)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
 
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"
+                                    UPDATE [TKRESEARCH].[dbo].[TB_DEV_COOKEDS]
+                                    SET [MB001]='{1}'
+                                    WHERE [NO]='{0}'
+                                        ", NO, MB001
+
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+
+                    MessageBox.Show("完成");
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+        public void UPDATE_TB_DEV_COOKEDS_DETAILS_MB001(string ID, string MB001)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"
+                                    UPDATE [TKRESEARCH].[dbo].[TB_DEV_COOKEDS_DETAILS]
+                                    SET [MB001]='{1}'
+                                    WHERE [ID]='{0}'
+                                        ", ID, MB001
+
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+
+                    MessageBox.Show("完成");
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
         #endregion
 
         #region BUTTON
@@ -1311,6 +1426,31 @@ namespace TKRESEARCH
             }
         }
 
+        private void button13_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBox2T14.Text.Trim()))
+            {
+                UPDATE_TB_DEV_COOKEDS_BASES_MB001(textBox2T1.Text.Trim(), textBox2T14.Text.Trim());
+                SEARCH_TB_DEV_COOKEDS2(textBox2T1.Text);
+            }
+            else
+            {
+                MessageBox.Show("未填寫BOM品號");
+            }
+        }
+        private void button14_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBox2T41.Text.Trim()))
+            {
+                UPDATE_TB_DEV_COOKEDS_DETAILS_MB001(textBox2T40.Text.Trim(), textBox2T41.Text.Trim());
+
+                SEARCH_TB_DEV_COOKEDS_DETAILS2(textBox2T1.Text);
+            }
+            else
+            {
+                MessageBox.Show("未填寫BOM品號");
+            }
+        }
         #endregion
 
 
