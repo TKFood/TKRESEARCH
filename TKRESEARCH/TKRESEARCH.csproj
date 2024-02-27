@@ -151,6 +151,12 @@
     <Compile Include="FrmUOFMESSAGES.Designer.cs">
       <DependentUpon>FrmUOFMESSAGES.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frm_DEV_COOKEDS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_DEV_COOKEDS.Designer.cs">
+      <DependentUpon>Frm_DEV_COOKEDS.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frm_DEV_PASTRYS.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,6 +210,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmUOFMESSAGES.resx">
       <DependentUpon>FrmUOFMESSAGES.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_DEV_COOKEDS.resx">
+      <DependentUpon>Frm_DEV_COOKEDS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_DEV_PASTRYS.resx">
       <DependentUpon>Frm_DEV_PASTRYS.cs</DependentUpon>
