@@ -1277,6 +1277,339 @@ namespace TKRESEARCH
                 sqlConn.Close();
             }
         }
+
+        public DataTable CHECK_MB001(string NO)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlDataAdapter adapter1 = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+            DataSet ds1 = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sbSql.Clear();
+                sbSqlQuery.Clear();
+                ds1.Clear();
+
+
+                sbSql.AppendFormat(@" 
+                                    SELECT *
+                                    FROM 
+                                    (
+                                    SELECT 
+                                    [ID]
+                                    ,[NO]
+                                    ,[MB001]
+                                    FROM [TKRESEARCH].[dbo].[TB_DEV_COOKEDS]
+                                    WHERE NO='{0}' AND ISNULL([MB001],'')=''
+                                    UNION ALL
+                                    SELECT 
+                                    [ID]
+                                    ,[NO]
+                                    ,[MB001]
+                                    FROM [TKRESEARCH].[dbo].[TB_DEV_COOKEDS_DETAILS]
+                                    WHERE NO='{0}' AND ISNULL([MB001],'')=''
+                                    ) AS TEMP
+                                        ", NO);
+
+                adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+                sqlConn.Open();
+                ds1.Clear();
+                adapter1.Fill(ds1, "ds1");
+                sqlConn.Close();
+
+
+                if (ds1.Tables["ds1"].Rows.Count >= 1)
+                {
+                    return ds1.Tables["ds1"];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
+        public void ADD_BOMMJ_BOMMK(string NO)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"
+                                    INSERT INTO [TK].[dbo].[BOMMK]
+                                    (
+                                     [COMPANY]
+                                    ,[CREATOR]
+                                    ,[USR_GROUP]
+                                    ,[CREATE_DATE]
+                                    ,[MODIFIER]
+                                    ,[MODI_DATE]
+                                    ,[FLAG]
+                                    ,[CREATE_TIME]
+                                    ,[MODI_TIME]
+                                    ,[TRANS_TYPE]
+                                    ,[TRANS_NAME]
+                                    ,[sync_date]
+                                    ,[sync_time]
+                                    ,[sync_mark]
+                                    ,[sync_count]
+                                    ,[DataUser]
+                                    ,[DataGroup]
+                                    ,[MK001]
+                                    ,[MK002]
+                                    ,[MK003]
+                                    ,[MK006]
+                                    ,[MK007]
+                                    ,[MK008]
+                                    ,[MK009]
+                                    ,[MK010]
+                                    ,[MK011]
+                                    ,[MK012]
+                                    ,[MK013]
+                                    ,[MK014]
+                                    ,[MK015]
+                                    ,[MK016]
+                                    ,[MK017]
+                                    ,[MK018]
+                                    ,[MK019]
+                                    ,[MK020]
+                                    ,[MK021]
+                                    ,[MK022]
+                                    ,[MK023]
+                                    ,[MK024]
+                                    ,[MK025]
+                                    ,[MK026]
+                                    ,[MK027]
+                                    ,[MK028]
+                                    ,[MK029]
+                                    ,[MK030]
+                                    ,[MK031]
+                                    ,[MK032]
+                                    ,[MK033]
+                                    ,[MK034]
+                                    ,[MK035]
+                                    ,[MK036]
+                                    ,[MK037]
+                                    ,[MK038]
+                                    )
+                                    SELECT 
+                                    'TK' [COMPANY]
+                                    ,'160033' [CREATOR]
+                                    ,'104000' [USR_GROUP]
+                                    ,CONVERT(NVARCHAR,GETDATE(),112) [CREATE_DATE]
+                                    ,'160033' [MODIFIER]
+                                    ,CONVERT(NVARCHAR,GETDATE(),112) [MODI_DATE]
+                                    ,0 [FLAG]
+                                    ,CONVERT(VARCHAR(8), GETDATE(), 108) [CREATE_TIME]
+                                    ,CONVERT(VARCHAR(8), GETDATE(), 108) [MODI_TIME]
+                                    ,'P001' [TRANS_TYPE]
+                                    ,'BOMI11' [TRANS_NAME]
+                                    ,'' [sync_date]
+                                    ,'' [sync_time]
+                                    ,'' [sync_mark]
+                                    ,'0' [sync_count]
+                                    ,'' [DataUser]
+                                    ,'104000' [DataGroup]
+                                    ,[TB_DEV_COOKEDS].MB001 [MK001]
+                                    ,RIGHT(REPLICATE('0', 4) + CAST([SEQ] * 10 AS VARCHAR(4)), 4) [MK002]
+                                    ,[TB_DEV_COOKEDS_DETAILS].[MB001] [MK003]
+                                    ,[TWEIGHTS] [MK006]
+                                    ,1 [MK007]
+                                    ,0 [MK008]
+                                    ,'****' [MK009]
+                                    ,'' [MK010]
+                                    ,'' [MK011]
+                                    ,'' [MK012]
+                                    ,'N' [MK013]
+                                    ,'N' [MK014]
+                                    ,'' [MK015]
+                                    ,'' [MK016]
+                                    ,'1' [MK017]
+                                    ,0 [MK018]
+                                    ,'1' [MK019]
+                                    ,'' [MK020]
+                                    ,'' [MK021]
+                                    ,'' [MK022]
+                                    ,'' [MK023]
+                                    ,'' [MK024]
+                                    ,'' [MK025]
+                                    ,'' [MK026]
+                                    ,'' [MK027]
+                                    ,0 [MK028]
+                                    ,0 [MK029]
+                                    ,'' [MK030]
+                                    ,'' [MK031]
+                                    ,'' [MK032]
+                                    ,0 [MK033]
+                                    ,NULL [MK034]
+                                    ,'' [MK035]
+                                    ,'' [MK036]
+                                    ,'' [MK037]
+                                    ,0 [MK038]
+                                    FROM [TKRESEARCH].[dbo].[TB_DEV_COOKEDS_DETAILS],[TKRESEARCH].[dbo].[TB_DEV_COOKEDS]
+                                    WHERE [TB_DEV_COOKEDS].NO=[TB_DEV_COOKEDS_DETAILS].NO
+                                    AND TB_DEV_COOKEDS.MB001 NOT IN (SELECT [MJ001] FROM [TK].[dbo].[BOMMJ])
+                                    AND [TB_DEV_COOKEDS_DETAILS].NO='{0}'
+                                    AND ISNULL([TB_DEV_COOKEDS_DETAILS].MB001,'')<>''
+   
+                                    INSERT INTO [TK].[dbo].[BOMMJ]
+                                    (
+                                    [COMPANY]
+                                    ,[CREATOR]
+                                    ,[USR_GROUP]
+                                    ,[CREATE_DATE]
+                                    ,[MODIFIER]
+                                    ,[MODI_DATE]
+                                    ,[FLAG]
+                                    ,[CREATE_TIME]
+                                    ,[MODI_TIME]
+                                    ,[TRANS_TYPE]
+                                    ,[TRANS_NAME]
+                                    ,[sync_date]
+                                    ,[sync_time]
+                                    ,[sync_mark]
+                                    ,[sync_count]
+                                    ,[DataUser]
+                                    ,[DataGroup]
+                                    ,[MJ001]
+                                    ,[MJ004]
+                                    ,[MJ005]
+                                    ,[MJ006]
+                                    ,[MJ007]
+                                    ,[MJ008]
+                                    ,[MJ009]
+                                    ,[MJ010]
+                                    ,[MJ011]
+                                    ,[MJ012]
+                                    ,[MJ013]
+                                    ,[MJ014]
+                                    ,[MJ015]
+                                    ,[MJ016]
+                                    ,[MJ017]
+                                    ,[MJ018]
+                                    ,[MJ019]
+                                    ,[MJ020]
+                                    ,[MJ021]
+                                    ,[MJ022]
+                                    )
+                                    SELECT 
+                                    'TK' [COMPANY]
+                                    ,'160033' [CREATOR]
+                                    ,'104000' [USR_GROUP]
+                                    ,CONVERT(NVARCHAR,GETDATE(),112) [CREATE_DATE]
+                                    ,'160033' [MODIFIER]
+                                    ,CONVERT(NVARCHAR,GETDATE(),112) [MODI_DATE]
+                                    ,0 [FLAG]
+                                    ,CONVERT(VARCHAR(8), GETDATE(), 108) [CREATE_TIME]
+                                    ,CONVERT(VARCHAR(8), GETDATE(), 108) [MODI_TIME]
+                                    ,'P001' [TRANS_TYPE]
+                                    ,'BOMI11' [TRANS_NAME]
+                                    ,'' [sync_date]
+                                    ,'' [sync_time]
+                                    ,'' [sync_mark]
+                                    ,'0' [sync_count]
+                                    ,'' [DataUser]
+                                    ,'104000' [DataGroup]
+                                    ,[MB001] [MJ001]
+                                    ,(SELECT SUM([TWEIGHTS]) FROM [TKRESEARCH].[dbo].[TB_DEV_COOKEDS_DETAILS] WHERE [TB_DEV_COOKEDS_DETAILS].NO=[TB_DEV_COOKEDS].NO)[MJ004]
+                                    ,'A510' [MJ005]
+                                    ,'' [MJ006]
+                                    ,'' [MJ007]
+                                    ,'' [MJ008]
+                                    ,'0' [MJ009]
+                                    ,'' [MJ010]
+                                    ,'N' [MJ011]
+                                    ,'0' [MJ012]
+                                    ,'0' [MJ013]
+                                    ,'' [MJ014]
+                                    ,'' [MJ015]
+                                    ,'' [MJ016]
+                                    ,'' [MJ017]
+                                    ,'0' [MJ018]
+                                    ,'' [MJ019]
+                                    ,'' [MJ020]
+                                    ,'' [MJ021]
+                                    ,'0' [MJ022]
+                                    FROM [TKRESEARCH].[dbo].[TB_DEV_COOKEDS]
+                                    WHERE NO='{0}'
+                                    AND MB001 NOT IN (SELECT [MJ001] FROM [TK].[dbo].[BOMMJ])
+
+                               
+                                        ", NO
+
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+
+                    MessageBox.Show("完成");
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
+
+
         #endregion
 
         #region BUTTON
@@ -1449,6 +1782,21 @@ namespace TKRESEARCH
             else
             {
                 MessageBox.Show("未填寫BOM品號");
+            }
+        }
+        private void button15_Click(object sender, EventArgs e)
+        {
+            //CHECK_MB001
+            string NO = textBox2T1.Text.Trim();
+            DataTable DT = CHECK_MB001(NO);
+
+            if (DT != null && DT.Rows.Count >= 1)
+            {
+                MessageBox.Show(NO + Environment.NewLine + "有品號未填寫");
+            }
+            else
+            {
+                ADD_BOMMJ_BOMMK(NO);
             }
         }
         #endregion
