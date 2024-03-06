@@ -227,7 +227,7 @@ namespace TKRESEARCH
                 DataGridViewRow row = dataGridView1.Rows[rowindex];
 
                 NO = row.Cells["編號"].Value.ToString();
-                //SEARCH_TB_DEV_COOKEDS_DETAILS(NO);
+                SEARCH_TB_DEV_BREADS_DETAILS(NO);
 
                 SETTEXT_TAB2();
 
@@ -275,6 +275,82 @@ namespace TKRESEARCH
                     dateTimePicker2.Value = dateTime;
                 }
 
+
+            }
+        }
+        public void SEARCH_TB_DEV_BREADS_DETAILS(string NO)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                  SELECT
+                                    [NO] AS '編號'
+                                    ,[KINDS] AS '品項'
+                                    ,[SEQ] AS '投料順序'
+                                    ,[CODE] AS '代號'
+                                    ,[SUPPLIERS] AS '供應商'
+                                    ,[NAMES] AS '原料品項'
+                                    ,[PCTS] AS '各自百分比(%)'
+                                    ,[WEIGHTS] AS '各自重量(g)'
+                                    ,[TPCTS] AS '加總後百分比(%)'
+                                    ,[TWEIGHTS] AS '加總後重量(g)'
+                                    ,[MB001] AS '品號'
+                                    , [ID]
+                                    FROM [TKRESEARCH].[dbo].[TB_DEV_BREADS_DETAILS]
+                                    WHERE [NO]='{0}'
+                                    ORDER BY [KINDS],[CODE]
+                                  
+                                    ", NO);
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count == 0)
+                {
+                    dataGridView2.DataSource = null;
+                }
+                else
+                {
+                    if (ds.Tables["ds"].Rows.Count >= 1)
+                    {
+                        dataGridView2.DataSource = ds.Tables["ds"];
+                        dataGridView2.AutoResizeColumns();
+                    }
+
+                }
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
 
             }
         }
