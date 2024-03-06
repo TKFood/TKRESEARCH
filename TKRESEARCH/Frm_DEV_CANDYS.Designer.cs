@@ -659,6 +659,7 @@
             this.button7.TabIndex = 70;
             this.button7.Text = "修改";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button6
             // 
@@ -670,6 +671,7 @@
             this.button6.TabIndex = 69;
             this.button6.Text = "刪除";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // label13
             // 

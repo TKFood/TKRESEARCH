@@ -704,6 +704,159 @@ namespace TKRESEARCH
             }
 
         }
+
+        public void UPDATE_TB_DEV_CANDYS(
+            string NO
+           , string NAMES
+           , string SPECS
+           , string DEVCARESTEDATES
+           , string SQUGERCOOKEDTEMP
+           , string SQUGERCOOKEDTIMES
+           , string COOKEDSPCS
+           , string COOKEDTEMP
+           , string COOKEDTIMES
+           , string TOTALSWEIGHTS
+           , string WEIGHTS
+           , string COMMETNS
+
+           )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"
+
+                                    UPDATE [TKRESEARCH].[dbo].[TB_DEV_CANDYS]
+                                    SET
+                                    [NAMES]='{1}'
+                                    ,[SPECS]='{2}'
+                                    ,[DEVCARESTEDATES]='{3}'
+                                    ,[SQUGERCOOKEDTEMP]='{4}'
+                                    ,[SQUGERCOOKEDTIMES]='{5}'
+                                    ,[COOKEDSPCS]='{6}'
+                                    ,[COOKEDTEMP]='{7}'
+                                    ,[COOKEDTIMES]='{8}'
+                                    ,[TOTALSWEIGHTS]='{9}'
+                                    ,[WEIGHTS]='{10}'
+                                    ,[COMMETNS]='{11}'
+                                    WHERE  [NO]='{0}'                                    
+                                    "
+                                     , NO
+                                    , NAMES
+                                    , SPECS
+                                    , DEVCARESTEDATES
+                                    , SQUGERCOOKEDTEMP
+                                    , SQUGERCOOKEDTIMES
+                                    , COOKEDSPCS
+                                    , COOKEDTEMP
+                                    , COOKEDTIMES
+                                    , TOTALSWEIGHTS
+                                    , WEIGHTS
+                                    , COMMETNS
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
+
+        public void DELETE_TB_DEV_CANDYS(string NO)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"
+                                    DELETE [TKRESEARCH].[dbo].[TB_DEV_CANDYS]                                  
+                                    WHERE  [NO]='{0}'                                    
+                                    "
+                                     , NO
+
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
         #endregion
 
         #region BUTTON
@@ -757,6 +910,44 @@ namespace TKRESEARCH
             );
 
             SEARCH_TB_DEV_CANDYS2(textBox2T1.Text);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            UPDATE_TB_DEV_CANDYS(
+               textBox2T1.Text
+              , textBox2T2.Text
+              , textBox2T3.Text
+              , dateTimePicker2.Value.ToString("yyyy/MM/dd")
+              , textBox2T4.Text
+              , textBox2T5.Text
+              , textBox2T6.Text
+              , textBox2T7.Text
+              , textBox2T8.Text
+              , textBox2T9.Text
+              , textBox2T10.Text
+              , textBox2T11.Text
+       
+              );
+
+            SEARCH_TB_DEV_CANDYS2(textBox2T1.Text);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DELETE_TB_DEV_CANDYS(textBox2T1.Text);
+                SEARCH_TB_DEV_CANDYS2(textBox2T1.Text);
+
+                SETTEXT_TAB2();
+
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
         }
 
         #endregion
