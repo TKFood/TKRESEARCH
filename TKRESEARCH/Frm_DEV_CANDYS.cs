@@ -857,6 +857,252 @@ namespace TKRESEARCH
             }
 
         }
+
+        public void INSERT_TB_DEV_CANDYS_DETAILS(
+          string ID
+          , string NO
+          , string KINDS
+          , string SEQ
+          , string CODE
+          , string SUPPLIERS
+          , string NAMES
+          , string PCTS
+          , string WEIGHTS
+          , string TPCTS
+          , string TWEIGHTS
+          )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                   INSERT INTO [TKRESEARCH].[dbo].[TB_DEV_CANDYS_DETAILS]
+                                    (
+                                    NO
+                                    ,KINDS
+                                    ,SEQ
+                                    ,CODE
+                                    ,SUPPLIERS
+                                    ,NAMES
+                                    ,PCTS
+                                    ,WEIGHTS
+                                    ,TPCTS
+                                    ,TWEIGHTS
+                                    )
+                                    VALUES
+                                    (
+                                    '{0}'
+                                    ,'{1}'
+                                    ,'{2}'
+                                    ,'{3}'
+                                    ,'{4}'
+                                    ,'{5}'
+                                    ,'{6}'
+                                    ,'{7}'
+                                    ,'{8}'
+                                    ,'{9}'
+                                    )
+                                    "
+                                    , NO
+                                    , KINDS
+                                    , SEQ
+                                    , CODE
+                                    , SUPPLIERS
+                                    , NAMES
+                                    , PCTS
+                                    , WEIGHTS
+                                    , TPCTS
+                                    , TWEIGHTS
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
+        public void UPDATE_TB_DEV_CANDYS_DETAILS(
+           string ID
+           , string NO
+           , string KINDS
+           , string SEQ
+           , string CODE
+           , string SUPPLIERS
+           , string NAMES
+           , string PCTS
+           , string WEIGHTS
+           , string TPCTS
+           , string TWEIGHTS
+           )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                    UPDATE  [TKRESEARCH].[dbo].[TB_DEV_CANDYS_DETAILS]
+                                    SET
+                                    NO='{1}'
+                                    ,KINDS='{2}'
+                                    ,SEQ='{3}'
+                                    ,CODE='{4}'
+                                    ,SUPPLIERS='{5}'
+                                    ,NAMES='{6}'
+                                    ,PCTS='{7}'
+                                    ,WEIGHTS='{8}'
+                                    ,TPCTS='{9}'
+                                    ,TWEIGHTS='{10}'
+                                    WHERE ID='{0}'
+                                    ", ID
+                                    , NO
+                                    , KINDS
+                                    , SEQ
+                                    , CODE
+                                    , SUPPLIERS
+                                    , NAMES
+                                    , PCTS
+                                    , WEIGHTS
+                                    , TPCTS
+                                    , TWEIGHTS
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
+        public void DELETE_TB_DEV_CANDYS_DETAILS(string ID)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                    DELETE  [TKRESEARCH].[dbo].[TB_DEV_CANDYS_DETAILS]                                   
+                                    WHERE ID='{0}'
+                                    ", ID
+
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
         #endregion
 
         #region BUTTON
@@ -950,6 +1196,59 @@ namespace TKRESEARCH
             }
         }
 
+        private void button8_Click(object sender, EventArgs e)
+        {
+            INSERT_TB_DEV_CANDYS_DETAILS(
+                ""
+            , textBox2T30.Text
+            , textBox2T42.Text
+            , textBox2T32.Text
+            , textBox2T33.Text
+            , textBox2T34.Text
+            , textBox2T35.Text
+            , textBox2T36.Text
+            , textBox2T37.Text
+            , textBox2T38.Text
+            , textBox2T39.Text
+            );
+
+
+            SEARCH_TB_DEV_CANDYS_DETAILS2(textBox2T1.Text);
+        }
+        private void button9_Click(object sender, EventArgs e)
+        {
+            UPDATE_TB_DEV_CANDYS_DETAILS(
+           textBox2T40.Text
+           , textBox2T30.Text
+           , textBox2T42.Text
+           , textBox2T32.Text
+           , textBox2T33.Text
+           , textBox2T34.Text
+           , textBox2T35.Text
+           , textBox2T36.Text
+           , textBox2T37.Text
+           , textBox2T38.Text
+           , textBox2T39.Text
+           );
+
+
+            SEARCH_TB_DEV_CANDYS_DETAILS2(textBox2T1.Text);
+        }
+        private void button10_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DELETE_TB_DEV_CANDYS_DETAILS(textBox2T40.Text);
+
+                SEARCH_TB_DEV_CANDYS_DETAILS2(textBox2T1.Text);
+
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+        }
         #endregion
 
 
