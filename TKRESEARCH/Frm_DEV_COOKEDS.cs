@@ -1313,14 +1313,14 @@ namespace TKRESEARCH
                                     [ID]
                                     ,[NO]
                                     ,[MB001]
-                                    FROM [TKRESEARCH].[dbo].[TB_DEV_COOKEDS]
+                                    FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS]
                                     WHERE NO='{0}' AND ISNULL([MB001],'')=''
                                     UNION ALL
                                     SELECT 
                                     [ID]
                                     ,[NO]
                                     ,[MB001]
-                                    FROM [TKRESEARCH].[dbo].[TB_DEV_COOKEDS_DETAILS]
+                                    FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS]
                                     WHERE NO='{0}' AND ISNULL([MB001],'')=''
                                     ) AS TEMP
                                         ", NO);
@@ -1796,7 +1796,7 @@ namespace TKRESEARCH
             }
             else
             {
-                ADD_BOMMJ_BOMMK(NO);
+                //ADD_BOMMJ_BOMMK(NO);
             }
         }
         #endregion
