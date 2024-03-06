@@ -531,10 +531,14 @@ namespace TKRESEARCH
             SEARCH_TB_DEV_CANDYS2(textBox2T1.Text);
             SEARCH_TB_DEV_CANDYS_DETAILS2(textBox2T1.Text);
         }
+        private void button4_Click(object sender, EventArgs e)
+        {
+            SEARCH_TB_DEV_CANDYS_DETAILS2(textBox2T1.Text);
+        }
 
 
         #endregion
 
-       
+
     }
 }
