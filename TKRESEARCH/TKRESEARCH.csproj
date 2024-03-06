@@ -169,6 +169,12 @@
     <Compile Include="Frm_DEV_PASTRYS.Designer.cs">
       <DependentUpon>Frm_DEV_PASTRYS.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frm_TB_DEV_BREADS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_TB_DEV_BREADS.Designer.cs">
+      <DependentUpon>Frm_TB_DEV_BREADS.cs</DependentUpon>
+    </Compile>
     <Compile Include="FRM_TK_UOF_RESEARCH_1002.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -225,6 +231,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_DEV_PASTRYS.resx">
       <DependentUpon>Frm_DEV_PASTRYS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_TB_DEV_BREADS.resx">
+      <DependentUpon>Frm_TB_DEV_BREADS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FRM_TK_UOF_RESEARCH_1002.resx">
       <DependentUpon>FRM_TK_UOF_RESEARCH_1002.cs</DependentUpon>
