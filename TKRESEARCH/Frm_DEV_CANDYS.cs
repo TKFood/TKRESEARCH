@@ -461,6 +461,55 @@ namespace TKRESEARCH
             }
         }
 
+        private void dataGridView3_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridView3.CurrentRow != null)
+            {
+                int rowindex = dataGridView3.CurrentRow.Index;
+                DataGridViewRow row = dataGridView3.Rows[rowindex];
+
+                NO = row.Cells["編號"].Value.ToString();
+                string ID = row.Cells["ID"].Value.ToString();
+
+                SETTEXT_TAB2B();
+
+                textBox2T30.Text = row.Cells["編號"].Value.ToString();
+
+                textBox2T32.Text = row.Cells["投料順序"].Value.ToString();
+                textBox2T33.Text = row.Cells["代號"].Value.ToString();
+                textBox2T34.Text = row.Cells["供應商"].Value.ToString();
+                textBox2T35.Text = row.Cells["原料品項"].Value.ToString();
+                textBox2T36.Text = row.Cells["各自百分比(%)"].Value.ToString();
+                textBox2T37.Text = row.Cells["各自重量(g)"].Value.ToString();
+                textBox2T38.Text = row.Cells["加總後百分比(%)"].Value.ToString();
+                textBox2T39.Text = row.Cells["加總後重量(g)"].Value.ToString();
+                textBox2T40.Text = ID;
+                textBox2T41.Text = row.Cells["品號"].Value.ToString();
+
+                textBox2T42.Text = row.Cells["品項"].Value.ToString();
+
+
+
+            }
+        }
+
+        public void SETTEXT_TAB2B()
+        {
+            textBox2T30.Text = null;
+            //textBox2T31.Text = null;
+            textBox2T32.Text = null;
+            textBox2T33.Text = null;
+            textBox2T34.Text = null;
+            textBox2T35.Text = null;
+            textBox2T36.Text = null;
+            textBox2T37.Text = null;
+            textBox2T38.Text = null;
+            textBox2T39.Text = null;
+            textBox2T40.Text = null;
+
+
+        }
+
         #endregion
 
         #region BUTTON
@@ -483,8 +532,9 @@ namespace TKRESEARCH
             SEARCH_TB_DEV_CANDYS_DETAILS2(textBox2T1.Text);
         }
 
+
         #endregion
 
-
+       
     }
 }
