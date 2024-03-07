@@ -315,8 +315,17 @@ namespace TKRESEARCH
         {
             SEARCH_TB_DEV_CAKES(dateTimePicker1.Value.ToString("yyyy"), textBox1.Text);
         }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // 或者使用 SelectedTab 屬性直接指定 Tab 頁面物件
+            tabControl1.SelectedTab = tabPage2;
+            // 在某個地方調用 PerformClick() 方法來觸發按鈕的點擊事件
+            button3.PerformClick();
+            //MessageBox.Show(NO);
+        }
+
         #endregion
 
-    
+
     }
 }
