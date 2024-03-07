@@ -1335,6 +1335,7 @@
             this.dataGridView3.RowTemplate.Height = 24;
             this.dataGridView3.Size = new System.Drawing.Size(972, 238);
             this.dataGridView3.TabIndex = 3;
+            this.dataGridView3.SelectionChanged += new System.EventHandler(this.dataGridView3_SelectionChanged);
             // 
             // tableLayoutPanel4
             // 
@@ -1616,6 +1617,7 @@
             this.button8.TabIndex = 71;
             this.button8.Text = "新增";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button9
             // 
@@ -1627,6 +1629,7 @@
             this.button9.TabIndex = 73;
             this.button9.Text = "修改";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button10
             // 
@@ -1638,6 +1641,7 @@
             this.button10.TabIndex = 72;
             this.button10.Text = "刪除";
             this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // label30
             // 
@@ -1659,6 +1663,7 @@
             this.button14.TabIndex = 78;
             this.button14.Text = "新增BOM品號";
             this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
             // textBox3T10
             // 
