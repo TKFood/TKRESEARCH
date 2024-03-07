@@ -634,6 +634,211 @@ namespace TKRESEARCH
             }
         }
 
+        public void INSERT_TB_DEV_BREADS(
+         string NO
+        , string NAMES
+        , string SPECS
+        , string DEVCARESTEDATES
+        , string BEFROECOOKEDSPCS
+        , string AFERCOOKEDSPCS
+        , string BEFORECOOKEDWEIGHTS
+        , string AFTERCOOKEDWEIGHTS
+        , string COOKEDTEMP
+        , string COOKEDTIMES
+        , string TOTALSWEIGHTS
+        , string MODELS
+        , string MOQS
+        , string COMMETNS
+        , string MB001
+        , string SPONGESWEIGHTS
+        , string SPONGESDAYS
+        , string SPONGESTIMES
+        , string SPONGESTEMP
+        , string SPONGESHUMI
+        , string THISBASEWEIGHTS
+        , string THISBASEDAYS
+        , string THISBASETIMES
+        , string THISBASETEMP
+        , string THISBASEHUMI
+        , string THISMIDTIMES
+        , string THISMIDTEMP
+        , string THISMIDHUMI
+        , string THISFINTIMES
+        , string THISFINTEMP
+        , string THISFINHUMI
+        , string FILLINGWEIGHTS
+        , string FILLINGDAYS
+        , string DECWEIGHTS
+        , string DECDAYS
+
+
+         )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"                                    
+                                    INSERT INTO [TKRESEARCH].[dbo].[TB_DEV_BREADS]
+                                    (
+                                    NO
+                                    ,NAMES
+                                    ,SPECS
+                                    ,DEVCARESTEDATES
+                                    ,BEFROECOOKEDSPCS
+                                    ,AFERCOOKEDSPCS
+                                    ,BEFORECOOKEDWEIGHTS
+                                    ,AFTERCOOKEDWEIGHTS
+                                    ,COOKEDTEMP
+                                    ,COOKEDTIMES
+                                    ,TOTALSWEIGHTS
+                                    ,MODELS
+                                    ,MOQS
+                                    ,COMMETNS
+                                    ,MB001
+                                    ,SPONGESWEIGHTS
+                                    ,SPONGESDAYS
+                                    ,SPONGESTIMES
+                                    ,SPONGESTEMP
+                                    ,SPONGESHUMI
+                                    ,THISBASEWEIGHTS
+                                    ,THISBASEDAYS
+                                    ,THISBASETIMES
+                                    ,THISBASETEMP
+                                    ,THISBASEHUMI
+                                    ,THISMIDTIMES
+                                    ,THISMIDTEMP
+                                    ,THISMIDHUMI
+                                    ,THISFINTIMES
+                                    ,THISFINTEMP
+                                    ,THISFINHUMI
+                                    ,FILLINGWEIGHTS
+                                    ,FILLINGDAYS
+                                    ,DECWEIGHTS
+                                    ,DECDAYS
+
+                                    )
+                                    VALUES
+                                    (
+                                    '{0}'
+                                    ,'{1}'
+                                    ,'{2}'
+                                    ,'{3}'
+                                    ,'{4}'
+                                    ,'{5}'
+                                    ,'{6}'
+                                    ,'{7}'
+                                    ,'{8}'
+                                    ,'{9}'
+                                    ,'{10}'
+                                    ,'{11}'
+                                    ,'{12}'
+                                    ,'{13}'
+                                    ,'{14}'
+                                    ,'{15}'
+                                    ,'{16}'
+                                    ,'{17}'
+                                    ,'{18}'
+                                    ,'{19}'
+                                    ,'{20}'
+                                    ,'{21}'
+                                    ,'{22}'
+                                    ,'{23}'
+                                    ,'{24}'
+                                    ,'{25}'
+                                    ,'{26}'
+                                    ,'{27}'
+                                    ,'{28}'
+                                    ,'{29}'
+                                    ,'{30}'
+                                    ,'{31}'
+                                    ,'{32}'
+                                    ,'{33}'
+                                    ,'{34}'
+
+                                    )
+                                    "
+                                     , NO
+                                    , NAMES
+                                    , SPECS
+                                    , DEVCARESTEDATES
+                                    , BEFROECOOKEDSPCS
+                                    , AFERCOOKEDSPCS
+                                    , BEFORECOOKEDWEIGHTS
+                                    , AFTERCOOKEDWEIGHTS
+                                    , COOKEDTEMP
+                                    , COOKEDTIMES
+                                    , TOTALSWEIGHTS
+                                    , MODELS
+                                    , MOQS
+                                    , COMMETNS
+                                    , MB001
+                                    , SPONGESWEIGHTS
+                                    , SPONGESDAYS
+                                    , SPONGESTIMES
+                                    , SPONGESTEMP
+                                    , SPONGESHUMI
+                                    , THISBASEWEIGHTS
+                                    , THISBASEDAYS
+                                    , THISBASETIMES
+                                    , THISBASETEMP
+                                    , THISBASEHUMI
+                                    , THISMIDTIMES
+                                    , THISMIDTEMP
+                                    , THISMIDHUMI
+                                    , THISFINTIMES
+                                    , THISFINTEMP
+                                    , THISFINHUMI
+                                    , FILLINGWEIGHTS
+                                    , FILLINGDAYS
+                                    , DECWEIGHTS
+                                    , DECDAYS
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
+
         public void SETTEXT_TAB2()
         {
             textBox2T1.Text = null;
@@ -699,6 +904,48 @@ namespace TKRESEARCH
             DATES = DATES.Substring(2, 5);
             string NO = GETMAXNO(DATES);
             textBox2T1.Text = NO;
+        }
+        private void button5_Click(object sender, EventArgs e)
+        {
+            INSERT_TB_DEV_BREADS(
+            textBox2T1.Text
+            , textBox2T2.Text
+            , textBox2T3.Text
+            , dateTimePicker2.Value.ToString("yyyy/MM/dd")
+            , textBox2T4.Text
+            , textBox2T5.Text
+            , textBox2T6.Text
+            , textBox2T7.Text
+            , textBox2T8.Text
+            , textBox2T9.Text
+            , textBox2T10.Text
+            , textBox2T11.Text
+            , textBox2T12.Text
+            , textBox2T13.Text
+            , textBox2T14.Text
+            , textBox2T15.Text
+            , textBox2T16.Text
+            , textBox2T17.Text
+            , textBox2T18.Text
+            , textBox2T19.Text
+            , textBox2T20.Text
+            , textBox2T21.Text
+            , textBox2T22.Text
+            , textBox2T23.Text
+            , textBox2T24.Text
+            , textBox2T25.Text
+            , textBox2T26.Text
+            , textBox2T27.Text
+            , textBox2T28.Text
+            , textBox2T29.Text
+            , textBox2T30.Text
+            , textBox2T31.Text
+            , textBox2T32.Text
+            , textBox2T33.Text
+            , textBox2T34.Text
+            );
+
+            SEARCH_TB_DEV_BREADS2(textBox2T1.Text);
         }
         #endregion
 
