@@ -463,6 +463,236 @@ namespace TKRESEARCH
 
             }
         }
+
+        public string GETMAXNO(string NO)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlDataAdapter adapter1 = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+            DataSet ds1 = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sbSql.Clear();
+                sbSqlQuery.Clear();
+                ds1.Clear();
+
+
+                sbSql.AppendFormat(@" 
+                                        SELECT
+                                        ISNULL(MAX(NO),'0')  AS 'NO'
+                                        FROM [TKRESEARCH].[dbo].[TB_DEV_CAKES]
+                                        WHERE [NO] LIKE '{0}%'
+                                        ORDER BY [NO] DESC
+                                        ", NO);
+
+                adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+                sqlConn.Open();
+                ds1.Clear();
+                adapter1.Fill(ds1, "ds1");
+                sqlConn.Close();
+
+
+                if (ds1.Tables["ds1"].Rows.Count == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    if (ds1.Tables["ds1"].Rows.Count >= 1)
+                    {
+                        string NEWNO = ds1.Tables["ds1"].Rows[0]["NO"].ToString();
+
+                        if (NEWNO.Equals("0"))
+                        {
+                            return NO + "-" + "001";
+                        }
+
+                        else
+                        {
+                            int serno = Convert.ToInt16(NEWNO.Substring(6, 3));
+                            serno = serno + 1;
+                            string temp = serno.ToString();
+                            temp = temp.PadLeft(3, '0');
+                            return NO + "-" + temp.ToString();
+                        }
+
+
+                    }
+                    return null;
+                }
+
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
+        public void INSERT_TB_DEV_CAKES(
+                 string NO
+                , string NAMES
+                , string SPECS
+                , string DEVCARESTEDATES
+                , string BEFROECOOKEDSPCS
+                , string AFERCOOKEDSPCS
+                , string BEFORECOOKEDWEIGHTS
+                , string AFTERCOOKEDWEIGHTS
+                , string COOKEDTEMP
+                , string COOKEDTIMES
+                , string TOTALSWEIGHTS
+                , string MODELS
+                , string MOQS
+                , string COMMETNS
+                , string MB001
+                , string EGGSLEVELS
+                , string EGGSTIMES
+                , string EGGSSPEEDS
+                , string EGGSWEIGHTS
+                , string FILLINGWEIGHTS
+                , string DECWEIGHTS
+            )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"                                    
+                                    INSERT INTO [TKRESEARCH].[dbo].[TB_DEV_CAKES]
+                                    (
+                                    [NO]
+                                    ,[NAMES]
+                                    ,[SPECS]
+                                    ,[DEVCARESTEDATES]
+                                    ,[BEFROECOOKEDSPCS]
+                                    ,[AFERCOOKEDSPCS]
+                                    ,[BEFORECOOKEDWEIGHTS]
+                                    ,[AFTERCOOKEDWEIGHTS]
+                                    ,[COOKEDTEMP]
+                                    ,[COOKEDTIMES]
+                                    ,[TOTALSWEIGHTS]
+                                    ,[MODELS]
+                                    ,[MOQS]
+                                    ,[COMMETNS]
+                                    ,[MB001]
+                                    ,[EGGSLEVELS]
+                                    ,[EGGSTIMES]
+                                    ,[EGGSSPEEDS]
+                                    ,[EGGSWEIGHTS]
+                                    ,[FILLINGWEIGHTS]
+                                    ,[DECWEIGHTS]
+                                    )
+                                    VALUES
+                                    (
+                                    '{0}'
+                                    ,'{1}'
+                                    ,'{2}'
+                                    ,'{3}'
+                                    ,'{4}'
+                                    ,'{5}'
+                                    ,'{6}'
+                                    ,'{7}'
+                                    ,'{8}'
+                                    ,'{9}'
+                                    ,'{10}'
+                                    ,'{11}'
+                                    ,'{12}'
+                                    ,'{13}'
+                                    ,'{14}'
+                                    ,'{15}'
+                                    ,'{16}'
+                                    ,'{17}'
+                                    ,'{18}'
+                                    ,'{19}'
+                                    ,'{20}'
+                                  
+                                    )
+                                    "
+                                     , NO
+                                    , NAMES
+                                    , SPECS
+                                    , DEVCARESTEDATES
+                                    , BEFROECOOKEDSPCS
+                                    , AFERCOOKEDSPCS
+                                    , BEFORECOOKEDWEIGHTS
+                                    , AFTERCOOKEDWEIGHTS
+                                    , COOKEDTEMP
+                                    , COOKEDTIMES
+                                    , TOTALSWEIGHTS
+                                    , MODELS
+                                    , MOQS
+                                    , COMMETNS
+                                    , MB001
+                                    , EGGSLEVELS
+                                    , EGGSTIMES
+                                    , EGGSSPEEDS
+                                    , EGGSWEIGHTS
+                                    , FILLINGWEIGHTS
+                                    , DECWEIGHTS
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
         public void SETTEXT_TAB2()
         {
             textBox2T1.Text = null;
@@ -511,10 +741,46 @@ namespace TKRESEARCH
         {
 
         }
+        private void button11_Click(object sender, EventArgs e)
+        {
+            string DATES = dateTimePicker2.Value.ToString("yyyy-MM");
+            DATES = DATES.Substring(2, 5);
+            string NO = GETMAXNO(DATES);
+            textBox2T1.Text = NO;
+        }
 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            INSERT_TB_DEV_CAKES(
+            textBox2T1.Text
+            , textBox2T2.Text
+            , textBox2T3.Text
+            , dateTimePicker2.Value.ToString("yyyy/MM/dd")
+            , textBox2T4.Text
+            , textBox2T5.Text
+            , textBox2T6.Text
+            , textBox2T7.Text
+            , textBox2T8.Text
+            , textBox2T9.Text
+            , textBox2T10.Text
+            , textBox2T11.Text
+            , textBox2T12.Text
+            , textBox2T13.Text
+            , textBox2T20.Text
+            , textBox2T14.Text           
+            , textBox2T15.Text
+            , textBox2T16.Text
+            , textBox2T17.Text
+            , textBox2T18.Text
+            , textBox2T19.Text
+
+            );
+
+            SEARCH_TB_DEV_CAKES2(textBox2T1.Text);
+        }
 
         #endregion
 
-       
+
     }
 }
