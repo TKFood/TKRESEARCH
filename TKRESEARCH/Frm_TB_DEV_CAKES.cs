@@ -930,6 +930,355 @@ namespace TKRESEARCH
                 sqlConn.Close();
             }
         }
+
+        public void INSERT_TB_DEV_CAKES_DETAILS(
+            string ID
+            , string NO
+            , string KINDS
+            , string SEQ
+            , string CODE
+            , string SUPPLIERS
+            , string NAMES
+            , string PCTS
+            , string WEIGHTS
+            , string TPCTS
+            , string TWEIGHTS
+            )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                if (string.IsNullOrEmpty(PCTS))
+                {
+                    PCTS = "0";
+                }
+                if (string.IsNullOrEmpty(WEIGHTS))
+                {
+                    WEIGHTS = "0";
+                }
+
+                sbSql.AppendFormat(@" 
+                                   INSERT INTO [TKRESEARCH].[dbo].[TB_DEV_CAKES_DETAILS]
+                                    (
+                                    NO
+                                    ,KINDS
+                                    ,SEQ
+                                    ,CODE
+                                    ,SUPPLIERS
+                                    ,NAMES
+                                    ,PCTS
+                                    ,WEIGHTS
+                                    ,TPCTS
+                                    ,TWEIGHTS
+                                    )
+                                    VALUES
+                                    (
+                                    '{0}'
+                                    ,'{1}'
+                                    ,'{2}'
+                                    ,'{3}'
+                                    ,'{4}'
+                                    ,'{5}'
+                                    ,'{6}'
+                                    ,'{7}'
+                                    ,'{8}'
+                                    ,'{9}'
+                                    )
+                                    "
+                                    , NO
+                                    , KINDS
+                                    , SEQ
+                                    , CODE
+                                    , SUPPLIERS
+                                    , NAMES
+                                    , PCTS
+                                    , WEIGHTS
+                                    , TPCTS
+                                    , TWEIGHTS
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
+        private void dataGridView3_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridView3.CurrentRow != null)
+            {
+                int rowindex = dataGridView3.CurrentRow.Index;
+                DataGridViewRow row = dataGridView3.Rows[rowindex];
+
+                NO = row.Cells["編號"].Value.ToString();
+                string ID = row.Cells["ID"].Value.ToString();
+
+                SETTEXT_TAB2B();
+
+                textBox2T30.Text = row.Cells["編號"].Value.ToString();
+
+                textBox2T32.Text = row.Cells["投料順序"].Value.ToString();
+                textBox2T33.Text = row.Cells["代號"].Value.ToString();
+                textBox2T34.Text = row.Cells["供應商"].Value.ToString();
+                textBox2T35.Text = row.Cells["原料品項"].Value.ToString();
+                textBox2T36.Text = row.Cells["各自百分比(%)"].Value.ToString();
+                textBox2T37.Text = row.Cells["各自重量(g)"].Value.ToString();
+                textBox2T38.Text = row.Cells["加總後百分比(%)"].Value.ToString();
+                textBox2T39.Text = row.Cells["加總後重量(g)"].Value.ToString();
+                textBox2T40.Text = ID;
+                textBox2T41.Text = row.Cells["品號"].Value.ToString();
+
+                comboBox1.Text = row.Cells["品項"].Value.ToString();
+
+
+
+            }
+        }
+
+        public void UPDATE_TB_DEV_CAKES_DETAILS(
+           string ID
+           , string NO
+           , string KINDS
+           , string SEQ
+           , string CODE
+           , string SUPPLIERS
+           , string NAMES
+           , string PCTS
+           , string WEIGHTS
+           , string TPCTS
+           , string TWEIGHTS
+           )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                    UPDATE  [TKRESEARCH].[dbo].[TB_DEV_CAKES_DETAILS]
+                                    SET
+                                    NO='{1}'
+                                    ,KINDS='{2}'
+                                    ,SEQ='{3}'
+                                    ,CODE='{4}'
+                                    ,SUPPLIERS='{5}'
+                                    ,NAMES='{6}'
+                                    ,PCTS='{7}'
+                                    ,WEIGHTS='{8}'
+                                    ,TPCTS='{9}'
+                                    ,TWEIGHTS='{10}'
+                                    WHERE ID='{0}'
+                                    ", ID
+                                    , NO
+                                    , KINDS
+                                    , SEQ
+                                    , CODE
+                                    , SUPPLIERS
+                                    , NAMES
+                                    , PCTS
+                                    , WEIGHTS
+                                    , TPCTS
+                                    , TWEIGHTS
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+
+        }
+
+        public void DELETE_TB_DEV_CAKES_DETAILS(string ID)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@" 
+                                    DELETE  [TKRESEARCH].[dbo].[TB_DEV_CAKES_DETAILS]                                   
+                                    WHERE ID='{0}'
+                                    ", ID
+
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
+
+        public void UPDATE_TB_DEV_CAKES_DETAILS_MB001(string ID, string MB001)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"
+                                    UPDATE [TKRESEARCH].[dbo].[TB_DEV_CAKES_DETAILS]
+                                    SET [MB001]='{1}'
+                                    WHERE [ID]='{0}'
+                                        ", ID, MB001
+
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+
+                    MessageBox.Show("完成");
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
         public void SETTEXT_TAB2()
         {
             textBox2T1.Text = null;
@@ -954,6 +1303,22 @@ namespace TKRESEARCH
 
         }
 
+        public void SETTEXT_TAB2B()
+        {
+            textBox2T30.Text = null;
+            //textBox2T31.Text = null;
+            textBox2T32.Text = null;
+            textBox2T33.Text = null;
+            textBox2T34.Text = null;
+            textBox2T35.Text = null;
+            textBox2T36.Text = null;
+            textBox2T37.Text = null;
+            textBox2T38.Text = null;
+            textBox2T39.Text = null;
+            textBox2T40.Text = null;
+
+
+        }
         #endregion
 
         #region BUTTON
@@ -976,7 +1341,22 @@ namespace TKRESEARCH
         }
         private void button8_Click(object sender, EventArgs e)
         {
+            INSERT_TB_DEV_CAKES_DETAILS(
+               ""
+           , textBox2T30.Text
+           , comboBox1.Text
+           , textBox2T32.Text
+           , textBox2T33.Text
+           , textBox2T34.Text
+           , textBox2T35.Text
+           , textBox2T36.Text
+           , textBox2T37.Text
+           , textBox2T38.Text
+           , textBox2T39.Text
+           );
 
+            //CAL_TB_DEV_PASTRYS_DETAILS_PCTS(textBox2T30.Text);
+            SEARCH_TB_DEV_CAKES_DETAILS2(textBox2T1.Text);
         }
         private void button11_Click(object sender, EventArgs e)
         {
@@ -1072,6 +1452,58 @@ namespace TKRESEARCH
             }
         }
 
+        private void button4_Click(object sender, EventArgs e)
+        {
+            SEARCH_TB_DEV_CAKES_DETAILS2(textBox2T1.Text);
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            UPDATE_TB_DEV_CAKES_DETAILS(
+           textBox2T40.Text
+           , textBox2T30.Text
+           , comboBox1.Text
+           , textBox2T32.Text
+           , textBox2T33.Text
+           , textBox2T34.Text
+           , textBox2T35.Text
+           , textBox2T36.Text
+           , textBox2T37.Text
+           , textBox2T38.Text
+           , textBox2T39.Text
+           );
+
+            //CAL_TB_DEV_PASTRYS_DETAILS_PCTS(textBox2T30.Text);
+            SEARCH_TB_DEV_CAKES_DETAILS2(textBox2T1.Text);
+        }
+        private void button10_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DELETE_TB_DEV_CAKES_DETAILS(textBox2T40.Text);
+                //CAL_TB_DEV_PASTRYS_DETAILS_PCTS(textBox2T30.Text);
+                SEARCH_TB_DEV_CAKES_DETAILS2(textBox2T1.Text);
+
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+        }
+        private void button14_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBox2T41.Text.Trim()))
+            {
+                UPDATE_TB_DEV_CAKES_DETAILS_MB001(textBox2T40.Text.Trim(), textBox2T41.Text.Trim());
+
+                SEARCH_TB_DEV_CAKES_DETAILS2(textBox2T1.Text);
+            }
+            else
+            {
+                MessageBox.Show("未填寫BOM品號");
+            }
+        }
         #endregion
 
 
