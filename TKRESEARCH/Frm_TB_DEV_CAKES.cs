@@ -285,6 +285,184 @@ namespace TKRESEARCH
 
             }
         }
+
+        public void SEARCH_TB_DEV_CAKES2(string NO)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                StringBuilder SQLquery1 = new StringBuilder();
+                StringBuilder SQLquery2 = new StringBuilder();
+
+                if (!string.IsNullOrEmpty(NO))
+                {
+                    SQLquery1.AppendFormat(@" AND [NO] LIKE '%{0}%'", NO);
+                }
+                else
+                {
+                    SQLquery1.AppendFormat(@" ");
+                }
+
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                   SELECT 
+                                    [NO] AS '編號'
+                                    ,[NAMES] AS '產品名稱'
+                                    ,[SPECS] AS '規格(g)'
+                                    ,CONVERT(NVARCHAR,[DEVCARESTEDATES],112) AS '開發日期'
+                                    ,[BEFROECOOKEDSPCS] AS '烤前長*寬*厚(cm)'
+                                    ,[AFERCOOKEDSPCS] AS '烤後長*寬*厚(cm)'
+                                    ,[BEFORECOOKEDWEIGHTS] AS '烤前重量(g)'
+                                    ,[AFTERCOOKEDWEIGHTS] AS '烤後重量(g)'
+                                    ,[COOKEDTEMP] AS '烘焙溫度(℃)'
+                                    ,[COOKEDTIMES] AS '烘焙時間(m)'
+                                    ,[TOTALSWEIGHTS] AS '總產量(片or公斤)'
+                                    ,[MODELS] AS '模具'             
+                                    ,[MOQS] AS '最低生產批量'
+                                    ,[COMMETNS] AS '工作流程'
+                                    ,[EGGSLEVELS] AS '蛋白打發程度'
+                                    ,[EGGSTIMES] AS '蛋白時間'
+                                    ,[EGGSSPEEDS] AS '蛋白轉速'
+                                    ,[EGGSWEIGHTS] AS '蛋白重量'
+                                    ,[FILLINGWEIGHTS] AS '餡重量'
+                                    ,[DECWEIGHTS] AS '裝飾重量'
+                                    ,[MB001] AS '品號'
+                                    FROM [TKRESEARCH].[dbo].[TB_DEV_CAKES]       
+                                    WHERE 1=1
+                                    {0}
+                                   
+                                    ORDER BY [NO]
+                                    ", SQLquery1.ToString());
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count == 0)
+                {
+                    dataGridView1.DataSource = null;
+
+                }
+                else
+                {
+                    if (ds.Tables["ds"].Rows.Count >= 1)
+                    {
+                        dataGridView1.DataSource = ds.Tables["ds"];
+                        dataGridView1.AutoResizeColumns();
+                    }
+
+                }
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+
+        }
+
+        public void SEARCH_TB_DEV_CAKES_DETAILS2(string NO)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                  SELECT
+                                    [NO] AS '編號'
+                                    ,[KINDS] AS '品項'
+                                    ,[SEQ] AS '投料順序'
+                                    ,[CODE] AS '代號'
+                                    ,[SUPPLIERS] AS '供應商'
+                                    ,[NAMES] AS '原料品項'
+                                    ,[PCTS] AS '各自百分比(%)'
+                                    ,[WEIGHTS] AS '各自重量(g)'
+                                    ,[TPCTS] AS '加總後百分比(%)'
+                                    ,[TWEIGHTS] AS '加總後重量(g)'
+                                    ,[MB001] AS '品號'
+                                    , [ID]
+                                    FROM [TKRESEARCH].[dbo].[TB_DEV_CAKES_DETAILS]
+                                    WHERE [NO]='{0}'
+                                    ORDER BY [KINDS],[CODE]
+                                  
+                                    ", NO);
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count == 0)
+                {
+                    dataGridView3.DataSource = null;
+                }
+                else
+                {
+                    if (ds.Tables["ds"].Rows.Count >= 1)
+                    {
+                        dataGridView3.DataSource = ds.Tables["ds"];
+                        dataGridView3.AutoResizeColumns();
+                    }
+
+                }
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+        }
         public void SETTEXT_TAB2()
         {
             textBox2T1.Text = null;
@@ -308,6 +486,7 @@ namespace TKRESEARCH
             textBox2T19.Text = null;
 
         }
+
         #endregion
 
         #region BUTTON
@@ -323,13 +502,19 @@ namespace TKRESEARCH
             button3.PerformClick();
             //MessageBox.Show(NO);
         }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SEARCH_TB_DEV_CAKES2(textBox2T1.Text);
+            SEARCH_TB_DEV_CAKES_DETAILS2(textBox2T1.Text);
+        }
         private void button8_Click(object sender, EventArgs e)
         {
 
         }
 
+
         #endregion
 
-
+       
     }
 }
