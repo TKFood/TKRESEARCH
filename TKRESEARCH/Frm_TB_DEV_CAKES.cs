@@ -693,6 +693,127 @@ namespace TKRESEARCH
             }
 
         }
+
+        public void UPDATE_TB_DEV_CAKES(
+             string NO
+                , string NAMES
+                , string SPECS
+                , string DEVCARESTEDATES
+                , string BEFROECOOKEDSPCS
+                , string AFERCOOKEDSPCS
+                , string BEFORECOOKEDWEIGHTS
+                , string AFTERCOOKEDWEIGHTS
+                , string COOKEDTEMP
+                , string COOKEDTIMES
+                , string TOTALSWEIGHTS
+                , string MODELS
+                , string MOQS
+                , string COMMETNS
+                , string MB001
+                , string EGGSLEVELS
+                , string EGGSTIMES
+                , string EGGSSPEEDS
+                , string EGGSWEIGHTS
+                , string FILLINGWEIGHTS
+                , string DECWEIGHTS
+
+           )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"
+                                    UPDATE  [TKRESEARCH].[dbo].[TB_DEV_CAKES]
+                                    SET
+                                    [NAMES]='{1}'
+                                    ,[SPECS]='{2}'
+                                    ,[DEVCARESTEDATES]='{3}'
+                                    ,[BEFROECOOKEDSPCS]='{4}'
+                                    ,[AFERCOOKEDSPCS]='{5}'
+                                    ,[BEFORECOOKEDWEIGHTS]='{6}'
+                                    ,[AFTERCOOKEDWEIGHTS]='{7}'
+                                    ,[COOKEDTEMP]='{8}'
+                                    ,[COOKEDTIMES]='{9}'
+                                    ,[TOTALSWEIGHTS]='{10}'
+                                    ,[MODELS]='{11}'
+                                    ,[MOQS]='{12}'
+                                    ,[COMMETNS]='{13}'
+                                    ,[MB001]='{14}'
+                                    ,[EGGSLEVELS]='{15}'
+                                    ,[EGGSTIMES]='{16}'
+                                    ,[EGGSSPEEDS]='{17}'
+                                    ,[EGGSWEIGHTS]='{18}'
+                                    ,[FILLINGWEIGHTS]='{19}'
+                                    ,[DECWEIGHTS]='{20}'
+                                    WHERE  [NO]='{0}'                                    
+                                    "
+                                      , NO
+                                    , NAMES
+                                    , SPECS
+                                    , DEVCARESTEDATES
+                                    , BEFROECOOKEDSPCS
+                                    , AFERCOOKEDSPCS
+                                    , BEFORECOOKEDWEIGHTS
+                                    , AFTERCOOKEDWEIGHTS
+                                    , COOKEDTEMP
+                                    , COOKEDTIMES
+                                    , TOTALSWEIGHTS
+                                    , MODELS
+                                    , MOQS
+                                    , COMMETNS
+                                    , MB001
+                                    , EGGSLEVELS
+                                    , EGGSTIMES
+                                    , EGGSSPEEDS
+                                    , EGGSWEIGHTS
+                                    , FILLINGWEIGHTS
+                                    , DECWEIGHTS
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
         public void SETTEXT_TAB2()
         {
             textBox2T1.Text = null;
@@ -775,6 +896,34 @@ namespace TKRESEARCH
             , textBox2T19.Text
 
             );
+
+            SEARCH_TB_DEV_CAKES2(textBox2T1.Text);
+        }
+        private void button7_Click(object sender, EventArgs e)
+        {
+            UPDATE_TB_DEV_CAKES(
+                 textBox2T1.Text
+                , textBox2T2.Text
+                , textBox2T3.Text
+                , dateTimePicker2.Value.ToString("yyyy/MM/dd")
+                , textBox2T4.Text
+                , textBox2T5.Text
+                , textBox2T6.Text
+                , textBox2T7.Text
+                , textBox2T8.Text
+                , textBox2T9.Text
+                , textBox2T10.Text
+                , textBox2T11.Text
+                , textBox2T12.Text
+                , textBox2T13.Text
+                , textBox2T20.Text
+                , textBox2T14.Text
+                , textBox2T15.Text
+                , textBox2T16.Text
+                , textBox2T17.Text
+                , textBox2T18.Text
+                , textBox2T19.Text
+                );
 
             SEARCH_TB_DEV_CAKES2(textBox2T1.Text);
         }
