@@ -721,6 +721,7 @@
             this.button13.TabIndex = 75;
             this.button13.Text = "新增BOM品號";
             this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // button15
             // 
@@ -787,6 +788,7 @@
             this.button6.TabIndex = 69;
             this.button6.Text = "刪除";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // label9
             // 
