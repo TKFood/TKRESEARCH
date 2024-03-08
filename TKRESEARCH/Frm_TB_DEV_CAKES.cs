@@ -323,6 +323,10 @@ namespace TKRESEARCH
             button3.PerformClick();
             //MessageBox.Show(NO);
         }
+        private void button8_Click(object sender, EventArgs e)
+        {
+
+        }
 
         #endregion
 

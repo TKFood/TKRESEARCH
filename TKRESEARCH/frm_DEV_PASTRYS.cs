@@ -645,6 +645,15 @@ namespace TKRESEARCH
                 tran = sqlConn.BeginTransaction();
 
                 sbSql.Clear();
+                
+                if(string.IsNullOrEmpty(PCTS))
+                {
+                    PCTS = "0";
+                }
+                if (string.IsNullOrEmpty(WEIGHTS))
+                {
+                    WEIGHTS = "0";
+                }
 
                 sbSql.AppendFormat(@" 
                                    INSERT INTO [TKRESEARCH].[dbo].[TB_DEV_PASTRYS_DETAILS]
