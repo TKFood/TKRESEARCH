@@ -251,6 +251,7 @@ namespace TKRESEARCH
                                     ,[THICKNESS] AS '延壓厚度(cm)'
                                     ,[PCTS] AS '配比(水麵:油酥)'
                                     ,[COMMETNS] AS '工作流程'
+                                    ,[MB001] AS '品號'
                                     ,[ID] 
                                     FROM [TKRESEARCH].[dbo].[TB_DEV_PASTRYS]
                                     WHERE 1=1
@@ -335,6 +336,7 @@ namespace TKRESEARCH
                
             }
 
+          
 
         }
 
@@ -2189,7 +2191,14 @@ namespace TKRESEARCH
         {
             textBox2T30.Text = textBox2T1.Text;
         }
-
+        private void dataGridView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            // 或者使用 SelectedTab 屬性直接指定 Tab 頁面物件
+            tabControl1.SelectedTab = tabPage2;
+            // 在某個地方調用 PerformClick() 方法來觸發按鈕的點擊事件
+            button3.PerformClick();
+            //MessageBox.Show(NO);
+        }
         #endregion
 
         #region BUTTON
@@ -2390,8 +2399,9 @@ namespace TKRESEARCH
             }
         }
 
+
         #endregion
 
-       
+        
     }
 }
