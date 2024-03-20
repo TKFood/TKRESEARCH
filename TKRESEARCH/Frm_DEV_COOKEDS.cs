@@ -950,12 +950,21 @@ namespace TKRESEARCH
 
                 if (string.IsNullOrEmpty(PCTS))
                 {
-                    PCTS = "0";
+                    PCTS = "1";
                 }
                 if (string.IsNullOrEmpty(WEIGHTS))
                 {
                     WEIGHTS = "0";
                 }
+                if (string.IsNullOrEmpty(TPCTS))
+                {
+                    TPCTS = "1";
+                }
+                if (string.IsNullOrEmpty(TWEIGHTS))
+                {
+                    TWEIGHTS = "0";
+                }
+
 
                 sbSql.AppendFormat(@" 
                                    INSERT INTO [TKRESEARCH].[dbo].[TB_DEV_COOKEDS_DETAILS]
@@ -1617,7 +1626,10 @@ namespace TKRESEARCH
             }
         }
 
-
+        private void textBox2T1_TextChanged(object sender, EventArgs e)
+        {
+            textBox2T30.Text = textBox2T1.Text;
+        }
 
         #endregion
 
@@ -1808,8 +1820,9 @@ namespace TKRESEARCH
                 //ADD_BOMMJ_BOMMK(NO);
             }
         }
+
         #endregion
 
-
+       
     }
 }
