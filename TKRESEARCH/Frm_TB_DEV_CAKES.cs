@@ -967,11 +967,19 @@ namespace TKRESEARCH
 
                 if (string.IsNullOrEmpty(PCTS))
                 {
-                    PCTS = "0";
+                    PCTS = "1";
                 }
                 if (string.IsNullOrEmpty(WEIGHTS))
                 {
                     WEIGHTS = "0";
+                }
+                if (string.IsNullOrEmpty(TPCTS))
+                {
+                    TPCTS = "1";
+                }
+                if (string.IsNullOrEmpty(TWEIGHTS))
+                {
+                    TWEIGHTS = "0";
                 }
 
                 sbSql.AppendFormat(@" 
@@ -1319,6 +1327,12 @@ namespace TKRESEARCH
 
 
         }
+
+        private void textBox2T1_TextChanged(object sender, EventArgs e)
+        {
+            textBox2T30.Text = textBox2T1.Text;
+        }
+
         #endregion
 
         #region BUTTON
@@ -1504,8 +1518,9 @@ namespace TKRESEARCH
                 MessageBox.Show("未填寫BOM品號");
             }
         }
+
         #endregion
 
-
+     
     }
 }
