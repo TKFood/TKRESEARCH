@@ -915,7 +915,6 @@
             this.tableLayoutPanel4.Controls.Add(this.button8, 3, 1);
             this.tableLayoutPanel4.Controls.Add(this.button9, 3, 2);
             this.tableLayoutPanel4.Controls.Add(this.button10, 3, 3);
-            this.tableLayoutPanel4.Controls.Add(this.button12, 3, 4);
             this.tableLayoutPanel4.Controls.Add(this.label30, 2, 5);
             this.tableLayoutPanel4.Controls.Add(this.button14, 4, 5);
             this.tableLayoutPanel4.Controls.Add(this.textBox2T41, 3, 5);
@@ -923,6 +922,7 @@
             this.tableLayoutPanel4.Controls.Add(this.label26, 0, 6);
             this.tableLayoutPanel4.Controls.Add(this.label19, 0, 7);
             this.tableLayoutPanel4.Controls.Add(this.textBox2T36, 1, 7);
+            this.tableLayoutPanel4.Controls.Add(this.button12, 2, 4);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -1191,13 +1191,14 @@
             // 
             // button12
             // 
+            this.tableLayoutPanel4.SetColumnSpan(this.button12, 2);
             this.button12.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.button12.ForeColor = System.Drawing.Color.Blue;
-            this.button12.Location = new System.Drawing.Point(365, 163);
+            this.button12.Location = new System.Drawing.Point(284, 163);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(113, 34);
+            this.button12.Size = new System.Drawing.Size(194, 34);
             this.button12.TabIndex = 75;
-            this.button12.Text = "計算總桶用量";
+            this.button12.Text = "低筋麵粉-計算總桶用量";
             this.button12.UseVisualStyleBackColor = true;
             this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
