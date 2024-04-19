@@ -1660,7 +1660,7 @@ namespace TKRESEARCH
                                     ,SUM([WEIGHTS]) AS 'KINDSWEIGHTS'
                                     INTO #KindsTotalWeight
                                     FROM [TKRESEARCH].[dbo].[TB_DEV_COOKEDS_DETAILS]
-                                    WHERE [NO]='24-02-001'
+                                    WHERE [NO]='{0}'
                                     GROUP BY [NO],[KINDS]
 
                                     UPDATE  [TKRESEARCH].[dbo].[TB_DEV_COOKEDS_DETAILS]
