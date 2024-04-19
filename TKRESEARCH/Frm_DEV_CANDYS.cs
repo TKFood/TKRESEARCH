@@ -1320,7 +1320,63 @@ namespace TKRESEARCH
 
         public void CAL_TB_DEV_CANDYS_DETAILS_PCTS(string NO)
         {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
 
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"   
+                                    UPDATE [TKRESEARCH].[dbo].[TB_DEV_CANDYS_DETAILS]
+                                    SET [TWEIGHTS]=[WEIGHTS]
+                                    ,[PCTS]=CONVERT(decimal(16,4),[WEIGHTS]/(SELECT SUM([WEIGHTS]) FROM [TKRESEARCH].[dbo].[TB_DEV_CANDYS_DETAILS] AS DE2 WHERE DE2.NO=[TB_DEV_CANDYS_DETAILS].NO))
+                                    ,[TPCTS]=CONVERT(decimal(16,4),[WEIGHTS]/(SELECT SUM([WEIGHTS]) FROM [TKRESEARCH].[dbo].[TB_DEV_CANDYS_DETAILS] AS DE2 WHERE DE2.NO=[TB_DEV_CANDYS_DETAILS].NO))
+                                    WHERE [NO]='24-04-001' 
+                              
+                                    "
+                                     , NO
+
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
         }
         #endregion
 
@@ -1513,6 +1569,9 @@ namespace TKRESEARCH
         private void button12_Click(object sender, EventArgs e)
         {
             CAL_TB_DEV_CANDYS_DETAILS_PCTS(textBox2T42.Text.Trim());
+            SEARCH_TB_DEV_CANDYS_DETAILS2(textBox2T1.Text.Trim());
+
+            MessageBox.Show("完成");
         }
 
         #endregion
