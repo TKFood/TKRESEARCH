@@ -1568,7 +1568,7 @@ namespace TKRESEARCH
 
         private void button12_Click(object sender, EventArgs e)
         {
-            CAL_TB_DEV_CANDYS_DETAILS_PCTS(textBox2T42.Text.Trim());
+            CAL_TB_DEV_CANDYS_DETAILS_PCTS(textBox2T1.Text.Trim());
             SEARCH_TB_DEV_CANDYS_DETAILS2(textBox2T1.Text.Trim());
 
             MessageBox.Show("完成");
