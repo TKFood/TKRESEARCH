@@ -86,9 +86,7 @@
             this.label22 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.textBox2T30 = new System.Windows.Forms.TextBox();
@@ -96,8 +94,6 @@
             this.textBox2T33 = new System.Windows.Forms.TextBox();
             this.textBox2T34 = new System.Windows.Forms.TextBox();
             this.textBox2T35 = new System.Windows.Forms.TextBox();
-            this.textBox2T36 = new System.Windows.Forms.TextBox();
-            this.textBox2T37 = new System.Windows.Forms.TextBox();
             this.textBox2T38 = new System.Windows.Forms.TextBox();
             this.textBox2T39 = new System.Windows.Forms.TextBox();
             this.textBox2T40 = new System.Windows.Forms.TextBox();
@@ -109,6 +105,11 @@
             this.button14 = new System.Windows.Forms.Button();
             this.textBox2T41 = new System.Windows.Forms.TextBox();
             this.textBox2T42 = new System.Windows.Forms.TextBox();
+            this.textBox2T37 = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.textBox2T36 = new System.Windows.Forms.TextBox();
+            this.button12 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -435,6 +436,7 @@
             this.tableLayoutPanel3.Controls.Add(this.textBox2T10, 1, 5);
             this.tableLayoutPanel3.Controls.Add(this.textBox2T9, 1, 4);
             this.tableLayoutPanel3.Controls.Add(this.textBox2T11, 7, 1);
+            this.tableLayoutPanel3.Controls.Add(this.button12, 7, 4);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -905,16 +907,6 @@
             this.label23.TabIndex = 48;
             this.label23.Text = "供應商";
             // 
-            // label19
-            // 
-            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(3, 292);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(114, 16);
-            this.label19.TabIndex = 44;
-            this.label19.Text = "各自百分比(%)";
-            // 
             // label14
             // 
             this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -924,16 +916,6 @@
             this.label14.Size = new System.Drawing.Size(114, 16);
             this.label14.TabIndex = 43;
             this.label14.Text = "原料品項";
-            // 
-            // label26
-            // 
-            this.label26.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(3, 252);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(114, 16);
-            this.label26.TabIndex = 51;
-            this.label26.Text = "各自重量(g)";
             // 
             // label25
             // 
@@ -994,22 +976,6 @@
             this.textBox2T35.Name = "textBox2T35";
             this.textBox2T35.Size = new System.Drawing.Size(155, 27);
             this.textBox2T35.TabIndex = 57;
-            // 
-            // textBox2T36
-            // 
-            this.textBox2T36.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2T36.Location = new System.Drawing.Point(123, 286);
-            this.textBox2T36.Name = "textBox2T36";
-            this.textBox2T36.Size = new System.Drawing.Size(155, 27);
-            this.textBox2T36.TabIndex = 58;
-            // 
-            // textBox2T37
-            // 
-            this.textBox2T37.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2T37.Location = new System.Drawing.Point(123, 246);
-            this.textBox2T37.Name = "textBox2T37";
-            this.textBox2T37.Size = new System.Drawing.Size(155, 27);
-            this.textBox2T37.TabIndex = 59;
             // 
             // textBox2T38
             // 
@@ -1121,6 +1087,54 @@
             this.textBox2T42.Name = "textBox2T42";
             this.textBox2T42.Size = new System.Drawing.Size(155, 27);
             this.textBox2T42.TabIndex = 79;
+            // 
+            // textBox2T37
+            // 
+            this.textBox2T37.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox2T37.Location = new System.Drawing.Point(123, 246);
+            this.textBox2T37.Name = "textBox2T37";
+            this.textBox2T37.Size = new System.Drawing.Size(155, 27);
+            this.textBox2T37.TabIndex = 59;
+            // 
+            // label26
+            // 
+            this.label26.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(3, 252);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(114, 16);
+            this.label26.TabIndex = 51;
+            this.label26.Text = "各自重量(g)";
+            // 
+            // label19
+            // 
+            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(3, 292);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(114, 16);
+            this.label19.TabIndex = 44;
+            this.label19.Text = "各自百分比(%)";
+            // 
+            // textBox2T36
+            // 
+            this.textBox2T36.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox2T36.Location = new System.Drawing.Point(123, 286);
+            this.textBox2T36.Name = "textBox2T36";
+            this.textBox2T36.Size = new System.Drawing.Size(155, 27);
+            this.textBox2T36.TabIndex = 58;
+            // 
+            // button12
+            // 
+            this.button12.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button12.ForeColor = System.Drawing.Color.Blue;
+            this.button12.Location = new System.Drawing.Point(830, 163);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(101, 34);
+            this.button12.TabIndex = 77;
+            this.button12.Text = "計算佔比";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // Frm_DEV_CANDYS
             // 
@@ -1252,5 +1266,6 @@
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.TextBox textBox2T41;
         private System.Windows.Forms.TextBox textBox2T42;
+        private System.Windows.Forms.Button button12;
     }
 }
