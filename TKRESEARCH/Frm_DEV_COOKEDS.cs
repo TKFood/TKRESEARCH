@@ -1815,7 +1815,7 @@ namespace TKRESEARCH
             , textBox2T39.Text
             );
 
-           
+            CAL_TB_DEV_COOKEDS_DETAILS(textBox2T1.Text.Trim());
             SEARCH_TB_DEV_COOKEDS_DETAILS2(textBox2T1.Text);
         }
         private void button9_Click(object sender, EventArgs e)
@@ -1834,7 +1834,7 @@ namespace TKRESEARCH
            , textBox2T39.Text
            );
 
-
+            CAL_TB_DEV_COOKEDS_DETAILS(textBox2T1.Text.Trim());
             SEARCH_TB_DEV_COOKEDS_DETAILS2(textBox2T1.Text);
         }
         private void button10_Click(object sender, EventArgs e)
@@ -1844,6 +1844,7 @@ namespace TKRESEARCH
             {
                 DELETE_TB_DEV_COOKEDS_DETAILS(textBox2T40.Text);
 
+                CAL_TB_DEV_COOKEDS_DETAILS(textBox2T1.Text.Trim());
                 SEARCH_TB_DEV_COOKEDS_DETAILS2(textBox2T1.Text);
 
             }
