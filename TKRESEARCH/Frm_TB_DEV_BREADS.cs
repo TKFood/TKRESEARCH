@@ -1531,6 +1531,78 @@ namespace TKRESEARCH
             textBox3T1.Text = textBox2T1.Text;
         }
 
+        public void CAL_TB_DEV_BREADS_DETAILS(string NO)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"     
+                                    SELECT  
+                                    [NO]
+                                    ,[KINDS]
+                                    ,SUM([WEIGHTS]) AS 'KINDSWEIGHTS'
+                                    INTO #KindsTotalWeight
+                                    FROM [TKRESEARCH].[dbo].[TB_DEV_BREADS_DETAILS]
+                                    WHERE [NO]='{0}'
+                                    GROUP BY [NO],[KINDS]
+
+                                    UPDATE  [TKRESEARCH].[dbo].[TB_DEV_BREADS_DETAILS]
+                                    SET [TWEIGHTS]=[WEIGHTS]
+                                    ,[PCTS]=CONVERT(decimal(16,4),[WEIGHTS]/#KindsTotalWeight.KINDSWEIGHTS)
+                                    ,[TPCTS]=CONVERT(decimal(16,4),[WEIGHTS]/(SELECT SUM([WEIGHTS]) FROM [TKRESEARCH].[dbo].[TB_DEV_BREADS_DETAILS] AS DE2 WHERE DE2.NO=[TB_DEV_BREADS_DETAILS].NO))
+                                    FROM #KindsTotalWeight 
+                                    WHERE [TB_DEV_BREADS_DETAILS].NO=#KindsTotalWeight.NO AND  [TB_DEV_BREADS_DETAILS].KINDS=#KindsTotalWeight.KINDS 
+                                    AND [TB_DEV_BREADS_DETAILS].[NO]='{0}'
+
+                              
+                                    "
+                                     , NO
+
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
         #endregion
 
         #region BUTTON
@@ -1747,10 +1819,16 @@ namespace TKRESEARCH
                 MessageBox.Show("未填寫BOM品號");
             }
         }
+        private void button12_Click(object sender, EventArgs e)
+        {
+            CAL_TB_DEV_BREADS_DETAILS(textBox2T1.Text);
+            SEARCH_TB_DEV_BREADS_DETAILS2(textBox3T1.Text);
+
+        }
 
 
         #endregion
 
-      
+
     }
 }

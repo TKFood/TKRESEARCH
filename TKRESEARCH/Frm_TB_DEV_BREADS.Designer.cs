@@ -159,6 +159,7 @@
             this.textBox3T7 = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
+            this.button12 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -1377,6 +1378,7 @@
             this.tableLayoutPanel4.Controls.Add(this.textBox3T7, 1, 6);
             this.tableLayoutPanel4.Controls.Add(this.label19, 0, 7);
             this.tableLayoutPanel4.Controls.Add(this.label26, 0, 6);
+            this.tableLayoutPanel4.Controls.Add(this.button12, 4, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -1674,6 +1676,18 @@
             this.label26.TabIndex = 51;
             this.label26.Text = "各自重量(g)";
             // 
+            // button12
+            // 
+            this.button12.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button12.ForeColor = System.Drawing.Color.Blue;
+            this.button12.Location = new System.Drawing.Point(484, 3);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(113, 34);
+            this.button12.TabIndex = 93;
+            this.button12.Text = "計算佔比";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
             // Frm_TB_DEV_BREADS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
@@ -1851,5 +1865,6 @@
         private System.Windows.Forms.TextBox textBox2T33;
         private System.Windows.Forms.Label label53;
         private System.Windows.Forms.TextBox textBox2T34;
+        private System.Windows.Forms.Button button12;
     }
 }
