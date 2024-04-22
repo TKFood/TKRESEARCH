@@ -95,6 +95,7 @@
             this.textBox2T12 = new System.Windows.Forms.TextBox();
             this.textBox2T13 = new System.Windows.Forms.TextBox();
             this.textBox2T20 = new System.Windows.Forms.TextBox();
+            this.button12 = new System.Windows.Forms.Button();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -127,7 +128,6 @@
             this.label19 = new System.Windows.Forms.Label();
             this.textBox2T37 = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
-            this.button12 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -955,6 +955,18 @@
             this.textBox2T20.Size = new System.Drawing.Size(102, 27);
             this.textBox2T20.TabIndex = 91;
             // 
+            // button12
+            // 
+            this.button12.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button12.ForeColor = System.Drawing.Color.Blue;
+            this.button12.Location = new System.Drawing.Point(723, 163);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(101, 34);
+            this.button12.TabIndex = 92;
+            this.button12.Text = "計算佔比";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
             // splitContainer5
             // 
             this.splitContainer5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -1046,7 +1058,7 @@
             // 
             this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(123, 48);
+            this.comboBox1.Location = new System.Drawing.Point(123, 50);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(155, 24);
             this.comboBox1.TabIndex = 78;
@@ -1319,18 +1331,6 @@
             this.label26.Size = new System.Drawing.Size(114, 16);
             this.label26.TabIndex = 51;
             this.label26.Text = "各自重量(g)";
-            // 
-            // button12
-            // 
-            this.button12.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button12.ForeColor = System.Drawing.Color.Blue;
-            this.button12.Location = new System.Drawing.Point(723, 163);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(101, 34);
-            this.button12.TabIndex = 92;
-            this.button12.Text = "計算佔比";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // Frm_TB_DEV_CAKES
             // 

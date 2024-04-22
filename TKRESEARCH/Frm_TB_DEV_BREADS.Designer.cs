@@ -137,9 +137,7 @@
             this.label22 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.textBox3T1 = new System.Windows.Forms.TextBox();
@@ -147,8 +145,6 @@
             this.textBox3T3 = new System.Windows.Forms.TextBox();
             this.textBox3T4 = new System.Windows.Forms.TextBox();
             this.textBox3T5 = new System.Windows.Forms.TextBox();
-            this.textBox3T6 = new System.Windows.Forms.TextBox();
-            this.textBox3T7 = new System.Windows.Forms.TextBox();
             this.textBox3T8 = new System.Windows.Forms.TextBox();
             this.textBox3T9 = new System.Windows.Forms.TextBox();
             this.textBox3T11 = new System.Windows.Forms.TextBox();
@@ -159,6 +155,10 @@
             this.label30 = new System.Windows.Forms.Label();
             this.button14 = new System.Windows.Forms.Button();
             this.textBox3T10 = new System.Windows.Forms.TextBox();
+            this.textBox3T6 = new System.Windows.Forms.TextBox();
+            this.textBox3T7 = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -1400,7 +1400,7 @@
             // 
             this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(123, 48);
+            this.comboBox1.Location = new System.Drawing.Point(123, 50);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(155, 24);
             this.comboBox1.TabIndex = 78;
@@ -1465,16 +1465,6 @@
             this.label23.TabIndex = 48;
             this.label23.Text = "供應商";
             // 
-            // label19
-            // 
-            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(3, 292);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(114, 16);
-            this.label19.TabIndex = 44;
-            this.label19.Text = "各自百分比(%)";
-            // 
             // label14
             // 
             this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -1484,16 +1474,6 @@
             this.label14.Size = new System.Drawing.Size(114, 16);
             this.label14.TabIndex = 43;
             this.label14.Text = "原料品項";
-            // 
-            // label26
-            // 
-            this.label26.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(3, 252);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(114, 16);
-            this.label26.TabIndex = 51;
-            this.label26.Text = "各自重量(g)";
             // 
             // label25
             // 
@@ -1554,22 +1534,6 @@
             this.textBox3T5.Name = "textBox3T5";
             this.textBox3T5.Size = new System.Drawing.Size(155, 27);
             this.textBox3T5.TabIndex = 57;
-            // 
-            // textBox3T6
-            // 
-            this.textBox3T6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox3T6.Location = new System.Drawing.Point(123, 286);
-            this.textBox3T6.Name = "textBox3T6";
-            this.textBox3T6.Size = new System.Drawing.Size(155, 27);
-            this.textBox3T6.TabIndex = 58;
-            // 
-            // textBox3T7
-            // 
-            this.textBox3T7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox3T7.Location = new System.Drawing.Point(123, 246);
-            this.textBox3T7.Name = "textBox3T7";
-            this.textBox3T7.Size = new System.Drawing.Size(155, 27);
-            this.textBox3T7.TabIndex = 59;
             // 
             // textBox3T8
             // 
@@ -1673,6 +1637,42 @@
             this.textBox3T10.Name = "textBox3T10";
             this.textBox3T10.Size = new System.Drawing.Size(113, 27);
             this.textBox3T10.TabIndex = 77;
+            // 
+            // textBox3T6
+            // 
+            this.textBox3T6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox3T6.Location = new System.Drawing.Point(123, 286);
+            this.textBox3T6.Name = "textBox3T6";
+            this.textBox3T6.Size = new System.Drawing.Size(155, 27);
+            this.textBox3T6.TabIndex = 58;
+            // 
+            // textBox3T7
+            // 
+            this.textBox3T7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox3T7.Location = new System.Drawing.Point(123, 246);
+            this.textBox3T7.Name = "textBox3T7";
+            this.textBox3T7.Size = new System.Drawing.Size(155, 27);
+            this.textBox3T7.TabIndex = 59;
+            // 
+            // label19
+            // 
+            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(3, 292);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(114, 16);
+            this.label19.TabIndex = 44;
+            this.label19.Text = "各自百分比(%)";
+            // 
+            // label26
+            // 
+            this.label26.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(3, 252);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(114, 16);
+            this.label26.TabIndex = 51;
+            this.label26.Text = "各自重量(g)";
             // 
             // Frm_TB_DEV_BREADS
             // 

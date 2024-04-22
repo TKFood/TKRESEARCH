@@ -1484,7 +1484,7 @@ namespace TKRESEARCH
            , textBox2T39.Text
            );
 
-            //CAL_TB_DEV_PASTRYS_DETAILS_PCTS(textBox2T30.Text);
+            CAL_TB_DEV_CAKES_DETAILS(textBox2T1.Text);
             SEARCH_TB_DEV_CAKES_DETAILS2(textBox2T1.Text);
         }
         private void button11_Click(object sender, EventArgs e)
@@ -1602,7 +1602,7 @@ namespace TKRESEARCH
            , textBox2T39.Text
            );
 
-            //CAL_TB_DEV_PASTRYS_DETAILS_PCTS(textBox2T30.Text);
+            CAL_TB_DEV_CAKES_DETAILS(textBox2T1.Text);
             SEARCH_TB_DEV_CAKES_DETAILS2(textBox2T1.Text);
         }
         private void button10_Click(object sender, EventArgs e)
@@ -1611,7 +1611,8 @@ namespace TKRESEARCH
             if (dialogResult == DialogResult.Yes)
             {
                 DELETE_TB_DEV_CAKES_DETAILS(textBox2T40.Text);
-                //CAL_TB_DEV_PASTRYS_DETAILS_PCTS(textBox2T30.Text);
+
+                CAL_TB_DEV_CAKES_DETAILS(textBox2T1.Text);
                 SEARCH_TB_DEV_CAKES_DETAILS2(textBox2T1.Text);
 
             }
