@@ -1767,7 +1767,7 @@ namespace TKRESEARCH
            , textBox3T9.Text
            );
 
-
+            CAL_TB_DEV_BREADS_DETAILS(textBox2T1.Text);
             SEARCH_TB_DEV_BREADS_DETAILS2(textBox3T1.Text);
         }
         private void button9_Click(object sender, EventArgs e)
@@ -1786,7 +1786,7 @@ namespace TKRESEARCH
            , textBox3T9.Text
            );
 
-
+            CAL_TB_DEV_BREADS_DETAILS(textBox2T1.Text);
             SEARCH_TB_DEV_BREADS_DETAILS2(textBox3T1.Text);
         }
 
@@ -1798,6 +1798,7 @@ namespace TKRESEARCH
             {
                 DELETE_TB_DEV_BREADS_DETAILS(textBox3T11.Text);
 
+                CAL_TB_DEV_BREADS_DETAILS(textBox2T1.Text);
                 SEARCH_TB_DEV_BREADS_DETAILS2(textBox3T1.Text);
 
             }
