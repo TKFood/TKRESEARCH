@@ -273,9 +273,9 @@
             this.tableLayoutPanel2.Controls.Add(this.textBox10, 1, 8);
             this.tableLayoutPanel2.Controls.Add(this.dateTimePicker2, 1, 9);
             this.tableLayoutPanel2.Controls.Add(this.button2, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.button7, 2, 8);
-            this.tableLayoutPanel2.Controls.Add(this.button6, 2, 9);
             this.tableLayoutPanel2.Controls.Add(this.button5, 2, 1);
+            this.tableLayoutPanel2.Controls.Add(this.button6, 2, 8);
+            this.tableLayoutPanel2.Controls.Add(this.button7, 2, 9);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -510,11 +510,11 @@
             this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.button7.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.button7.ForeColor = System.Drawing.Color.Blue;
-            this.button7.Location = new System.Drawing.Point(324, 323);
+            this.button7.Location = new System.Drawing.Point(324, 363);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(82, 34);
             this.button7.TabIndex = 71;
-            this.button7.Text = "修改";
+            this.button7.Text = "刪除";
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
@@ -523,11 +523,11 @@
             this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.button6.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.button6.ForeColor = System.Drawing.Color.Blue;
-            this.button6.Location = new System.Drawing.Point(324, 363);
+            this.button6.Location = new System.Drawing.Point(324, 323);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(82, 34);
             this.button6.TabIndex = 72;
-            this.button6.Text = "刪除";
+            this.button6.Text = "修改";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
