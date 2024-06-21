@@ -106,6 +106,8 @@ namespace TKRESEARCH
                                     ,[COSTS] AS '成本'
                                     ,[MOQS] AS 'MOQ'
                                     ,[MANUPRODS] AS '一天產能量'
+                                    ,[GETDATES] AS '送樣日期'
+                                    ,[REPLY] AS '業務回覆'
                                     ,CONVERT(NVARCHAR,[CARESTEDATES],112) AS '建立日期'
                                     ,[ID]
 
