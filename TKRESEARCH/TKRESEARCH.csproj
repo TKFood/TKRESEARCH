@@ -145,6 +145,12 @@
     <Compile Include="FrmTBINVMB.Designer.cs">
       <DependentUpon>FrmTBINVMB.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmTB_DEV_NEWLISTS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTB_DEV_NEWLISTS.Designer.cs">
+      <DependentUpon>FrmTB_DEV_NEWLISTS.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmUOFMESSAGES.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -231,6 +237,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmTBINVMB.resx">
       <DependentUpon>FrmTBINVMB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTB_DEV_NEWLISTS.resx">
+      <DependentUpon>FrmTB_DEV_NEWLISTS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmUOFMESSAGES.resx">
       <DependentUpon>FrmUOFMESSAGES.cs</DependentUpon>
