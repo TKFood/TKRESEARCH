@@ -248,6 +248,20 @@ namespace TKRESEARCH
             string NO = GETMAXNO(DATES);
             textBox2.Text = NO;
         }
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+        }
         #endregion
 
 
