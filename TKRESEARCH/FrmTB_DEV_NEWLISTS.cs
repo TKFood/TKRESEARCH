@@ -150,7 +150,89 @@ namespace TKRESEARCH
 
             }
         }
+        public string GETMAXNO(string NO)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlDataAdapter adapter1 = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+            DataSet ds1 = new DataSet();
 
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sbSql.Clear();
+                sbSqlQuery.Clear();
+                ds1.Clear();
+
+
+                sbSql.AppendFormat(@" 
+                                        SELECT
+                                        ISNULL(MAX(NO),'0')  AS 'NO'
+                                        FROM  [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]
+                                        WHERE [NO] LIKE '{0}%'
+                                        ORDER BY [NO] DESC
+                                        ", NO);
+
+                adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+                sqlConn.Open();
+                ds1.Clear();
+                adapter1.Fill(ds1, "ds1");
+                sqlConn.Close();
+
+
+                if (ds1.Tables["ds1"].Rows.Count == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    if (ds1.Tables["ds1"].Rows.Count >= 1)
+                    {
+                        string NEWNO = ds1.Tables["ds1"].Rows[0]["NO"].ToString();
+
+                        if (NEWNO.Equals("0"))
+                        {
+                            return NO + "-" + "001";
+                        }
+
+                        else
+                        {
+                            int serno = Convert.ToInt16(NEWNO.Substring(6, 3));
+                            serno = serno + 1;
+                            string temp = serno.ToString();
+                            temp = temp.PadLeft(3, '0');
+                            return NO + "-" + temp.ToString();
+                        }
+
+
+                    }
+                    return null;
+                }
+
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
 
         #endregion
 
@@ -159,7 +241,15 @@ namespace TKRESEARCH
         {
             SEARCH(dateTimePicker1.Value.ToString("yyyyMM"),textBox1.Text.Trim());
         }
-
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string DATES = DateTime.Now.ToString("yyyy-MM");
+            DATES = DATES.Substring(2, 5);
+            string NO = GETMAXNO(DATES);
+            textBox2.Text = NO;
+        }
         #endregion
-}
+
+
+    }
 }
