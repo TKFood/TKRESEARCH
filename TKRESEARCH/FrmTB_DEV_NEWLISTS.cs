@@ -106,7 +106,7 @@ namespace TKRESEARCH
                                     ,[COSTS] AS '成本'
                                     ,[MOQS] AS 'MOQ'
                                     ,[MANUPRODS] AS '一天產能量'
-                                    ,[GETDATES] AS '送樣日期'
+                                    ,CONVERT(NVARCHAR,[GETDATES],112)  AS '送樣日期'
                                     ,[REPLY] AS '業務回覆'
                                     ,CONVERT(NVARCHAR,[CARESTEDATES],112) AS '建立日期'
                                     ,[ID]
@@ -151,6 +151,47 @@ namespace TKRESEARCH
             {
 
             }
+        }
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            SETTEXT();
+
+            if (dataGridView1.CurrentRow != null)
+            {
+                int rowindex = dataGridView1.CurrentRow.Index;
+                DataGridViewRow row = dataGridView1.Rows[rowindex];
+
+                textBoxid.Text = row.Cells["編號"].Value.ToString();              
+
+
+                //dateTimePicker2.Value= row.Cells["開發日期"].Value.ToString();
+                DateTime dateTime2;
+                if (DateTime.TryParseExact(row.Cells["建立日期"].Value.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime2))
+                {                 
+                    dateTimePicker2.Value = dateTime2;
+                }
+                DateTime dateTime3;
+                if (DateTime.TryParseExact(row.Cells["送樣日期"].Value.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime3))
+                {                   
+                    dateTimePicker3.Value = dateTime3;
+                }
+
+
+            }
+        }
+
+        public void SETTEXT()
+        {
+            textBox2.Text = null;
+            textBox3.Text = null;
+            textBox4.Text = null;
+            textBox5.Text = null;
+            textBox6.Text = null;
+            textBox7.Text = null;
+            textBox8.Text = null;
+            textBox9.Text = null;
+            textBox10.Text = null;
+            textBoxid.Text = null;
         }
         public string GETMAXNO(string NO)
         {
@@ -263,9 +304,10 @@ namespace TKRESEARCH
 
         }
 
-      
+
+
         #endregion
 
-
+       
     }
 }
