@@ -285,6 +285,262 @@ namespace TKRESEARCH
             }
         }
 
+        public void ADD_TB_DEVE_NEWLISTS(
+            string NO
+            , string NAMES
+            , string SPECS
+            , string COMMENTS
+            , string INGREDIENTS
+            , string COSTS
+            , string MOQS
+            , string MANUPRODS
+            , string GETDATES
+            , string REPLY
+            , string CARESTEDATES
+
+            )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"                                   
+                                    
+                                    INSERT INTO [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]
+                                    (
+                                    [NO]
+                                    ,[NAMES]
+                                    ,[SPECS]
+                                    ,[COMMENTS]
+                                    ,[INGREDIENTS]
+                                    ,[COSTS]
+                                    ,[MOQS]
+                                    ,[MANUPRODS]
+                                    ,[GETDATES]
+                                    ,[REPLY]
+                                    ,[CARESTEDATES]
+                                    )
+                                    VALUES
+                                    (
+                                    '{0}'
+                                    ,'{1}'
+                                    ,'{2}'
+                                    ,'{3}'
+                                    ,'{4}'
+                                    ,'{5}'
+                                    ,'{6}'
+                                    ,'{7}'
+                                    ,'{8}'
+                                    ,'{9}'
+                                    ,'{10}'
+                                    )
+                                    ", NO
+                                    , NAMES
+                                    , SPECS
+                                    , COMMENTS
+                                    , INGREDIENTS
+                                    , COSTS
+                                    , MOQS
+                                    , MANUPRODS
+                                    , GETDATES
+                                    , REPLY
+                                    , CARESTEDATES
+
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
+        public void UPDATE_TB_DEVE_NEWLISTS(
+            string ID
+            ,string NO
+            , string NAMES
+            , string SPECS
+            , string COMMENTS
+            , string INGREDIENTS
+            , string COSTS
+            , string MOQS
+            , string MANUPRODS
+            , string GETDATES
+            , string REPLY
+            , string CARESTEDATES
+            )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"                                    
+                                    UPDATE [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]
+                                    SET 
+                                    [NO]='{1}'
+                                    ,[NAMES]='{2}'
+                                    ,[SPECS]='{3}'
+                                    ,[COMMENTS]='{4}'
+                                    ,[INGREDIENTS]='{5}'
+                                    ,[COSTS]='{6}'
+                                    ,[MOQS]='{7}'
+                                    ,[MANUPRODS]='{8}'
+                                    ,[GETDATES]='{9}'
+                                    ,[REPLY]='{10}'
+                                    ,[CARESTEDATES]='{11}'
+                                    WHERE [ID]='{0}'
+                                    "
+                                    ,ID
+                                    , NO
+                                    , NAMES
+                                    , SPECS
+                                    , COMMENTS
+                                    , INGREDIENTS
+                                    , COSTS
+                                    , MOQS
+                                    , MANUPRODS
+                                    , GETDATES
+                                    , REPLY
+                                    , CARESTEDATES
+
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
+        public void DEL_TB_DEVE_NEWLISTS(string ID)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                    DELETE [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]
+                                    WHERE [ID]='{0}'
+                                    ", ID
+
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+
+        }
+
         #endregion
 
         #region BUTTON
@@ -301,15 +557,83 @@ namespace TKRESEARCH
         }
         private void button5_Click(object sender, EventArgs e)
         {
+            string NO = textBox2.Text.Trim();
+            string NAMES = textBox3.Text.Trim();
+            string SPECS = textBox4.Text.Trim();
+            string COMMENTS = textBox5.Text.Trim();
+            string INGREDIENTS = textBox6.Text.Trim();
+            string COSTS = textBox7.Text.Trim();
+            string MOQS = textBox8.Text.Trim();
+            string MANUPRODS = textBox9.Text.Trim();
+            string GETDATES = dateTimePicker3.Value.ToString("yyyy/MM/dd");
+            string REPLY = textBox10.Text.Trim();
+            string CARESTEDATES = dateTimePicker2.Value.ToString("yyyy/MM/dd");
+
+            ADD_TB_DEVE_NEWLISTS(
+                NO
+                , NAMES
+                , SPECS
+                , COMMENTS
+                , INGREDIENTS
+                , COSTS
+                , MOQS
+                , MANUPRODS
+                , GETDATES
+                , REPLY
+                , CARESTEDATES
+                );
+
+            SEARCH(dateTimePicker1.Value.ToString("yyyyMM"), textBox1.Text.Trim());
 
         }
         private void button6_Click(object sender, EventArgs e)
         {
+            string ID = textBoxid.Text.Trim();
+            string NO = textBox2.Text.Trim();
+            string NAMES = textBox3.Text.Trim();
+            string SPECS = textBox4.Text.Trim();
+            string COMMENTS = textBox5.Text.Trim();
+            string INGREDIENTS = textBox6.Text.Trim();
+            string COSTS = textBox7.Text.Trim();
+            string MOQS = textBox8.Text.Trim();
+            string MANUPRODS = textBox9.Text.Trim();
+            string GETDATES = dateTimePicker3.Value.ToString("yyyy/MM/dd");
+            string REPLY = textBox10.Text.Trim();
+            string CARESTEDATES = dateTimePicker2.Value.ToString("yyyy/MM/dd");
 
+            UPDATE_TB_DEVE_NEWLISTS(
+                ID
+                ,NO
+                , NAMES
+                , SPECS
+                , COMMENTS
+                , INGREDIENTS
+                , COSTS
+                , MOQS
+                , MANUPRODS
+                , GETDATES
+                , REPLY
+                , CARESTEDATES
+                );
+
+
+            SEARCH(dateTimePicker1.Value.ToString("yyyyMM"), textBox1.Text.Trim());
         }
         private void button7_Click(object sender, EventArgs e)
         {
+            string ID = textBoxid.Text.Trim();
 
+            DialogResult dialogResult = MessageBox.Show("要刪除了?", "要刪除了?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DEL_TB_DEVE_NEWLISTS(ID);
+                SEARCH(dateTimePicker1.Value.ToString("yyyyMM"), textBox1.Text.Trim()); ;
+
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
         }
 
 
