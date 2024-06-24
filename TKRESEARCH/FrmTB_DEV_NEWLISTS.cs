@@ -636,10 +636,76 @@ namespace TKRESEARCH
             }
         }
 
+        public void SETFASTREPORT(string YYYYMM)
+        {
+            string YY = YYYYMM.Substring(2, 2);
+            string MM = YYYYMM.Substring(4, 2);
+            string YYYY = YYYYMM.Substring(0, 4);
+            string P1 = YYYY + "年/" + MM+ "月份";
+
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder SQL1 = new StringBuilder();
+
+            SQL1 = SETSQL(YY+"-"+ MM);
+            Report report1 = new Report();
+            report1.Load(@"REPORT\研發新品清單.frx");
+
+            report1.Dictionary.Connections[0].ConnectionString = sqlsb.ConnectionString;
+
+            TableDataSource table = report1.GetDataSource("Table") as TableDataSource;
+            table.SelectCommand = SQL1.ToString();
+
+            report1.SetParameterValue("P1", P1);
+            //report1.SetParameterValue("P2", dateTimePicker2.Value.ToString("yyyyMMdd"));
+            report1.Preview = previewControl1;
+            report1.Show();
+        }
+
+        public StringBuilder SETSQL(string YYMM)
+        {
+            StringBuilder SB = new StringBuilder();
+
+            SB.AppendFormat(@" 
+                            SELECT 
+                            [NO] AS '編號'
+                            ,[NAMES] AS '商品'
+                            ,[SPECS] AS '規格'
+                            ,[COMMENTS] AS '需求'
+                            ,[INGREDIENTS] AS '成份'
+                            ,[COSTS] AS '成本'
+                            ,[MOQS] AS 'MOQ'
+                            ,[MANUPRODS] AS '一天產能量'
+                            ,CONVERT(NVARCHAR,[GETDATES],112)  AS '送樣日期'
+                            ,[REPLY] AS '業務回覆'
+                            ,CONVERT(NVARCHAR,[CARESTEDATES],112) AS '建立日期'
+
+
+                            FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]
+                            WHERE 1=1
+                            AND [NO] LIKE '%{0}%'
+                          
+                            ", YYMM);
+
+            return SB;
+
+        }
 
 
         #endregion
 
-       
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SETFASTREPORT(dateTimePicker4.Value.ToString("yyyyMM"));
+        }
     }
 }
