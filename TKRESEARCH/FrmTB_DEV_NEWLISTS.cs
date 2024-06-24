@@ -693,20 +693,20 @@ namespace TKRESEARCH
 
                             FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]
                             WHERE 1=1
-                            AND [NO] LIKE '%{0}%'
+                            AND [NO] LIKE '%{0}%' 
                           
                             ", YYMM);
 
             return SB;
 
         }
-
-
-        #endregion
-
         private void button3_Click(object sender, EventArgs e)
         {
             SETFASTREPORT(dateTimePicker4.Value.ToString("yyyyMM"));
         }
+
+        #endregion
+
+
     }
 }

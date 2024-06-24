@@ -1,19 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="06/24/2024 11:30:38" ReportInfo.Modified="06/24/2024 11:50:32" ReportInfo.CreatorVersion="2016.4.4.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/24/2024 11:30:38" ReportInfo.Modified="06/24/2024 15:40:22" ReportInfo.CreatorVersion="2016.4.4.0">
   <Dictionary>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqHwzMSgwTFaHpjtG3vsOj8Zy6q+uhwpDsytgWqwZQZyEQUQyQ022aWUGqU90pHzzNjHuzu89K+RQ2LIBVx1fpgNkNJhwC4eetn2/Uy0fMrO7zDUE5AmRb+0bcYI+lxqpN+i5gA3VDGcwlcfm6L9ZMsLrZ3U+wEDtHCQtd9vw2XUHxE/mdSzEamTnlf4IktkYC">
-      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="SELECT &#13;&#10;[NO] AS '編號'&#13;&#10;,[NAMES] AS '商品'&#13;&#10;,[SPECS] AS '規格'&#13;&#10;,[COMMENTS] AS '需求'&#13;&#10;,[INGREDIENTS] AS '成份'&#13;&#10;,[COSTS] AS '成本'&#13;&#10;,[MOQS] AS 'MOQ'&#13;&#10;,[MANUPRODS] AS '一天產能量'&#13;&#10;,CONVERT(NVARCHAR,[GETDATES],112)  AS '送樣日期'&#13;&#10;,[REPLY] AS '業務回覆'&#13;&#10;,CONVERT(NVARCHAR,[CARESTEDATES],112) AS '建立日期'&#13;&#10;&#13;&#10;&#13;&#10;FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]&#13;&#10;WHERE 1=1">
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqHwzMSgwTFaHpjtG3vsOj8Zy6q+uhwpDsytgWqwZQZyEQUQyQ022aWUGqU90pHzzNjHuzu89K+RQ2LIBVx1fpgNkNJhwC4eetn2/Uy0fMrO7zDUE5AmRb+0bcYI+lxqpN+i5gA3VDGcwlcfm6L9ZMsLrZ3U+wEDtHCQtd9vw2XUEBnaddjP6jodcOxDh7g7Tk">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand=" SELECT &#13;&#10;                                    [NO] AS '編號'&#13;&#10;                                    ,[NAMES] AS '商品'&#13;&#10;                                    ,[SPECS] AS '規格'&#13;&#10;                                    ,[COMMENTS] AS '需求人'&#13;&#10;                                    ,[INGREDIENTS] AS '差異特色'&#13;&#10;                                    ,CONVERT(NVARCHAR,[GETDATES],112)  AS '打樣日期'&#13;&#10;                                    ,[COSTS] AS '成本'&#13;&#10;                                    ,[MOQS] AS 'MOQ'&#13;&#10;                                    ,[MANUPRODS] AS '一天產能量'&#13;&#10;                                    &#13;&#10;                                    ,[REPLY] AS '業務回覆'&#13;&#10;                                    ,CONVERT(NVARCHAR,[CARESTEDATES],112) AS '建立日期'&#13;&#10;                                    ,[ID]&#13;&#10;&#13;&#10;                                    FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]&#13;&#10;                                    WHERE 1=1">
         <Column Name="編號" DataType="System.String"/>
         <Column Name="商品" DataType="System.String"/>
         <Column Name="規格" DataType="System.String"/>
-        <Column Name="需求" DataType="System.String"/>
-        <Column Name="成份" DataType="System.String"/>
         <Column Name="成本" DataType="System.String"/>
         <Column Name="MOQ" DataType="System.String"/>
         <Column Name="一天產能量" DataType="System.String"/>
-        <Column Name="送樣日期" DataType="System.String"/>
         <Column Name="業務回覆" DataType="System.String"/>
         <Column Name="建立日期" DataType="System.String"/>
+        <Column Name="需求人" DataType="System.String"/>
+        <Column Name="差異特色" DataType="System.String"/>
+        <Column Name="打樣日期" DataType="System.String"/>
+        <Column Name="ID" DataType="System.Decimal"/>
       </TableDataSource>
     </MsSqlDataConnection>
     <Parameter Name="P1" DataType="System.String"/>
@@ -26,7 +27,7 @@
     <PageHeaderBand Name="PageHeader1" Top="127.45" Width="718.2" Height="85.05">
       <TextObject Name="Text2" Top="56.7" Width="151.2" Height="28.35" Border.Lines="All" Text="編號" HorzAlign="Center" VertAlign="Center" Font="標楷體, 14pt"/>
       <TextObject Name="Text4" Left="151.2" Top="56.7" Width="567" Height="28.35" Border.Lines="All" Text="商品" HorzAlign="Center" VertAlign="Center" Font="標楷體, 14pt"/>
-      <TextObject Name="Text6" Width="151.2" Height="56.7" Border.Lines="All" Text="編砠規則" HorzAlign="Center" VertAlign="Center" Font="標楷體, 14pt"/>
+      <TextObject Name="Text6" Width="151.2" Height="56.7" Border.Lines="All" Text="編碼規則" HorzAlign="Center" VertAlign="Center" Font="標楷體, 14pt"/>
       <TextObject Name="Text7" Left="151.2" Width="567" Height="56.7" Border.Lines="All" Text="□□-□□-□□□&#13;&#10;年份(西元末兩碼)-月份(01-12)-序號(001-999)" HorzAlign="Center" VertAlign="Center" Font="標楷體, 14pt"/>
     </PageHeaderBand>
     <DataBand Name="Data1" Top="217.1" Width="718.2" Height="28.35" DataSource="Table">
