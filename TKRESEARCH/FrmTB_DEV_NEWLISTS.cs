@@ -50,9 +50,53 @@ namespace TKRESEARCH
         public FrmTB_DEV_NEWLISTS()
         {
             InitializeComponent();
+
+            comboBox1load();
         }
 
         #region FUNCTION
+        public void comboBox1load()
+        {
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder Sequel = new StringBuilder();
+            Sequel.AppendFormat(@" 
+                                SELECT 
+                                [ID]
+                                ,[NAMES]
+                                FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS_SALES]
+                                ");
+            SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+            DataTable dt = new DataTable();
+            sqlConn.Open();
+
+            dt.Columns.Add("ID", typeof(string));
+            dt.Columns.Add("NAMES", typeof(string));
+            da.Fill(dt);
+            comboBox1.DataSource = dt.DefaultView;
+            comboBox1.ValueMember = "ID";
+            comboBox1.DisplayMember = "NAMES";
+            sqlConn.Close();
+
+
+        }
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            textBox5.Text = null;
+            if (comboBox1.SelectedValue!=null && !string.IsNullOrEmpty(comboBox1.SelectedValue.ToString()))
+            {
+                textBox5.Text = comboBox1.SelectedValue.ToString();
+            }
+        }
         public void SEARCH(string yyyyMM, string NAMES)
         {
             StringBuilder sbSql = new StringBuilder();
@@ -101,14 +145,15 @@ namespace TKRESEARCH
                                     [NO] AS '編號'
                                     ,[NAMES] AS '商品'
                                     ,[SPECS] AS '規格'
-                                    ,[COMMENTS] AS '需求人'
+                                    ,[SALES] AS '業務'
+                                    ,[COMMENTS] AS '註記'
                                     ,[INGREDIENTS] AS '差異特色'
                                     ,CONVERT(NVARCHAR,[GETDATES],112)  AS '打樣日期'
+                                    ,[REPLY] AS '業務回覆'
+                                    ,[SALESID] AS '業務ID'
                                     ,[COSTS] AS '成本'
                                     ,[MOQS] AS 'MOQ'
                                     ,[MANUPRODS] AS '一天產能量'
-                                    
-                                    ,[REPLY] AS '業務回覆'
                                     ,CONVERT(NVARCHAR,[CARESTEDATES],112) AS '建立日期'
                                     ,[ID]
 
@@ -166,12 +211,15 @@ namespace TKRESEARCH
                 textBox2.Text = row.Cells["編號"].Value.ToString();
                 textBox3.Text = row.Cells["商品"].Value.ToString();
                 textBox4.Text = row.Cells["規格"].Value.ToString();
-                textBox5.Text = row.Cells["需求人"].Value.ToString();
+                //textBox5.Text = row.Cells["需求人"].Value.ToString();
+                comboBox1.SelectedValue = row.Cells["業務ID"].Value.ToString();
+                textBox5.Text = row.Cells["業務ID"].Value.ToString();
                 textBox6.Text = row.Cells["差異特色"].Value.ToString();
                 textBox7.Text = row.Cells["成本"].Value.ToString();
                 textBox8.Text = row.Cells["MOQ"].Value.ToString();
                 textBox9.Text = row.Cells["一天產能量"].Value.ToString();
                 textBox10.Text = row.Cells["業務回覆"].Value.ToString();
+                textBox11.Text = row.Cells["註記"].Value.ToString();
 
                 //dateTimePicker2.Value= row.Cells["開發日期"].Value.ToString();
                 DateTime dateTime2;
@@ -200,7 +248,10 @@ namespace TKRESEARCH
             textBox8.Text = null;
             textBox9.Text = null;
             textBox10.Text = null;
+            textBox11.Text = null;
             textBoxid.Text = null;
+
+            //comboBox1.SelectedValue = null;
         }
         public string GETMAXNO(string NO)
         {
@@ -705,8 +756,9 @@ namespace TKRESEARCH
             SETFASTREPORT(dateTimePicker4.Value.ToString("yyyyMM"));
         }
 
+
         #endregion
 
-
+     
     }
 }
