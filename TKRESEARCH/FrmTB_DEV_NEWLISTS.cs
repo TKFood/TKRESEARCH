@@ -161,8 +161,16 @@ namespace TKRESEARCH
                 int rowindex = dataGridView1.CurrentRow.Index;
                 DataGridViewRow row = dataGridView1.Rows[rowindex];
 
-                textBoxid.Text = row.Cells["編號"].Value.ToString();              
-
+                textBoxid.Text = row.Cells["ID"].Value.ToString();
+                textBox2.Text = row.Cells["編號"].Value.ToString();
+                textBox3.Text = row.Cells["商品"].Value.ToString();
+                textBox4.Text = row.Cells["規格"].Value.ToString();
+                textBox5.Text = row.Cells["需求"].Value.ToString();
+                textBox6.Text = row.Cells["成份"].Value.ToString();
+                textBox7.Text = row.Cells["成本"].Value.ToString();
+                textBox8.Text = row.Cells["MOQ"].Value.ToString();
+                textBox9.Text = row.Cells["一天產能量"].Value.ToString();
+                textBox10.Text = row.Cells["業務回覆"].Value.ToString();
 
                 //dateTimePicker2.Value= row.Cells["開發日期"].Value.ToString();
                 DateTime dateTime2;
