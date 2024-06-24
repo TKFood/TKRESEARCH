@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="06/24/2024 11:30:38" ReportInfo.Modified="06/24/2024 15:40:22" ReportInfo.CreatorVersion="2016.4.4.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/24/2024 11:30:38" ReportInfo.Modified="06/24/2024 16:32:58" ReportInfo.CreatorVersion="2016.4.4.0">
   <Dictionary>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqHwzMSgwTFaHpjtG3vsOj8Zy6q+uhwpDsytgWqwZQZyEQUQyQ022aWUGqU90pHzzNjHuzu89K+RQ2LIBVx1fpgNkNJhwC4eetn2/Uy0fMrO7zDUE5AmRb+0bcYI+lxqpN+i5gA3VDGcwlcfm6L9ZMsLrZ3U+wEDtHCQtd9vw2XUEBnaddjP6jodcOxDh7g7Tk">
-      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand=" SELECT &#13;&#10;                                    [NO] AS '編號'&#13;&#10;                                    ,[NAMES] AS '商品'&#13;&#10;                                    ,[SPECS] AS '規格'&#13;&#10;                                    ,[COMMENTS] AS '需求人'&#13;&#10;                                    ,[INGREDIENTS] AS '差異特色'&#13;&#10;                                    ,CONVERT(NVARCHAR,[GETDATES],112)  AS '打樣日期'&#13;&#10;                                    ,[COSTS] AS '成本'&#13;&#10;                                    ,[MOQS] AS 'MOQ'&#13;&#10;                                    ,[MANUPRODS] AS '一天產能量'&#13;&#10;                                    &#13;&#10;                                    ,[REPLY] AS '業務回覆'&#13;&#10;                                    ,CONVERT(NVARCHAR,[CARESTEDATES],112) AS '建立日期'&#13;&#10;                                    ,[ID]&#13;&#10;&#13;&#10;                                    FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]&#13;&#10;                                    WHERE 1=1">
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqHwzMSgwTFaHpjtG3vsOj8Zy6q+uhwpDsytgWqwZQZyEQUQyQ022aWUGqU90pHzzNjHuzu89K+RQ2LIBVx1fpgNkNJhwC4eetn2/Uy0fMrO7zDUE5AmRb+0bcYI+lxqpN+i5gA3VDGcwlcfm6L9ZMsLrZ3U+wEDtHCQtd9vw2XUHXv8Dh1HSfBVEP52ZkOd+i">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="SELECT &#13;&#10;                            [NO] AS '編號'&#13;&#10;                            ,[NAMES] AS '商品'&#13;&#10;                            ,[SPECS] AS '規格'&#13;&#10;                            ,[SALES] AS '業務'&#13;&#10;                            ,[COMMENTS] AS '註記'&#13;&#10;                            ,[INGREDIENTS] AS '差異特色'&#13;&#10;                            ,CONVERT(NVARCHAR,[GETDATES],112)  AS '打樣日期'&#13;&#10;                            ,[REPLY] AS '業務回覆'&#13;&#10;                            ,[SALESID] AS '業務ID'&#13;&#10;                            ,[COSTS] AS '成本'&#13;&#10;                            ,[MOQS] AS 'MOQ'&#13;&#10;                            ,[MANUPRODS] AS '一天產能量'&#13;&#10;                            ,CONVERT(NVARCHAR,[CARESTEDATES],112) AS '建立日期'&#13;&#10;                            ,[ID]&#13;&#10;&#13;&#10;                                &#13;&#10;&#13;&#10;&#13;&#10;                            FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]&#13;&#10;                            WHERE 1=1">
         <Column Name="編號" DataType="System.String"/>
         <Column Name="商品" DataType="System.String"/>
         <Column Name="規格" DataType="System.String"/>
@@ -11,10 +11,12 @@
         <Column Name="一天產能量" DataType="System.String"/>
         <Column Name="業務回覆" DataType="System.String"/>
         <Column Name="建立日期" DataType="System.String"/>
-        <Column Name="需求人" DataType="System.String"/>
         <Column Name="差異特色" DataType="System.String"/>
         <Column Name="打樣日期" DataType="System.String"/>
         <Column Name="ID" DataType="System.Decimal"/>
+        <Column Name="業務" DataType="System.String"/>
+        <Column Name="註記" DataType="System.String"/>
+        <Column Name="業務ID" DataType="System.String"/>
       </TableDataSource>
     </MsSqlDataConnection>
     <Parameter Name="P1" DataType="System.String"/>

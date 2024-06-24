@@ -349,6 +349,8 @@ namespace TKRESEARCH
             , string GETDATES
             , string REPLY
             , string CARESTEDATES
+            , string SALES
+            , string SALESID
 
             )
         {
@@ -386,7 +388,9 @@ namespace TKRESEARCH
                                     ,[MANUPRODS]
                                     ,[GETDATES]
                                     ,[REPLY]
-                                    ,[CARESTEDATES]
+                                    ,[CARESTEDATES] 
+                                    ,[SALES]
+                                    ,[SALESID]
                                     )
                                     VALUES
                                     (
@@ -401,6 +405,8 @@ namespace TKRESEARCH
                                     ,'{8}'
                                     ,'{9}'
                                     ,'{10}'
+                                    ,'{11}'
+                                    ,'{12}'
                                     )
                                     ", NO
                                     , NAMES
@@ -413,6 +419,8 @@ namespace TKRESEARCH
                                     , GETDATES
                                     , REPLY
                                     , CARESTEDATES
+                                    , SALES
+                                    , SALESID
 
                                     );
 
@@ -456,6 +464,8 @@ namespace TKRESEARCH
             , string GETDATES
             , string REPLY
             , string CARESTEDATES
+            , string SALES
+            , string SALESID
             )
         {
             try
@@ -492,9 +502,11 @@ namespace TKRESEARCH
                                     ,[GETDATES]='{9}'
                                     ,[REPLY]='{10}'
                                     ,[CARESTEDATES]='{11}'
+                                    ,[SALES]='{12}'
+                                    ,[SALESID]='{13}'
                                     WHERE [ID]='{0}'
                                     "
-                                    ,ID
+                                    , ID
                                     , NO
                                     , NAMES
                                     , SPECS
@@ -506,6 +518,8 @@ namespace TKRESEARCH
                                     , GETDATES
                                     , REPLY
                                     , CARESTEDATES
+                                    , SALES
+                                    , SALESID
 
                                     );
 
@@ -612,7 +626,7 @@ namespace TKRESEARCH
             string NO = textBox2.Text.Trim();
             string NAMES = textBox3.Text.Trim();
             string SPECS = textBox4.Text.Trim();
-            string COMMENTS = textBox5.Text.Trim();
+            string COMMENTS = textBox11.Text.Trim();
             string INGREDIENTS = textBox6.Text.Trim();
             string COSTS = textBox7.Text.Trim();
             string MOQS = textBox8.Text.Trim();
@@ -620,6 +634,8 @@ namespace TKRESEARCH
             string GETDATES = dateTimePicker3.Value.ToString("yyyy/MM/dd");
             string REPLY = textBox10.Text.Trim();
             string CARESTEDATES = dateTimePicker2.Value.ToString("yyyy/MM/dd");
+            string SALES = comboBox1.Text.ToString();
+            string SALESID = textBox5.Text.Trim();
 
             ADD_TB_DEVE_NEWLISTS(
                 NO
@@ -633,6 +649,8 @@ namespace TKRESEARCH
                 , GETDATES
                 , REPLY
                 , CARESTEDATES
+                , SALES
+                , SALESID
                 );
 
             SEARCH(dateTimePicker1.Value.ToString("yyyyMM"), textBox1.Text.Trim());
@@ -644,7 +662,7 @@ namespace TKRESEARCH
             string NO = textBox2.Text.Trim();
             string NAMES = textBox3.Text.Trim();
             string SPECS = textBox4.Text.Trim();
-            string COMMENTS = textBox5.Text.Trim();
+            string COMMENTS = textBox11.Text.Trim();
             string INGREDIENTS = textBox6.Text.Trim();
             string COSTS = textBox7.Text.Trim();
             string MOQS = textBox8.Text.Trim();
@@ -652,6 +670,8 @@ namespace TKRESEARCH
             string GETDATES = dateTimePicker3.Value.ToString("yyyy/MM/dd");
             string REPLY = textBox10.Text.Trim();
             string CARESTEDATES = dateTimePicker2.Value.ToString("yyyy/MM/dd");
+            string SALES = comboBox1.Text.ToString();
+            string SALESID = textBox5.Text.Trim();
 
             UPDATE_TB_DEVE_NEWLISTS(
                 ID
@@ -666,6 +686,8 @@ namespace TKRESEARCH
                 , GETDATES
                 , REPLY
                 , CARESTEDATES
+                , SALES
+                , SALESID
                 );
 
 
@@ -729,17 +751,22 @@ namespace TKRESEARCH
 
             SB.AppendFormat(@" 
                             SELECT 
-                            [NO] AS '編號'
+                            [NO] AS '編號' 
                             ,[NAMES] AS '商品'
                             ,[SPECS] AS '規格'
-                            ,[COMMENTS] AS '需求'
-                            ,[INGREDIENTS] AS '成份'
+                            ,[SALES] AS '業務'
+                            ,[COMMENTS] AS '註記'
+                            ,[INGREDIENTS] AS '差異特色'
+                            ,CONVERT(NVARCHAR,[GETDATES],112)  AS '打樣日期'
+                            ,[REPLY] AS '業務回覆'
+                            ,[SALESID] AS '業務ID'
                             ,[COSTS] AS '成本'
                             ,[MOQS] AS 'MOQ'
                             ,[MANUPRODS] AS '一天產能量'
-                            ,CONVERT(NVARCHAR,[GETDATES],112)  AS '送樣日期'
-                            ,[REPLY] AS '業務回覆'
                             ,CONVERT(NVARCHAR,[CARESTEDATES],112) AS '建立日期'
+                            ,[ID]
+
+                                
 
 
                             FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]
