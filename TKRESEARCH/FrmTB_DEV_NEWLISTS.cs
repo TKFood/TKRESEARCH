@@ -101,12 +101,13 @@ namespace TKRESEARCH
                                     [NO] AS '編號'
                                     ,[NAMES] AS '商品'
                                     ,[SPECS] AS '規格'
-                                    ,[COMMENTS] AS '需求'
-                                    ,[INGREDIENTS] AS '成份'
+                                    ,[COMMENTS] AS '需求人'
+                                    ,[INGREDIENTS] AS '差異特色'
+                                    ,CONVERT(NVARCHAR,[GETDATES],112)  AS '打樣日期'
                                     ,[COSTS] AS '成本'
                                     ,[MOQS] AS 'MOQ'
                                     ,[MANUPRODS] AS '一天產能量'
-                                    ,CONVERT(NVARCHAR,[GETDATES],112)  AS '送樣日期'
+                                    
                                     ,[REPLY] AS '業務回覆'
                                     ,CONVERT(NVARCHAR,[CARESTEDATES],112) AS '建立日期'
                                     ,[ID]
@@ -165,8 +166,8 @@ namespace TKRESEARCH
                 textBox2.Text = row.Cells["編號"].Value.ToString();
                 textBox3.Text = row.Cells["商品"].Value.ToString();
                 textBox4.Text = row.Cells["規格"].Value.ToString();
-                textBox5.Text = row.Cells["需求"].Value.ToString();
-                textBox6.Text = row.Cells["成份"].Value.ToString();
+                textBox5.Text = row.Cells["需求人"].Value.ToString();
+                textBox6.Text = row.Cells["差異特色"].Value.ToString();
                 textBox7.Text = row.Cells["成本"].Value.ToString();
                 textBox8.Text = row.Cells["MOQ"].Value.ToString();
                 textBox9.Text = row.Cells["一天產能量"].Value.ToString();
@@ -179,7 +180,7 @@ namespace TKRESEARCH
                     dateTimePicker2.Value = dateTime2;
                 }
                 DateTime dateTime3;
-                if (DateTime.TryParseExact(row.Cells["送樣日期"].Value.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime3))
+                if (DateTime.TryParseExact(row.Cells["打樣日期"].Value.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime3))
                 {                   
                     dateTimePicker3.Value = dateTime3;
                 }
