@@ -25,6 +25,8 @@ using System.Net.Mail;
 using TKITDLL;
 using System.Globalization;
 using System.Collections;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace TKRESEARCH
 {
@@ -224,18 +226,19 @@ namespace TKRESEARCH
                 //dateTimePicker2.Value= row.Cells["開發日期"].Value.ToString();
                 DateTime dateTime2;
                 if (DateTime.TryParseExact(row.Cells["建立日期"].Value.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime2))
-                {                 
+                {
                     dateTimePicker2.Value = dateTime2;
                 }
                 DateTime dateTime3;
                 if (DateTime.TryParseExact(row.Cells["打樣日期"].Value.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime3))
-                {                   
+                {
                     dateTimePicker3.Value = dateTime3;
                 }
 
 
             }
         }
+                
 
         public void SETTEXT()
         {
@@ -607,6 +610,473 @@ namespace TKRESEARCH
 
         }
 
+        public void ADD_TB_DEVE_NEWLISTS_TB_WKF_EXTERNAL_TASK(string NO)
+        {
+            string DBNAME = "UOF";
+            DataTable DT = SEARCH_TB_DEVE_NEWLISTS(NO);
+            if(DT!=null && DT.Rows.Count>=1)
+            {
+                DataTable DTUPFDEP = SEARCHUOFDEP(DT.Rows[0]["ACCOUNT"].ToString());
+
+                string account = DT.Rows[0]["ACCOUNT"].ToString();
+                string groupId = DT.Rows[0]["GROUP_ID"].ToString();
+                string jobTitleId = DT.Rows[0]["TITLE_ID"].ToString();
+                string fillerName = DT.Rows[0]["MV002"].ToString();
+                string fillerUserGuid = DT.Rows[0]["USER_GUID"].ToString();
+
+                string DEPNAME = DTUPFDEP.Rows[0]["DEPNAME"].ToString();
+                string DEPNO = DTUPFDEP.Rows[0]["DEPNO"].ToString();
+
+                string EXTERNAL_FORM_NBR = DT.Rows[0]["NO"].ToString().Trim();
+
+                int rowscounts = 0;
+
+                XmlDocument xmlDoc = new XmlDocument();
+                //建立根節點
+                XmlElement Form = xmlDoc.CreateElement("Form");
+
+                //正式的id
+                string FORMID = SEARCHFORM_UOF_VERSION_ID("1006.樣品試吃回覆單");
+
+                if (!string.IsNullOrEmpty(FORMID))
+                {
+                    Form.SetAttribute("formVersionId", FORMID);
+                }
+
+
+                Form.SetAttribute("urgentLevel", "2");
+                //加入節點底下
+                xmlDoc.AppendChild(Form);
+
+                ////建立節點Applicant
+                XmlElement Applicant = xmlDoc.CreateElement("Applicant");
+                Applicant.SetAttribute("account", account);
+                Applicant.SetAttribute("groupId", groupId);
+                Applicant.SetAttribute("jobTitleId", jobTitleId);
+                //加入節點底下
+                Form.AppendChild(Applicant);
+
+                //建立節點 Comment
+                XmlElement Comment = xmlDoc.CreateElement("Comment");
+                Comment.InnerText = "申請者意見";
+                //加入至節點底下
+                Applicant.AppendChild(Comment);
+
+                //建立節點 FormFieldValue
+                XmlElement FormFieldValue = xmlDoc.CreateElement("FormFieldValue");
+                //加入至節點底下
+                Form.AppendChild(FormFieldValue);
+
+                //建立節點FieldItem
+                //ID 表單編號	
+                XmlElement FieldItem = xmlDoc.CreateElement("FieldItem");
+                FieldItem.SetAttribute("fieldId", "ID");
+                FieldItem.SetAttribute("fieldValue", "");
+                FieldItem.SetAttribute("realValue", "");
+                FieldItem.SetAttribute("enableSearch", "True");
+                FieldItem.SetAttribute("fillerName", fillerName);
+                FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+                FieldItem.SetAttribute("fillerAccount", account);
+                FieldItem.SetAttribute("fillSiteId", "");
+                //加入至members節點底下
+                FormFieldValue.AppendChild(FieldItem);
+
+
+                //建立節點FieldItem
+                //F04	
+                string USERID=XML_SETID(DT.Rows[0]["USER_GUID"].ToString());
+
+                FieldItem = xmlDoc.CreateElement("FieldItem");
+                FieldItem.SetAttribute("fieldId", "F04");
+                FieldItem.SetAttribute("fieldValue", DT.Rows[0]["NAME"].ToString() +"("+ DT.Rows[0]["ACCOUNT"].ToString() + ")");
+                FieldItem.SetAttribute("realValue", USERID);
+                FieldItem.SetAttribute("enableSearch", "True");
+                FieldItem.SetAttribute("fillerName", fillerName);
+                FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+                FieldItem.SetAttribute("fillerAccount", account);
+                FieldItem.SetAttribute("fillSiteId", "");
+                //加入至members節點底下
+                FormFieldValue.AppendChild(FieldItem);
+                //建立節點FieldItem
+                //F01	
+                FieldItem = xmlDoc.CreateElement("FieldItem");
+                FieldItem.SetAttribute("fieldId", "F01");
+                FieldItem.SetAttribute("fieldValue", DT.Rows[0]["NO"].ToString());
+                FieldItem.SetAttribute("realValue", "");
+                FieldItem.SetAttribute("enableSearch", "True");
+                FieldItem.SetAttribute("fillerName", fillerName);
+                FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+                FieldItem.SetAttribute("fillerAccount", account);
+                FieldItem.SetAttribute("fillSiteId", "");
+                //加入至members節點底下
+                FormFieldValue.AppendChild(FieldItem);
+                //建立節點FieldItem
+                //F02	
+                FieldItem = xmlDoc.CreateElement("FieldItem");
+                FieldItem.SetAttribute("fieldId", "F02");
+                FieldItem.SetAttribute("fieldValue", DT.Rows[0]["NAMES"].ToString());
+                FieldItem.SetAttribute("realValue", "");
+                FieldItem.SetAttribute("enableSearch", "True");
+                FieldItem.SetAttribute("fillerName", fillerName);
+                FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+                FieldItem.SetAttribute("fillerAccount", account);
+                FieldItem.SetAttribute("fillSiteId", "");
+                //加入至members節點底下
+                FormFieldValue.AppendChild(FieldItem);
+                //建立節點FieldItem
+                //F03	
+                FieldItem = xmlDoc.CreateElement("FieldItem");
+                FieldItem.SetAttribute("fieldId", "F03");
+                FieldItem.SetAttribute("fieldValue", DT.Rows[0]["INGREDIENTS"].ToString());
+                FieldItem.SetAttribute("realValue", "");
+                FieldItem.SetAttribute("enableSearch", "True");
+                FieldItem.SetAttribute("fillerName", fillerName);
+                FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+                FieldItem.SetAttribute("fillerAccount", account);
+                FieldItem.SetAttribute("fillSiteId", "");
+                //加入至members節點底下
+                FormFieldValue.AppendChild(FieldItem);
+                //建立節點FieldItem
+                //F09	
+                FieldItem = xmlDoc.CreateElement("FieldItem");
+                FieldItem.SetAttribute("fieldId", "F09");
+                FieldItem.SetAttribute("fieldValue","");
+                FieldItem.SetAttribute("realValue", "");
+                FieldItem.SetAttribute("enableSearch", "True");
+                FieldItem.SetAttribute("fillerName", fillerName);
+                FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+                FieldItem.SetAttribute("fillerAccount", account);
+                FieldItem.SetAttribute("fillSiteId", "");
+                //加入至members節點底下
+                FormFieldValue.AppendChild(FieldItem);
+
+
+
+                ////用ADDTACK，直接啟動起單
+                //ADDTACK(Form);
+
+                //ADD TO DB
+                ////string connectionString = ConfigurationManager.ConnectionStrings["dbUOF"].ToString();
+
+                //connectionString = ConfigurationManager.ConnectionStrings["dberp"].ConnectionString;
+                //sqlConn = new SqlConnection(connectionString);
+
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbUOF"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+                connectionString = sqlConn.ConnectionString.ToString();
+
+                StringBuilder queryString = new StringBuilder();
+
+
+
+
+                queryString.AppendFormat(@" INSERT INTO [{0}].dbo.TB_WKF_EXTERNAL_TASK
+                                         (EXTERNAL_TASK_ID,FORM_INFO,STATUS,EXTERNAL_FORM_NBR)
+                                        VALUES (NEWID(),@XML,2,'{1}')
+                                        ", DBNAME, EXTERNAL_FORM_NBR);
+
+                try
+                {
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+
+                        SqlCommand command = new SqlCommand(queryString.ToString(), connection);
+                        command.Parameters.Add("@XML", SqlDbType.NVarChar).Value = Form.OuterXml;
+
+                        command.Connection.Open();
+
+                        int count = command.ExecuteNonQuery();
+
+                        connection.Close();
+                        connection.Dispose();
+
+                    }
+                }
+                catch
+                {
+
+                }
+                finally
+                {
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("送簽失敗，需求人的工號錯誤");
+            }
+           
+        }
+
+        public string XML_SETID(string REAL_userId)
+        {
+            // 创建一个XmlDocument对象
+            XmlDocument xmlDoc = new XmlDocument();
+
+            // 创建根元素<UserSet>
+            XmlElement userSetElement = xmlDoc.CreateElement("UserSet");
+            xmlDoc.AppendChild(userSetElement);
+
+            // 创建子元素<Element>，并设置属性type='user'
+            XmlElement element = xmlDoc.CreateElement("Element");
+            element.SetAttribute("type", "user");
+            userSetElement.AppendChild(element);
+
+            // 创建子元素<userId>，并设置其值
+            XmlElement userId = xmlDoc.CreateElement("userId");
+            userId.InnerText = REAL_userId;
+            element.AppendChild(userId);
+
+            // 将XmlDocument对象保存为XML文件，或输出为字符串
+            string xmlOutput = xmlDoc.OuterXml;
+
+            return xmlOutput;
+        }
+
+        public DataTable SEARCH_TB_DEVE_NEWLISTS(string NO)
+        {
+            SqlDataAdapter adapter1 = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+            DataSet ds1 = new DataSet();
+
+            try
+            {
+                //connectionString = ConfigurationManager.ConnectionStrings["dberp"].ConnectionString;
+                //sqlConn = new SqlConnection(connectionString);
+
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dberp"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sbSql.Clear();
+                sbSqlQuery.Clear();
+
+                //庫存數量看LA009 IN ('20004','20006','20008','20019','20020'
+
+                sbSql.AppendFormat(@"  
+                                    SELECT *
+                                    ,USER_GUID,NAME
+                                    ,(SELECT TOP 1 GROUP_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'GROUP_ID'
+                                    ,(SELECT TOP 1 TITLE_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'TITLE_ID'
+                                    FROM 
+                                    (
+                                    SELECT 
+                                    [ID]
+                                    ,[NO]
+                                    ,[NAMES]
+                                    ,[SPECS]
+                                    ,[SALES]
+                                    ,[SALESID]
+                                    ,[COMMENTS]
+                                    ,[INGREDIENTS]
+                                    ,[COSTS]
+                                    ,[MOQS]
+                                    ,[MANUPRODS]
+                                    ,[GETDATES]
+                                    ,[REPLY]
+                                    ,[CARESTEDATES]
+
+                                    ,[TB_EB_USER].USER_GUID,NAME
+                                    ,(SELECT TOP 1 MV002 FROM [TK].dbo.CMSMV WHERE MV001=[SALESID]) AS 'MV002'
+                                    ,ACCOUNT
+                                    FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS],[192.168.1.223].[UOF].[dbo].[TB_EB_USER]
+                                    WHERE 1=1
+                                    AND [NO]='{0}'
+                                    AND [TB_EB_USER].ACCOUNT=[SALESID]COLLATE Chinese_Taiwan_Stroke_BIN
+                                    ) AS TEMP
+                                    
+                              
+                                    ", NO);
+
+
+                adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+                sqlConn.Open();
+                ds1.Clear();
+                adapter1.Fill(ds1, "ds1");
+                sqlConn.Close();
+
+                if (ds1.Tables["ds1"].Rows.Count >= 1)
+                {
+                    return ds1.Tables["ds1"];
+
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
+        public DataTable SEARCHUOFDEP(string ACCOUNT)
+        {
+            string DBNAME = "UOF";
+            SqlDataAdapter adapter1 = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+            DataSet ds1 = new DataSet();
+
+            try
+            {
+                //connectionString = ConfigurationManager.ConnectionStrings["dberp"].ConnectionString;
+                //sqlConn = new SqlConnection(connectionString);
+
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dberp"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                sbSql.Clear();
+                sbSqlQuery.Clear();
+
+                sbSql.AppendFormat(@"  
+                                    SELECT 
+                                    [GROUP_NAME] AS 'DEPNAME'
+                                    ,[TB_EB_EMPL_DEP].[GROUP_ID]+','+[GROUP_NAME]+',False' AS 'DEPNO'
+                                    ,[TB_EB_USER].[USER_GUID]
+                                    ,[ACCOUNT]
+                                    ,[NAME]
+                                    ,[TB_EB_EMPL_DEP].[GROUP_ID]
+                                    ,[TITLE_ID]     
+                                    ,[GROUP_NAME]
+                                    ,[GROUP_CODE]
+                                    ,[TB_EB_EMPL_DEP].ORDERS
+                                    FROM [192.168.1.223].[{0}].[dbo].[TB_EB_USER],[192.168.1.223].[{0}].[dbo].[TB_EB_EMPL_DEP],[192.168.1.223].[{0}].[dbo].[TB_EB_GROUP]
+                                    WHERE [TB_EB_USER].[USER_GUID]=[TB_EB_EMPL_DEP].[USER_GUID]
+                                    AND [TB_EB_EMPL_DEP].[GROUP_ID]=[TB_EB_GROUP].[GROUP_ID]
+                                    AND ISNULL([TB_EB_GROUP].[GROUP_CODE],'')<>''
+                                    AND [ACCOUNT]='{1}'
+                                    ORDER BY [TB_EB_EMPL_DEP].ORDERS
+
+                                    ", DBNAME, ACCOUNT);
+
+
+                adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+                sqlConn.Open();
+                ds1.Clear();
+                adapter1.Fill(ds1, "ds1");
+                sqlConn.Close();
+
+                if (ds1.Tables["ds1"].Rows.Count >= 1)
+                {
+                    return ds1.Tables["ds1"];
+
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
+        public string SEARCHFORM_UOF_VERSION_ID(string FORM_NAME)
+        {
+            SqlDataAdapter adapter1 = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+            DataSet ds1 = new DataSet();
+
+            try
+            {
+                //connectionString = ConfigurationManager.ConnectionStrings["dberp"].ConnectionString;
+                //sqlConn = new SqlConnection(connectionString);
+
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbUOF"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                sbSql.Clear();
+                sbSqlQuery.Clear();
+
+
+                sbSql.AppendFormat(@" 
+                                   SELECT TOP 1 RTRIM(LTRIM(TB_WKF_FORM_VERSION.FORM_VERSION_ID)) FORM_VERSION_ID,TB_WKF_FORM_VERSION.FORM_ID,TB_WKF_FORM_VERSION.VERSION,TB_WKF_FORM_VERSION.ISSUE_CTL
+                                    ,TB_WKF_FORM.FORM_NAME
+                                    FROM [UOF].dbo.TB_WKF_FORM_VERSION,[UOF].dbo.TB_WKF_FORM
+                                    WHERE 1=1
+                                    AND TB_WKF_FORM_VERSION.FORM_ID=TB_WKF_FORM.FORM_ID
+                                    AND TB_WKF_FORM_VERSION.ISSUE_CTL=1
+                                    AND FORM_NAME='{0}'
+                                    ORDER BY TB_WKF_FORM_VERSION.FORM_ID,TB_WKF_FORM_VERSION.VERSION DESC
+
+                                    ", FORM_NAME);
+
+                adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+                sqlConn.Open();
+                ds1.Clear();
+                adapter1.Fill(ds1, "ds1");
+
+
+                if (ds1.Tables["ds1"].Rows.Count >= 1)
+                {
+                    return ds1.Tables["ds1"].Rows[0]["FORM_VERSION_ID"].ToString();
+                }
+                else
+                {
+                    return "";
+                }
+
+            }
+            catch
+            {
+                return "";
+            }
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
         #endregion
 
         #region BUTTON
@@ -782,10 +1252,14 @@ namespace TKRESEARCH
         {
             SETFASTREPORT(dateTimePicker4.Value.ToString("yyyyMM"));
         }
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ADD_TB_DEVE_NEWLISTS_TB_WKF_EXTERNAL_TASK(textBox2.Text);
+        }
 
 
         #endregion
 
-     
+
     }
 }
