@@ -158,8 +158,12 @@ namespace TKRESEARCH
                                     ,[MANUPRODS] AS '一天產能量'
                                     ,CONVERT(NVARCHAR,[CARESTEDATES],112) AS '建立日期'
                                     ,[ID]
+                                    ,[DOC_NBR]
+                                    ,[F01FieldValue]
+                                    ,[F09FieldValue]
 
                                     FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]
+                                    LEFT JOIN [192.168.1.223].[UOF].[dbo].[View_TKRS_TB_DEVE_NEWLISTS] ON [View_TKRS_TB_DEVE_NEWLISTS].[F01FieldValue]=[TB_DEVE_NEWLISTS].NO  COLLATE Chinese_Taiwan_Stroke_BIN
                                     WHERE 1=1
                                     {0}
                                     {1}
@@ -222,6 +226,8 @@ namespace TKRESEARCH
                 textBox9.Text = row.Cells["一天產能量"].Value.ToString();
                 textBox10.Text = row.Cells["業務回覆"].Value.ToString();
                 textBox11.Text = row.Cells["註記"].Value.ToString();
+                textBox12.Text = row.Cells["DOC_NBR"].Value.ToString();
+                textBox13.Text = row.Cells["F09FieldValue"].Value.ToString();
 
                 //dateTimePicker2.Value= row.Cells["開發日期"].Value.ToString();
                 DateTime dateTime2;
@@ -252,6 +258,9 @@ namespace TKRESEARCH
             textBox9.Text = null;
             textBox10.Text = null;
             textBox11.Text = null;
+            textBox12.Text = null;
+            textBox13.Text = null;
+
             textBoxid.Text = null;
 
             //comboBox1.SelectedValue = null;
@@ -614,6 +623,7 @@ namespace TKRESEARCH
         {
             string DBNAME = "UOF";
             DataTable DT = SEARCH_TB_DEVE_NEWLISTS(NO);
+
             if(DT!=null && DT.Rows.Count>=1)
             {
                 DataTable DTUPFDEP = SEARCHUOFDEP(DT.Rows[0]["ACCOUNT"].ToString());
