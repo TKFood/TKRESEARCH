@@ -1251,7 +1251,7 @@ namespace TKRESEARCH
                             FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]
                             WHERE 1=1
                             AND [NO] LIKE '%{0}%' 
-                          
+                            ORDER BY [NO]
                             ", YYMM);
 
             return SB;
