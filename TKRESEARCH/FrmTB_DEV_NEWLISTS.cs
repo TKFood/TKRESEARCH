@@ -807,11 +807,12 @@ namespace TKRESEARCH
                         connection.Close();
                         connection.Dispose();
 
+                        MessageBox.Show("送簽成功");
                     }
                 }
                 catch
                 {
-
+                    MessageBox.Show("送簽失敗");
                 }
                 finally
                 {
