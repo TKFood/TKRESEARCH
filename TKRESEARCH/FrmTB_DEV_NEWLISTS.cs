@@ -161,7 +161,8 @@ namespace TKRESEARCH
                                    ,(SELECT TOP 1 [DOC_NBR] FROM [192.168.1.223].[UOF].[dbo].[View_TKRS_TB_DEVE_NEWLISTS] WHERE [View_TKRS_TB_DEVE_NEWLISTS].[F01FieldValue]=[TB_DEVE_NEWLISTS].NO  COLLATE Chinese_Taiwan_Stroke_BIN ORDER BY [DOC_NBR] DESC) AS 'DOC_NBR'
                                     ,(SELECT TOP 1 [F01FieldValue] FROM [192.168.1.223].[UOF].[dbo].[View_TKRS_TB_DEVE_NEWLISTS] WHERE [View_TKRS_TB_DEVE_NEWLISTS].[F01FieldValue]=[TB_DEVE_NEWLISTS].NO  COLLATE Chinese_Taiwan_Stroke_BIN ORDER BY [DOC_NBR] DESC) AS 'F01FieldValue'
                                     ,(SELECT TOP 1 [F09FieldValue] FROM [192.168.1.223].[UOF].[dbo].[View_TKRS_TB_DEVE_NEWLISTS] WHERE [View_TKRS_TB_DEVE_NEWLISTS].[F01FieldValue]=[TB_DEVE_NEWLISTS].NO  COLLATE Chinese_Taiwan_Stroke_BIN ORDER BY [DOC_NBR] DESC) AS 'F09FieldValue'
-
+                                    ,(SELECT TOP 1 [COMMENT] FROM [192.168.1.223].[UOF].[dbo].[View_TKRS_TB_DEVE_NEWLISTS] WHERE [View_TKRS_TB_DEVE_NEWLISTS].[F01FieldValue]=[TB_DEVE_NEWLISTS].NO  COLLATE Chinese_Taiwan_Stroke_BIN ORDER BY [DOC_NBR] DESC) AS 'COMMENT'
+    
                                     FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]                                    
                                     WHERE 1=1
                                     {0}
@@ -737,6 +738,19 @@ namespace TKRESEARCH
                 FieldItem = xmlDoc.CreateElement("FieldItem");
                 FieldItem.SetAttribute("fieldId", "F03");
                 FieldItem.SetAttribute("fieldValue", DT.Rows[0]["INGREDIENTS"].ToString());
+                FieldItem.SetAttribute("realValue", "");
+                FieldItem.SetAttribute("enableSearch", "True");
+                FieldItem.SetAttribute("fillerName", fillerName);
+                FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+                FieldItem.SetAttribute("fillerAccount", account);
+                FieldItem.SetAttribute("fillSiteId", "");
+                //加入至members節點底下
+                FormFieldValue.AppendChild(FieldItem);
+                //建立節點FieldItem
+                //F05	
+                FieldItem = xmlDoc.CreateElement("FieldItem");
+                FieldItem.SetAttribute("fieldId", "F05");
+                FieldItem.SetAttribute("fieldValue", DT.Rows[0]["COMMENTS"].ToString());
                 FieldItem.SetAttribute("realValue", "");
                 FieldItem.SetAttribute("enableSearch", "True");
                 FieldItem.SetAttribute("fillerName", fillerName);

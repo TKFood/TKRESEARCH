@@ -259,10 +259,10 @@
             // 
             this.tableLayoutPanel2.BackColor = System.Drawing.Color.LightGreen;
             this.tableLayoutPanel2.ColumnCount = 5;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 194F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 125F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 190F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 78F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 156F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 13F));
             this.tableLayoutPanel2.Controls.Add(this.label2, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.label6, 0, 1);
@@ -328,7 +328,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(3, 12);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(89, 16);
+            this.label2.Size = new System.Drawing.Size(76, 16);
             this.label2.TabIndex = 42;
             this.label2.Text = "編號";
             // 
@@ -338,7 +338,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(3, 52);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(89, 16);
+            this.label6.Size = new System.Drawing.Size(76, 16);
             this.label6.TabIndex = 45;
             this.label6.Text = "商品";
             // 
@@ -348,7 +348,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(3, 92);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(89, 16);
+            this.label5.Size = new System.Drawing.Size(76, 16);
             this.label5.TabIndex = 44;
             this.label5.Text = "規格";
             // 
@@ -358,7 +358,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(3, 132);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 16);
+            this.label4.Size = new System.Drawing.Size(76, 16);
             this.label4.TabIndex = 43;
             this.label4.Text = "需求人";
             // 
@@ -368,42 +368,42 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(3, 172);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(89, 16);
+            this.label7.Size = new System.Drawing.Size(76, 16);
             this.label7.TabIndex = 46;
             this.label7.Text = "差異特色";
             // 
             // textBox2
             // 
             this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(98, 6);
+            this.textBox2.Location = new System.Drawing.Point(85, 6);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(188, 27);
+            this.textBox2.Size = new System.Drawing.Size(184, 27);
             this.textBox2.TabIndex = 52;
             // 
             // textBox3
             // 
             this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox3.Location = new System.Drawing.Point(98, 46);
+            this.textBox3.Location = new System.Drawing.Point(85, 46);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(188, 27);
+            this.textBox3.Size = new System.Drawing.Size(184, 27);
             this.textBox3.TabIndex = 53;
             // 
             // textBox6
             // 
             this.textBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox6.Location = new System.Drawing.Point(98, 163);
+            this.textBox6.Location = new System.Drawing.Point(85, 163);
             this.textBox6.Multiline = true;
             this.textBox6.Name = "textBox6";
             this.tableLayoutPanel2.SetRowSpan(this.textBox6, 2);
-            this.textBox6.Size = new System.Drawing.Size(188, 74);
+            this.textBox6.Size = new System.Drawing.Size(184, 74);
             this.textBox6.TabIndex = 55;
             // 
             // textBox4
             // 
             this.textBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox4.Location = new System.Drawing.Point(98, 86);
+            this.textBox4.Location = new System.Drawing.Point(85, 86);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(188, 27);
+            this.textBox4.Size = new System.Drawing.Size(184, 27);
             this.textBox4.TabIndex = 54;
             // 
             // button2
@@ -411,9 +411,9 @@
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.button2.ForeColor = System.Drawing.Color.Blue;
-            this.button2.Location = new System.Drawing.Point(292, 3);
+            this.button2.Location = new System.Drawing.Point(275, 3);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(86, 34);
+            this.button2.Size = new System.Drawing.Size(72, 34);
             this.button2.TabIndex = 61;
             this.button2.Text = "新編號";
             this.button2.UseVisualStyleBackColor = true;
@@ -423,9 +423,9 @@
             // 
             this.button5.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.button5.ForeColor = System.Drawing.Color.Blue;
-            this.button5.Location = new System.Drawing.Point(292, 43);
+            this.button5.Location = new System.Drawing.Point(275, 43);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(82, 34);
+            this.button5.Size = new System.Drawing.Size(72, 34);
             this.button5.TabIndex = 69;
             this.button5.Text = "新增";
             this.button5.UseVisualStyleBackColor = true;
@@ -436,9 +436,9 @@
             this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.button6.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.button6.ForeColor = System.Drawing.Color.Blue;
-            this.button6.Location = new System.Drawing.Point(292, 323);
+            this.button6.Location = new System.Drawing.Point(275, 323);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(86, 34);
+            this.button6.Size = new System.Drawing.Size(72, 34);
             this.button6.TabIndex = 72;
             this.button6.Text = "修改";
             this.button6.UseVisualStyleBackColor = true;
@@ -449,9 +449,9 @@
             this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.button7.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.button7.ForeColor = System.Drawing.Color.Blue;
-            this.button7.Location = new System.Drawing.Point(292, 363);
+            this.button7.Location = new System.Drawing.Point(275, 363);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(86, 34);
+            this.button7.Size = new System.Drawing.Size(72, 34);
             this.button7.TabIndex = 71;
             this.button7.Text = "刪除";
             this.button7.UseVisualStyleBackColor = true;
@@ -460,28 +460,28 @@
             // textBox5
             // 
             this.textBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox5.Location = new System.Drawing.Point(292, 126);
+            this.textBox5.Location = new System.Drawing.Point(275, 126);
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(86, 27);
+            this.textBox5.Size = new System.Drawing.Size(72, 27);
             this.textBox5.TabIndex = 54;
             // 
             // comboBox1
             // 
             this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(98, 130);
+            this.comboBox1.Location = new System.Drawing.Point(85, 128);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(188, 24);
+            this.comboBox1.Size = new System.Drawing.Size(184, 24);
             this.comboBox1.TabIndex = 77;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // textBoxid
             // 
             this.textBoxid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxid.Location = new System.Drawing.Point(98, 575);
+            this.textBoxid.Location = new System.Drawing.Point(85, 575);
             this.textBoxid.Name = "textBoxid";
             this.textBoxid.ReadOnly = true;
-            this.textBoxid.Size = new System.Drawing.Size(188, 27);
+            this.textBoxid.Size = new System.Drawing.Size(184, 27);
             this.textBoxid.TabIndex = 59;
             // 
             // label12
@@ -490,7 +490,7 @@
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(3, 580);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(89, 16);
+            this.label12.Size = new System.Drawing.Size(76, 16);
             this.label12.TabIndex = 51;
             this.label12.Text = "ID ";
             // 
@@ -500,7 +500,7 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(3, 532);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(89, 16);
+            this.label9.Size = new System.Drawing.Size(76, 16);
             this.label9.TabIndex = 48;
             this.label9.Text = "建立日期";
             // 
@@ -509,35 +509,35 @@
             this.dateTimePicker2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dateTimePicker2.CustomFormat = "yyyy/MM/dd";
             this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker2.Location = new System.Drawing.Point(98, 526);
+            this.dateTimePicker2.Location = new System.Drawing.Point(85, 526);
             this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(188, 27);
+            this.dateTimePicker2.Size = new System.Drawing.Size(184, 27);
             this.dateTimePicker2.TabIndex = 60;
             // 
             // textBox9
             // 
             this.textBox9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox9.Location = new System.Drawing.Point(98, 486);
+            this.textBox9.Location = new System.Drawing.Point(85, 486);
             this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(188, 27);
+            this.textBox9.Size = new System.Drawing.Size(184, 27);
             this.textBox9.TabIndex = 58;
             // 
             // label10
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 492);
+            this.label10.Location = new System.Drawing.Point(3, 484);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(89, 16);
+            this.label10.Size = new System.Drawing.Size(76, 32);
             this.label10.TabIndex = 49;
             this.label10.Text = "一天產能量";
             // 
             // textBox8
             // 
             this.textBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox8.Location = new System.Drawing.Point(98, 446);
+            this.textBox8.Location = new System.Drawing.Point(85, 446);
             this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(188, 27);
+            this.textBox8.Size = new System.Drawing.Size(184, 27);
             this.textBox8.TabIndex = 57;
             // 
             // label11
@@ -546,7 +546,7 @@
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(3, 452);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(89, 16);
+            this.label11.Size = new System.Drawing.Size(76, 16);
             this.label11.TabIndex = 50;
             this.label11.Text = "MOQ";
             // 
@@ -556,24 +556,24 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(3, 412);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(89, 16);
+            this.label8.Size = new System.Drawing.Size(76, 16);
             this.label8.TabIndex = 47;
             this.label8.Text = "成本";
             // 
             // textBox7
             // 
             this.textBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox7.Location = new System.Drawing.Point(98, 406);
+            this.textBox7.Location = new System.Drawing.Point(85, 406);
             this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(188, 27);
+            this.textBox7.Size = new System.Drawing.Size(184, 27);
             this.textBox7.TabIndex = 56;
             // 
             // textBox10
             // 
             this.textBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox10.Location = new System.Drawing.Point(98, 366);
+            this.textBox10.Location = new System.Drawing.Point(85, 366);
             this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(188, 27);
+            this.textBox10.Size = new System.Drawing.Size(184, 27);
             this.textBox10.TabIndex = 76;
             // 
             // label14
@@ -582,7 +582,7 @@
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(3, 372);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(89, 16);
+            this.label14.Size = new System.Drawing.Size(76, 16);
             this.label14.TabIndex = 74;
             this.label14.Text = "業務回覆";
             // 
@@ -592,7 +592,7 @@
             this.label13.AutoSize = true;
             this.label13.Location = new System.Drawing.Point(3, 332);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(89, 16);
+            this.label13.Size = new System.Drawing.Size(76, 16);
             this.label13.TabIndex = 73;
             this.label13.Text = "打樣日期";
             // 
@@ -601,9 +601,9 @@
             this.dateTimePicker3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dateTimePicker3.CustomFormat = "yyyy/MM/dd";
             this.dateTimePicker3.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker3.Location = new System.Drawing.Point(98, 326);
+            this.dateTimePicker3.Location = new System.Drawing.Point(85, 326);
             this.dateTimePicker3.Name = "dateTimePicker3";
-            this.dateTimePicker3.Size = new System.Drawing.Size(188, 27);
+            this.dateTimePicker3.Size = new System.Drawing.Size(184, 27);
             this.dateTimePicker3.TabIndex = 75;
             // 
             // label17
@@ -612,18 +612,18 @@
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(3, 252);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(89, 16);
+            this.label17.Size = new System.Drawing.Size(76, 16);
             this.label17.TabIndex = 79;
             this.label17.Text = "註記";
             // 
             // textBox11
             // 
             this.textBox11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox11.Location = new System.Drawing.Point(98, 243);
+            this.textBox11.Location = new System.Drawing.Point(85, 243);
             this.textBox11.Multiline = true;
             this.textBox11.Name = "textBox11";
             this.tableLayoutPanel2.SetRowSpan(this.textBox11, 2);
-            this.textBox11.Size = new System.Drawing.Size(188, 74);
+            this.textBox11.Size = new System.Drawing.Size(184, 74);
             this.textBox11.TabIndex = 80;
             // 
             // button4
@@ -631,9 +631,9 @@
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.button4.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.button4.ForeColor = System.Drawing.Color.Blue;
-            this.button4.Location = new System.Drawing.Point(384, 123);
+            this.button4.Location = new System.Drawing.Point(353, 123);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(119, 34);
+            this.button4.Size = new System.Drawing.Size(150, 34);
             this.button4.TabIndex = 81;
             this.button4.Text = "送簽";
             this.button4.UseVisualStyleBackColor = true;
@@ -642,30 +642,30 @@
             // textBox12
             // 
             this.textBox12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox12.Location = new System.Drawing.Point(384, 166);
+            this.textBox12.Location = new System.Drawing.Point(353, 166);
             this.textBox12.Name = "textBox12";
             this.textBox12.ReadOnly = true;
-            this.textBox12.Size = new System.Drawing.Size(119, 27);
+            this.textBox12.Size = new System.Drawing.Size(150, 27);
             this.textBox12.TabIndex = 82;
             // 
             // textBox13
             // 
             this.textBox13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox13.Location = new System.Drawing.Point(384, 203);
+            this.textBox13.Location = new System.Drawing.Point(353, 203);
             this.textBox13.Multiline = true;
             this.textBox13.Name = "textBox13";
             this.textBox13.ReadOnly = true;
-            this.tableLayoutPanel2.SetRowSpan(this.textBox13, 2);
-            this.textBox13.Size = new System.Drawing.Size(119, 74);
+            this.tableLayoutPanel2.SetRowSpan(this.textBox13, 3);
+            this.textBox13.Size = new System.Drawing.Size(150, 114);
             this.textBox13.TabIndex = 83;
             // 
             // label16
             // 
             this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(292, 172);
+            this.label16.Location = new System.Drawing.Point(275, 172);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(86, 16);
+            this.label16.Size = new System.Drawing.Size(72, 16);
             this.label16.TabIndex = 84;
             this.label16.Text = "表單編號";
             // 
@@ -673,9 +673,9 @@
             // 
             this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(292, 212);
+            this.label18.Location = new System.Drawing.Point(275, 212);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(86, 16);
+            this.label18.Size = new System.Drawing.Size(72, 16);
             this.label18.TabIndex = 85;
             this.label18.Text = "表單回覆";
             // 
