@@ -1504,6 +1504,240 @@ namespace TKRESEARCH
             textBox40.Text = null;
         }
 
+
+        public void ADD_TB_INVMB_MB013(
+             string MB013
+            , string MB001
+            , string MB002
+            , string MB003
+            , string MB004
+            , string MODIDATES
+            , string COMMENTS
+            )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"                                      
+                                    INSERT INTO [TKRESEARCH].[dbo].[TB_INVMB_MB013]
+                                    (
+                                    [MB013]
+                                    ,[MB001]
+                                    ,[MB002]
+                                    ,[MB003]
+                                    ,[MB004]
+                                    ,[MODIDATES]
+                                    ,[COMMENTS]
+                                    )
+                                    VALUES
+                                    (
+                                    '{0}'
+                                    ,'{1}'
+                                    ,'{2}'
+                                    ,'{3}'
+                                    ,'{4}'
+                                    ,'{5}'
+                                    ,'{6}'
+                                
+                                    )
+
+                                    ", MB013
+                                    , MB001
+                                    , MB002
+                                    , MB003
+                                    , MB004
+                                    , MODIDATES
+                                    , COMMENTS
+                                    );
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                    MessageBox.Show("失敗");
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                    MessageBox.Show("完成");
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("失敗");
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
+        public void UPDATE_TB_INVMB_MB013(
+            string MB013
+            , string MB001
+            , string MB002
+            , string MB003
+            , string MB004
+            , string MODIDATES
+            , string COMMENTS
+            )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"                                       
+                                   UPDATE [TKRESEARCH].[dbo].[TB_INVMB_MB013]
+                                    SET
+                                    [MB001]='{1}'
+                                    ,[MB002]='{2}'
+                                    ,[MB003]='{3}'
+                                    ,[MB004]='{4}'
+                                    ,[MODIDATES]='{5}'
+                                    ,[COMMENTS]='{6}'
+                                    WHERE  [MB013]='{0}'
+
+                                    ", MB013
+                                    , MB001
+                                    , MB002
+                                    , MB003
+                                    , MB004
+                                    , MODIDATES
+                                    , COMMENTS
+                                    );
+
+        
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                    MessageBox.Show("失敗");
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                    MessageBox.Show("完成");
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("失敗");
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
+        public void DELETE_TB_INVMB_MB013(
+          string MB013   
+          )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"                                       
+                                   DELETE  [TKRESEARCH].[dbo].[TB_INVMB_MB013]                                   
+                                    WHERE  [MB013]='{0}'
+
+                                    ", MB013                                   
+                                    );
+
+
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+                result = cmd.ExecuteNonQuery();
+
+                if (result == 0)
+                {
+                    tran.Rollback();    //交易取消
+                    MessageBox.Show("失敗");
+                }
+                else
+                {
+                    tran.Commit();      //執行交易  
+                    MessageBox.Show("完成");
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
         #endregion
 
         #region BUTTON
@@ -1596,12 +1830,34 @@ namespace TKRESEARCH
 
         private void button10_Click(object sender, EventArgs e)
         {
+            ADD_TB_INVMB_MB013(
+                textBox33.Text.Trim(),
+                textBox35.Text.Trim(),
+                textBox36.Text.Trim(),
+                textBox37.Text.Trim(),
+                textBox38.Text.Trim(),
+                textBox39.Text.Trim(),
+                textBox40.Text.Trim()
+
+                );
+
+            SEARCH_TB_INVMB_MB013(textBox34.Text.Trim());
 
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
+            UPDATE_TB_INVMB_MB013(
+                textBox33.Text.Trim(),
+                textBox35.Text.Trim(),
+                textBox36.Text.Trim(),
+                textBox37.Text.Trim(),
+                textBox38.Text.Trim(),
+                textBox39.Text.Trim(),
+                textBox40.Text.Trim()
+                );
 
+            SEARCH_TB_INVMB_MB013(textBox34.Text.Trim());
         }
 
         #endregion
