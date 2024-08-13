@@ -1263,16 +1263,11 @@ namespace TKRESEARCH
                 String connectionString;
                 sqlConn = new SqlConnection(sqlsb.ConnectionString);
 
-                StringBuilder SQLQUERY1 = new StringBuilder();
-                StringBuilder SQLQUERY2 = new StringBuilder();
-                StringBuilder SQLQUERY3 = new StringBuilder();
-                StringBuilder SQLQUERY4 = new StringBuilder();
+                StringBuilder SQLQUERY1 = new StringBuilder();     
 
                 sbSql.Clear();
                 SQLQUERY1.Clear();
-                SQLQUERY2.Clear();
-                SQLQUERY3.Clear();
-                SQLQUERY4.Clear();
+         
 
 
 
@@ -1354,7 +1349,9 @@ namespace TKRESEARCH
                 if (rowindex >= 0)
                 {
                     DataGridViewRow row = dataGridView4.Rows[rowindex];
-                    textBox32.Text = row.Cells["條碼"].Value.ToString();                    
+                    textBox32.Text = row.Cells["條碼"].Value.ToString();
+
+                    SEARCH_TK_INVMB(row.Cells["條碼"].Value.ToString());
 
                 }
                 else
@@ -1363,6 +1360,124 @@ namespace TKRESEARCH
                 }
             }
         }
+        private void textBox32_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        public void SEARCH_TK_INVMB(string MB013)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+            DataTable TEMPNULL = new DataTable();
+
+            // 添加列（例如，列名为 "Column1", "Column2"）
+            TEMPNULL.Columns.Add("ERP", typeof(string));
+            TEMPNULL.Columns.Add("條碼", typeof(string));
+            TEMPNULL.Columns.Add("品號", typeof(string));
+
+
+            // 创建一行空数据
+            DataRow newRow = TEMPNULL.NewRow();
+            // 可以选择性地将每列的值设置为 null 或默认值
+            newRow["ERP"] = "ERP"; // 或者可以设为 string.Empty
+            newRow["條碼"] = "沒有符合"; // 或者可以设为 string.Empty
+            newRow["品號"] = "條碼-品號資料"; // 或者可以设为 string.Empty
+
+
+            // 将该行添加到 DataTable 中
+            TEMPNULL.Rows.Add(newRow);
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                StringBuilder SQLQUERY1 = new StringBuilder();
+
+                sbSql.Clear();
+                SQLQUERY1.Clear();
+
+
+
+
+                if (!string.IsNullOrEmpty(MB013))
+                {
+                    SQLQUERY1.AppendFormat(@"
+                                        AND MB013 LIKE '{0}%'
+                                        ", MB013);
+                }
+                else
+                {
+                    SQLQUERY1.AppendFormat(@"   ");
+                }
+
+
+
+                sbSql.AppendFormat(@"     
+                                    SELECT
+                                    'ERP明細' AS 'ERP'
+                                    ,[MB013] AS '條碼'
+                                    ,[MB001] AS '品號'
+                                    ,[MB002] AS '品名'
+                                    ,[MB003] AS '規格'
+                                    ,[MB004] AS '單位'
+                                    FROM [TK].[dbo].[INVMB]
+                                    WHERE 1=1                                    
+                                    {0}
+                                    ORDER BY [MB013]
+	 
+
+                                ", SQLQUERY1.ToString());
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count == 0)
+                {
+                    //dataGridView5.DataSource = null;
+                    dataGridView5.DataSource = TEMPNULL;
+                    ;
+                }
+                else
+                {
+                    if (ds.Tables["ds"].Rows.Count >= 1)
+                    {
+                        dataGridView5.DataSource = ds.Tables["ds"];
+                        dataGridView5.AutoResizeColumns();
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+        }
+
 
         #endregion
 
@@ -1454,8 +1569,9 @@ namespace TKRESEARCH
 
 
 
+
         #endregion
 
-       
+      
     }
 }
