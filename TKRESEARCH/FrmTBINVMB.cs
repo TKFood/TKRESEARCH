@@ -25,6 +25,7 @@ using System.Collections;
 using TKITDLL;
 using System.Xml;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace TKRESEARCH
 {
@@ -1340,7 +1341,11 @@ namespace TKRESEARCH
 
         private void dataGridView4_SelectionChanged(object sender, EventArgs e)
         {
+            // 定义日期格式
+            string format = "yyyy/MM/dd";
+
             textBox32.Text = null;
+            SET_TEXTBOX_NULL();
 
             if (dataGridView4.CurrentRow != null)
             {
@@ -1352,6 +1357,16 @@ namespace TKRESEARCH
                     textBox32.Text = row.Cells["條碼"].Value.ToString();
 
                     SEARCH_TK_INVMB(row.Cells["條碼"].Value.ToString());
+
+                    textBox33.Text = row.Cells["條碼"].Value.ToString();
+                    textBox35.Text = row.Cells["品號"].Value.ToString();
+                    textBox36.Text = row.Cells["品名"].Value.ToString();
+                    textBox37.Text = row.Cells["規格"].Value.ToString();
+                    textBox38.Text = row.Cells["單位"].Value.ToString();
+                    textBox39.Text = row.Cells["日期"].Value.ToString();
+                    textBox40.Text = row.Cells["備註"].Value.ToString();
+
+
 
                 }
                 else
@@ -1478,6 +1493,16 @@ namespace TKRESEARCH
             }
         }
 
+        public void SET_TEXTBOX_NULL()
+        {
+            textBox33.Text = null;
+            textBox35.Text = null;
+            textBox36.Text = null;
+            textBox37.Text = null;
+            textBox38.Text = null;
+            textBox39.Text = null;
+            textBox40.Text = null;
+        }
 
         #endregion
 
@@ -1569,9 +1594,18 @@ namespace TKRESEARCH
 
 
 
+        private void button10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+
+        }
 
         #endregion
 
-      
+
     }
 }
