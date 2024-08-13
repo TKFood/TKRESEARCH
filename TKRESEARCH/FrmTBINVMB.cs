@@ -1243,6 +1243,127 @@ namespace TKRESEARCH
                 sqlConn.Close();
             }
         }
+
+        public void SEARCH_TB_INVMB_MB013(string MB013)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                StringBuilder SQLQUERY1 = new StringBuilder();
+                StringBuilder SQLQUERY2 = new StringBuilder();
+                StringBuilder SQLQUERY3 = new StringBuilder();
+                StringBuilder SQLQUERY4 = new StringBuilder();
+
+                sbSql.Clear();
+                SQLQUERY1.Clear();
+                SQLQUERY2.Clear();
+                SQLQUERY3.Clear();
+                SQLQUERY4.Clear();
+
+
+
+                if (!string.IsNullOrEmpty(MB013) )
+                {
+                    SQLQUERY1.AppendFormat(@"
+                                        AND MB013 LIKE '{0}%'
+                                        ", MB013);
+                }
+                else 
+                {
+                    SQLQUERY1.AppendFormat(@"   ");
+                }
+             
+
+
+                sbSql.AppendFormat(@"     
+                                    SELECT
+                                    [MB013] AS '條碼'
+                                    ,[MB001] AS '品號'
+                                    ,[MB002] AS '品名'
+                                    ,[MB003] AS '規格'
+                                    ,[MB004] AS '單位'
+                                    ,[MODIDATES] AS '日期'
+                                    ,[COMMENTS] AS '備註'
+                                    FROM [TKRESEARCH].[dbo].[TB_INVMB_MB013]
+                                    WHERE 1=1
+                                    {0}
+                                    ORDER BY [MB013]
+	 
+
+                                ", SQLQUERY1.ToString());
+
+
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count == 0)
+                {
+                    dataGridView4.DataSource = null;
+                }
+                else
+                {
+                    if (ds.Tables["ds"].Rows.Count >= 1)
+                    {
+                        dataGridView4.DataSource = ds.Tables["ds"];
+                        dataGridView4.AutoResizeColumns();
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+        }
+
+        private void dataGridView4_SelectionChanged(object sender, EventArgs e)
+        {
+            textBox32.Text = null;
+
+            if (dataGridView4.CurrentRow != null)
+            {
+                int rowindex = dataGridView4.CurrentRow.Index;
+
+                if (rowindex >= 0)
+                {
+                    DataGridViewRow row = dataGridView4.Rows[rowindex];
+                    textBox32.Text = row.Cells["條碼"].Value.ToString();                    
+
+                }
+                else
+                {
+                   
+                }
+            }
+        }
+
         #endregion
 
         #region BUTTON
@@ -1326,6 +1447,11 @@ namespace TKRESEARCH
                 , textBox31.Text.ToString());
             SEARCH2(comboBox3.Text.ToString(), textBox11.Text.ToString(), textBox12.Text.ToString(), textBox13.Text.ToString());
         }
+        private void button9_Click(object sender, EventArgs e)
+        {
+            SEARCH_TB_INVMB_MB013(textBox34.Text.Trim());
+        }
+
 
 
         #endregion
