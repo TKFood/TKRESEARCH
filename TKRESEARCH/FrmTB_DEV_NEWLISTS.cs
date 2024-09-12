@@ -379,77 +379,81 @@ namespace TKRESEARCH
                 String connectionString;
                 sqlConn = new SqlConnection(sqlsb.ConnectionString);
 
-
+                // 關閉再開啟資料庫連線，並開始交易
                 sqlConn.Close();
                 sqlConn.Open();
                 tran = sqlConn.BeginTransaction();
 
+                // 清空 StringBuilder 並建立插入語句
                 sbSql.Clear();
-
-                sbSql.AppendFormat(@"                                   
-                                    
+                sbSql.AppendFormat(@"
                                     INSERT INTO [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]
                                     (
-                                    [NO]
-                                    ,[NAMES]
-                                    ,[SPECS]
-                                    ,[COMMENTS]
-                                    ,[INGREDIENTS]
-                                    ,[COSTS]
-                                    ,[MOQS]
-                                    ,[MANUPRODS]
-                                    ,[GETDATES]
-                                    ,[REPLY]
-                                    ,[CARESTEDATES] 
-                                    ,[SALES]
-                                    ,[SALESID]
+                                        [NO],
+                                        [NAMES],
+                                        [SPECS],
+                                        [COMMENTS],
+                                        [INGREDIENTS],
+                                        [COSTS],
+                                        [MOQS],
+                                        [MANUPRODS],
+                                        [GETDATES],
+                                        [REPLY],
+                                        [CARESTEDATES],
+                                        [SALES],
+                                        [SALESID]
                                     )
                                     VALUES
                                     (
-                                    '{0}'
-                                    ,'{1}'
-                                    ,'{2}'
-                                    ,'{3}'
-                                    ,'{4}'
-                                    ,'{5}'
-                                    ,'{6}'
-                                    ,'{7}'
-                                    ,'{8}'
-                                    ,'{9}'
-                                    ,'{10}'
-                                    ,'{11}'
-                                    ,'{12}'
+                                        @NO,
+                                        @NAMES,
+                                        @SPECS,
+                                        @COMMENTS,
+                                        @INGREDIENTS,
+                                        @COSTS,
+                                        @MOQS,
+                                        @MANUPRODS,
+                                        @GETDATES,
+                                        @REPLY,
+                                        @CARESTEDATES,
+                                        @SALES,
+                                        @SALESID
                                     )
-                                    ", NO
-                                    , NAMES
-                                    , SPECS
-                                    , COMMENTS
-                                    , INGREDIENTS
-                                    , COSTS
-                                    , MOQS
-                                    , MANUPRODS
-                                    , GETDATES
-                                    , REPLY
-                                    , CARESTEDATES
-                                    , SALES
-                                    , SALESID
-
-                                    );
+");
 
                 cmd.Connection = sqlConn;
                 cmd.CommandTimeout = 60;
                 cmd.CommandText = sbSql.ToString();
                 cmd.Transaction = tran;
+
+                // 使用參數化查詢，並對每個參數進行賦值
+                cmd.Parameters.AddWithValue("@NO", NO);
+                cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                cmd.Parameters.AddWithValue("@SPECS", SPECS);
+                cmd.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+                cmd.Parameters.AddWithValue("@INGREDIENTS", INGREDIENTS);
+                cmd.Parameters.AddWithValue("@COSTS", COSTS);
+                cmd.Parameters.AddWithValue("@MOQS", MOQS);
+                cmd.Parameters.AddWithValue("@MANUPRODS", MANUPRODS);
+                cmd.Parameters.AddWithValue("@GETDATES", GETDATES);
+                cmd.Parameters.AddWithValue("@REPLY", REPLY);
+                cmd.Parameters.AddWithValue("@CARESTEDATES", CARESTEDATES);
+                cmd.Parameters.AddWithValue("@SALES", SALES);
+                cmd.Parameters.AddWithValue("@SALESID", SALESID);
+
+                // 執行插入語句
                 result = cmd.ExecuteNonQuery();
 
+                // 處理交易
                 if (result == 0)
                 {
-                    tran.Rollback();    //交易取消
+                    tran.Rollback();    // 交易取消
                 }
                 else
                 {
-                    tran.Commit();      //執行交易  
+                    tran.Commit();      // 執行交易
                 }
+
 
             }
             catch
