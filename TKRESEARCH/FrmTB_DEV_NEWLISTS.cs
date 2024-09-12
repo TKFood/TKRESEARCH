@@ -553,7 +553,7 @@ namespace TKRESEARCH
                 else
                 {
                     tran.Commit();      // 執行交易
-                }
+                } 
 
             }
             catch
