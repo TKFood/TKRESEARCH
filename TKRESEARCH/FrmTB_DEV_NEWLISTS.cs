@@ -499,55 +499,56 @@ namespace TKRESEARCH
                 tran = sqlConn.BeginTransaction();
 
                 sbSql.Clear();
-
-                sbSql.AppendFormat(@"                                    
+                sbSql.AppendFormat(@"
                                     UPDATE [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]
                                     SET 
-                                    [NO]='{1}'
-                                    ,[NAMES]='{2}'
-                                    ,[SPECS]='{3}'
-                                    ,[COMMENTS]='{4}'
-                                    ,[INGREDIENTS]='{5}'
-                                    ,[COSTS]='{6}'
-                                    ,[MOQS]='{7}'
-                                    ,[MANUPRODS]='{8}'
-                                    ,[GETDATES]='{9}'
-                                    ,[REPLY]='{10}'
-                                    ,[CARESTEDATES]='{11}'
-                                    ,[SALES]='{12}'
-                                    ,[SALESID]='{13}'
-                                    WHERE [ID]='{0}'
-                                    "
-                                    , ID
-                                    , NO
-                                    , NAMES
-                                    , SPECS
-                                    , COMMENTS
-                                    , INGREDIENTS
-                                    , COSTS
-                                    , MOQS
-                                    , MANUPRODS
-                                    , GETDATES
-                                    , REPLY
-                                    , CARESTEDATES
-                                    , SALES
-                                    , SALESID
-
-                                    );
+                                        [NO]=@NO,
+                                        [NAMES]=@NAMES,
+                                        [SPECS]=@SPECS,
+                                        [COMMENTS]=@COMMENTS,
+                                        [INGREDIENTS]=@INGREDIENTS,
+                                        [COSTS]=@COSTS,
+                                        [MOQS]=@MOQS,
+                                        [MANUPRODS]=@MANUPRODS,
+                                        [GETDATES]=@GETDATES,
+                                        [REPLY]=@REPLY,
+                                        [CARESTEDATES]=@CARESTEDATES,
+                                        [SALES]=@SALES,
+                                        [SALESID]=@SALESID
+                                    WHERE [ID]=@ID
+                                ");
 
                 cmd.Connection = sqlConn;
                 cmd.CommandTimeout = 60;
                 cmd.CommandText = sbSql.ToString();
                 cmd.Transaction = tran;
+
+                // 使用參數化查詢，並對每個參數進行賦值
+                cmd.Parameters.AddWithValue("@ID", ID);
+                cmd.Parameters.AddWithValue("@NO", NO);
+                cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                cmd.Parameters.AddWithValue("@SPECS", SPECS);
+                cmd.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+                cmd.Parameters.AddWithValue("@INGREDIENTS", INGREDIENTS);
+                cmd.Parameters.AddWithValue("@COSTS", COSTS);
+                cmd.Parameters.AddWithValue("@MOQS", MOQS);
+                cmd.Parameters.AddWithValue("@MANUPRODS", MANUPRODS);
+                cmd.Parameters.AddWithValue("@GETDATES", GETDATES);
+                cmd.Parameters.AddWithValue("@REPLY", REPLY);
+                cmd.Parameters.AddWithValue("@CARESTEDATES", CARESTEDATES);
+                cmd.Parameters.AddWithValue("@SALES", SALES);
+                cmd.Parameters.AddWithValue("@SALESID", SALESID);
+
                 result = cmd.ExecuteNonQuery();
 
+                // 處理交易
                 if (result == 0)
                 {
-                    tran.Rollback();    //交易取消
+                    tran.Rollback();    // 交易取消
                 }
                 else
                 {
-                    tran.Commit();      //執行交易  
+                    tran.Commit();      // 執行交易
                 }
 
             }
