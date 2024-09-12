@@ -419,7 +419,7 @@ namespace TKRESEARCH
                                         @SALES,
                                         @SALESID
                                     )
-");
+                                    ");
 
                 cmd.Connection = sqlConn;
                 cmd.CommandTimeout = 60;
