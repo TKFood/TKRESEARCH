@@ -529,6 +529,9 @@ namespace TKRESEARCH
                 cmd.CommandText = sbSql.ToString();
                 cmd.Transaction = tran;
 
+                //使用 cmd.Parameters.Clear() 清除之前的参数，确保在每次执行时没有冲突
+                cmd.Parameters.Clear();
+
                 // 使用參數化查詢，並對每個參數進行賦值
                 cmd.Parameters.AddWithValue("@ID", ID);
                 cmd.Parameters.AddWithValue("@NO", NO);
