@@ -158,12 +158,12 @@ namespace TKRESEARCH
                                     ,[MANUPRODS] AS '一天產能量'
                                     ,CONVERT(NVARCHAR,[CARESTEDATES],112) AS '建立日期'
                                     ,[ID]
-                                   ,(SELECT TOP 1 [DOC_NBR] FROM [192.168.1.223].[UOF].[dbo].[View_TKRS_TB_DEVE_NEWLISTS] WHERE [View_TKRS_TB_DEVE_NEWLISTS].[F01FieldValue]=[TB_DEVE_NEWLISTS].NO  COLLATE Chinese_Taiwan_Stroke_BIN ORDER BY [DOC_NBR] DESC) AS 'DOC_NBR'
-                                    ,(SELECT TOP 1 [F01FieldValue] FROM [192.168.1.223].[UOF].[dbo].[View_TKRS_TB_DEVE_NEWLISTS] WHERE [View_TKRS_TB_DEVE_NEWLISTS].[F01FieldValue]=[TB_DEVE_NEWLISTS].NO  COLLATE Chinese_Taiwan_Stroke_BIN ORDER BY [DOC_NBR] DESC) AS 'F01FieldValue'
-                                    ,(SELECT TOP 1 [F09FieldValue] FROM [192.168.1.223].[UOF].[dbo].[View_TKRS_TB_DEVE_NEWLISTS] WHERE [View_TKRS_TB_DEVE_NEWLISTS].[F01FieldValue]=[TB_DEVE_NEWLISTS].NO  COLLATE Chinese_Taiwan_Stroke_BIN ORDER BY [DOC_NBR] DESC) AS 'F09FieldValue'
-                                    ,(SELECT TOP 1 [COMMENT] FROM [192.168.1.223].[UOF].[dbo].[View_TKRS_TB_DEVE_NEWLISTS] WHERE [View_TKRS_TB_DEVE_NEWLISTS].[F01FieldValue]=[TB_DEVE_NEWLISTS].NO  COLLATE Chinese_Taiwan_Stroke_BIN ORDER BY [DOC_NBR] DESC) AS 'COMMENT'
+                                   ,(SELECT TOP 1 [DOC_NBR] FROM [192.168.1.223].[UOF].[dbo].[View_TKRS_TB_DEVE_NEWLISTS] WHERE [View_TKRS_TB_DEVE_NEWLISTS].[F01FieldValue]=[TB_DEVE_NEWLISTS_BAKED].NO  COLLATE Chinese_Taiwan_Stroke_BIN ORDER BY [DOC_NBR] DESC) AS 'DOC_NBR'
+                                    ,(SELECT TOP 1 [F01FieldValue] FROM [192.168.1.223].[UOF].[dbo].[View_TKRS_TB_DEVE_NEWLISTS] WHERE [View_TKRS_TB_DEVE_NEWLISTS].[F01FieldValue]=[TB_DEVE_NEWLISTS_BAKED].NO  COLLATE Chinese_Taiwan_Stroke_BIN ORDER BY [DOC_NBR] DESC) AS 'F01FieldValue'
+                                    ,(SELECT TOP 1 [F09FieldValue] FROM [192.168.1.223].[UOF].[dbo].[View_TKRS_TB_DEVE_NEWLISTS] WHERE [View_TKRS_TB_DEVE_NEWLISTS].[F01FieldValue]=[TB_DEVE_NEWLISTS_BAKED].NO  COLLATE Chinese_Taiwan_Stroke_BIN ORDER BY [DOC_NBR] DESC) AS 'F09FieldValue'
+                                    ,(SELECT TOP 1 [COMMENT] FROM [192.168.1.223].[UOF].[dbo].[View_TKRS_TB_DEVE_NEWLISTS] WHERE [View_TKRS_TB_DEVE_NEWLISTS].[F01FieldValue]=[TB_DEVE_NEWLISTS_BAKED].NO  COLLATE Chinese_Taiwan_Stroke_BIN ORDER BY [DOC_NBR] DESC) AS 'COMMENT'
     
-                                    FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]                                    
+                                    FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS_BAKED]                                    
                                     WHERE 1=1
                                     {0}
                                     {1}
@@ -295,7 +295,7 @@ namespace TKRESEARCH
                 sbSql.AppendFormat(@" 
                                         SELECT
                                         ISNULL(MAX(NO),'0')  AS 'NO'
-                                        FROM  [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]
+                                        FROM  [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS_BAKED]
                                         WHERE [NO] LIKE '{0}%'
                                         ORDER BY [NO] DESC
                                         ", NO);
@@ -387,7 +387,7 @@ namespace TKRESEARCH
                 // 清空 StringBuilder 並建立插入語句
                 sbSql.Clear();
                 sbSql.AppendFormat(@"
-                                    INSERT INTO [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]
+                                    INSERT INTO [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS_BAKED]
                                     (
                                         [NO],
                                         [NAMES],
@@ -506,7 +506,7 @@ namespace TKRESEARCH
 
                 sbSql.Clear();
                 sbSql.AppendFormat(@"
-                                    UPDATE [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]
+                                    UPDATE [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS_BAKED]
                                     SET 
                                         [NO]=@NO,
                                         [NAMES]=@NAMES,
@@ -595,7 +595,7 @@ namespace TKRESEARCH
                 sbSql.Clear();
 
                 sbSql.AppendFormat(@"  
-                                    DELETE [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]
+                                    DELETE [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS_BAKED]
                                     WHERE [ID]='{0}'
                                     ", ID
 
@@ -929,7 +929,7 @@ namespace TKRESEARCH
                                     ,[TB_EB_USER].USER_GUID,NAME
                                     ,(SELECT TOP 1 MV002 FROM [TK].dbo.CMSMV WHERE MV001=[SALESID]) AS 'MV002'
                                     ,ACCOUNT
-                                    FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS],[192.168.1.223].[UOF].[dbo].[TB_EB_USER]
+                                    FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS_BAKED],[192.168.1.223].[UOF].[dbo].[TB_EB_USER]
                                     WHERE 1=1
                                     AND [NO]='{0}'
                                     AND [TB_EB_USER].ACCOUNT=[SALESID]COLLATE Chinese_Taiwan_Stroke_BIN
@@ -1273,7 +1273,7 @@ namespace TKRESEARCH
                                 
 
 
-                            FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS]
+                            FROM [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS_BAKED]
                             WHERE 1=1
                             AND [NO] LIKE '%{0}%' 
                             ORDER BY [NO]
