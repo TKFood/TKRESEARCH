@@ -469,7 +469,7 @@
             // 
             this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(85, 130);
+            this.comboBox1.Location = new System.Drawing.Point(85, 128);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(184, 24);
             this.comboBox1.TabIndex = 77;
@@ -795,6 +795,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmTB_DEV_NEWLISTS_BAKED";
             this.Text = "FrmTB_DEV_NEWLISTS_BAKED";
+            this.Load += new System.EventHandler(this.FrmTB_DEV_NEWLISTS_BAKED_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);

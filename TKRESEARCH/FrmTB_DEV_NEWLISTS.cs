@@ -53,9 +53,16 @@ namespace TKRESEARCH
         {
             InitializeComponent();
 
-            comboBox1load();
+            // 綁定事件處理方法
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+
+           
         }
 
+        private void FrmTB_DEV_NEWLISTS_Load(object sender, EventArgs e)
+        {
+            comboBox1load();
+        }
         #region FUNCTION
         public void comboBox1load()
         {
@@ -1292,8 +1299,9 @@ namespace TKRESEARCH
         }
 
 
+
         #endregion
 
-
+    
     }
 }
