@@ -303,7 +303,7 @@ namespace TKRESEARCH
                                         SELECT
                                         ISNULL(MAX(NO),'0')  AS 'NO'
                                         FROM  [TKRESEARCH].[dbo].[TB_DEVE_NEWLISTS_BAKED]
-                                        WHERE [NO] LIKE '{0}%'
+                                        WHERE [NO] LIKE 'BAKED-'+'{0}%'
                                         ORDER BY [NO] DESC
                                         ", NO);
 
@@ -333,7 +333,7 @@ namespace TKRESEARCH
 
                         else
                         {
-                            int serno = Convert.ToInt16(NEWNO.Substring(6, 3));
+                            int serno = Convert.ToInt16(NEWNO.Substring(12, 3));
                             serno = serno + 1;
                             string temp = serno.ToString();
                             temp = temp.PadLeft(3, '0');
@@ -1130,7 +1130,7 @@ namespace TKRESEARCH
             string DATES = DateTime.Now.ToString("yyyy-MM");
             DATES = DATES.Substring(2, 5);
             string NO = GETMAXNO(DATES);
-            textBox2.Text = NO;
+            textBox2.Text = "BAKED-"+NO;
         }
         private void button5_Click(object sender, EventArgs e)
         {
