@@ -257,6 +257,29 @@ namespace TKRESEARCH
 
             }
         }
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            SETTEXT();
+
+            if (dataGridView1.CurrentRow != null)
+            {
+                int rowindex = dataGridView1.CurrentRow.Index;
+                DataGridViewRow row = dataGridView1.Rows[rowindex];
+
+                textBoxid.Text = row.Cells["ID"].Value.ToString();
+                textBox2.Text = row.Cells["研發進度回覆"].Value.ToString().Replace("\n", "\r\n"); ;
+               
+
+
+            }
+        }
+
+        public void SETTEXT()
+        {
+            textBoxid.Text = "";
+            textBox2.Text = "";
+        }
+
         #endregion
 
         #region BUTTON
@@ -268,8 +291,9 @@ namespace TKRESEARCH
 
             SEARCH(ISCLOSED, OWNER, PROJECTNAMES);
         }
+
         #endregion
 
-     
+    
     }
 }
