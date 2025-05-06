@@ -1348,8 +1348,8 @@ namespace TKRESEARCH
                                     [DESIGNER],
                                     [STAGES],
                                     [ISCLOSED],
-                                    [DOC_NBR],
-                                    [UPDATEDATES]
+                                    [DOC_NBR]
+                                  
                                     )
                                     VALUES
                                     (
@@ -1361,8 +1361,7 @@ namespace TKRESEARCH
                                     @DESIGNER,
                                     @STAGES,
                                     @ISCLOSED,
-                                    @DOC_NBR,
-                                    @UPDATEDATES
+                                    @DOC_NBR                                  
                                     )
 
                                     ");
@@ -1384,8 +1383,7 @@ namespace TKRESEARCH
                 cmd.Parameters.AddWithValue("@STAGES", STAGES);
                 cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
                 cmd.Parameters.AddWithValue("@DOC_NBR", DOC_NBR);
-                cmd.Parameters.AddWithValue("@UPDATEDATES", UPDATEDATES);
-
+              
 
 
                 // 執行插入語句
