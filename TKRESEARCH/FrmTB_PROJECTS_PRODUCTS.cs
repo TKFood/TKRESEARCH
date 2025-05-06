@@ -61,6 +61,11 @@ namespace TKRESEARCH
             comboBox2_load();
             comboBox3_load();
             comboBox4_load();
+            comboBox5_load();
+            comboBox6_load();
+            comboBox7_load();
+            comboBox8_load();
+            comboBox9_load();
         }
         public void comboBox1_load()
         {
@@ -216,6 +221,190 @@ namespace TKRESEARCH
             comboBox4.DataSource = dt.DefaultView;
             comboBox4.ValueMember = "OWNER";
             comboBox4.DisplayMember = "OWNER";
+            sqlConn.Close();
+
+
+        }
+        public void comboBox5_load()
+        {
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder Sequel = new StringBuilder();
+            Sequel.AppendFormat(@" 
+                                 SELECT 
+                                [KINDS]
+                                FROM [TKRESEARCH].[dbo].[TB_PROJECTS_KINDS]
+                                ORDER BY [ID]
+                                 ");
+            SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+            DataTable dt = new DataTable();
+            sqlConn.Open();
+
+            dt.Columns.Add("KINDS", typeof(string));
+            da.Fill(dt);
+            comboBox5.DataSource = dt.DefaultView;
+            comboBox5.ValueMember = "KINDS";
+            comboBox5.DisplayMember = "KINDS";
+            sqlConn.Close();
+
+
+        }
+        public void comboBox6_load()
+        {
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder Sequel = new StringBuilder();
+            Sequel.AppendFormat(@" 
+                                SELECT DESIGNER
+                                FROM 
+                                (
+                                SELECT '全部' AS 'DESIGNER'
+                                UNION ALL
+                                SELECT
+                                DESIGNER      
+                                FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+                                GROUP BY DESIGNER
+                                ) AS TEMP
+                                ORDER BY DESIGNER
+                                ");
+            SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+            DataTable dt = new DataTable();
+            sqlConn.Open();
+
+            dt.Columns.Add("DESIGNER", typeof(string));
+            da.Fill(dt);
+            comboBox6.DataSource = dt.DefaultView;
+            comboBox6.ValueMember = "DESIGNER";
+            comboBox6.DisplayMember = "DESIGNER";
+            sqlConn.Close();
+
+
+        }
+        public void comboBox7_load()
+        {
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder Sequel = new StringBuilder();
+            Sequel.AppendFormat(@" 
+                                SELECT OWNER
+                                FROM 
+                                (
+	                                SELECT '全部' AS 'OWNER'
+	                                UNION ALL
+	                                SELECT
+	                                [OWNER]      
+	                                FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+	                                GROUP BY [OWNER]
+                                ) AS TEMP
+                                ORDER BY OWNER
+                                ");
+            SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+            DataTable dt = new DataTable();
+            sqlConn.Open();
+
+            dt.Columns.Add("OWNER", typeof(string));
+            da.Fill(dt);
+            comboBox7.DataSource = dt.DefaultView;
+            comboBox7.ValueMember = "OWNER";
+            comboBox7.DisplayMember = "OWNER";
+            sqlConn.Close();
+
+
+        }
+        public void comboBox8_load()
+        {
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder Sequel = new StringBuilder();
+            Sequel.AppendFormat(@" 
+                                SELECT 
+                                [ID]
+                                ,[STAGES]
+                                FROM [TKRESEARCH].[dbo].[TB_PROJECTS_STAGES]
+                                ORDER BY [ID]
+                                ");
+            SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+            DataTable dt = new DataTable();
+            sqlConn.Open();
+
+            dt.Columns.Add("STAGES", typeof(string));
+            da.Fill(dt);
+            comboBox8.DataSource = dt.DefaultView;
+            comboBox8.ValueMember = "STAGES";
+            comboBox8.DisplayMember = "STAGES";
+            sqlConn.Close();
+
+
+        }
+        public void comboBox9_load()
+        {
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder Sequel = new StringBuilder();
+            Sequel.AppendFormat(@" 
+                               SELECT
+                                [ID]
+                                ,[KIND]
+                                ,[PARAID]
+                                ,[PARANAME]
+                                FROM[TKRESEARCH].[dbo].[TBPARA]
+                                WHERE[KIND] = 'TB_PROJECTS_PRODUCTS_ISCLOSEDYN'
+                                ORDER BY[PARAID]
+                                ");
+            SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+            DataTable dt = new DataTable();
+            sqlConn.Open();
+
+            dt.Columns.Add("PARANAME", typeof(string));
+            da.Fill(dt);
+            comboBox9.DataSource = dt.DefaultView;
+            comboBox9.ValueMember = "PARANAME";
+            comboBox9.DisplayMember = "PARANAME";
             sqlConn.Close();
 
 
