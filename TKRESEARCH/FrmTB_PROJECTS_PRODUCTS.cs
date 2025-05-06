@@ -276,6 +276,76 @@ namespace TKRESEARCH
             }
         }
 
+        public void UPDATE_TB_PROJECTS_PRODUCTS_COMMENTS(string ID,string STATUS,string TASTESREPLYS,string DESIGNREPLYS)
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                // 關閉再開啟資料庫連線，並開始交易
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                // 清空 StringBuilder 並建立插入語句
+                sbSql.Clear();
+                sbSql.AppendFormat(@"
+                                    UPDATE  [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+                                    SET [STATUS]=@STATUS,
+                                    [TASTESREPLYS]=@TASTESREPLYS,
+                                    [DESIGNREPLYS]=@DESIGNREPLYS
+                                    WHERE [ID]=@ID
+                                    ");
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+
+                //使用 cmd.Parameters.Clear() 清除之前的参数，确保在每次执行时没有冲突
+                cmd.Parameters.Clear();
+                // 使用參數化查詢，並對每個參數進行賦值
+                cmd.Parameters.AddWithValue("@ID", ID);
+                cmd.Parameters.AddWithValue("@STATUS", STATUS);
+                cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
+                cmd.Parameters.AddWithValue("@DESIGNREPLYS", DESIGNREPLYS);
+
+
+                // 執行插入語句
+                result = cmd.ExecuteNonQuery();
+
+                // 處理交易
+                if (result == 0)
+                {
+                    tran.Rollback();    // 交易取消
+                }
+                else
+                {
+                    tran.Commit();      // 執行交易
+                }
+
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
         public void SETTEXT()
         {
             textBoxid.Text = "";
@@ -297,9 +367,23 @@ namespace TKRESEARCH
 
             SEARCH(ISCLOSED, OWNER, PROJECTNAMES);
         }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string ID = textBoxid.Text.Trim();
+            string STATUS= textBox2.Text.Replace("\r\n", "\n"); 
+            string TASTESREPLYS = textBox3.Text.Replace("\r\n", "\n");
+            string DESIGNREPLYS = textBox4.Text.Replace("\r\n", "\n");
+            UPDATE_TB_PROJECTS_PRODUCTS_COMMENTS(ID, STATUS, TASTESREPLYS, DESIGNREPLYS);
+
+            string ISCLOSED = comboBox1.Text.Trim();
+            string OWNER = comboBox2.Text.Trim();
+            string PROJECTNAMES = textBox1.Text.Trim();
+
+            SEARCH(ISCLOSED, OWNER, PROJECTNAMES);
+        }
 
         #endregion
 
-    
+
     }
 }
