@@ -573,6 +573,7 @@
             this.dataGridView2.RowTemplate.Height = 24;
             this.dataGridView2.Size = new System.Drawing.Size(966, 209);
             this.dataGridView2.TabIndex = 4;
+            this.dataGridView2.SelectionChanged += new System.EventHandler(this.dataGridView2_SelectionChanged);
             // 
             // tableLayoutPanel4
             // 
@@ -580,8 +581,8 @@
             this.tableLayoutPanel4.ColumnCount = 10;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 98F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 226F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 132F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 24F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
@@ -589,7 +590,6 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel4.Controls.Add(this.comboBox6, 1, 3);
-            this.tableLayoutPanel4.Controls.Add(this.textBoxid2, 3, 0);
             this.tableLayoutPanel4.Controls.Add(this.label10, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.label11, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.label12, 0, 2);
@@ -605,7 +605,8 @@
             this.tableLayoutPanel4.Controls.Add(this.textBox7, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.textBox9, 1, 2);
             this.tableLayoutPanel4.Controls.Add(this.textBox10, 1, 7);
-            this.tableLayoutPanel4.Controls.Add(this.button4, 3, 7);
+            this.tableLayoutPanel4.Controls.Add(this.button4, 4, 7);
+            this.tableLayoutPanel4.Controls.Add(this.textBoxid2, 2, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -635,10 +636,10 @@
             // textBoxid2
             // 
             this.textBoxid2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxid2.Location = new System.Drawing.Point(363, 6);
+            this.textBoxid2.Location = new System.Drawing.Point(327, 6);
             this.textBoxid2.Name = "textBoxid2";
             this.textBoxid2.ReadOnly = true;
-            this.textBoxid2.Size = new System.Drawing.Size(114, 27);
+            this.textBoxid2.Size = new System.Drawing.Size(126, 27);
             this.textBoxid2.TabIndex = 82;
             // 
             // label10
@@ -767,9 +768,10 @@
             // textBox9
             // 
             this.textBox9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel4.SetColumnSpan(this.textBox9, 2);
             this.textBox9.Location = new System.Drawing.Point(101, 86);
             this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(220, 27);
+            this.textBox9.Size = new System.Drawing.Size(352, 27);
             this.textBox9.TabIndex = 91;
             // 
             // textBox10
@@ -784,12 +786,13 @@
             // 
             this.button4.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.button4.ForeColor = System.Drawing.Color.Blue;
-            this.button4.Location = new System.Drawing.Point(363, 283);
+            this.button4.Location = new System.Drawing.Point(483, 283);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(114, 34);
             this.button4.TabIndex = 93;
             this.button4.Text = "儲存";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // FrmTB_PROJECTS_PRODUCTS
             // 

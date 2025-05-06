@@ -273,27 +273,26 @@ namespace TKRESEARCH
 
             StringBuilder Sequel = new StringBuilder();
             Sequel.AppendFormat(@" 
-                                SELECT DESIGNER
+                                SELECT OWNER
                                 FROM 
-                                (
-                                SELECT '全部' AS 'DESIGNER'
-                                UNION ALL
-                                SELECT
-                                DESIGNER      
-                                FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
-                                GROUP BY DESIGNER
+                                (	                               
+	                                SELECT
+	                                [OWNER]      
+	                                FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+	                                GROUP BY [OWNER]
                                 ) AS TEMP
-                                ORDER BY DESIGNER
+                                ORDER BY OWNER
+                               
                                 ");
             SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
             DataTable dt = new DataTable();
             sqlConn.Open();
 
-            dt.Columns.Add("DESIGNER", typeof(string));
+            dt.Columns.Add("OWNER", typeof(string));
             da.Fill(dt);
             comboBox6.DataSource = dt.DefaultView;
-            comboBox6.ValueMember = "DESIGNER";
-            comboBox6.DisplayMember = "DESIGNER";
+            comboBox6.ValueMember = "OWNER";
+            comboBox6.DisplayMember = "OWNER";
             sqlConn.Close();
 
 
@@ -313,27 +312,25 @@ namespace TKRESEARCH
 
             StringBuilder Sequel = new StringBuilder();
             Sequel.AppendFormat(@" 
-                                SELECT OWNER
+                                SELECT DESIGNER
                                 FROM 
-                                (
-	                                SELECT '全部' AS 'OWNER'
-	                                UNION ALL
-	                                SELECT
-	                                [OWNER]      
-	                                FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
-	                                GROUP BY [OWNER]
+                                (                                
+                                SELECT
+                                DESIGNER      
+                                FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+                                GROUP BY DESIGNER
                                 ) AS TEMP
-                                ORDER BY OWNER
+                                ORDER BY DESIGNER
                                 ");
             SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
             DataTable dt = new DataTable();
             sqlConn.Open();
 
-            dt.Columns.Add("OWNER", typeof(string));
+            dt.Columns.Add("DESIGNER", typeof(string));
             da.Fill(dt);
             comboBox7.DataSource = dt.DefaultView;
-            comboBox7.ValueMember = "OWNER";
-            comboBox7.DisplayMember = "OWNER";
+            comboBox7.ValueMember = "DESIGNER";
+            comboBox7.DisplayMember = "DESIGNER";
             sqlConn.Close();
 
 
@@ -665,8 +662,33 @@ namespace TKRESEARCH
 
             }
         }
+        private void dataGridView2_SelectionChanged(object sender, EventArgs e)
+        {
+            SETTEXT2();
 
-        public void UPDATE_TB_PROJECTS_PRODUCTS_COMMENTS(string ID,string STATUS,string TASTESREPLYS,string DESIGNREPLYS)
+            if (dataGridView2.CurrentRow != null)
+            {
+                int rowindex = dataGridView2.CurrentRow.Index;
+                DataGridViewRow row = dataGridView2.Rows[rowindex];
+
+                textBoxid2.Text = row.Cells["ID"].Value.ToString();
+                textBox7.Text = row.Cells["專案編號"].Value.ToString().Replace("\n", "\r\n");
+                textBox9.Text = row.Cells["項目名稱"].Value.ToString().Replace("\n", "\r\n");
+                textBox10.Text = row.Cells["表單編號"].Value.ToString().Replace("\n", "\r\n");
+
+                comboBox5.Text = row.Cells["分類"].Value.ToString();
+                comboBox6.Text = row.Cells["專案負責人"].Value.ToString();
+                comboBox7.Text = row.Cells["設計負責人"].Value.ToString();
+                comboBox8.Text = row.Cells["專案階段"].Value.ToString();
+                comboBox9.Text = row.Cells["是否結案"].Value.ToString();
+            }
+        }
+
+        public void UPDATE_TB_PROJECTS_PRODUCTS_COMMENTS(
+            string ID,
+            string STATUS,
+            string TASTESREPLYS,
+            string DESIGNREPLYS)
         {
             try
             {
@@ -736,6 +758,98 @@ namespace TKRESEARCH
             }
         }
 
+        public void UPDATE_TB_PROJECTS_PRODUCTS_ALL(
+             string ID,
+             string NO ,
+             string PROJECTNAMES,
+             string KINDS,
+             string OWNER,
+             string DESIGNER,
+             string STAGES,
+             string ISCLOSED,
+             string DOC_NBR
+            )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                // 關閉再開啟資料庫連線，並開始交易
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                // 清空 StringBuilder 並建立插入語句
+                sbSql.Clear();
+                sbSql.AppendFormat(@"
+                                    UPDATE  [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+                                    SET 
+                                    [NO]=@NO,
+                                    [PROJECTNAMES]=@PROJECTNAMES,
+                                    [KINDS]=@KINDS,
+                                    [OWNER]=@OWNER,
+                                    [DESIGNER]=@DESIGNER,
+                                    [STAGES]=@STAGES,
+                                    [ISCLOSED]=@ISCLOSED,
+                                    [DOC_NBR]=@DOC_NBR
+                                    WHERE [ID]=@ID
+                                    ");
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+
+                //使用 cmd.Parameters.Clear() 清除之前的参数，确保在每次执行时没有冲突
+                cmd.Parameters.Clear();
+                // 使用參數化查詢，並對每個參數進行賦值
+                cmd.Parameters.AddWithValue("@ID", ID);
+                cmd.Parameters.AddWithValue("@NO", NO);
+                cmd.Parameters.AddWithValue("@PROJECTNAMES", PROJECTNAMES);
+                cmd.Parameters.AddWithValue("@KINDS", KINDS);
+                cmd.Parameters.AddWithValue("@OWNER", OWNER);
+                cmd.Parameters.AddWithValue("@DESIGNER", DESIGNER);
+                cmd.Parameters.AddWithValue("@STAGES", STAGES);
+                cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
+                cmd.Parameters.AddWithValue("@DOC_NBR", DOC_NBR);
+
+
+
+                // 執行插入語句
+                result = cmd.ExecuteNonQuery();
+
+                // 處理交易
+                if (result == 0)
+                {
+                    tran.Rollback();    // 交易取消
+                }
+                else
+                {
+                    tran.Commit();      // 執行交易
+                }
+
+
+            }
+            catch
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
         public void SETTEXT()
         {
             textBoxid.Text = "";
@@ -743,6 +857,16 @@ namespace TKRESEARCH
             textBox3.Text = "";
             textBox4.Text = "";
             textBox5.Text = "";
+
+        }
+
+        public void SETTEXT2()
+        {
+            textBoxid2.Text = "";
+            textBox7.Text = "";
+            textBox9.Text = "";
+            textBox10.Text = "";
+          
 
         }
 
@@ -778,6 +902,37 @@ namespace TKRESEARCH
             string PROJECTNAMES = textBox6.Text.Trim();
 
             SEARCH_GV2(ISCLOSED, OWNER, PROJECTNAMES);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string ID = textBoxid2.Text.Trim();
+            string NO = textBox7.Text.Trim();
+            string PROJECTNAMES = textBox9.Text.Trim();
+            string KINDS = comboBox5.Text.ToString();
+            string OWNER = comboBox6.Text.ToString();            
+            string DESIGNER = comboBox7.Text.ToString();
+            string STAGES = comboBox8.Text.ToString();
+            string ISCLOSED = comboBox9.Text.ToString();
+            string DOC_NBR = textBox10.Text.Trim();
+
+            UPDATE_TB_PROJECTS_PRODUCTS_ALL(
+                ID,
+                NO,
+                PROJECTNAMES,
+                KINDS,
+                OWNER,
+                DESIGNER,
+                STAGES,
+                ISCLOSED,
+                DOC_NBR
+            );
+
+            string SEARCH_ISCLOSED = comboBox3.Text.Trim();
+            string SEARCH_OWNER = comboBox4.Text.Trim();
+            string SEARCH_PROJECTNAMES = textBox6.Text.Trim();
+
+            SEARCH_GV2(SEARCH_ISCLOSED, SEARCH_OWNER, SEARCH_PROJECTNAMES);
         }
 
         #endregion
