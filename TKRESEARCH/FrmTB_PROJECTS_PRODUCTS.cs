@@ -200,7 +200,8 @@ namespace TKRESEARCH
                     QUERYS3.AppendFormat(@"");
                 }
 
-                sbSql.AppendFormat(@"  SELECT 
+                sbSql.AppendFormat(@"  
+                                        SELECT 
                                         [NO] AS '專案編號'
                                         ,[KINDS] AS '分類'
                                         ,[PROJECTNAMES] AS '項目名稱'                                        
@@ -268,7 +269,8 @@ namespace TKRESEARCH
 
                 textBoxid.Text = row.Cells["ID"].Value.ToString();
                 textBox2.Text = row.Cells["研發進度回覆"].Value.ToString().Replace("\n", "\r\n"); ;
-               
+                textBox3.Text = row.Cells["業務進度回覆"].Value.ToString().Replace("\n", "\r\n"); ;
+                textBox4.Text = row.Cells["設計回覆"].Value.ToString().Replace("\n", "\r\n"); ;
 
 
             }
@@ -278,6 +280,9 @@ namespace TKRESEARCH
         {
             textBoxid.Text = "";
             textBox2.Text = "";
+            textBox3.Text = "";
+            textBox4.Text = "";
+
         }
 
         #endregion
