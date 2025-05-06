@@ -57,10 +57,12 @@ namespace TKRESEARCH
         #region FUNCTION
         private void FrmTB_PROJECTS_PRODUCTS_Load(object sender, EventArgs e)
         {
-            comboBox1load();
-            comboBox2load();
+            comboBox1_load();
+            comboBox2_load();
+            comboBox3_load();
+            comboBox4_load();
         }
-        public void comboBox1load()
+        public void comboBox1_load()
         {
             //20210902密
             Class1 TKID = new Class1();//用new 建立類別實體
@@ -99,7 +101,7 @@ namespace TKRESEARCH
 
         }
 
-        public void comboBox2load()
+        public void comboBox2_load()
         {
             //20210902密
             Class1 TKID = new Class1();//用new 建立類別實體
@@ -135,6 +137,85 @@ namespace TKRESEARCH
             comboBox2.DataSource = dt.DefaultView;
             comboBox2.ValueMember = "OWNER";
             comboBox2.DisplayMember = "OWNER";
+            sqlConn.Close();
+
+
+        }
+        public void comboBox3_load()
+        {
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder Sequel = new StringBuilder();
+            Sequel.AppendFormat(@" 
+                                SELECT
+                                [ID]
+                                ,[KIND]
+                                ,[PARAID]
+                                ,[PARANAME]
+                                FROM [TKRESEARCH].[dbo].[TBPARA]
+                                WHERE [KIND]='TB_PROJECTS_PRODUCTS_ISCLOSED'
+                                ORDER BY [PARAID]
+                                ");
+            SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+            DataTable dt = new DataTable();
+            sqlConn.Open();
+
+            dt.Columns.Add("PARANAME", typeof(string));
+
+            da.Fill(dt);
+            comboBox3.DataSource = dt.DefaultView;
+            comboBox3.ValueMember = "PARANAME";
+            comboBox3.DisplayMember = "PARANAME";
+            sqlConn.Close();
+
+
+        }
+
+        public void comboBox4_load()
+        {
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder Sequel = new StringBuilder();
+            Sequel.AppendFormat(@" 
+                                SELECT OWNER
+                                FROM 
+                                (
+	                                SELECT '全部' AS 'OWNER'
+	                                UNION ALL
+	                                SELECT
+	                                [OWNER]      
+	                                FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+	                                GROUP BY [OWNER]
+                                ) AS TEMP
+                                ORDER BY OWNER
+                                ");
+            SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
+            DataTable dt = new DataTable();
+            sqlConn.Open();
+
+            dt.Columns.Add("OWNER", typeof(string));
+            da.Fill(dt);
+            comboBox4.DataSource = dt.DefaultView;
+            comboBox4.ValueMember = "OWNER";
+            comboBox4.DisplayMember = "OWNER";
             sqlConn.Close();
 
 
@@ -276,6 +357,126 @@ namespace TKRESEARCH
             }
         }
 
+        public void SEARCH_GV2(string ISCLOSED, string OWNER, string PROJECTNAMES)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            DataSet ds = new DataSet();
+
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                StringBuilder QUERYS = new StringBuilder();
+                StringBuilder QUERYS2 = new StringBuilder();
+                StringBuilder QUERYS3 = new StringBuilder();
+
+
+                sbSql.Clear();
+
+                //DropDownList_ISCLOSED
+                if (ISCLOSED.Equals("全部"))
+                {
+                    QUERYS.AppendFormat(@"");
+                }
+                else if (ISCLOSED.Equals("進行中"))
+                {
+                    QUERYS.AppendFormat(@" AND [ISCLOSED]='N' ");
+                }
+                else if (ISCLOSED.Equals("已完成"))
+                {
+                    QUERYS.AppendFormat(@" AND [ISCLOSED]='Y' ");
+                }
+                //DropDownList_OWNER
+                if (OWNER.Equals("全部"))
+                {
+                    QUERYS2.AppendFormat(@"");
+                }
+                else
+                {
+                    QUERYS2.AppendFormat(@" AND OWNER=N'{0}' ", OWNER);
+                }
+                //TextBox1
+                if (!string.IsNullOrEmpty(PROJECTNAMES))
+                {
+                    QUERYS3.AppendFormat(@" AND PROJECTNAMES LIKE '%{0}%' ", PROJECTNAMES);
+                }
+                else
+                {
+                    QUERYS3.AppendFormat(@"");
+                }
+
+                sbSql.AppendFormat(@"  
+                                        SELECT 
+                                        [NO] AS '專案編號'
+                                        ,[KINDS] AS '分類'
+                                        ,[PROJECTNAMES] AS '項目名稱'                                        
+                                        ,[OWNER] AS '專案負責人'
+                                        ,[STATUS] AS '研發進度回覆'
+                                        ,[TASTESREPLYS] AS '業務進度回覆'
+                                        ,[DESIGNER] AS '設計負責人'
+                                        ,[DESIGNREPLYS] AS '設計回覆'
+                                        ,[STAGES] AS '專案階段'
+                                        ,[ISCLOSED] AS '是否結案'
+                                        ,[DOC_NBR] AS '表單編號'
+                                        ,CONVERT(NVARCHAR,[UPDATEDATES],112) AS '更新日'                                        
+                                        ,[ID]
+                                        
+                                        FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+                                        WHERE 1=1
+                                        {0}
+                                        {1}
+                                        {2}
+                                        ORDER BY [OWNER],[NO]
+                                         ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds.Clear();
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+
+                if (ds.Tables["ds"].Rows.Count == 0)
+                {
+                    dataGridView2.DataSource = null;
+
+                }
+                else
+                {
+                    if (ds.Tables["ds"].Rows.Count >= 1)
+                    {
+                        dataGridView2.DataSource = ds.Tables["ds"];
+                        dataGridView2.AutoResizeColumns();
+                    }
+
+                }
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+        }
+
         public void UPDATE_TB_PROJECTS_PRODUCTS_COMMENTS(string ID,string STATUS,string TASTESREPLYS,string DESIGNREPLYS)
         {
             try
@@ -380,6 +581,14 @@ namespace TKRESEARCH
             string PROJECTNAMES = textBox1.Text.Trim();
 
             SEARCH(ISCLOSED, OWNER, PROJECTNAMES);
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string ISCLOSED = comboBox3.Text.Trim();
+            string OWNER = comboBox4.Text.Trim();
+            string PROJECTNAMES = textBox6.Text.Trim();
+
+            SEARCH_GV2(ISCLOSED, OWNER, PROJECTNAMES);
         }
 
         #endregion
