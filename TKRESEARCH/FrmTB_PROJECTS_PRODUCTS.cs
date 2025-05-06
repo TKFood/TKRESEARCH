@@ -935,7 +935,9 @@ namespace TKRESEARCH
             string ID,
             string STATUS,
             string TASTESREPLYS,
-            string DESIGNREPLYS)
+            string DESIGNREPLYS,
+            string UPDATEDATES
+            )
         {
             try
             {
@@ -961,7 +963,8 @@ namespace TKRESEARCH
                                     UPDATE  [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
                                     SET [STATUS]=@STATUS,
                                     [TASTESREPLYS]=@TASTESREPLYS,
-                                    [DESIGNREPLYS]=@DESIGNREPLYS
+                                    [DESIGNREPLYS]=@DESIGNREPLYS,
+                                    [UPDATEDATES]=@UPDATEDATES
                                     WHERE [ID]=@ID
                                     ");
 
@@ -977,6 +980,7 @@ namespace TKRESEARCH
                 cmd.Parameters.AddWithValue("@STATUS", STATUS);
                 cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
                 cmd.Parameters.AddWithValue("@DESIGNREPLYS", DESIGNREPLYS);
+                cmd.Parameters.AddWithValue("@UPDATEDATES", UPDATEDATES);
 
 
                 // 執行插入語句
@@ -1014,7 +1018,8 @@ namespace TKRESEARCH
              string DESIGNER,
              string STAGES,
              string ISCLOSED,
-             string DOC_NBR
+             string DOC_NBR,
+             string UPDATEDATES
             )
         {
             try
@@ -1047,7 +1052,8 @@ namespace TKRESEARCH
                                     [DESIGNER]=@DESIGNER,
                                     [STAGES]=@STAGES,
                                     [ISCLOSED]=@ISCLOSED,
-                                    [DOC_NBR]=@DOC_NBR
+                                    [DOC_NBR]=@DOC_NBR,
+                                    [UPDATEDATES]=@UPDATEDATES
                                     WHERE [ID]=@ID
                                     ");
 
@@ -1068,6 +1074,7 @@ namespace TKRESEARCH
                 cmd.Parameters.AddWithValue("@STAGES", STAGES);
                 cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
                 cmd.Parameters.AddWithValue("@DOC_NBR", DOC_NBR);
+                cmd.Parameters.AddWithValue("@UPDATEDATES", UPDATEDATES);
 
 
 
@@ -1211,6 +1218,16 @@ namespace TKRESEARCH
             }
         }
 
+        public void ADD_TB_PROJECTS_PRODUCTS_HISTORYS_COMMENTS(
+            string ID,
+            string STATUS,
+            string TASTESREPLYS,
+            string DESIGNREPLYS
+            )
+        {
+
+        }
+
         public void SETTEXT()
         {
             textBoxid.Text = "";
@@ -1264,7 +1281,10 @@ namespace TKRESEARCH
             string STATUS= textBox2.Text.Replace("\r\n", "\n"); 
             string TASTESREPLYS = textBox3.Text.Replace("\r\n", "\n");
             string DESIGNREPLYS = textBox4.Text.Replace("\r\n", "\n");
-            UPDATE_TB_PROJECTS_PRODUCTS_COMMENTS(ID, STATUS, TASTESREPLYS, DESIGNREPLYS);
+            string UPDATEDATES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+
+            UPDATE_TB_PROJECTS_PRODUCTS_COMMENTS(ID, STATUS, TASTESREPLYS, DESIGNREPLYS, UPDATEDATES);
+            //ADD_TB_PROJECTS_PRODUCTS_HISTORYS_COMMENTS(ID, STATUS, TASTESREPLYS, DESIGNREPLYS);
 
             string ISCLOSED = comboBox1.Text.Trim();
             string OWNER = comboBox2.Text.Trim();
@@ -1294,6 +1314,7 @@ namespace TKRESEARCH
             string STAGES = comboBox8.Text.ToString();
             string ISCLOSED = comboBox9.Text.ToString();
             string DOC_NBR = textBox10.Text.Trim();
+            string UPDATEDATES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
 
             UPDATE_TB_PROJECTS_PRODUCTS_ALL(
                 ID,
@@ -1304,7 +1325,8 @@ namespace TKRESEARCH
                 DESIGNER,
                 STAGES,
                 ISCLOSED,
-                DOC_NBR
+                DOC_NBR,
+                UPDATEDATES
             );
 
             string SEARCH_ISCLOSED = comboBox3.Text.Trim();
