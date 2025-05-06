@@ -998,7 +998,7 @@ namespace TKRESEARCH
 
 
             }
-            catch
+            catch (Exception ex)
             {
 
             }
@@ -1093,7 +1093,7 @@ namespace TKRESEARCH
 
 
             }
-            catch
+            catch (Exception ex)
             {
 
             }
@@ -1207,7 +1207,7 @@ namespace TKRESEARCH
 
 
             }
-            catch
+            catch (Exception ex)
             {
 
             }
@@ -1225,7 +1225,266 @@ namespace TKRESEARCH
             string DESIGNREPLYS
             )
         {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
 
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                // 關閉再開啟資料庫連線，並開始交易
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                // 清空 StringBuilder 並建立插入語句
+                sbSql.Clear();
+                sbSql.AppendFormat(@"
+                                    INSERT INTO [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS_HISTORYS]
+                                    (
+                                    [SID],                                  
+                                    [STATUS],
+                                    [TASTESREPLYS],
+                                    [DESIGNREPLYS]
+                                    )
+                                    VALUES
+                                    (
+                                    @ID,                                   
+                                    @STATUS,
+                                    @TASTESREPLYS,
+                                    @DESIGNREPLYS
+                                    )
+
+                                    ");
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+
+                //使用 cmd.Parameters.Clear() 清除之前的参数，确保在每次执行时没有冲突
+                cmd.Parameters.Clear();
+                // 使用參數化查詢，並對每個參數進行賦值             
+                cmd.Parameters.AddWithValue("@ID", ID);
+                cmd.Parameters.AddWithValue("@STATUS", STATUS);
+                cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
+                cmd.Parameters.AddWithValue("@DESIGNREPLYS", DESIGNREPLYS);
+
+
+
+                // 執行插入語句
+                result = cmd.ExecuteNonQuery();
+
+                // 處理交易
+                if (result == 0)
+                {
+                    tran.Rollback();    // 交易取消
+                }
+                else
+                {
+                    tran.Commit();      // 執行交易
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("錯誤：" + ex.Message);
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
+        public void ADD_TB_PROJECTS_PRODUCTS_HISTORYS_ALL(
+                string ID,
+                string NO,
+                string PROJECTNAMES,
+                string KINDS,
+                string OWNER,
+                string DESIGNER,
+                string STAGES,
+                string ISCLOSED,
+                string DOC_NBR,
+                string UPDATEDATES
+            )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                // 關閉再開啟資料庫連線，並開始交易
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                // 清空 StringBuilder 並建立插入語句
+                sbSql.Clear();
+                sbSql.AppendFormat(@"
+                                    INSERT INTO [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS_HISTORYS]
+                                    (
+                                    [SID],                               
+                                    [NO],
+                                    [PROJECTNAMES],
+                                    [KINDS],
+                                    [OWNER],
+                                    [DESIGNER],
+                                    [STAGES],
+                                    [ISCLOSED],
+                                    [DOC_NBR],
+                                    [UPDATEDATES]
+                                    )
+                                    VALUES
+                                    (
+                                    @ID,                                   
+                                    @NO,
+                                    @PROJECTNAMES,
+                                    @KINDS,
+                                    @OWNER,
+                                    @DESIGNER,
+                                    @STAGES,
+                                    @ISCLOSED,
+                                    @DOC_NBR,
+                                    @UPDATEDATES
+                                    )
+
+                                    ");
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+
+                //使用 cmd.Parameters.Clear() 清除之前的参数，确保在每次执行时没有冲突
+                cmd.Parameters.Clear();
+                // 使用參數化查詢，並對每個參數進行賦值             
+                cmd.Parameters.AddWithValue("@ID", ID);
+                cmd.Parameters.AddWithValue("@NO", NO);
+                cmd.Parameters.AddWithValue("@PROJECTNAMES", PROJECTNAMES);
+                cmd.Parameters.AddWithValue("@KINDS", KINDS);
+                cmd.Parameters.AddWithValue("@OWNER", OWNER);
+                cmd.Parameters.AddWithValue("@DESIGNER", DESIGNER);
+                cmd.Parameters.AddWithValue("@STAGES", STAGES);
+                cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
+                cmd.Parameters.AddWithValue("@DOC_NBR", DOC_NBR);
+                cmd.Parameters.AddWithValue("@UPDATEDATES", UPDATEDATES);
+
+
+
+                // 執行插入語句
+                result = cmd.ExecuteNonQuery();
+
+                // 處理交易
+                if (result == 0)
+                {
+                    tran.Rollback();    // 交易取消
+                }
+                else
+                {
+                    tran.Commit();      // 執行交易
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("錯誤：" + ex.Message);
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
+        public void UPDTE_TB_PROJECTS_PRODUCTS_HISTORYS(
+            string ID
+            )
+        {
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                // 關閉再開啟資料庫連線，並開始交易
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                // 清空 StringBuilder 並建立插入語句
+                sbSql.Clear();
+                sbSql.AppendFormat(@"
+                                    UPDATE [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS_HISTORYS]
+                                    SET [TB_PROJECTS_PRODUCTS_HISTORYS].NO=[TB_PROJECTS_PRODUCTS].NO,
+                                    [TB_PROJECTS_PRODUCTS_HISTORYS].PROJECTNAMES=[TB_PROJECTS_PRODUCTS].PROJECTNAMES
+                                    FROM  [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+                                    WHERE [TB_PROJECTS_PRODUCTS].ID=[TB_PROJECTS_PRODUCTS_HISTORYS].SID
+                                    AND ISNULL([TB_PROJECTS_PRODUCTS_HISTORYS].NO,'')=''
+                                    AND [TB_PROJECTS_PRODUCTS_HISTORYS].SID=@ID
+                                    ");
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+
+                //使用 cmd.Parameters.Clear() 清除之前的参数，确保在每次执行时没有冲突
+                cmd.Parameters.Clear();
+                // 使用參數化查詢，並對每個參數進行賦值             
+                cmd.Parameters.AddWithValue("@ID", ID);
+               
+
+
+
+                // 執行插入語句
+                result = cmd.ExecuteNonQuery();
+
+                // 處理交易
+                if (result == 0)
+                {
+                    tran.Rollback();    // 交易取消
+                }
+                else
+                {
+                    tran.Commit();      // 執行交易
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
         }
 
         public void SETTEXT()
@@ -1284,7 +1543,8 @@ namespace TKRESEARCH
             string UPDATEDATES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
 
             UPDATE_TB_PROJECTS_PRODUCTS_COMMENTS(ID, STATUS, TASTESREPLYS, DESIGNREPLYS, UPDATEDATES);
-            //ADD_TB_PROJECTS_PRODUCTS_HISTORYS_COMMENTS(ID, STATUS, TASTESREPLYS, DESIGNREPLYS);
+            ADD_TB_PROJECTS_PRODUCTS_HISTORYS_COMMENTS(ID, STATUS, TASTESREPLYS, DESIGNREPLYS);
+            UPDTE_TB_PROJECTS_PRODUCTS_HISTORYS(ID);
 
             string ISCLOSED = comboBox1.Text.Trim();
             string OWNER = comboBox2.Text.Trim();
@@ -1328,6 +1588,20 @@ namespace TKRESEARCH
                 DOC_NBR,
                 UPDATEDATES
             );
+
+            ADD_TB_PROJECTS_PRODUCTS_HISTORYS_ALL(
+                ID,
+                NO,
+                PROJECTNAMES,
+                KINDS,
+                OWNER,
+                DESIGNER,
+                STAGES,
+                ISCLOSED,
+                DOC_NBR,
+                UPDATEDATES);
+            UPDTE_TB_PROJECTS_PRODUCTS_HISTORYS(ID);
+
 
             string SEARCH_ISCLOSED = comboBox3.Text.Trim();
             string SEARCH_OWNER = comboBox4.Text.Trim();
