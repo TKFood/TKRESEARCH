@@ -46,6 +46,7 @@ namespace TKRESEARCH
         string talbename = null;
         int rownum = 0;
         int result;
+        
 
         public FrmTB_PROJECTS_PRODUCTS()
         {
@@ -508,7 +509,7 @@ namespace TKRESEARCH
                 else
                 {
                     if (ds.Tables["ds"].Rows.Count >= 1)
-                    {
+                    {                                        
                         dataGridView1.DataSource = ds.Tables["ds"];
                         dataGridView1.AutoResizeColumns();
                     }
@@ -534,13 +535,43 @@ namespace TKRESEARCH
                 int rowindex = dataGridView1.CurrentRow.Index;
                 DataGridViewRow row = dataGridView1.Rows[rowindex];
 
-                textBoxid.Text = row.Cells["ID"].Value.ToString();
-                textBox2.Text = row.Cells["研發進度回覆"].Value.ToString().Replace("\n", "\r\n"); 
-                textBox3.Text = row.Cells["業務進度回覆"].Value.ToString().Replace("\n", "\r\n"); 
-                textBox4.Text = row.Cells["設計回覆"].Value.ToString().Replace("\n", "\r\n");
-                textBox5.Text = row.Cells["項目名稱"].Value.ToString().Replace("\n", "\r\n"); 
-
+                HandleRowSelectionChanged_GV1(dataGridView1.CurrentRow);
             }
+        }
+        ///把原本的 SelectionChanged 抽出來變一個方法
+        private void HandleRowSelectionChanged_GV1(DataGridViewRow row)
+        {
+            // 原本的內容寫這裡，例如填入欄位的值到 TextBox 等
+            textBoxid.Text = row.Cells["ID"].Value.ToString();
+            textBox2.Text = row.Cells["研發進度回覆"].Value.ToString().Replace("\n", "\r\n");
+            textBox3.Text = row.Cells["業務進度回覆"].Value.ToString().Replace("\n", "\r\n");
+            textBox4.Text = row.Cells["設計回覆"].Value.ToString().Replace("\n", "\r\n");
+            textBox5.Text = row.Cells["項目名稱"].Value.ToString().Replace("\n", "\r\n");
+
+        }
+
+        //重新查詢資料後，找到對應的那筆資料並選取該列
+        private void ReloadDataAndRestoreSelection_GV1(string ID)
+        {
+            // 查詢後嘗試還原選取列
+            DataGridView SEARCH_DataGridView = new DataGridView();
+            SEARCH_DataGridView = dataGridView1;
+
+            foreach (DataGridViewRow row in SEARCH_DataGridView.Rows)
+            {
+                if (row.Cells["ID"].Value.ToString() == ID)
+                {
+                    row.Selected = true;
+                    SEARCH_DataGridView.CurrentCell = row.Cells[0]; // 確保游標在那一列
+                    SEARCH_DataGridView.FirstDisplayedScrollingRowIndex = row.Index;
+
+                    // 手動呼叫 SelectionChanged 的處理邏輯
+                    HandleRowSelectionChanged_GV1(row); // ← 把原本的 SelectionChanged 抽出來變一個方法
+                    break;
+                }
+            }
+
+            SEARCH_DataGridView.Refresh(); // 強制畫面刷新
         }
 
         public void SEARCH_GV2(string ISCLOSED, string OWNER, string PROJECTNAMES)
@@ -670,20 +701,49 @@ namespace TKRESEARCH
             {
                 int rowindex = dataGridView2.CurrentRow.Index;
                 DataGridViewRow row = dataGridView2.Rows[rowindex];
+                HandleRowSelectionChanged_GV2(row);
 
-                textBoxid2.Text = row.Cells["ID"].Value.ToString();
-                textBox7.Text = row.Cells["專案編號"].Value.ToString().Replace("\n", "\r\n");
-                textBox9.Text = row.Cells["項目名稱"].Value.ToString().Replace("\n", "\r\n");
-                textBox10.Text = row.Cells["表單編號"].Value.ToString().Replace("\n", "\r\n");
-
-                comboBox5.Text = row.Cells["分類"].Value.ToString();
-                comboBox6.Text = row.Cells["專案負責人"].Value.ToString();
-                comboBox7.Text = row.Cells["設計負責人"].Value.ToString();
-                comboBox8.Text = row.Cells["專案階段"].Value.ToString();
-                comboBox9.Text = row.Cells["是否結案"].Value.ToString();
             }
         }
+        ///把原本的 SelectionChanged 抽出來變一個方法
+        private void HandleRowSelectionChanged_GV2(DataGridViewRow row)
+        {
+            textBoxid2.Text = row.Cells["ID"].Value.ToString();
+            textBox7.Text = row.Cells["專案編號"].Value.ToString().Replace("\n", "\r\n");
+            textBox9.Text = row.Cells["項目名稱"].Value.ToString().Replace("\n", "\r\n");
+            textBox10.Text = row.Cells["表單編號"].Value.ToString().Replace("\n", "\r\n");
 
+            comboBox5.Text = row.Cells["分類"].Value.ToString();
+            comboBox6.Text = row.Cells["專案負責人"].Value.ToString();
+            comboBox7.Text = row.Cells["設計負責人"].Value.ToString();
+            comboBox8.Text = row.Cells["專案階段"].Value.ToString();
+            comboBox9.Text = row.Cells["是否結案"].Value.ToString();
+
+        }
+
+        //重新查詢資料後，找到對應的那筆資料並選取該列
+        private void ReloadDataAndRestoreSelection_GV2(string ID)
+        {
+            // 查詢後嘗試還原選取列
+            DataGridView SEARCH_DataGridView = new DataGridView();
+            SEARCH_DataGridView = dataGridView2;
+
+            foreach (DataGridViewRow row in SEARCH_DataGridView.Rows)
+            {
+                if (row.Cells["ID"].Value.ToString() == ID)
+                {
+                    row.Selected = true;
+                    SEARCH_DataGridView.CurrentCell = row.Cells[0]; // 確保游標在那一列
+                    SEARCH_DataGridView.FirstDisplayedScrollingRowIndex = row.Index;
+
+                    // 手動呼叫 SelectionChanged 的處理邏輯
+                    HandleRowSelectionChanged_GV2(row); // ← 把原本的 SelectionChanged 抽出來變一個方法
+                    break;
+                }
+            }
+
+            SEARCH_DataGridView.Refresh(); // 強制畫面刷新
+        }
         public void UPDATE_TB_PROJECTS_PRODUCTS_COMMENTS(
             string ID,
             string STATUS,
@@ -894,6 +954,8 @@ namespace TKRESEARCH
             string PROJECTNAMES = textBox1.Text.Trim();
 
             SEARCH(ISCLOSED, OWNER, PROJECTNAMES);
+
+            ReloadDataAndRestoreSelection_GV1(ID);
         }
         private void button3_Click(object sender, EventArgs e)
         {
@@ -933,6 +995,7 @@ namespace TKRESEARCH
             string SEARCH_PROJECTNAMES = textBox6.Text.Trim();
 
             SEARCH_GV2(SEARCH_ISCLOSED, SEARCH_OWNER, SEARCH_PROJECTNAMES);
+            ReloadDataAndRestoreSelection_GV2(ID);
         }
 
         #endregion
