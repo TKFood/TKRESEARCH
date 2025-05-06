@@ -268,10 +268,10 @@ namespace TKRESEARCH
                 DataGridViewRow row = dataGridView1.Rows[rowindex];
 
                 textBoxid.Text = row.Cells["ID"].Value.ToString();
-                textBox2.Text = row.Cells["研發進度回覆"].Value.ToString().Replace("\n", "\r\n"); ;
-                textBox3.Text = row.Cells["業務進度回覆"].Value.ToString().Replace("\n", "\r\n"); ;
-                textBox4.Text = row.Cells["設計回覆"].Value.ToString().Replace("\n", "\r\n"); ;
-
+                textBox2.Text = row.Cells["研發進度回覆"].Value.ToString().Replace("\n", "\r\n"); 
+                textBox3.Text = row.Cells["業務進度回覆"].Value.ToString().Replace("\n", "\r\n"); 
+                textBox4.Text = row.Cells["設計回覆"].Value.ToString().Replace("\n", "\r\n");
+                textBox5.Text = row.Cells["項目名稱"].Value.ToString().Replace("\n", "\r\n"); 
 
             }
         }
@@ -282,6 +282,7 @@ namespace TKRESEARCH
             textBox2.Text = "";
             textBox3.Text = "";
             textBox4.Text = "";
+            textBox5.Text = "";
 
         }
 
