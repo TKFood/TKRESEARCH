@@ -21,6 +21,7 @@ using NPOI.SS.UserModel;
 using System.Configuration;
 using FastReport;
 using FastReport.Data;
+using FastReport.Data;
 using System.Net.Mail;
 using TKITDLL;
 using System.Globalization;
@@ -665,6 +666,7 @@ namespace TKRESEARCH
                                         ,[TASTESREPLYS] AS '業務進度回覆'
                                         ,[DESIGNER] AS '設計負責人'
                                         ,[DESIGNREPLYS] AS '設計回覆'
+                                        ,[QCREPLYS] AS '品保回覆'
                                         ,[STAGES] AS '專案階段'
                                         ,[ISCLOSED] AS '是否結案'
                                         ,[DOC_NBR] AS '表單編號'
@@ -734,6 +736,7 @@ namespace TKRESEARCH
             textBox3.Text = row.Cells["業務進度回覆"].Value.ToString().Replace("\n", "\r\n");
             textBox4.Text = row.Cells["設計回覆"].Value.ToString().Replace("\n", "\r\n");
             textBox5.Text = row.Cells["項目名稱"].Value.ToString().Replace("\n", "\r\n");
+            textBox16.Text = row.Cells["品保回覆"].Value.ToString().Replace("\n", "\r\n");
 
         }
 
@@ -936,7 +939,8 @@ namespace TKRESEARCH
             string STATUS,
             string TASTESREPLYS,
             string DESIGNREPLYS,
-            string UPDATEDATES
+            string UPDATEDATES,
+            string QCREPLYS
             )
         {
             try
@@ -964,7 +968,8 @@ namespace TKRESEARCH
                                     SET [STATUS]=@STATUS,
                                     [TASTESREPLYS]=@TASTESREPLYS,
                                     [DESIGNREPLYS]=@DESIGNREPLYS,
-                                    [UPDATEDATES]=@UPDATEDATES
+                                    [UPDATEDATES]=@UPDATEDATES,
+                                    [QCREPLYS]=@QCREPLYS
                                     WHERE [ID]=@ID
                                     ");
 
@@ -981,7 +986,7 @@ namespace TKRESEARCH
                 cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
                 cmd.Parameters.AddWithValue("@DESIGNREPLYS", DESIGNREPLYS);
                 cmd.Parameters.AddWithValue("@UPDATEDATES", UPDATEDATES);
-
+                cmd.Parameters.AddWithValue("@QCREPLYS", QCREPLYS);
 
                 // 執行插入語句
                 result = cmd.ExecuteNonQuery();
@@ -1115,7 +1120,8 @@ namespace TKRESEARCH
             string DOC_NBR,
             string STATUS,
             string TASTESREPLYS,
-            string DESIGNREPLYS
+            string DESIGNREPLYS,
+            string QCREPLYS
            )
         {
             try
@@ -1151,7 +1157,8 @@ namespace TKRESEARCH
                                     DOC_NBR,
                                     STATUS,
                                     TASTESREPLYS,
-                                    DESIGNREPLYS
+                                    DESIGNREPLYS,
+                                    QCREPLYS
                                     )
                                     VALUES
                                     (
@@ -1165,7 +1172,8 @@ namespace TKRESEARCH
                                     @DOC_NBR,
                                     @STATUS,
                                     @TASTESREPLYS,
-                                    @DESIGNREPLYS
+                                    @DESIGNREPLYS,
+                                    @QCREPLYS
                                     )
 
                                     ");
@@ -1189,8 +1197,7 @@ namespace TKRESEARCH
                 cmd.Parameters.AddWithValue("@STATUS", STATUS);
                 cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
                 cmd.Parameters.AddWithValue("@DESIGNREPLYS", DESIGNREPLYS);
-
-
+                cmd.Parameters.AddWithValue("@QCREPLYS", QCREPLYS);
 
                 // 執行插入語句
                 result = cmd.ExecuteNonQuery();
@@ -1222,7 +1229,8 @@ namespace TKRESEARCH
             string ID,
             string STATUS,
             string TASTESREPLYS,
-            string DESIGNREPLYS
+            string DESIGNREPLYS,
+            string QCREPLYS
             )
         {
             try
@@ -1251,14 +1259,16 @@ namespace TKRESEARCH
                                     [SID],                                  
                                     [STATUS],
                                     [TASTESREPLYS],
-                                    [DESIGNREPLYS]
+                                    [DESIGNREPLYS],
+                                    [QCREPLYS]
                                     )
                                     VALUES
                                     (
                                     @ID,                                   
                                     @STATUS,
                                     @TASTESREPLYS,
-                                    @DESIGNREPLYS
+                                    @DESIGNREPLYS,
+                                    @QCREPLYS
                                     )
 
                                     ");
@@ -1275,6 +1285,7 @@ namespace TKRESEARCH
                 cmd.Parameters.AddWithValue("@STATUS", STATUS);
                 cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
                 cmd.Parameters.AddWithValue("@DESIGNREPLYS", DESIGNREPLYS);
+                cmd.Parameters.AddWithValue("@QCREPLYS", QCREPLYS);
 
 
 
@@ -1538,10 +1549,11 @@ namespace TKRESEARCH
             string STATUS= textBox2.Text.Replace("\r\n", "\n"); 
             string TASTESREPLYS = textBox3.Text.Replace("\r\n", "\n");
             string DESIGNREPLYS = textBox4.Text.Replace("\r\n", "\n");
+            string QCREPLYS = textBox16.Text.Replace("\r\n", "\n");
             string UPDATEDATES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
 
-            UPDATE_TB_PROJECTS_PRODUCTS_COMMENTS(ID, STATUS, TASTESREPLYS, DESIGNREPLYS, UPDATEDATES);
-            ADD_TB_PROJECTS_PRODUCTS_HISTORYS_COMMENTS(ID, STATUS, TASTESREPLYS, DESIGNREPLYS);
+            UPDATE_TB_PROJECTS_PRODUCTS_COMMENTS(ID, STATUS, TASTESREPLYS, DESIGNREPLYS, UPDATEDATES, QCREPLYS);
+            ADD_TB_PROJECTS_PRODUCTS_HISTORYS_COMMENTS(ID, STATUS, TASTESREPLYS, DESIGNREPLYS, QCREPLYS);
             UPDTE_TB_PROJECTS_PRODUCTS_HISTORYS(ID);
 
             string ISCLOSED = comboBox1.Text.Trim();
@@ -1625,6 +1637,7 @@ namespace TKRESEARCH
             string STATUS = textBox13.Text.Replace("\r\n", "\n");
             string TASTESREPLYS = textBox14.Text.Replace("\r\n", "\n");
             string DESIGNREPLYS = textBox15.Text.Replace("\r\n", "\n");
+            string QCREPLYS = textBox17.Text.Replace("\r\n", "\n");
 
             ADD_TB_PROJECTS_PRODUCTS(               
                 NO,
@@ -1637,7 +1650,8 @@ namespace TKRESEARCH
                 DOC_NBR,
                 STATUS,
                 TASTESREPLYS,
-                DESIGNREPLYS
+                DESIGNREPLYS,
+                QCREPLYS
                 );
         }
     }
