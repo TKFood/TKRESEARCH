@@ -146,6 +146,43 @@ namespace TKRESEARCH
                 MessageBox.Show("儲存失敗：" + ex.Message);
             }
         }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.CurrentRow != null)
+                {
+                    string mb001 = dataGridView1.CurrentRow.Cells["MB001"].Value.ToString();
+                    string mb002 = dataGridView1.CurrentRow.Cells["MB002"].Value.ToString();
+
+                    // 顯示確認訊息
+                    var result = MessageBox.Show(
+                        $"確定要刪除這筆資料嗎？\nMB001 = {mb001}, MB002 = {mb002}",
+                        "刪除確認",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning
+                    );
+
+                    if (result == DialogResult.Yes)
+                    {
+                        int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["MID"].Value);
+
+                        // 從 DataGridView 刪掉 → DataRow 標記為 Deleted
+                        dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
+
+                        // 一次把異動同步回資料庫
+                        adapter_TB_PRODUCT_SET_M.Update(ds_TB_PRODUCT_SET_M.Tables["ds_TB_PRODUCT_SET_M"]);
+
+                        SEARCH();
+                        MessageBox.Show("資料已刪除成功！");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("刪除失敗：" + ex.Message);
+            }
+        }
         #endregion
 
 
