@@ -157,6 +157,12 @@
     <Compile Include="FrmTB_DEV_NEWLISTS_BAKED.Designer.cs">
       <DependentUpon>FrmTB_DEV_NEWLISTS_BAKED.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmTB_PRODUCT_SET.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTB_PRODUCT_SET.Designer.cs">
+      <DependentUpon>FrmTB_PRODUCT_SET.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmTB_PROJECTS_PRODUCTS.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -255,6 +261,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmTB_DEV_NEWLISTS_BAKED.resx">
       <DependentUpon>FrmTB_DEV_NEWLISTS_BAKED.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTB_PRODUCT_SET.resx">
+      <DependentUpon>FrmTB_PRODUCT_SET.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmTB_PROJECTS_PRODUCTS.resx">
       <DependentUpon>FrmTB_PROJECTS_PRODUCTS.cs</DependentUpon>
