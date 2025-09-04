@@ -96,8 +96,8 @@ namespace TKRESEARCH
                 sbSql.AppendFormat(@"  
                                     SELECT 
                                     [MID]
-                                    ,[MB001]
-                                    ,[MB002]
+                                    ,[MB001] AS '品號'
+                                    ,[MB002] AS '品名'
                                     FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
                                     ");
 
@@ -152,12 +152,12 @@ namespace TKRESEARCH
             {
                 if (dataGridView1.CurrentRow != null)
                 {
-                    string mb001 = dataGridView1.CurrentRow.Cells["MB001"].Value.ToString();
-                    string mb002 = dataGridView1.CurrentRow.Cells["MB002"].Value.ToString();
+                    string mb001 = dataGridView1.CurrentRow.Cells["品號"].Value.ToString();
+                    string mb002 = dataGridView1.CurrentRow.Cells["品名"].Value.ToString();
 
                     // 顯示確認訊息
                     var result = MessageBox.Show(
-                        $"確定要刪除這筆資料嗎？\nMB001 = {mb001}, MB002 = {mb002}",
+                        $"確定要刪除這筆資料嗎？\n 品號 = {mb001}, 品名 = {mb002}",
                         "刪除確認",
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Warning
