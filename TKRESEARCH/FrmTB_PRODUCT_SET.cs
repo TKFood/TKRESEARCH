@@ -36,17 +36,15 @@ namespace TKRESEARCH
 {
     public partial class FrmTB_PRODUCT_SET : Form
     {
+        private SqlDataAdapter adapter_TB_PRODUCT_SET_M;
+        private DataSet ds_TB_PRODUCT_SET_M;
+        private SqlConnection conn;
+
         SqlConnection sqlConn = new SqlConnection();
         SqlCommand sqlComm = new SqlCommand();
-        string connectionString;
-        StringBuilder sbSql = new StringBuilder();
-        StringBuilder sbSqlQuery = new StringBuilder();
-        SqlDataAdapter adapter = new SqlDataAdapter();
-        SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+        string connectionString;      
         SqlCommand cmd = new SqlCommand();
-        SqlTransaction tran;
-        DataSet ds = new DataSet();
-        DataTable dt = new DataTable();
+        SqlTransaction tran;      
         string talbename = null;
         int rownum = 0;
         int result;
@@ -60,11 +58,10 @@ namespace TKRESEARCH
         public void SEARCH()
         {
             StringBuilder sbSql = new StringBuilder();
-            StringBuilder sbSqlQuery = new StringBuilder();
-            SqlDataAdapter adapter = new SqlDataAdapter();
+            StringBuilder sbSqlQuery = new StringBuilder();           
             SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
-            DataSet ds = new DataSet();
 
+            dataGridView1.DataSource = null;
 
             try
             {
@@ -92,34 +89,24 @@ namespace TKRESEARCH
                                     ,[MB001]
                                     ,[MB002]
                                     FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
-                                         ");
+                                    ");
 
-                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+                adapter_TB_PRODUCT_SET_M = new SqlDataAdapter(@"" + sbSql, sqlConn);
 
-                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlCmdBuilder = new SqlCommandBuilder(adapter_TB_PRODUCT_SET_M);
                 sqlConn.Open();
-                ds.Clear();
-                adapter.Fill(ds, "ds");
+                ds_TB_PRODUCT_SET_M = new DataSet(); // 這樣就不需要再 Clear()
+                adapter_TB_PRODUCT_SET_M.Fill(ds_TB_PRODUCT_SET_M, "ds_TB_PRODUCT_SET_M");
                 sqlConn.Close();
 
-
-                if (ds.Tables["ds"].Rows.Count == 0)
+                if (ds_TB_PRODUCT_SET_M.Tables["ds_TB_PRODUCT_SET_M"].Rows.Count >= 1)
                 {
-                    dataGridView1.DataSource = null;
-
-                }
-                else
-                {
-                    if (ds.Tables["ds"].Rows.Count >= 1)
-                    {
-                        dataGridView1.DataSource = ds.Tables["ds"];
-                        dataGridView1.AutoResizeColumns();
-                    }
-
+                    dataGridView1.DataSource = ds_TB_PRODUCT_SET_M.Tables["ds_TB_PRODUCT_SET_M"];
+                    dataGridView1.AutoResizeColumns();
                 }
 
             }
-            catch
+            catch (Exception EX)
             {
 
             }
