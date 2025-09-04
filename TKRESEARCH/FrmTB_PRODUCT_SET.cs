@@ -52,9 +52,19 @@ namespace TKRESEARCH
         public FrmTB_PRODUCT_SET()
         {
             InitializeComponent();
+
+            DATAGRIDSET();
         }
 
         #region FUNCTION
+        public void DATAGRIDSET()
+        {
+            // DataGridView 屬性設定
+            dataGridView1.AllowUserToAddRows = true;   // 允許新增
+            dataGridView1.AllowUserToDeleteRows = true; // 允許刪除
+            dataGridView1.ReadOnly = false;             // 可編輯
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.CellSelect;
+        }
         public void SEARCH()
         {
             StringBuilder sbSql = new StringBuilder();
@@ -122,7 +132,22 @@ namespace TKRESEARCH
         {
             SEARCH();
         }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                adapter_TB_PRODUCT_SET_M.Update(ds_TB_PRODUCT_SET_M.Tables["ds_TB_PRODUCT_SET_M"]); // 更新回資料庫
 
+                SEARCH();
+                MessageBox.Show("資料已儲存成功！");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("儲存失敗：" + ex.Message);
+            }
+        }
         #endregion
+
+
     }
 }
