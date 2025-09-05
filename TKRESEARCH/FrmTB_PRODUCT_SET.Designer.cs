@@ -257,6 +257,7 @@
             this.dataGridView2.RowTemplate.Height = 24;
             this.dataGridView2.Size = new System.Drawing.Size(966, 353);
             this.dataGridView2.TabIndex = 5;
+            this.dataGridView2.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataGridView2_RowsAdded);
             // 
             // button4
             // 
@@ -268,6 +269,7 @@
             this.button4.TabIndex = 82;
             this.button4.Text = "刪除明細";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // FrmTB_PRODUCT_SET
             // 

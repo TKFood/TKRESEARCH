@@ -111,6 +111,31 @@ namespace TKRESEARCH
 
                 adapter_TB_PRODUCT_SET_M = new SqlDataAdapter(@"" + sbSql, sqlConn);
 
+                // -------- 手動設定 InsertCommand --------
+                adapter_TB_PRODUCT_SET_M.InsertCommand = new SqlCommand(@"
+                    INSERT INTO [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M] 
+                    (MB001, MB002) 
+                    VALUES (@MB001, @MB002);
+                    SELECT SCOPE_IDENTITY();", sqlConn);
+                adapter_TB_PRODUCT_SET_M.InsertCommand.Parameters.Add("@MB001", SqlDbType.NVarChar, 0, "品號");
+                adapter_TB_PRODUCT_SET_M.InsertCommand.Parameters.Add("@MB002", SqlDbType.NVarChar, 0, "品名");
+
+                // -------- 手動設定 UpdateCommand --------
+                adapter_TB_PRODUCT_SET_M.UpdateCommand = new SqlCommand(@"
+                    UPDATE [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M] 
+                    SET MB001=@MB001, MB002=@MB002 
+                    WHERE MID=@MID", sqlConn);
+                adapter_TB_PRODUCT_SET_M.UpdateCommand.Parameters.Add("@MB001", SqlDbType.NVarChar, 0, "品號");
+                adapter_TB_PRODUCT_SET_M.UpdateCommand.Parameters.Add("@MB002", SqlDbType.NVarChar, 0, "品名");
+                adapter_TB_PRODUCT_SET_M.UpdateCommand.Parameters.Add("@MID", SqlDbType.Int, 0, "MID");
+
+                // -------- 手動設定 DeleteCommand --------
+                adapter_TB_PRODUCT_SET_M.DeleteCommand = new SqlCommand(@"
+                    DELETE FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M] 
+                    WHERE MID=@MID", sqlConn);
+                adapter_TB_PRODUCT_SET_M.DeleteCommand.Parameters.Add("@MID", SqlDbType.Int, 0, "MID");
+
+
                 sqlCmdBuilder = new SqlCommandBuilder(adapter_TB_PRODUCT_SET_M);
                 sqlConn.Open();
                 ds_TB_PRODUCT_SET_M = new DataSet(); // 這樣就不需要再 Clear()
@@ -141,7 +166,6 @@ namespace TKRESEARCH
             SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
 
             dataGridView2.DataSource = null;
-
             try
             {
                 //20210902密
@@ -155,24 +179,45 @@ namespace TKRESEARCH
                 String connectionString;
                 sqlConn = new SqlConnection(sqlsb.ConnectionString);
 
-                StringBuilder QUERYS = new StringBuilder();
-                StringBuilder QUERYS2 = new StringBuilder();
-                StringBuilder QUERYS3 = new StringBuilder();
-
-
                 sbSql.Clear();
 
                 sbSql.AppendFormat(@"  
-                                    SELECT 
-                                    [MID]
-                                    ,[SERNO] AS '序號'
-                                    ,[MB001] AS '品號'
-                                    ,[MB002] AS '品名'
-                                    FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D]
-                                    WHERE MID='{0}'
-                                    ", MID);
+                                SELECT 
+                                [MID]
+                                ,[SERNO] AS '序號'
+                                ,[MB001] AS '品號'
+                                ,[MB002] AS '品名'
+                                FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D]
+                                WHERE MID='{0}' ", MID);
 
-                adapter_TB_PRODUCT_SET_D = new SqlDataAdapter(@"" + sbSql, sqlConn);
+                adapter_TB_PRODUCT_SET_D = new SqlDataAdapter(sbSql.ToString(), sqlConn);
+
+                // ⚠️ 這裡自己手動指定 Insert/Update/DeleteCommand
+                adapter_TB_PRODUCT_SET_D.InsertCommand = new SqlCommand(
+                    @"INSERT INTO [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D] (MID, SERNO, MB001, MB002) 
+                VALUES (@MID, @SERNO, @MB001, @MB002)", sqlConn);
+                adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@MID", SqlDbType.Int, 0, "MID");
+                adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@SERNO", SqlDbType.NVarChar, 0, "序號");
+                adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@MB001", SqlDbType.NVarChar, 0, "品號");
+                adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@MB002", SqlDbType.NVarChar, 0, "品名");
+
+                adapter_TB_PRODUCT_SET_D.UpdateCommand = new SqlCommand(
+                    @"UPDATE [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D] 
+                  SET MB001=@MB001, MB002=@MB002 
+                  WHERE MID=@MID AND SERNO=@SERNO", sqlConn);
+                adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@MB001", SqlDbType.NVarChar, 0, "品號");
+                adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@MB002", SqlDbType.NVarChar, 0, "品名");
+                adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@MID", SqlDbType.Int, 0, "MID");
+                adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@SERNO", SqlDbType.NVarChar, 0, "序號");
+
+                adapter_TB_PRODUCT_SET_D.DeleteCommand = new SqlCommand(
+                    @"DELETE FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D] 
+                 WHERE MID=@MID AND SERNO=@SERNO", sqlConn);
+                adapter_TB_PRODUCT_SET_D.DeleteCommand.Parameters.Add("@MID", SqlDbType.Int, 0, "MID");
+                adapter_TB_PRODUCT_SET_D.DeleteCommand.Parameters.Add("@SERNO", SqlDbType.NVarChar, 0, "序號");
+
+                ds_TB_PRODUCT_SET_D = new DataSet();
+                adapter_TB_PRODUCT_SET_D.Fill(ds_TB_PRODUCT_SET_D, "ds_TB_PRODUCT_SET_D");
 
                 sqlCmdBuilder = new SqlCommandBuilder(adapter_TB_PRODUCT_SET_D);
                 sqlConn.Open();
@@ -185,7 +230,6 @@ namespace TKRESEARCH
                     dataGridView2.DataSource = ds_TB_PRODUCT_SET_D.Tables["ds_TB_PRODUCT_SET_D"];
                     dataGridView2.AutoResizeColumns();
                 }
-
             }
             catch (Exception EX)
             {
@@ -195,6 +239,7 @@ namespace TKRESEARCH
             {
 
             }
+           
         }
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
@@ -204,6 +249,25 @@ namespace TKRESEARCH
                 SEARCH_TB_PRODUCT_SET_D(mid);
             }
         }
+        private void dataGridView2_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            // 這裡假設主檔 DataGridView 是 dataGridView1，MID 在目前選取列
+            if (dataGridView1.CurrentRow == null) return;
+
+            string masterMID = dataGridView1.CurrentRow.Cells["MID"].Value.ToString();
+            // 每次有新列被加進來，就重新編流水號
+            for (int i = 0; i < dataGridView2.Rows.Count; i++)
+            {
+                if (dataGridView2.Rows[i].IsNewRow) continue; // 跳過新增中的空白列
+
+                int serno = (i + 1) * 10; // 1筆=10, 2筆=20, ...
+                dataGridView2.Rows[i].Cells["序號"].Value = serno.ToString("D4"); // 4碼補零
+
+                // 設定跟主檔一樣的 MID
+                dataGridView2.Rows[i].Cells["MID"].Value = masterMID;
+            }
+        }
+
         #endregion
 
         #region BUTTON
@@ -265,8 +329,48 @@ namespace TKRESEARCH
             }
         }
 
+        private void button4_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView2.CurrentRow != null)
+                {
+                    string mid = dataGridView2.CurrentRow.Cells["MID"].Value.ToString();
+                    string SERNO = dataGridView2.CurrentRow.Cells["序號"].Value.ToString();
+                    string mb001 = dataGridView2.CurrentRow.Cells["品號"].Value.ToString();
+                    string mb002 = dataGridView2.CurrentRow.Cells["品名"].Value.ToString();
+
+                    // 顯示確認訊息
+                    var result = MessageBox.Show(
+                        $"確定要刪除這筆資料嗎？\n 品號 = {mb001}, 品名 = {mb002}",
+                        "刪除確認",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning
+                    );
+
+                    if (result == DialogResult.Yes)
+                    {
+                        //int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["MID"].Value);
+
+                        // 從 DataGridView 刪掉 → DataRow 標記為 Deleted
+                        dataGridView2.Rows.Remove(dataGridView2.CurrentRow);
+
+                        // 一次把異動同步回資料庫
+                        adapter_TB_PRODUCT_SET_D.Update(ds_TB_PRODUCT_SET_D.Tables["ds_TB_PRODUCT_SET_D"]);
+
+                        SEARCH();
+                        MessageBox.Show("資料已刪除成功！");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("刪除失敗：" + ex.Message);
+            }
+        }
+
         #endregion
 
-    
+
     }
 }
