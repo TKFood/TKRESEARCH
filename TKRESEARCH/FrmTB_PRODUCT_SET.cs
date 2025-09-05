@@ -50,6 +50,7 @@ namespace TKRESEARCH
         string talbename = null;
         int rownum = 0;
         int result;
+        string currentMID = null;
 
         public FrmTB_PRODUCT_SET()
         {
@@ -146,6 +147,25 @@ namespace TKRESEARCH
                 {
                     dataGridView1.DataSource = ds_TB_PRODUCT_SET_M.Tables["ds_TB_PRODUCT_SET_M"];
                     dataGridView1.AutoResizeColumns();
+
+                    // 查詢後，還原到剛剛那筆dataGridView1
+                    // 同時指向明細
+                    if (!string.IsNullOrEmpty(currentMID))
+                    {
+                        foreach (DataGridViewRow row in dataGridView1.Rows)
+                        {
+                            if (row.Cells["MID"].Value.ToString() == currentMID)
+                            {
+                                row.Selected = true;
+                                dataGridView1.CurrentCell = row.Cells["品號"];
+
+                                // 直接呼叫明細查詢，更新明細 DataGridView2
+                                SEARCH_TB_PRODUCT_SET_D(currentMID);
+
+                                break;
+                            }
+                        }
+                    }
                 }
 
             }
@@ -230,6 +250,17 @@ namespace TKRESEARCH
                     dataGridView2.DataSource = ds_TB_PRODUCT_SET_D.Tables["ds_TB_PRODUCT_SET_D"];
                     dataGridView2.AutoResizeColumns();
                 }
+
+                // ✅ 即使沒有資料，也要建立 DataTable 結構並綁定              
+                if (ds_TB_PRODUCT_SET_D.Tables["ds_TB_PRODUCT_SET_D"].Rows.Count == 0)
+                {
+                    // 建立一個空的 Row，不是真的資料，只是確保 DataGridView 可以編輯
+                    ds_TB_PRODUCT_SET_D.Tables["ds_TB_PRODUCT_SET_D"].Rows.Clear();
+                    dataGridView2.DataSource = ds_TB_PRODUCT_SET_D.Tables["ds_TB_PRODUCT_SET_D"];
+                    dataGridView2.AutoResizeColumns();
+                }
+
+              
             }
             catch (Exception EX)
             {
@@ -244,7 +275,7 @@ namespace TKRESEARCH
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow != null)
-            {
+            { 
                 string mid = dataGridView1.CurrentRow.Cells["MID"].Value.ToString();
                 SEARCH_TB_PRODUCT_SET_D(mid);
             }
@@ -268,6 +299,15 @@ namespace TKRESEARCH
             }
         }
 
+        public void SET_dataGridView1_MID()
+        {
+            if (dataGridView1.CurrentRow != null)
+            {
+                // 先記住目前選到的 MID
+                currentMID = dataGridView1.CurrentRow.Cells["MID"].Value.ToString();              
+                //MessageBox.Show(currentMID);
+            }
+        }
         #endregion
 
         #region BUTTON
@@ -282,7 +322,9 @@ namespace TKRESEARCH
                 adapter_TB_PRODUCT_SET_M.Update(ds_TB_PRODUCT_SET_M.Tables["ds_TB_PRODUCT_SET_M"]); // 更新回資料庫
                 adapter_TB_PRODUCT_SET_D.Update(ds_TB_PRODUCT_SET_D.Tables["ds_TB_PRODUCT_SET_D"]); // 更新回資料庫
 
-                SEARCH();
+                SET_dataGridView1_MID();
+                SEARCH();              
+
                 MessageBox.Show("資料已儲存成功！");
             }
             catch (Exception ex)
@@ -318,6 +360,7 @@ namespace TKRESEARCH
                         // 一次把異動同步回資料庫
                         adapter_TB_PRODUCT_SET_M.Update(ds_TB_PRODUCT_SET_M.Tables["ds_TB_PRODUCT_SET_M"]);
 
+                        SET_dataGridView1_MID();
                         SEARCH();
                         MessageBox.Show("資料已刪除成功！");
                     }
@@ -358,6 +401,7 @@ namespace TKRESEARCH
                         // 一次把異動同步回資料庫
                         adapter_TB_PRODUCT_SET_D.Update(ds_TB_PRODUCT_SET_D.Tables["ds_TB_PRODUCT_SET_D"]);
 
+                        SET_dataGridView1_MID();
                         SEARCH();
                         MessageBox.Show("資料已刪除成功！");
                     }
