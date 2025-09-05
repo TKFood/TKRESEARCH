@@ -354,6 +354,14 @@ namespace TKRESEARCH
                     {
                         //int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["MID"].Value);
 
+                        // 先刪除明細
+                        foreach (DataRow dr in ds_TB_PRODUCT_SET_D.Tables["ds_TB_PRODUCT_SET_D"].Select($"MID='{mid}'"))
+                        {
+                            dr.Delete();
+                        }
+                        adapter_TB_PRODUCT_SET_D.Update(ds_TB_PRODUCT_SET_D.Tables["ds_TB_PRODUCT_SET_D"]);
+
+
                         // 從 DataGridView 刪掉 → DataRow 標記為 Deleted
                         dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
 
