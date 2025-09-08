@@ -371,10 +371,17 @@ namespace TKRESEARCH
         }
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
+            SET_TEXTBOX_NULL();
             if (dataGridView1.CurrentRow != null)
             { 
                 string mid = dataGridView1.CurrentRow.Cells["MID"].Value.ToString();
                 SEARCH_TB_PRODUCT_SET_D(mid);
+
+                string MB001 = dataGridView1.CurrentRow.Cells["品號"].Value.ToString();
+                string MB002 = dataGridView1.CurrentRow.Cells["品名"].Value.ToString();
+                textBox2.Text = mid;
+                textBox3.Text = MB001;
+                textBox4.Text = MB002;
             }
         }
         private void dataGridView2_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
@@ -404,6 +411,13 @@ namespace TKRESEARCH
                 currentMID = dataGridView1.CurrentRow.Cells["MID"].Value.ToString();              
                 //MessageBox.Show(currentMID);
             }
+        }
+
+        public void SET_TEXTBOX_NULL()
+        {
+            textBox2.Text = "";
+            textBox3.Text = "";
+            textBox4.Text = "";
         }
         #endregion
 
@@ -516,6 +530,10 @@ namespace TKRESEARCH
             {
                 MessageBox.Show("刪除失敗：" + ex.Message);
             }
+        }
+        private void button5_Click(object sender, EventArgs e)
+        {
+
         }
 
         #endregion
