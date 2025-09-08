@@ -210,34 +210,58 @@ namespace TKRESEARCH
                                 ,[SERNO] AS '序號'
                                 ,[MB001] AS '品號'
                                 ,[MB002] AS '品名'
+                                ,[AMOUNTS] AS '用量'
+                                ,[UNITS] AS '單位'
                                 FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D]
                                 WHERE MID='{0}' ", MID);
 
+                // 在建立 adapter_TB_PRODUCT_SET_D 之後，設定三個 command
                 adapter_TB_PRODUCT_SET_D = new SqlDataAdapter(sbSql.ToString(), sqlConn);
 
-                // ⚠️ 這裡自己手動指定 Insert/Update/DeleteCommand
+                // Insert
                 adapter_TB_PRODUCT_SET_D.InsertCommand = new SqlCommand(
-                    @"INSERT INTO [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D] (MID, SERNO, MB001, MB002) 
-                VALUES (@MID, @SERNO, @MB001, @MB002)", sqlConn);
-                adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@MID", SqlDbType.Int, 0, "MID");
-                adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@SERNO", SqlDbType.NVarChar, 0, "序號");
-                adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@MB001", SqlDbType.NVarChar, 0, "品號");
-                adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@MB002", SqlDbType.NVarChar, 0, "品名");
+                    @"INSERT INTO [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D] 
+                    (MID, SERNO, MB001, MB002, AMOUNTS, UNITS) 
+                     VALUES (@MID, @SERNO, @MB001, @MB002, @AMOUNTS, @UNITS)", sqlConn);
+                adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@MID", SqlDbType.Int).SourceColumn = "MID";
+                adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@SERNO", SqlDbType.NVarChar, 20).SourceColumn = "序號";
+                adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@MB001", SqlDbType.NVarChar, 50).SourceColumn = "品號";
+                adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@MB002", SqlDbType.NVarChar, 200).SourceColumn = "品名";
+                adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@AMOUNTS", SqlDbType.NVarChar, 200).SourceColumn = "用量";
+                adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@UNITS", SqlDbType.NVarChar, 20).SourceColumn = "單位";
 
+                // Update — 注意把 WHERE 的 key 參數設為 Original
                 adapter_TB_PRODUCT_SET_D.UpdateCommand = new SqlCommand(
-                    @"UPDATE [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D] 
-                  SET MB001=@MB001, MB002=@MB002 
-                  WHERE MID=@MID AND SERNO=@SERNO", sqlConn);
-                adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@MB001", SqlDbType.NVarChar, 0, "品號");
-                adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@MB002", SqlDbType.NVarChar, 0, "品名");
-                adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@MID", SqlDbType.Int, 0, "MID");
-                adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@SERNO", SqlDbType.NVarChar, 0, "序號");
+                    @"UPDATE [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D]
+                      SET MB001 = @MB001,
+                          MB002 = @MB002,
+                          AMOUNTS = @AMOUNTS,
+                          UNITS = @UNITS
+                      WHERE MID = @MID AND SERNO = @SERNO", sqlConn);
 
+                adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@MB001", SqlDbType.NVarChar, 50).SourceColumn = "品號";
+                adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@MB002", SqlDbType.NVarChar, 200).SourceColumn = "品名";
+                adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@AMOUNTS", SqlDbType.NVarChar, 200).SourceColumn = "用量";
+                adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@UNITS", SqlDbType.NVarChar, 20).SourceColumn = "單位";
+
+                // Key 參數 (用 Original 版本以匹配更新前的 key)
+                var pMID = adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@MID", SqlDbType.Int);
+                pMID.SourceColumn = "MID";
+                pMID.SourceVersion = DataRowVersion.Original;
+
+                var pSERNO = adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@SERNO", SqlDbType.NVarChar, 20);
+                pSERNO.SourceColumn = "序號";
+                pSERNO.SourceVersion = DataRowVersion.Original;
+
+                // Delete
                 adapter_TB_PRODUCT_SET_D.DeleteCommand = new SqlCommand(
-                    @"DELETE FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D] 
-                 WHERE MID=@MID AND SERNO=@SERNO", sqlConn);
-                adapter_TB_PRODUCT_SET_D.DeleteCommand.Parameters.Add("@MID", SqlDbType.Int, 0, "MID");
-                adapter_TB_PRODUCT_SET_D.DeleteCommand.Parameters.Add("@SERNO", SqlDbType.NVarChar, 0, "序號");
+                    @"DELETE FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D] WHERE MID = @MID AND SERNO = @SERNO", sqlConn);
+                var dMID = adapter_TB_PRODUCT_SET_D.DeleteCommand.Parameters.Add("@MID", SqlDbType.Int);
+                dMID.SourceColumn = "MID";
+                dMID.SourceVersion = DataRowVersion.Original;
+                var dSERNO = adapter_TB_PRODUCT_SET_D.DeleteCommand.Parameters.Add("@SERNO", SqlDbType.NVarChar, 20);
+                dSERNO.SourceColumn = "序號";
+                dSERNO.SourceVersion = DataRowVersion.Original; ;
 
                 ds_TB_PRODUCT_SET_D = new DataSet();
                 adapter_TB_PRODUCT_SET_D.Fill(ds_TB_PRODUCT_SET_D, "ds_TB_PRODUCT_SET_D");
@@ -256,6 +280,8 @@ namespace TKRESEARCH
                     dataGridView2.Columns["序號"].Width = 100;
                     dataGridView2.Columns["品號"].Width = 200;
                     dataGridView2.Columns["品名"].Width = 200;
+                    dataGridView2.Columns["用量"].Width = 100;
+                    dataGridView2.Columns["單位"].Width = 100;
                 }
 
                 // ✅ 即使沒有資料，也要建立 DataTable 結構並綁定              
