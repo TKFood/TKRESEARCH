@@ -413,6 +413,88 @@ namespace TKRESEARCH
             }
         }
 
+        public void SEARCH_TB_PRODUCT_SET_M(string MID)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            SqlDataAdapter adapter;
+            DataSet ds;
+
+            dataGridView3.DataSource = null;
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                StringBuilder QUERYS = new StringBuilder();
+                StringBuilder QUERYS2 = new StringBuilder();
+                StringBuilder QUERYS3 = new StringBuilder();
+             
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                    SELECT 
+                                    [MID]
+                                    ,[MB001] AS '品號'
+                                    ,[MB002] as '品名'
+                                    ,[ISCLOSED]
+                                    ,[DEP]
+                                    ,[KINDS]
+                                    ,[UNITS]
+                                    ,[BOXS]
+                                    ,[BEFORESIZES]
+                                    ,[AFTERSIZES]
+                                    ,[BEFOREWEIGHTS]
+                                    ,[AFTERWEIGHTS]
+                                    ,[MOQS]
+                                    ,[MOQMINS]
+                                    ,[PROCESS]
+                                    ,[STEPS]
+                                    ,[COMMENTS]
+                                    FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
+                                    WHERE [MID]='{0}'
+                                    ", MID);
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds = new DataSet(); // 這樣就不需要再 Clear()
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    dataGridView3.DataSource = ds.Tables["ds"];
+                    //dataGridView1.AutoResizeColumns();
+                    // 指定固定寬度
+                    dataGridView3.Columns["品號"].Width = 200;
+                    dataGridView3.Columns["品名"].Width = 200;
+                   
+                }
+
+            }
+            catch (Exception EX)
+            {
+
+            }
+            finally
+            {
+
+            }
+
+        }
         public void SET_TEXTBOX_NULL()
         {
             textBox2.Text = "";
@@ -533,7 +615,7 @@ namespace TKRESEARCH
         }
         private void button5_Click(object sender, EventArgs e)
         {
-
+            SEARCH_TB_PRODUCT_SET_M(textBox2.Text.Trim());
         }
 
         #endregion
