@@ -56,10 +56,56 @@ namespace TKRESEARCH
         {
             InitializeComponent();
 
+            comboBox1load();
             DATAGRIDSET();
         }
 
         #region FUNCTION
+        public void comboBox1load()
+        {
+            try
+            {
+                Class1 TKID = new Class1();
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                // 解密帳號密碼
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                using (SqlConnection sqlConn = new SqlConnection(sqlsb.ConnectionString))
+                {
+                    StringBuilder sbSql = new StringBuilder();
+                    sbSql.AppendFormat(@"
+                                        SELECT 
+                                            [ID],
+                                            [KIND],
+                                            [PARAID],
+                                            [PARANAME]
+                                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                                        WHERE [KIND]='FrmTB_PRODUCT_SET'
+                                        ORDER BY [PARAID]");
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(sbSql.ToString(), sqlConn);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+
+                    if (dt.Rows.Count > 0)
+                    {
+                        comboBox1.DataSource = dt;
+                        comboBox1.DisplayMember = "PARANAME";  // 顯示中文名稱
+                        comboBox1.ValueMember = "PARAID";      // 內部對應值
+                    }
+                    else
+                    {
+                        comboBox1.DataSource = null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("載入 ComboBox 發生錯誤：" + ex.Message);
+            }
+        }
         public void DATAGRIDSET()
         {
             // DataGridView1 屬性設定
@@ -74,13 +120,14 @@ namespace TKRESEARCH
             dataGridView2.ReadOnly = false;             // 可編輯
             dataGridView2.SelectionMode = DataGridViewSelectionMode.CellSelect;
         }
-        public void SEARCH()
+        public void SEARCH(string ISCLOSED,string MB001)
         {
             StringBuilder sbSql = new StringBuilder();
             StringBuilder sbSqlQuery = new StringBuilder();           
             SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
 
             dataGridView1.DataSource = null;
+            dataGridView2.DataSource = null;
 
             try
             {
@@ -99,6 +146,19 @@ namespace TKRESEARCH
                 StringBuilder QUERYS2 = new StringBuilder();
                 StringBuilder QUERYS3 = new StringBuilder();
 
+                if(!string.IsNullOrEmpty(ISCLOSED))
+                {
+                    QUERYS.AppendFormat(@"AND ISCLOSED='{0}'", ISCLOSED);
+                }
+
+                if (!string.IsNullOrEmpty(MB001))
+                {
+                    QUERYS2.AppendFormat(@"AND (MB001 LIKE '%{0}%' OR MB002 LIKE '%{0}%')", MB001);
+                }
+                else
+                {
+                    QUERYS2.AppendFormat(@"");
+                }
 
                 sbSql.Clear();              
 
@@ -108,7 +168,10 @@ namespace TKRESEARCH
                                     ,[MB001] AS '品號'
                                     ,[MB002] AS '品名'
                                     FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
-                                    ");
+                                    WHERE 1=1
+                                    {0}
+                                    {1}
+                                    ", QUERYS.ToString(), QUERYS2.ToString());
 
                 adapter_TB_PRODUCT_SET_M = new SqlDataAdapter(@"" + sbSql, sqlConn);
 
@@ -347,7 +410,7 @@ namespace TKRESEARCH
         #region BUTTON
         private void button1_Click(object sender, EventArgs e)
         {
-            SEARCH();
+            SEARCH(comboBox1.Text.ToString(),textBox1.Text.Trim());
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -357,7 +420,7 @@ namespace TKRESEARCH
                 adapter_TB_PRODUCT_SET_D.Update(ds_TB_PRODUCT_SET_D.Tables["ds_TB_PRODUCT_SET_D"]); // 更新回資料庫
 
                 SET_dataGridView1_MID();
-                SEARCH();              
+                SEARCH(comboBox1.Text.ToString(), textBox1.Text.Trim());
 
                 MessageBox.Show("資料已儲存成功！");
             }
@@ -403,7 +466,7 @@ namespace TKRESEARCH
                         adapter_TB_PRODUCT_SET_M.Update(ds_TB_PRODUCT_SET_M.Tables["ds_TB_PRODUCT_SET_M"]);
 
                         SET_dataGridView1_MID();
-                        SEARCH();
+                        SEARCH(comboBox1.Text.ToString(), textBox1.Text.Trim());
                         MessageBox.Show("資料已刪除成功！");
                     }
                 }
@@ -444,7 +507,7 @@ namespace TKRESEARCH
                         adapter_TB_PRODUCT_SET_D.Update(ds_TB_PRODUCT_SET_D.Tables["ds_TB_PRODUCT_SET_D"]);
 
                         SET_dataGridView1_MID();
-                        SEARCH();
+                        SEARCH(comboBox1.Text.ToString(), textBox1.Text.Trim());
                         MessageBox.Show("資料已刪除成功！");
                     }
                 }
