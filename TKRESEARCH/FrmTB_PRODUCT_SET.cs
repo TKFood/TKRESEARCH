@@ -146,7 +146,10 @@ namespace TKRESEARCH
                 if (ds_TB_PRODUCT_SET_M.Tables["ds_TB_PRODUCT_SET_M"].Rows.Count >= 1)
                 {
                     dataGridView1.DataSource = ds_TB_PRODUCT_SET_M.Tables["ds_TB_PRODUCT_SET_M"];
-                    dataGridView1.AutoResizeColumns();
+                    //dataGridView1.AutoResizeColumns();
+                    // 指定固定寬度
+                    dataGridView1.Columns["品號"].Width = 200;
+                    dataGridView1.Columns["品名"].Width = 200;
 
                     // 查詢後，還原到剛剛那筆dataGridView1
                     // 同時指向明細
@@ -248,7 +251,11 @@ namespace TKRESEARCH
                 if (ds_TB_PRODUCT_SET_D.Tables["ds_TB_PRODUCT_SET_D"].Rows.Count >= 1)
                 {
                     dataGridView2.DataSource = ds_TB_PRODUCT_SET_D.Tables["ds_TB_PRODUCT_SET_D"];
-                    dataGridView2.AutoResizeColumns();
+                    //dataGridView2.AutoResizeColumns();
+                    //指定固定寬度
+                    dataGridView2.Columns["序號"].Width = 100;
+                    dataGridView2.Columns["品號"].Width = 200;
+                    dataGridView2.Columns["品名"].Width = 200;
                 }
 
                 // ✅ 即使沒有資料，也要建立 DataTable 結構並綁定              
@@ -257,7 +264,8 @@ namespace TKRESEARCH
                     // 建立一個空的 Row，不是真的資料，只是確保 DataGridView 可以編輯
                     ds_TB_PRODUCT_SET_D.Tables["ds_TB_PRODUCT_SET_D"].Rows.Clear();
                     dataGridView2.DataSource = ds_TB_PRODUCT_SET_D.Tables["ds_TB_PRODUCT_SET_D"];
-                    dataGridView2.AutoResizeColumns();
+                    //dataGridView2.AutoResizeColumns();
+                   
                 }
 
               
