@@ -63,6 +63,7 @@ namespace TKRESEARCH
             comboBox1_load();
             comboBox2_load();
             comboBox3_load();
+            comboBox4_load();
             DATAGRIDSET();
         }
         #region FUNCTION
@@ -143,7 +144,20 @@ namespace TKRESEARCH
 
             LoadComboBox(comboBox3, sql, "PARANAME", "PARAID");
         }
+        public void comboBox4_load()
+        {
+            string sql = @"
+                        SELECT 
+                            [ID],
+                            [KIND],
+                            [PARAID],
+                            [PARANAME]
+                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                        WHERE [KIND]='FrmTB_PRODUCT_SET'
+                        ORDER BY [PARAID]";
 
+            LoadComboBox(comboBox4, sql, "PARANAME", "PARAID");
+        }
 
         public void DATAGRIDSET()
         {
@@ -571,7 +585,204 @@ namespace TKRESEARCH
                     textBox15.Text = MOQMINS;
                     textBox16.Text = PROCESS;
                     textBox17.Text = COMMENTS;
+                    comboBox2.Text = ISCLOSED;
+                    comboBox3.Text = KINDS;
                 }
+            }
+        }
+
+        public void UPDATE_TB_PRODUCT_SET_M(
+            string MID,
+            string MB001,
+            string MB002,
+            string ISCLOSED,
+            string DEP,
+            string KINDS,
+            string UNITS,
+            string BOXS,
+            string BEFORESIZES,
+            string AFTERSIZES,
+            string BEFOREWEIGHTS,
+            string AFTERWEIGHTS,
+            string MOQS,
+            string MOQMINS,
+            string PROCESS,
+            string COMMENTS
+            )
+        {
+            try
+            {
+                StringBuilder sbSql = new StringBuilder();
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                // 關閉再開啟資料庫連線，並開始交易
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                // 清空 StringBuilder 並建立插入語句
+                sbSql.Clear();
+                sbSql.AppendFormat(@"
+                                    UPDATE [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
+                                    SET 
+                                    MB001=@MB001
+                                    ,MB002=@MB002
+                                    ,ISCLOSED=@ISCLOSED
+                                    ,DEP=@DEP
+                                    ,KINDS=@KINDS
+                                    ,UNITS=@UNITS
+                                    ,BOXS=@BOXS
+                                    ,BEFORESIZES=@BEFORESIZES
+                                    ,AFTERSIZES=@AFTERSIZES
+                                    ,BEFOREWEIGHTS=@BEFOREWEIGHTS
+                                    ,AFTERWEIGHTS=@AFTERWEIGHTS
+                                    ,MOQS=@MOQS
+                                    ,MOQMINS=@MOQMINS
+                                    ,PROCESS=@PROCESS
+                                    ,COMMENTS=@COMMENTS
+                                    WHERE MID=@MID
+                                    ");
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+
+                //使用 cmd.Parameters.Clear() 清除之前的参数，确保在每次执行时没有冲突
+                cmd.Parameters.Clear();
+                // 使用參數化查詢，並對每個參數進行賦值
+                cmd.Parameters.AddWithValue("@MID", MID);
+                cmd.Parameters.AddWithValue("@MB001", MB001);
+                cmd.Parameters.AddWithValue("@MB002", MB002);
+                cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
+                cmd.Parameters.AddWithValue("@DEP", DEP);
+                cmd.Parameters.AddWithValue("@KINDS", KINDS);
+                cmd.Parameters.AddWithValue("@UNITS", UNITS);
+                cmd.Parameters.AddWithValue("@BOXS", BOXS);
+                cmd.Parameters.AddWithValue("@BEFORESIZES", BEFORESIZES);
+                cmd.Parameters.AddWithValue("@AFTERSIZES", AFTERSIZES);
+                cmd.Parameters.AddWithValue("@BEFOREWEIGHTS", BEFOREWEIGHTS);
+                cmd.Parameters.AddWithValue("@AFTERWEIGHTS", AFTERWEIGHTS);
+                cmd.Parameters.AddWithValue("@MOQS", MOQS);
+                cmd.Parameters.AddWithValue("@MOQMINS", MOQMINS);
+                cmd.Parameters.AddWithValue("@PROCESS", PROCESS);
+                cmd.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+
+                // 執行插入語句
+                result = cmd.ExecuteNonQuery();
+
+                // 處理交易
+                if (result == 0)
+                {
+                    tran.Rollback();    // 交易取消
+                }
+                else
+                {
+                    tran.Commit();      // 執行交易
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
+
+        public void SEARCH_GV4(string ISCLOSED, string MB001)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            SqlDataAdapter adapter;
+            DataSet ds;
+
+            dataGridView4.DataSource = null;
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                StringBuilder QUERYS = new StringBuilder();
+                StringBuilder QUERYS2 = new StringBuilder();
+                StringBuilder QUERYS3 = new StringBuilder();
+
+                if (!string.IsNullOrEmpty(ISCLOSED))
+                {
+                    QUERYS.AppendFormat(@"AND ISCLOSED='{0}'", ISCLOSED);
+                }
+
+                if (!string.IsNullOrEmpty(MB001))
+                {
+                    QUERYS2.AppendFormat(@"AND (MB001 LIKE '%{0}%' OR MB002 LIKE '%{0}%')", MB001);
+                }
+                else
+                {
+                    QUERYS2.AppendFormat(@"");
+                }
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                    SELECT 
+                                    [MID]
+                                    ,[MB001] AS '品號'
+                                    ,[MB002] AS '品名'
+                                    FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
+                                    WHERE 1=1
+                                    {0}
+                                    {1}
+                                    ", QUERYS.ToString(), QUERYS2.ToString());
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds = new DataSet(); // 這樣就不需要再 Clear()
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    dataGridView4.DataSource = ds.Tables["ds"];
+                    //dataGridView1.AutoResizeColumns();
+                    // 指定固定寬度
+                    dataGridView4.Columns["品號"].Width = 200;
+                    dataGridView4.Columns["品名"].Width = 200;
+                    
+                }
+
+            }
+            catch (Exception EX)
+            {
+
+            }
+            finally
+            {
+
             }
         }
 
@@ -715,9 +926,54 @@ namespace TKRESEARCH
         }
 
 
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string MID = textBox2.Text;
+            string MB001 = textBox5.Text;
+            string MB002 = textBox6.Text;
+            string ISCLOSED = comboBox2.Text.ToString();
+            string DEP = textBox7.Text;
+            string KINDS = comboBox3.Text.ToString();
+            string UNITS = textBox8.Text;
+            string BOXS = textBox9.Text;
+            string BEFORESIZES = textBox10.Text;
+            string AFTERSIZES = textBox11.Text;
+            string BEFOREWEIGHTS = textBox12.Text;
+            string AFTERWEIGHTS = textBox13.Text;
+            string MOQS = textBox14.Text;
+            string MOQMINS = textBox15.Text;
+            string PROCESS = textBox16.Text;
+            string COMMENTS = textBox17.Text;
 
+            UPDATE_TB_PRODUCT_SET_M(
+            MID,
+            MB001,
+            MB002,
+            ISCLOSED,
+            DEP,
+            KINDS,
+            UNITS,
+            BOXS,
+            BEFORESIZES,
+            AFTERSIZES,
+            BEFOREWEIGHTS,
+            AFTERWEIGHTS,
+            MOQS,
+            MOQMINS,
+            PROCESS,
+            COMMENTS
+            );
+
+            SEARCH_TB_PRODUCT_SET_M(textBox2.Text.Trim());
+            MessageBox.Show("完成");
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            SEARCH_GV4(comboBox4.Text.ToString(), textBox18.Text.Trim());
+        }
         #endregion
 
-        
+
     }
 }
