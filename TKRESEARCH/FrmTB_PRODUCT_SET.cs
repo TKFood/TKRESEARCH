@@ -66,6 +66,7 @@ namespace TKRESEARCH
             comboBox4_load();
             comboBox5_load();
             comboBox6_load();
+            comboBox7_load();
 
             DATAGRIDSET();
         }
@@ -188,6 +189,20 @@ namespace TKRESEARCH
                         ORDER BY [PARAID]";
 
             LoadComboBox(comboBox6, sql, "PARANAME", "PARAID");
+        }
+        public void comboBox7_load()
+        {
+            string sql = @"
+                        SELECT 
+                            [ID],
+                            [KIND],
+                            [PARAID],
+                            [PARANAME]
+                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                        WHERE [KIND]='FrmTB_PRODUCT_SET_REPORTS'
+                        ORDER BY [PARAID]";
+
+            LoadComboBox(comboBox7, sql, "PARANAME", "PARAID");
         }
         public void DATAGRIDSET()
         {
@@ -1126,6 +1141,77 @@ namespace TKRESEARCH
 
         }
 
+        public void SETFASTREPORT_MAIN(string MID)
+        {
+
+            //20210902密
+            Class1 TKID = new Class1();//用new 建立類別實體
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            //資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+            StringBuilder SQL1 = new StringBuilder();
+
+            SQL1 = SETSQL2(MID);
+            Report report1 = new Report();
+            report1.Load(@"REPORT\成品設定表.frx");
+
+            report1.Dictionary.Connections[0].ConnectionString = sqlsb.ConnectionString;
+
+            TableDataSource table = report1.GetDataSource("Table") as TableDataSource;
+            table.SelectCommand = SQL1.ToString();
+
+            //report1.SetParameterValue("P1", dateTimePicker1.Value.ToString("yyyyMMdd"));
+            //report1.SetParameterValue("P2", dateTimePicker2.Value.ToString("yyyyMMdd"));
+            report1.Preview = previewControl1;
+            report1.Show();
+        }
+
+        public StringBuilder SETSQL2(string MID)
+        {
+            StringBuilder SB = new StringBuilder();
+            StringBuilder SQUERY = new StringBuilder();
+
+            if (!string.IsNullOrEmpty(MID))
+            {
+                SB.AppendFormat(@"
+                                SELECT 
+                                [TB_PRODUCT_SET_M].[MID]
+                                ,[TB_PRODUCT_SET_M].[MB001] AS '品號'
+                                ,[TB_PRODUCT_SET_M].[MB002] AS '品名'
+                                ,[TB_PRODUCT_SET_M].[MB003] AS '成品規格'
+                                ,[TB_PRODUCT_SET_M].[ISCLOSED] AS '結案碼'
+                                ,[TB_PRODUCT_SET_M].[PRICES] AS '標準售價'
+                                ,[TB_PRODUCT_SET_M].[BARCODE] AS '條碼編號'
+                                ,[TB_PRODUCT_SET_M].[SIZE] AS '長寬高'
+                                ,[TB_PRODUCT_SET_M].[DEP] AS '填表部門'
+                                ,[TB_PRODUCT_SET_M].[KINDS] AS '新品舊品更改'
+                                ,[TB_PRODUCT_SET_M].[UNITS] AS '計量單位'
+                                ,[TB_PRODUCT_SET_M].[BOXS] AS '入/箱'
+                                ,[TB_PRODUCT_SET_M].[MOQS] AS '標準批量(1桶產量)'
+                                ,[TB_PRODUCT_SET_M].[PACKAGES] AS '包裝方式說明或附件'                            
+                                ,[TB_PRODUCT_SET_M].[COMMENTS] AS '備註'
+                                ,[TB_PRODUCT_SET_D].[SERNO] AS '序號'
+                                ,[TB_PRODUCT_SET_D].[MB001] AS '明細品號'
+                                ,[TB_PRODUCT_SET_D].[MB002] AS '明細品名'
+                                ,[TB_PRODUCT_SET_D].[AMOUNTS] AS '明細用量'
+                                ,[TB_PRODUCT_SET_D].[UNITS] AS '明細單位'
+                                ,[TB_PRODUCT_SET_D].[COMMENTS] AS '明細備註'
+                                FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
+                                LEFT JOIN [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D] ON [TB_PRODUCT_SET_M].MID=[TB_PRODUCT_SET_D].MID
+                                WHERE [TB_PRODUCT_SET_M].MID='{0}'
+                                ORDER BY [TB_PRODUCT_SET_M].[MID],[TB_PRODUCT_SET_D].[SERNO]
+                                ", MID);
+            }
+            return SB;
+
+        }
+
 
 
         public void SET_TEXTBOX_NULL()
@@ -1336,10 +1422,19 @@ namespace TKRESEARCH
         }
         private void button7_Click(object sender, EventArgs e)
         {
+            string reports = comboBox7.Text.ToString();
             if (dataGridView4.CurrentRow != null)
             {
                 string mid = dataGridView4.CurrentRow.Cells["MID"].Value.ToString();
-                SETFASTREPORT(mid);
+                if(reports.Equals("半成品"))
+                {
+                    SETFASTREPORT(mid);
+                }
+                else if (reports.Equals("成品"))
+                {
+                    SETFASTREPORT_MAIN(mid);
+                }
+
             }
         }
         private void button8_Click(object sender, EventArgs e)
