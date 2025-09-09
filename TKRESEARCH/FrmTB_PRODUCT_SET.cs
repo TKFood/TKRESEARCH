@@ -64,6 +64,9 @@ namespace TKRESEARCH
             comboBox2_load();
             comboBox3_load();
             comboBox4_load();
+            comboBox5_load();
+            comboBox6_load();
+
             DATAGRIDSET();
         }
         #region FUNCTION
@@ -158,7 +161,34 @@ namespace TKRESEARCH
 
             LoadComboBox(comboBox4, sql, "PARANAME", "PARAID");
         }
+        public void comboBox5_load()
+        {
+            string sql = @"
+                        SELECT 
+                            [ID],
+                            [KIND],
+                            [PARAID],
+                            [PARANAME]
+                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                        WHERE [KIND]='FrmTB_PRODUCT_SET'
+                        ORDER BY [PARAID]";
 
+            LoadComboBox(comboBox5, sql, "PARANAME", "PARAID");
+        }
+        public void comboBox6_load()
+        {
+            string sql = @"
+                        SELECT 
+                            [ID],
+                            [KIND],
+                            [PARAID],
+                            [PARANAME]
+                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                        WHERE [KIND]='FrmTB_PRODUCT_SET_KINDS'
+                        ORDER BY [PARAID]";
+
+            LoadComboBox(comboBox6, sql, "PARANAME", "PARAID");
+        }
         public void DATAGRIDSET()
         {
             // DataGridView1 屬性設定
@@ -435,6 +465,10 @@ namespace TKRESEARCH
                 textBox2.Text = mid;
                 textBox3.Text = MB001;
                 textBox4.Text = MB002;
+
+                textBox19.Text = mid;
+                textBox20.Text = MB001;
+                textBox21.Text = MB002;
             }
         }
         private void dataGridView2_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
@@ -786,6 +820,130 @@ namespace TKRESEARCH
             }
         }
 
+        public void SEARCH_TB_PRODUCT_SET_M_GV5(string MID)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+            SqlDataAdapter adapter;
+            DataSet ds;
+
+            dataGridView5.DataSource = null;
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                StringBuilder QUERYS = new StringBuilder();
+                StringBuilder QUERYS2 = new StringBuilder();
+                StringBuilder QUERYS3 = new StringBuilder();
+
+                sbSql.Clear();
+
+                sbSql.AppendFormat(@"  
+                                    SELECT 
+                                    [MID]
+                                    ,[MB001] AS '品號'
+                                    ,[MB002] AS '品名'
+                                    ,[MB003] AS '成品規格'
+                                    ,[ISCLOSED] AS '結案碼'
+                                    ,[PRICES] AS '標準售價'
+                                    ,[BARCODE] AS '條碼編號'
+                                    ,[SIZE] AS '長寬高'
+                                    ,[DEP] AS '填表部門'
+                                    ,[KINDS] AS '新品舊品更改'
+                                    ,[UNITS] AS '計量單位'
+                                    ,[BOXS] AS '入/箱'
+                                    ,[MOQS] AS '標準批量(1桶產量)'
+                                    ,[PACKAGES] AS '包裝方式說明或附件'                            
+                                    ,[COMMENTS] AS '備註'
+                                    FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
+                                    WHERE [MID]='{0}'
+                                    ", MID);
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds = new DataSet(); // 這樣就不需要再 Clear()
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    dataGridView5.DataSource = ds.Tables["ds"];
+                    //dataGridView1.AutoResizeColumns();
+                    // 指定固定寬度
+                    dataGridView5.Columns["品號"].Width = 200;
+                    dataGridView5.Columns["品名"].Width = 200;
+
+                }
+
+            }
+            catch (Exception EX)
+            {
+
+            }
+            finally
+            {
+
+            }
+
+        }
+
+        private void dataGridView5_SelectionChanged(object sender, EventArgs e)
+        {
+            SET_TEXTBOX_NULL_TAB3();
+            {
+                if (dataGridView5.CurrentRow != null)
+                {
+                    string mid = dataGridView5.CurrentRow.Cells["MID"].Value.ToString();
+
+                    string MB001 = dataGridView5.CurrentRow.Cells["品號"].Value.ToString();
+                    string MB002 = dataGridView5.CurrentRow.Cells["品名"].Value.ToString();
+                    string MB003 = dataGridView5.CurrentRow.Cells["成品規格"].Value.ToString();
+                    string ISCLOSED = dataGridView5.CurrentRow.Cells["結案碼"].Value.ToString();
+                    string DEP = dataGridView5.CurrentRow.Cells["填表部門"].Value.ToString();
+                    string KINDS = dataGridView5.CurrentRow.Cells["新品舊品更改"].Value.ToString();
+                    string UNITS = dataGridView3.CurrentRow.Cells["計量單位"].Value.ToString();
+                    string BOXS = dataGridView3.CurrentRow.Cells["入/箱"].Value.ToString();
+                    string PRICES = dataGridView3.CurrentRow.Cells["標準售價"].Value.ToString();
+                    string BARCODE = dataGridView3.CurrentRow.Cells["條碼編號"].Value.ToString();
+                    string SIZE = dataGridView3.CurrentRow.Cells["長寬高"].Value.ToString();
+                    string MOQS = dataGridView3.CurrentRow.Cells["生產批量"].Value.ToString();
+                    string PACKAGES = dataGridView3.CurrentRow.Cells["包裝方式說明或附件"].Value.ToString();
+                    string COMMENTS = dataGridView3.CurrentRow.Cells["備註"].Value.ToString();
+
+                    textBox22.Text = MB001;
+                    textBox23.Text = MB002;
+                    textBox24.Text = MB003;
+                    textBox25.Text = DEP;
+                    textBox26.Text = UNITS;
+                    textBox27.Text = BOXS;
+                    textBox28.Text = PRICES;
+                    textBox29.Text = BARCODE;
+                    textBox30.Text = SIZE;
+                    textBox31.Text = MOQS;
+                    textBox32.Text = COMMENTS;
+                    textBox33.Text = PACKAGES;
+
+                    comboBox5.Text = ISCLOSED;
+                    comboBox6.Text = KINDS;
+
+                }
+            }
+        }
+
         public void SETFASTREPORT(string MID)
         {
 
@@ -858,11 +1016,16 @@ namespace TKRESEARCH
 
         }
 
+
+
         public void SET_TEXTBOX_NULL()
         {
             textBox2.Text = "";
             textBox3.Text = "";
             textBox4.Text = "";
+            textBox19.Text = "";
+            textBox20.Text = "";
+            textBox21.Text = "";
         }
         public void SET_TEXTBOX_NULL_TAB2()
         {
@@ -879,6 +1042,23 @@ namespace TKRESEARCH
             textBox15.Text = "";
             textBox16.Text = "";
             textBox17.Text = "";
+        }
+
+        public void SET_TEXTBOX_NULL_TAB3()
+        {
+            textBox22.Text = "";
+            textBox23.Text = "";
+            textBox24.Text = "";
+            textBox25.Text = "";
+            textBox26.Text = "";
+            textBox27.Text = "";
+            textBox28.Text = "";
+            textBox29.Text = "";
+            textBox30.Text = "";
+            textBox31.Text = "";
+            textBox32.Text = "";
+            textBox33.Text = "";
+         
         }
         #endregion
 
@@ -1054,11 +1234,12 @@ namespace TKRESEARCH
         }
         private void button8_Click(object sender, EventArgs e)
         {
-
+            SEARCH_TB_PRODUCT_SET_M_GV5(textBox19.Text.Trim());
         }
+
 
         #endregion
 
-
+       
     }
 }

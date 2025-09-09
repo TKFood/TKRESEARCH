@@ -59,7 +59,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -76,33 +75,20 @@
             this.textBox11 = new System.Windows.Forms.TextBox();
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.textBox13 = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.textBox14 = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.textBox15 = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
             this.textBox16 = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.textBox17 = new System.Windows.Forms.TextBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label21 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
             this.button6 = new System.Windows.Forms.Button();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer6 = new System.Windows.Forms.SplitContainer();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.label22 = new System.Windows.Forms.Label();
-            this.textBox18 = new System.Windows.Forms.TextBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.button10 = new System.Windows.Forms.Button();
-            this.previewControl1 = new FastReport.Preview.PreviewControl();
-            this.splitContainer7 = new System.Windows.Forms.SplitContainer();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.button7 = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.splitContainer8 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.textBox19 = new System.Windows.Forms.TextBox();
@@ -116,21 +102,12 @@
             this.dataGridView5 = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.label27 = new System.Windows.Forms.Label();
-            this.textBox22 = new System.Windows.Forms.TextBox();
             this.textBox23 = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
-            this.label34 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
-            this.textBox24 = new System.Windows.Forms.TextBox();
-            this.textBox25 = new System.Windows.Forms.TextBox();
-            this.textBox26 = new System.Windows.Forms.TextBox();
             this.textBox27 = new System.Windows.Forms.TextBox();
             this.textBox28 = new System.Windows.Forms.TextBox();
             this.textBox29 = new System.Windows.Forms.TextBox();
@@ -142,9 +119,32 @@
             this.textBox33 = new System.Windows.Forms.TextBox();
             this.label42 = new System.Windows.Forms.Label();
             this.comboBox5 = new System.Windows.Forms.ComboBox();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
-            this.textBox34 = new System.Windows.Forms.TextBox();
+            this.textBox31 = new System.Windows.Forms.TextBox();
             this.button9 = new System.Windows.Forms.Button();
+            this.textBox25 = new System.Windows.Forms.TextBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.textBox24 = new System.Windows.Forms.TextBox();
+            this.comboBox6 = new System.Windows.Forms.ComboBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.textBox22 = new System.Windows.Forms.TextBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.textBox26 = new System.Windows.Forms.TextBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.label22 = new System.Windows.Forms.Label();
+            this.textBox18 = new System.Windows.Forms.TextBox();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.button10 = new System.Windows.Forms.Button();
+            this.splitContainer6 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer7 = new System.Windows.Forms.SplitContainer();
+            this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.button7 = new System.Windows.Forms.Button();
+            this.previewControl1 = new FastReport.Preview.PreviewControl();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -171,22 +171,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.tableLayoutPanel3.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
-            this.splitContainer5.Panel1.SuspendLayout();
-            this.splitContainer5.Panel2.SuspendLayout();
-            this.splitContainer5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer6)).BeginInit();
-            this.splitContainer6.Panel1.SuspendLayout();
-            this.splitContainer6.Panel2.SuspendLayout();
-            this.splitContainer6.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer7)).BeginInit();
-            this.splitContainer7.Panel1.SuspendLayout();
-            this.splitContainer7.Panel2.SuspendLayout();
-            this.splitContainer7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
-            this.tableLayoutPanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer8)).BeginInit();
             this.splitContainer8.Panel1.SuspendLayout();
             this.splitContainer8.Panel2.SuspendLayout();
@@ -198,6 +182,22 @@
             this.splitContainer9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
             this.tableLayoutPanel7.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
+            this.splitContainer5.Panel1.SuspendLayout();
+            this.splitContainer5.Panel2.SuspendLayout();
+            this.splitContainer5.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer6)).BeginInit();
+            this.splitContainer6.Panel1.SuspendLayout();
+            this.splitContainer6.Panel2.SuspendLayout();
+            this.splitContainer6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer7)).BeginInit();
+            this.splitContainer7.Panel1.SuspendLayout();
+            this.splitContainer7.Panel2.SuspendLayout();
+            this.splitContainer7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -298,7 +298,7 @@
             // 
             this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(101, 8);
+            this.comboBox1.Location = new System.Drawing.Point(101, 10);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(187, 24);
             this.comboBox1.TabIndex = 78;
@@ -655,15 +655,6 @@
             this.textBox6.Size = new System.Drawing.Size(434, 27);
             this.textBox6.TabIndex = 80;
             // 
-            // textBox5
-            // 
-            this.textBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel3.SetColumnSpan(this.textBox5, 2);
-            this.textBox5.Location = new System.Drawing.Point(133, 46);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(294, 27);
-            this.textBox5.TabIndex = 42;
-            // 
             // label9
             // 
             this.label9.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -812,16 +803,6 @@
             this.textBox13.Size = new System.Drawing.Size(134, 27);
             this.textBox13.TabIndex = 102;
             // 
-            // label17
-            // 
-            this.label17.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(495, 52);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(72, 16);
-            this.label17.TabIndex = 91;
-            this.label17.Text = "是否結案";
-            // 
             // label18
             // 
             this.label18.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -868,16 +849,6 @@
             this.textBox15.Size = new System.Drawing.Size(134, 27);
             this.textBox15.TabIndex = 104;
             // 
-            // label21
-            // 
-            this.label21.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(575, 212);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(152, 16);
-            this.label21.TabIndex = 95;
-            this.label21.Text = "製作程序說明或附件";
-            // 
             // textBox16
             // 
             this.textBox16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -888,6 +859,16 @@
             this.tableLayoutPanel3.SetRowSpan(this.textBox16, 3);
             this.textBox16.Size = new System.Drawing.Size(334, 112);
             this.textBox16.TabIndex = 105;
+            // 
+            // label17
+            // 
+            this.label17.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(495, 52);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(72, 16);
+            this.label17.TabIndex = 91;
+            this.label17.Text = "是否結案";
             // 
             // textBox17
             // 
@@ -900,21 +881,21 @@
             this.textBox17.Size = new System.Drawing.Size(334, 114);
             this.textBox17.TabIndex = 106;
             // 
-            // tabPage3
+            // label21
             // 
-            this.tabPage3.Controls.Add(this.splitContainer8);
-            this.tabPage3.Location = new System.Drawing.Point(4, 26);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(976, 731);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "主檔成品設定";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.label21.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(575, 212);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(152, 16);
+            this.label21.TabIndex = 95;
+            this.label21.Text = "製作程序說明或附件";
             // 
             // comboBox2
             // 
             this.comboBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(573, 48);
+            this.comboBox2.Location = new System.Drawing.Point(573, 50);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(154, 24);
             this.comboBox2.TabIndex = 107;
@@ -923,10 +904,19 @@
             // 
             this.comboBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(133, 168);
+            this.comboBox3.Location = new System.Drawing.Point(133, 170);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(114, 24);
             this.comboBox3.TabIndex = 108;
+            // 
+            // textBox5
+            // 
+            this.textBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel3.SetColumnSpan(this.textBox5, 2);
+            this.textBox5.Location = new System.Drawing.Point(133, 46);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(294, 27);
+            this.textBox5.TabIndex = 42;
             // 
             // button6
             // 
@@ -940,202 +930,15 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
-            // tabPage4
+            // tabPage3
             // 
-            this.tabPage4.Controls.Add(this.splitContainer5);
-            this.tabPage4.Location = new System.Drawing.Point(4, 26);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(976, 731);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "報表";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // splitContainer5
-            // 
-            this.splitContainer5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer5.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer5.Name = "splitContainer5";
-            this.splitContainer5.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer5.Panel1
-            // 
-            this.splitContainer5.Panel1.Controls.Add(this.tableLayoutPanel4);
-            // 
-            // splitContainer5.Panel2
-            // 
-            this.splitContainer5.Panel2.Controls.Add(this.splitContainer6);
-            this.splitContainer5.Size = new System.Drawing.Size(976, 731);
-            this.splitContainer5.SplitterDistance = 95;
-            this.splitContainer5.TabIndex = 0;
-            // 
-            // splitContainer6
-            // 
-            this.splitContainer6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.splitContainer6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer6.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer6.Name = "splitContainer6";
-            this.splitContainer6.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer6.Panel1
-            // 
-            this.splitContainer6.Panel1.Controls.Add(this.splitContainer7);
-            // 
-            // splitContainer6.Panel2
-            // 
-            this.splitContainer6.Panel2.Controls.Add(this.previewControl1);
-            this.splitContainer6.Size = new System.Drawing.Size(976, 632);
-            this.splitContainer6.SplitterDistance = 119;
-            this.splitContainer6.TabIndex = 0;
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.BackColor = System.Drawing.Color.LightGreen;
-            this.tableLayoutPanel4.ColumnCount = 10;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 98F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 193F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 69F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 132F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 108F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.tableLayoutPanel4.Controls.Add(this.label22, 0, 1);
-            this.tableLayoutPanel4.Controls.Add(this.textBox18, 1, 1);
-            this.tableLayoutPanel4.Controls.Add(this.comboBox4, 1, 0);
-            this.tableLayoutPanel4.Controls.Add(this.label23, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.button10, 3, 1);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 4;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(972, 91);
-            this.tableLayoutPanel4.TabIndex = 13;
-            // 
-            // label22
-            // 
-            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(3, 52);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(92, 16);
-            this.label22.TabIndex = 41;
-            this.label22.Text = "品號/品名:";
-            // 
-            // textBox18
-            // 
-            this.textBox18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox18.Location = new System.Drawing.Point(101, 46);
-            this.textBox18.Name = "textBox18";
-            this.textBox18.Size = new System.Drawing.Size(187, 27);
-            this.textBox18.TabIndex = 42;
-            // 
-            // comboBox4
-            // 
-            this.comboBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(101, 10);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(187, 24);
-            this.comboBox4.TabIndex = 78;
-            // 
-            // label23
-            // 
-            this.label23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(3, 12);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(92, 16);
-            this.label23.TabIndex = 79;
-            this.label23.Text = "是否結案:";
-            // 
-            // button10
-            // 
-            this.button10.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button10.ForeColor = System.Drawing.Color.Blue;
-            this.button10.Location = new System.Drawing.Point(363, 43);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(114, 34);
-            this.button10.TabIndex = 31;
-            this.button10.Text = "查詢";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
-            // 
-            // previewControl1
-            // 
-            this.previewControl1.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.previewControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.previewControl1.Font = new System.Drawing.Font("宋体", 9F);
-            this.previewControl1.Location = new System.Drawing.Point(0, 0);
-            this.previewControl1.Margin = new System.Windows.Forms.Padding(4);
-            this.previewControl1.Name = "previewControl1";
-            this.previewControl1.PageOffset = new System.Drawing.Point(10, 10);
-            this.previewControl1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.previewControl1.Size = new System.Drawing.Size(972, 505);
-            this.previewControl1.TabIndex = 12;
-            // 
-            // splitContainer7
-            // 
-            this.splitContainer7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.splitContainer7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer7.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer7.Name = "splitContainer7";
-            // 
-            // splitContainer7.Panel1
-            // 
-            this.splitContainer7.Panel1.Controls.Add(this.dataGridView4);
-            // 
-            // splitContainer7.Panel2
-            // 
-            this.splitContainer7.Panel2.Controls.Add(this.tableLayoutPanel5);
-            this.splitContainer7.Size = new System.Drawing.Size(976, 119);
-            this.splitContainer7.SplitterDistance = 581;
-            this.splitContainer7.TabIndex = 0;
-            // 
-            // dataGridView4
-            // 
-            this.dataGridView4.AllowUserToAddRows = false;
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView4.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.RowTemplate.Height = 24;
-            this.dataGridView4.Size = new System.Drawing.Size(577, 115);
-            this.dataGridView4.TabIndex = 7;
-            // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.BackColor = System.Drawing.Color.LightGreen;
-            this.tableLayoutPanel5.ColumnCount = 2;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Controls.Add(this.button7, 0, 0);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 2;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(387, 115);
-            this.tableLayoutPanel5.TabIndex = 0;
-            // 
-            // button7
-            // 
-            this.button7.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button7.ForeColor = System.Drawing.Color.Blue;
-            this.button7.Location = new System.Drawing.Point(3, 3);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(187, 51);
-            this.button7.TabIndex = 32;
-            this.button7.Text = "報表";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.tabPage3.Controls.Add(this.splitContainer8);
+            this.tabPage3.Location = new System.Drawing.Point(4, 26);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(976, 731);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "主檔成品設定";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // splitContainer8
             // 
@@ -1283,6 +1086,7 @@
             this.dataGridView5.RowTemplate.Height = 24;
             this.dataGridView5.Size = new System.Drawing.Size(972, 149);
             this.dataGridView5.TabIndex = 6;
+            this.dataGridView5.SelectionChanged += new System.EventHandler(this.dataGridView5_SelectionChanged);
             // 
             // tableLayoutPanel7
             // 
@@ -1303,29 +1107,29 @@
             this.tableLayoutPanel7.Controls.Add(this.label35, 2, 4);
             this.tableLayoutPanel7.Controls.Add(this.label36, 2, 5);
             this.tableLayoutPanel7.Controls.Add(this.label37, 2, 6);
-            this.tableLayoutPanel7.Controls.Add(this.textBox27, 3, 4);
-            this.tableLayoutPanel7.Controls.Add(this.textBox28, 3, 5);
-            this.tableLayoutPanel7.Controls.Add(this.textBox29, 3, 6);
             this.tableLayoutPanel7.Controls.Add(this.label38, 4, 2);
-            this.tableLayoutPanel7.Controls.Add(this.textBox30, 3, 7);
             this.tableLayoutPanel7.Controls.Add(this.label39, 2, 7);
             this.tableLayoutPanel7.Controls.Add(this.textBox32, 5, 2);
             this.tableLayoutPanel7.Controls.Add(this.label41, 3, 1);
             this.tableLayoutPanel7.Controls.Add(this.textBox33, 5, 5);
             this.tableLayoutPanel7.Controls.Add(this.label42, 4, 5);
-            this.tableLayoutPanel7.Controls.Add(this.comboBox5, 4, 1);
-            this.tableLayoutPanel7.Controls.Add(this.textBox34, 1, 1);
             this.tableLayoutPanel7.Controls.Add(this.button9, 6, 9);
-            this.tableLayoutPanel7.Controls.Add(this.textBox25, 1, 7);
             this.tableLayoutPanel7.Controls.Add(this.label33, 0, 7);
             this.tableLayoutPanel7.Controls.Add(this.label30, 0, 6);
-            this.tableLayoutPanel7.Controls.Add(this.textBox24, 1, 6);
-            this.tableLayoutPanel7.Controls.Add(this.comboBox6, 1, 5);
             this.tableLayoutPanel7.Controls.Add(this.label29, 0, 5);
             this.tableLayoutPanel7.Controls.Add(this.label32, 0, 4);
-            this.tableLayoutPanel7.Controls.Add(this.textBox22, 1, 4);
             this.tableLayoutPanel7.Controls.Add(this.label34, 0, 3);
-            this.tableLayoutPanel7.Controls.Add(this.textBox26, 1, 3);
+            this.tableLayoutPanel7.Controls.Add(this.textBox22, 1, 1);
+            this.tableLayoutPanel7.Controls.Add(this.textBox24, 1, 3);
+            this.tableLayoutPanel7.Controls.Add(this.textBox28, 3, 4);
+            this.tableLayoutPanel7.Controls.Add(this.textBox29, 3, 5);
+            this.tableLayoutPanel7.Controls.Add(this.textBox30, 3, 6);
+            this.tableLayoutPanel7.Controls.Add(this.textBox31, 3, 7);
+            this.tableLayoutPanel7.Controls.Add(this.textBox25, 1, 4);
+            this.tableLayoutPanel7.Controls.Add(this.textBox26, 1, 6);
+            this.tableLayoutPanel7.Controls.Add(this.textBox27, 1, 7);
+            this.tableLayoutPanel7.Controls.Add(this.comboBox5, 4, 1);
+            this.tableLayoutPanel7.Controls.Add(this.comboBox6, 1, 5);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
@@ -1355,14 +1159,6 @@
             this.label27.TabIndex = 81;
             this.label27.Text = "主檔欄位";
             // 
-            // textBox22
-            // 
-            this.textBox22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox22.Location = new System.Drawing.Point(133, 166);
-            this.textBox22.Name = "textBox22";
-            this.textBox22.Size = new System.Drawing.Size(114, 27);
-            this.textBox22.TabIndex = 82;
-            // 
             // textBox23
             // 
             this.textBox23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -1382,26 +1178,6 @@
             this.label28.TabIndex = 83;
             this.label28.Text = "品號";
             // 
-            // label29
-            // 
-            this.label29.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(11, 212);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(116, 16);
-            this.label29.TabIndex = 84;
-            this.label29.Text = "新品 / 舊品更改";
-            // 
-            // label30
-            // 
-            this.label30.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(55, 252);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(72, 16);
-            this.label30.TabIndex = 87;
-            this.label30.Text = "計量單位";
-            // 
             // label31
             // 
             this.label31.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -1411,36 +1187,6 @@
             this.label31.Size = new System.Drawing.Size(40, 16);
             this.label31.TabIndex = 41;
             this.label31.Text = "品名";
-            // 
-            // label32
-            // 
-            this.label32.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(55, 172);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(72, 16);
-            this.label32.TabIndex = 79;
-            this.label32.Text = "填表部門";
-            // 
-            // label33
-            // 
-            this.label33.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(83, 292);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(44, 16);
-            this.label33.TabIndex = 94;
-            this.label33.Text = "入/箱";
-            // 
-            // label34
-            // 
-            this.label34.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(55, 132);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(72, 16);
-            this.label34.TabIndex = 88;
-            this.label34.Text = "成品規格";
             // 
             // label35
             // 
@@ -1472,43 +1218,18 @@
             this.label37.TabIndex = 90;
             this.label37.Text = "長/寬/高";
             // 
-            // textBox24
-            // 
-            this.textBox24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox24.Location = new System.Drawing.Point(133, 246);
-            this.textBox24.Name = "textBox24";
-            this.textBox24.Size = new System.Drawing.Size(114, 27);
-            this.textBox24.TabIndex = 97;
-            // 
-            // textBox25
-            // 
-            this.textBox25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox25.Location = new System.Drawing.Point(133, 286);
-            this.textBox25.Name = "textBox25";
-            this.textBox25.Size = new System.Drawing.Size(114, 27);
-            this.textBox25.TabIndex = 98;
-            // 
-            // textBox26
-            // 
-            this.textBox26.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel7.SetColumnSpan(this.textBox26, 3);
-            this.textBox26.Location = new System.Drawing.Point(133, 126);
-            this.textBox26.Name = "textBox26";
-            this.textBox26.Size = new System.Drawing.Size(434, 27);
-            this.textBox26.TabIndex = 99;
-            // 
             // textBox27
             // 
             this.textBox27.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox27.Location = new System.Drawing.Point(433, 166);
+            this.textBox27.Location = new System.Drawing.Point(133, 286);
             this.textBox27.Name = "textBox27";
-            this.textBox27.Size = new System.Drawing.Size(134, 27);
+            this.textBox27.Size = new System.Drawing.Size(114, 27);
             this.textBox27.TabIndex = 100;
             // 
             // textBox28
             // 
             this.textBox28.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox28.Location = new System.Drawing.Point(433, 206);
+            this.textBox28.Location = new System.Drawing.Point(433, 166);
             this.textBox28.Name = "textBox28";
             this.textBox28.Size = new System.Drawing.Size(134, 27);
             this.textBox28.TabIndex = 101;
@@ -1516,7 +1237,7 @@
             // textBox29
             // 
             this.textBox29.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox29.Location = new System.Drawing.Point(433, 246);
+            this.textBox29.Location = new System.Drawing.Point(433, 206);
             this.textBox29.Name = "textBox29";
             this.textBox29.Size = new System.Drawing.Size(134, 27);
             this.textBox29.TabIndex = 102;
@@ -1534,7 +1255,7 @@
             // textBox30
             // 
             this.textBox30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox30.Location = new System.Drawing.Point(433, 286);
+            this.textBox30.Location = new System.Drawing.Point(433, 246);
             this.textBox30.Name = "textBox30";
             this.textBox30.Size = new System.Drawing.Size(134, 27);
             this.textBox30.TabIndex = 103;
@@ -1553,11 +1274,11 @@
             // 
             this.textBox32.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel7.SetColumnSpan(this.textBox32, 3);
-            this.textBox32.Location = new System.Drawing.Point(733, 84);
+            this.textBox32.Location = new System.Drawing.Point(733, 83);
             this.textBox32.Multiline = true;
             this.textBox32.Name = "textBox32";
             this.tableLayoutPanel7.SetRowSpan(this.textBox32, 3);
-            this.textBox32.Size = new System.Drawing.Size(334, 112);
+            this.textBox32.Size = new System.Drawing.Size(334, 114);
             this.textBox32.TabIndex = 105;
             // 
             // label41
@@ -1595,28 +1316,18 @@
             // 
             this.comboBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(573, 50);
+            this.comboBox5.Location = new System.Drawing.Point(573, 48);
             this.comboBox5.Name = "comboBox5";
             this.comboBox5.Size = new System.Drawing.Size(154, 24);
             this.comboBox5.TabIndex = 107;
             // 
-            // comboBox6
+            // textBox31
             // 
-            this.comboBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(133, 208);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(114, 24);
-            this.comboBox6.TabIndex = 108;
-            // 
-            // textBox34
-            // 
-            this.textBox34.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel7.SetColumnSpan(this.textBox34, 2);
-            this.textBox34.Location = new System.Drawing.Point(133, 46);
-            this.textBox34.Name = "textBox34";
-            this.textBox34.Size = new System.Drawing.Size(294, 27);
-            this.textBox34.TabIndex = 42;
+            this.textBox31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox31.Location = new System.Drawing.Point(433, 286);
+            this.textBox31.Name = "textBox31";
+            this.textBox31.Size = new System.Drawing.Size(134, 27);
+            this.textBox31.TabIndex = 42;
             // 
             // button9
             // 
@@ -1628,6 +1339,296 @@
             this.button9.TabIndex = 109;
             this.button9.Text = "存檔";
             this.button9.UseVisualStyleBackColor = true;
+            // 
+            // textBox25
+            // 
+            this.textBox25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox25.Location = new System.Drawing.Point(133, 166);
+            this.textBox25.Name = "textBox25";
+            this.textBox25.Size = new System.Drawing.Size(114, 27);
+            this.textBox25.TabIndex = 98;
+            // 
+            // label33
+            // 
+            this.label33.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(83, 292);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(44, 16);
+            this.label33.TabIndex = 94;
+            this.label33.Text = "入/箱";
+            // 
+            // label30
+            // 
+            this.label30.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(55, 252);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(72, 16);
+            this.label30.TabIndex = 87;
+            this.label30.Text = "計量單位";
+            // 
+            // textBox24
+            // 
+            this.textBox24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel7.SetColumnSpan(this.textBox24, 3);
+            this.textBox24.Location = new System.Drawing.Point(133, 126);
+            this.textBox24.Name = "textBox24";
+            this.textBox24.Size = new System.Drawing.Size(434, 27);
+            this.textBox24.TabIndex = 97;
+            // 
+            // comboBox6
+            // 
+            this.comboBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox6.FormattingEnabled = true;
+            this.comboBox6.Location = new System.Drawing.Point(133, 210);
+            this.comboBox6.Name = "comboBox6";
+            this.comboBox6.Size = new System.Drawing.Size(114, 24);
+            this.comboBox6.TabIndex = 108;
+            // 
+            // label29
+            // 
+            this.label29.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(11, 212);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(116, 16);
+            this.label29.TabIndex = 84;
+            this.label29.Text = "新品 / 舊品更改";
+            // 
+            // label32
+            // 
+            this.label32.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(55, 172);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(72, 16);
+            this.label32.TabIndex = 79;
+            this.label32.Text = "填表部門";
+            // 
+            // textBox22
+            // 
+            this.textBox22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel7.SetColumnSpan(this.textBox22, 2);
+            this.textBox22.Location = new System.Drawing.Point(133, 46);
+            this.textBox22.Name = "textBox22";
+            this.textBox22.Size = new System.Drawing.Size(294, 27);
+            this.textBox22.TabIndex = 82;
+            // 
+            // label34
+            // 
+            this.label34.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(55, 132);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(72, 16);
+            this.label34.TabIndex = 88;
+            this.label34.Text = "成品規格";
+            // 
+            // textBox26
+            // 
+            this.textBox26.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox26.Location = new System.Drawing.Point(133, 246);
+            this.textBox26.Name = "textBox26";
+            this.textBox26.Size = new System.Drawing.Size(114, 27);
+            this.textBox26.TabIndex = 99;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.splitContainer5);
+            this.tabPage4.Location = new System.Drawing.Point(4, 26);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(976, 731);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "報表";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer5
+            // 
+            this.splitContainer5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer5.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer5.Name = "splitContainer5";
+            this.splitContainer5.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer5.Panel1
+            // 
+            this.splitContainer5.Panel1.Controls.Add(this.tableLayoutPanel4);
+            // 
+            // splitContainer5.Panel2
+            // 
+            this.splitContainer5.Panel2.Controls.Add(this.splitContainer6);
+            this.splitContainer5.Size = new System.Drawing.Size(976, 731);
+            this.splitContainer5.SplitterDistance = 95;
+            this.splitContainer5.TabIndex = 0;
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.BackColor = System.Drawing.Color.LightGreen;
+            this.tableLayoutPanel4.ColumnCount = 10;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 98F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 193F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 69F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 132F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 108F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel4.Controls.Add(this.label22, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.textBox18, 1, 1);
+            this.tableLayoutPanel4.Controls.Add(this.comboBox4, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.label23, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.button10, 3, 1);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 4;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(972, 91);
+            this.tableLayoutPanel4.TabIndex = 13;
+            // 
+            // label22
+            // 
+            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(3, 52);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(92, 16);
+            this.label22.TabIndex = 41;
+            this.label22.Text = "品號/品名:";
+            // 
+            // textBox18
+            // 
+            this.textBox18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox18.Location = new System.Drawing.Point(101, 46);
+            this.textBox18.Name = "textBox18";
+            this.textBox18.Size = new System.Drawing.Size(187, 27);
+            this.textBox18.TabIndex = 42;
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Location = new System.Drawing.Point(101, 8);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(187, 24);
+            this.comboBox4.TabIndex = 78;
+            // 
+            // label23
+            // 
+            this.label23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(3, 12);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(92, 16);
+            this.label23.TabIndex = 79;
+            this.label23.Text = "是否結案:";
+            // 
+            // button10
+            // 
+            this.button10.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button10.ForeColor = System.Drawing.Color.Blue;
+            this.button10.Location = new System.Drawing.Point(363, 43);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(114, 34);
+            this.button10.TabIndex = 31;
+            this.button10.Text = "查詢";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // splitContainer6
+            // 
+            this.splitContainer6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.splitContainer6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer6.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer6.Name = "splitContainer6";
+            this.splitContainer6.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer6.Panel1
+            // 
+            this.splitContainer6.Panel1.Controls.Add(this.splitContainer7);
+            // 
+            // splitContainer6.Panel2
+            // 
+            this.splitContainer6.Panel2.Controls.Add(this.previewControl1);
+            this.splitContainer6.Size = new System.Drawing.Size(976, 632);
+            this.splitContainer6.SplitterDistance = 119;
+            this.splitContainer6.TabIndex = 0;
+            // 
+            // splitContainer7
+            // 
+            this.splitContainer7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.splitContainer7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer7.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer7.Name = "splitContainer7";
+            // 
+            // splitContainer7.Panel1
+            // 
+            this.splitContainer7.Panel1.Controls.Add(this.dataGridView4);
+            // 
+            // splitContainer7.Panel2
+            // 
+            this.splitContainer7.Panel2.Controls.Add(this.tableLayoutPanel5);
+            this.splitContainer7.Size = new System.Drawing.Size(976, 119);
+            this.splitContainer7.SplitterDistance = 581;
+            this.splitContainer7.TabIndex = 0;
+            // 
+            // dataGridView4
+            // 
+            this.dataGridView4.AllowUserToAddRows = false;
+            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView4.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView4.Name = "dataGridView4";
+            this.dataGridView4.RowTemplate.Height = 24;
+            this.dataGridView4.Size = new System.Drawing.Size(577, 115);
+            this.dataGridView4.TabIndex = 7;
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.BackColor = System.Drawing.Color.LightGreen;
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Controls.Add(this.button7, 0, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 2;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(387, 115);
+            this.tableLayoutPanel5.TabIndex = 0;
+            // 
+            // button7
+            // 
+            this.button7.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button7.ForeColor = System.Drawing.Color.Blue;
+            this.button7.Location = new System.Drawing.Point(3, 3);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(187, 51);
+            this.button7.TabIndex = 32;
+            this.button7.Text = "報表";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // previewControl1
+            // 
+            this.previewControl1.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.previewControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.previewControl1.Font = new System.Drawing.Font("宋体", 9F);
+            this.previewControl1.Location = new System.Drawing.Point(0, 0);
+            this.previewControl1.Margin = new System.Windows.Forms.Padding(4);
+            this.previewControl1.Name = "previewControl1";
+            this.previewControl1.PageOffset = new System.Drawing.Point(10, 10);
+            this.previewControl1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.previewControl1.Size = new System.Drawing.Size(972, 505);
+            this.previewControl1.TabIndex = 12;
             // 
             // FrmTB_PRODUCT_SET
             // 
@@ -1669,23 +1670,6 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             this.tabPage3.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            this.splitContainer5.Panel1.ResumeLayout(false);
-            this.splitContainer5.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
-            this.splitContainer5.ResumeLayout(false);
-            this.splitContainer6.Panel1.ResumeLayout(false);
-            this.splitContainer6.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer6)).EndInit();
-            this.splitContainer6.ResumeLayout(false);
-            this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel4.PerformLayout();
-            this.splitContainer7.Panel1.ResumeLayout(false);
-            this.splitContainer7.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer7)).EndInit();
-            this.splitContainer7.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
-            this.tableLayoutPanel5.ResumeLayout(false);
             this.splitContainer8.Panel1.ResumeLayout(false);
             this.splitContainer8.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer8)).EndInit();
@@ -1699,6 +1683,23 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.splitContainer5.Panel1.ResumeLayout(false);
+            this.splitContainer5.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
+            this.splitContainer5.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
+            this.splitContainer6.Panel1.ResumeLayout(false);
+            this.splitContainer6.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer6)).EndInit();
+            this.splitContainer6.ResumeLayout(false);
+            this.splitContainer7.Panel1.ResumeLayout(false);
+            this.splitContainer7.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer7)).EndInit();
+            this.splitContainer7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            this.tableLayoutPanel5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1820,7 +1821,7 @@
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.ComboBox comboBox5;
         private System.Windows.Forms.ComboBox comboBox6;
-        private System.Windows.Forms.TextBox textBox34;
+        private System.Windows.Forms.TextBox textBox31;
         private System.Windows.Forms.Button button9;
     }
 }
