@@ -488,7 +488,7 @@ namespace TKRESEARCH
                                     ,[MB002] AS '品名'
                                     ,[ISCLOSED] AS '結案碼'
                                     ,[DEP] AS '填表部門'
-                                    ,[KINDS] AS '新品舊品更改 '
+                                    ,[KINDS] AS '新品舊品更改'
                                     ,[UNITS] AS '計量單位'
                                     ,[BOXS] AS '入/箱'
                                     ,[BEFORESIZES] AS '烘焙前尺寸(長/寬/厚度)'
@@ -533,11 +533,69 @@ namespace TKRESEARCH
             }
 
         }
+
+        private void dataGridView3_SelectionChanged(object sender, EventArgs e)
+        {
+            SET_TEXTBOX_NULL_TAB2();
+            {
+                if (dataGridView3.CurrentRow != null)
+                {
+                    string mid = dataGridView3.CurrentRow.Cells["MID"].Value.ToString();
+
+                    string MB001 = dataGridView3.CurrentRow.Cells["品號"].Value.ToString();
+                    string MB002 = dataGridView3.CurrentRow.Cells["品名"].Value.ToString();
+                    string ISCLOSED = dataGridView3.CurrentRow.Cells["結案碼"].Value.ToString();
+                    string DEP = dataGridView3.CurrentRow.Cells["填表部門"].Value.ToString();
+                    string KINDS = dataGridView3.CurrentRow.Cells["新品舊品更改"].Value.ToString();
+                    string UNITS = dataGridView3.CurrentRow.Cells["計量單位"].Value.ToString();
+                    string BOXS = dataGridView3.CurrentRow.Cells["入/箱"].Value.ToString();
+                    string BEFORESIZES = dataGridView3.CurrentRow.Cells["烘焙前尺寸(長/寬/厚度)"].Value.ToString();
+                    string AFTERSIZES = dataGridView3.CurrentRow.Cells["烘焙後尺寸(長/寬/厚度)"].Value.ToString();
+                    string BEFOREWEIGHTS = dataGridView3.CurrentRow.Cells["烘焙前重量(克/厚度)"].Value.ToString();
+                    string AFTERWEIGHTS = dataGridView3.CurrentRow.Cells["烘焙後重量(克/厚度)"].Value.ToString();
+                    string MOQS = dataGridView3.CurrentRow.Cells["標準批量(1桶產量)"].Value.ToString();
+                    string MOQMINS = dataGridView3.CurrentRow.Cells["最低製造量"].Value.ToString();
+                    string PROCESS = dataGridView3.CurrentRow.Cells["製作程序說明或附件"].Value.ToString();
+                    string COMMENTS = dataGridView3.CurrentRow.Cells["備註"].Value.ToString();
+
+                    textBox5.Text = MB001;
+                    textBox6.Text = MB002;
+                    textBox7.Text = DEP;
+                    textBox8.Text = UNITS;
+                    textBox9.Text = BOXS;
+                    textBox10.Text = BEFORESIZES;
+                    textBox11.Text = AFTERWEIGHTS;
+                    textBox12.Text = BEFOREWEIGHTS;
+                    textBox13.Text = AFTERWEIGHTS;
+                    textBox14.Text = MOQS;
+                    textBox15.Text = MOQMINS;
+                    textBox16.Text = PROCESS;
+                    textBox17.Text = COMMENTS;
+                }
+            }
+        }
+
         public void SET_TEXTBOX_NULL()
         {
             textBox2.Text = "";
             textBox3.Text = "";
             textBox4.Text = "";
+        }
+        public void SET_TEXTBOX_NULL_TAB2()
+        {
+            textBox5.Text = "";
+            textBox6.Text = "";
+            textBox7.Text = "";
+            textBox8.Text = "";
+            textBox9.Text = "";
+            textBox10.Text = "";
+            textBox11.Text = "";
+            textBox12.Text = "";
+            textBox13.Text = "";
+            textBox14.Text = "";
+            textBox15.Text = "";
+            textBox16.Text = "";
+            textBox17.Text = "";
         }
         #endregion
 
@@ -657,8 +715,9 @@ namespace TKRESEARCH
         }
 
 
+
         #endregion
 
-       
+        
     }
 }

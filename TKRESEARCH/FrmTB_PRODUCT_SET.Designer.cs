@@ -477,6 +477,7 @@
             this.dataGridView3.RowTemplate.Height = 24;
             this.dataGridView3.Size = new System.Drawing.Size(966, 119);
             this.dataGridView3.TabIndex = 5;
+            this.dataGridView3.SelectionChanged += new System.EventHandler(this.dataGridView3_SelectionChanged);
             // 
             // tableLayoutPanel3
             // 
@@ -493,7 +494,6 @@
             this.tableLayoutPanel3.Controls.Add(this.label8, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.textBox7, 1, 3);
             this.tableLayoutPanel3.Controls.Add(this.textBox6, 1, 2);
-            this.tableLayoutPanel3.Controls.Add(this.textBox5, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.label9, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.label10, 0, 4);
             this.tableLayoutPanel3.Controls.Add(this.label13, 0, 5);
@@ -521,6 +521,7 @@
             this.tableLayoutPanel3.Controls.Add(this.label21, 4, 5);
             this.tableLayoutPanel3.Controls.Add(this.comboBox2, 4, 1);
             this.tableLayoutPanel3.Controls.Add(this.comboBox3, 1, 4);
+            this.tableLayoutPanel3.Controls.Add(this.textBox5, 1, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
