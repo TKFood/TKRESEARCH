@@ -56,12 +56,17 @@ namespace TKRESEARCH
         {
             InitializeComponent();
 
-            comboBox1load();
+          
+        }
+        private void FrmTB_PRODUCT_SET_Load(object sender, EventArgs e)
+        {
+            comboBox1_load();
+            comboBox2_load();
+            comboBox3_load();
             DATAGRIDSET();
         }
-
         #region FUNCTION
-        public void comboBox1load()
+        public void LoadComboBox(ComboBox comboBox, string sql, string displayMember, string valueMember)
         {
             try
             {
@@ -74,30 +79,19 @@ namespace TKRESEARCH
 
                 using (SqlConnection sqlConn = new SqlConnection(sqlsb.ConnectionString))
                 {
-                    StringBuilder sbSql = new StringBuilder();
-                    sbSql.AppendFormat(@"
-                                        SELECT 
-                                            [ID],
-                                            [KIND],
-                                            [PARAID],
-                                            [PARANAME]
-                                        FROM [TKRESEARCH].[dbo].[TBPARA]
-                                        WHERE [KIND]='FrmTB_PRODUCT_SET'
-                                        ORDER BY [PARAID]");
-
-                    SqlDataAdapter adapter = new SqlDataAdapter(sbSql.ToString(), sqlConn);
+                    SqlDataAdapter adapter = new SqlDataAdapter(sql, sqlConn);
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
 
                     if (dt.Rows.Count > 0)
                     {
-                        comboBox1.DataSource = dt;
-                        comboBox1.DisplayMember = "PARANAME";  // 顯示中文名稱
-                        comboBox1.ValueMember = "PARAID";      // 內部對應值
+                        comboBox.DataSource = dt;
+                        comboBox.DisplayMember = displayMember;  // 顯示的欄位
+                        comboBox.ValueMember = valueMember;      // 實際值欄位
                     }
                     else
                     {
-                        comboBox1.DataSource = null;
+                        comboBox.DataSource = null;
                     }
                 }
             }
@@ -106,6 +100,51 @@ namespace TKRESEARCH
                 MessageBox.Show("載入 ComboBox 發生錯誤：" + ex.Message);
             }
         }
+
+        public void comboBox1_load()
+        {
+            string sql = @"
+                        SELECT 
+                            [ID],
+                            [KIND],
+                            [PARAID],
+                            [PARANAME]
+                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                        WHERE [KIND]='FrmTB_PRODUCT_SET'
+                        ORDER BY [PARAID]";
+
+            LoadComboBox(comboBox1, sql, "PARANAME", "PARAID");
+        }
+        public void comboBox2_load()
+        {
+            string sql = @"
+                        SELECT 
+                            [ID],
+                            [KIND],
+                            [PARAID],
+                            [PARANAME]
+                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                        WHERE [KIND]='FrmTB_PRODUCT_SET'
+                        ORDER BY [PARAID]";
+
+            LoadComboBox(comboBox2, sql, "PARANAME", "PARAID");
+        }
+        public void comboBox3_load()
+        {
+            string sql = @"
+                        SELECT 
+                            [ID],
+                            [KIND],
+                            [PARAID],
+                            [PARANAME]
+                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                        WHERE [KIND]='FrmTB_PRODUCT_SET_KINDS'
+                        ORDER BY [PARAID]";
+
+            LoadComboBox(comboBox3, sql, "PARANAME", "PARAID");
+        }
+
+
         public void DATAGRIDSET()
         {
             // DataGridView1 屬性設定
@@ -446,21 +485,20 @@ namespace TKRESEARCH
                                     SELECT 
                                     [MID]
                                     ,[MB001] AS '品號'
-                                    ,[MB002] as '品名'
-                                    ,[ISCLOSED]
-                                    ,[DEP]
-                                    ,[KINDS]
-                                    ,[UNITS]
-                                    ,[BOXS]
-                                    ,[BEFORESIZES]
-                                    ,[AFTERSIZES]
-                                    ,[BEFOREWEIGHTS]
-                                    ,[AFTERWEIGHTS]
-                                    ,[MOQS]
-                                    ,[MOQMINS]
-                                    ,[PROCESS]
-                                    ,[STEPS]
-                                    ,[COMMENTS]
+                                    ,[MB002] AS '品名'
+                                    ,[ISCLOSED] AS '結案碼'
+                                    ,[DEP] AS '填表部門'
+                                    ,[KINDS] AS '新品舊品更改 '
+                                    ,[UNITS] AS '計量單位'
+                                    ,[BOXS] AS '入/箱'
+                                    ,[BEFORESIZES] AS '烘焙前尺寸(長/寬/厚度)'
+                                    ,[AFTERSIZES] AS '烘焙後尺寸(長/寬/厚度)'
+                                    ,[BEFOREWEIGHTS] AS '烘焙前重量(克/厚度)'
+                                    ,[AFTERWEIGHTS] AS '烘焙後重量(克/厚度)'
+                                    ,[MOQS] AS '標準批量(1桶產量)'
+                                    ,[MOQMINS] AS '最低製造量'
+                                    ,[PROCESS] AS '製作程序說明或附件'                                  
+                                    ,[COMMENTS] AS '備註'
                                     FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
                                     WHERE [MID]='{0}'
                                     ", MID);
@@ -618,8 +656,9 @@ namespace TKRESEARCH
             SEARCH_TB_PRODUCT_SET_M(textBox2.Text.Trim());
         }
 
+
         #endregion
 
-
+       
     }
 }
