@@ -469,6 +469,9 @@ namespace TKRESEARCH
                 textBox19.Text = mid;
                 textBox20.Text = MB001;
                 textBox21.Text = MB002;
+
+                SEARCH_TB_PRODUCT_SET_M(textBox2.Text.Trim());
+                SEARCH_TB_PRODUCT_SET_M_GV5(textBox19.Text.Trim());
             }
         }
         private void dataGridView2_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
@@ -863,7 +866,7 @@ namespace TKRESEARCH
                                     ,[KINDS] AS '新品舊品更改'
                                     ,[UNITS] AS '計量單位'
                                     ,[BOXS] AS '入/箱'
-                                    ,[MOQS] AS '標準批量(1桶產量)'
+                                    ,[MOQS] AS '生產批量'
                                     ,[PACKAGES] AS '包裝方式說明或附件'                            
                                     ,[COMMENTS] AS '備註'
                                     FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
@@ -904,43 +907,150 @@ namespace TKRESEARCH
         private void dataGridView5_SelectionChanged(object sender, EventArgs e)
         {
             SET_TEXTBOX_NULL_TAB3();
+
+            if (dataGridView5.CurrentRow != null)
             {
-                if (dataGridView5.CurrentRow != null)
+                string mid = dataGridView5.CurrentRow.Cells["MID"].Value.ToString();
+                string MB001 = dataGridView5.CurrentRow.Cells["品號"].Value.ToString();
+                string MB002 = dataGridView5.CurrentRow.Cells["品名"].Value.ToString();
+                string MB003 = dataGridView5.CurrentRow.Cells["成品規格"].Value.ToString();
+                string ISCLOSED = dataGridView5.CurrentRow.Cells["結案碼"].Value.ToString();
+                string DEP = dataGridView5.CurrentRow.Cells["填表部門"].Value.ToString();
+                string KINDS = dataGridView5.CurrentRow.Cells["新品舊品更改"].Value.ToString();
+                string UNITS = dataGridView5.CurrentRow.Cells["計量單位"].Value.ToString();
+                string BOXS = dataGridView5.CurrentRow.Cells["入/箱"].Value.ToString();
+                string PRICES = dataGridView5.CurrentRow.Cells["標準售價"].Value.ToString();
+                string BARCODE = dataGridView5.CurrentRow.Cells["條碼編號"].Value.ToString();
+                string SIZE = dataGridView5.CurrentRow.Cells["長寬高"].Value.ToString();
+                string MOQS = dataGridView5.CurrentRow.Cells["生產批量"].Value.ToString();
+                string PACKAGES = dataGridView5.CurrentRow.Cells["包裝方式說明或附件"].Value.ToString();
+                string COMMENTS = dataGridView5.CurrentRow.Cells["備註"].Value.ToString();
+
+                textBox22.Text = MB001;
+                textBox23.Text = MB002;
+                textBox24.Text = MB003;
+                textBox25.Text = DEP;
+                textBox26.Text = UNITS;
+                textBox27.Text = BOXS;
+                textBox28.Text = PRICES;
+                textBox29.Text = BARCODE;
+                textBox30.Text = SIZE;
+                textBox31.Text = MOQS;
+                textBox32.Text = COMMENTS;
+                textBox33.Text = PACKAGES;
+
+                comboBox5.Text = ISCLOSED;
+                comboBox6.Text = KINDS;
+
+            }
+        }
+
+        public void UPDATE_TB_PRODUCT_SET_M_GV5(
+            string MID,
+            string MB001,
+            string MB002,
+            string MB003,
+            string ISCLOSED,
+            string DEP,
+            string KINDS,
+            string UNITS,
+            string BOXS,
+            string PRICES,
+            string BARCODE,
+            string SIZE,
+            string MOQS,
+            string PACKAGES,
+            string COMMENTS
+           )
+        {
+            try
+            {
+                StringBuilder sbSql = new StringBuilder();
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                // 關閉再開啟資料庫連線，並開始交易
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                // 清空 StringBuilder 並建立插入語句
+                sbSql.Clear();
+                sbSql.AppendFormat(@"
+                                    UPDATE [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
+                                    SET 
+                                    MB001=@MB001
+                                    ,MB002=@MB002
+                                    ,MB003=@MB003
+                                    ,ISCLOSED=@ISCLOSED
+                                    ,DEP=@DEP
+                                    ,KINDS=@KINDS
+                                    ,UNITS=@UNITS
+                                    ,BOXS=@BOXS
+                                    ,PRICES=@PRICES
+                                    ,BARCODE=@BARCODE
+                                    ,SIZE=@SIZE
+                                    ,MOQS=@MOQS
+                                    ,PACKAGES=@PACKAGES
+                                    ,COMMENTS=@COMMENTS                              
+                                    WHERE MID=@MID
+                                    ");
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+
+                //使用 cmd.Parameters.Clear() 清除之前的参数，确保在每次执行时没有冲突
+                cmd.Parameters.Clear();
+                // 使用參數化查詢，並對每個參數進行賦值
+                cmd.Parameters.AddWithValue("@MID", MID);
+                cmd.Parameters.AddWithValue("@MB001", MB001);
+                cmd.Parameters.AddWithValue("@MB002", MB002);
+                cmd.Parameters.AddWithValue("@MB003", MB003);
+                cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
+                cmd.Parameters.AddWithValue("@DEP", DEP);
+                cmd.Parameters.AddWithValue("@KINDS", KINDS);
+                cmd.Parameters.AddWithValue("@UNITS", UNITS);
+                cmd.Parameters.AddWithValue("@BOXS", BOXS);
+                cmd.Parameters.AddWithValue("@BARCODE", BARCODE);
+                cmd.Parameters.AddWithValue("@SIZE", SIZE);
+                cmd.Parameters.AddWithValue("@MOQS", MOQS);
+                cmd.Parameters.AddWithValue("@PRICES", PRICES);
+                cmd.Parameters.AddWithValue("@PACKAGES", PACKAGES);
+                cmd.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+
+                // 執行插入語句
+                result = cmd.ExecuteNonQuery();
+
+                // 處理交易
+                if (result == 0)
                 {
-                    string mid = dataGridView5.CurrentRow.Cells["MID"].Value.ToString();
-
-                    string MB001 = dataGridView5.CurrentRow.Cells["品號"].Value.ToString();
-                    string MB002 = dataGridView5.CurrentRow.Cells["品名"].Value.ToString();
-                    string MB003 = dataGridView5.CurrentRow.Cells["成品規格"].Value.ToString();
-                    string ISCLOSED = dataGridView5.CurrentRow.Cells["結案碼"].Value.ToString();
-                    string DEP = dataGridView5.CurrentRow.Cells["填表部門"].Value.ToString();
-                    string KINDS = dataGridView5.CurrentRow.Cells["新品舊品更改"].Value.ToString();
-                    string UNITS = dataGridView3.CurrentRow.Cells["計量單位"].Value.ToString();
-                    string BOXS = dataGridView3.CurrentRow.Cells["入/箱"].Value.ToString();
-                    string PRICES = dataGridView3.CurrentRow.Cells["標準售價"].Value.ToString();
-                    string BARCODE = dataGridView3.CurrentRow.Cells["條碼編號"].Value.ToString();
-                    string SIZE = dataGridView3.CurrentRow.Cells["長寬高"].Value.ToString();
-                    string MOQS = dataGridView3.CurrentRow.Cells["生產批量"].Value.ToString();
-                    string PACKAGES = dataGridView3.CurrentRow.Cells["包裝方式說明或附件"].Value.ToString();
-                    string COMMENTS = dataGridView3.CurrentRow.Cells["備註"].Value.ToString();
-
-                    textBox22.Text = MB001;
-                    textBox23.Text = MB002;
-                    textBox24.Text = MB003;
-                    textBox25.Text = DEP;
-                    textBox26.Text = UNITS;
-                    textBox27.Text = BOXS;
-                    textBox28.Text = PRICES;
-                    textBox29.Text = BARCODE;
-                    textBox30.Text = SIZE;
-                    textBox31.Text = MOQS;
-                    textBox32.Text = COMMENTS;
-                    textBox33.Text = PACKAGES;
-
-                    comboBox5.Text = ISCLOSED;
-                    comboBox6.Text = KINDS;
-
+                    tran.Rollback();    // 交易取消
                 }
+                else
+                {
+                    tran.Commit();      // 執行交易
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
             }
         }
 
@@ -1237,9 +1347,49 @@ namespace TKRESEARCH
             SEARCH_TB_PRODUCT_SET_M_GV5(textBox19.Text.Trim());
         }
 
+        private void button9_Click(object sender, EventArgs e)
+        {
+            string MID = textBox19.Text;
+            string MB001 = textBox22.Text;
+            string MB002 = textBox23.Text;
+            string MB003 = textBox24.Text;
+            string ISCLOSED = comboBox5.Text.ToString();
+            string DEP = textBox25.Text;
+            string KINDS = comboBox6.Text.ToString();
+            string UNITS = textBox26.Text;
+            string BOXS = textBox27.Text;
+            string PRICES = textBox28.Text;
+            string BARCODE = textBox29.Text;
+            string SIZE = textBox30.Text;
+            string MOQS = textBox31.Text;
+            string PACKAGES = textBox33.Text;
+            string COMMENTS = textBox32.Text;
+
+            UPDATE_TB_PRODUCT_SET_M_GV5(
+            MID,
+            MB001,
+            MB002,
+            MB003,
+            ISCLOSED,
+            DEP,
+            KINDS,
+            UNITS,
+            BOXS,
+            PRICES,
+            BARCODE,
+            SIZE,
+            MOQS,
+            PACKAGES,
+            COMMENTS
+            );
+
+            SEARCH_TB_PRODUCT_SET_M_GV5(textBox19.Text.Trim());
+            MessageBox.Show("完成");
+            
+        }
 
         #endregion
 
-       
+
     }
 }

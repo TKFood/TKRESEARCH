@@ -1339,6 +1339,7 @@
             this.button9.TabIndex = 109;
             this.button9.Text = "存檔";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // textBox25
             // 
