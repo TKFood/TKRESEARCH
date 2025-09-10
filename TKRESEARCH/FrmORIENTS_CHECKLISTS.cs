@@ -143,34 +143,36 @@ namespace TKRESEARCH
 
                 if (ds.Tables["ds"].Rows.Count >= 1)
                 {
+                    DataTable dt = ds.Tables["ds"];
+                    dataGridView1.DataSource = dt;
+
+                    // 先移除舊的 ImageColumn
+                    if (dataGridView1.Columns.Contains("ICON_IMAGE"))
+                        dataGridView1.Columns.Remove("ICON_IMAGE");
+
+                    // 新增 ImageColumn（顯示縮圖）
+                    DataGridViewImageColumn imgCol = new DataGridViewImageColumn();
+                    imgCol.Name = "ICON_IMAGE";
+                    imgCol.HeaderText = "圖片";
+                    imgCol.ImageLayout = DataGridViewImageCellLayout.Zoom;
+                    dataGridView1.Columns.Add(imgCol);
+
+                    // 填入縮圖
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        if (row.IsNewRow) continue;
+
+                        string path = row.Cells["圖片路徑"].Value?.ToString();
+                        if (!string.IsNullOrEmpty(path) && File.Exists(path))
+                        {
+                            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                            {
+                                row.Cells["ICON_IMAGE"].Value = Image.FromStream(stream);
+                            }
+                        }
+                    }
+
                    
-                    //// 先移除舊的 ImageColumn
-                    //if (dataGridView1.Columns.Contains("ICON_IMAGE"))
-                    //    dataGridView1.Columns.Remove("ICON_IMAGE");
-
-                    //// 新增 ImageColumn（顯示縮圖）
-                    //DataGridViewImageColumn imgCol = new DataGridViewImageColumn();
-                    //imgCol.Name = "ICON_IMAGE";
-                    //imgCol.HeaderText = "圖片";
-                    //imgCol.ImageLayout = DataGridViewImageCellLayout.Zoom;
-                    //dataGridView1.Columns.Add(imgCol);
-
-                    //// 填入縮圖
-                    //foreach (DataGridViewRow row in dataGridView1.Rows)
-                    //{
-                    //    if (row.IsNewRow) continue;
-
-                    //    string path = row.Cells["圖片路徑"].Value?.ToString();
-                    //    if (!string.IsNullOrEmpty(path) && File.Exists(path))
-                    //    {
-                    //        using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
-                    //        {
-                    //            row.Cells["ICON_IMAGE"].Value = Image.FromStream(stream);
-                    //        }
-                    //    }
-                    //}
-
-                    dataGridView1.DataSource = ds.Tables["ds"];
                     dataGridView1.AutoResizeColumns();                   
                 }
 
