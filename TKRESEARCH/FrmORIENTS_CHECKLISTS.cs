@@ -136,7 +136,7 @@ namespace TKRESEARCH
                                     ORDER BY CATEGORY,SUPPLIER,PRODUCTNAME
                                     ", QUERYS.ToString(), QUERYS2.ToString());
 
-
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
                 sqlCmdBuilder = new SqlCommandBuilder(adapter);
                 sqlConn.Open();
                 ds = new DataSet(); // 這樣就不需要再 Clear()
@@ -146,10 +146,7 @@ namespace TKRESEARCH
                 if (ds.Tables["ds"].Rows.Count >= 1)
                 {
                     dataGridView1.DataSource = ds.Tables["ds"];
-                    dataGridView1.AutoResizeColumns();
-                   
-                
-                   
+                    dataGridView1.AutoResizeColumns();                   
                 }
 
             }
