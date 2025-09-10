@@ -108,6 +108,7 @@ namespace TKRESEARCH
 
                 sbSql.AppendFormat(@"  
                                     SELECT 
+                                        ID,
                                         CATEGORY AS '分類',
                                         UPDATETIME AS '更新時間',
                                         SUPPLIER AS '供應商',
@@ -159,6 +160,23 @@ namespace TKRESEARCH
 
             }
         }
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            SET_TEXTBOX_NULL();
+
+            if (dataGridView1.CurrentRow != null)
+            {
+                string id = dataGridView1.CurrentRow.Cells["ID"].Value.ToString();
+               
+                textBox2.Text = id;               
+            }
+        }
+
+        public void SET_TEXTBOX_NULL()
+        {
+            textBox2.Text = "";
+
+        }
 
         #endregion
 
@@ -167,8 +185,9 @@ namespace TKRESEARCH
         {
             SEARCH("");
         }
+
         #endregion
 
-
+     
     }
 }
