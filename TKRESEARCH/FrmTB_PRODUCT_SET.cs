@@ -602,7 +602,7 @@ namespace TKRESEARCH
 
         private void dataGridView3_SelectionChanged(object sender, EventArgs e)
         {
-            SET_TEXTBOX_NULL_TAB2();
+            SET_TEXTBOX_NULL_TAB2(); 
             {
                 if (dataGridView3.CurrentRow != null)
                 {
@@ -951,8 +951,8 @@ namespace TKRESEARCH
                 textBox29.Text = BARCODE;
                 textBox30.Text = SIZE;
                 textBox31.Text = MOQS;
-                textBox32.Text = COMMENTS;
-                textBox33.Text = PACKAGES;
+                textBox32.Text = PACKAGES;
+                textBox33.Text = COMMENTS;
 
                 comboBox5.Text = ISCLOSED;
                 comboBox6.Text = KINDS;
@@ -1457,8 +1457,8 @@ namespace TKRESEARCH
             string BARCODE = textBox29.Text;
             string SIZE = textBox30.Text;
             string MOQS = textBox31.Text;
-            string PACKAGES = textBox33.Text;
-            string COMMENTS = textBox32.Text;
+            string PACKAGES = textBox32.Text;
+            string COMMENTS = textBox33.Text;
 
             UPDATE_TB_PRODUCT_SET_M_GV5(
             MID,
