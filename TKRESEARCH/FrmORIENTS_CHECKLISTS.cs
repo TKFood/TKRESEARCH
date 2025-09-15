@@ -131,7 +131,7 @@ namespace TKRESEARCH
                                         ICON AS '圖片路徑'
                                     FROM [TKRESEARCH].[dbo].[TB_ORIENTS_CHECKLISTS]
                                     WHERE 1=1
-                                    ORDER BY CATEGORY,SUPPLIER,PRODUCTNAME
+                                    ORDER BY CAST(LEFT(CATEGORY, CHARINDEX('.', CATEGORY) - 1) AS INT),SUPPLIER,PRODUCTNAME
                                     ", QUERYS.ToString(), QUERYS2.ToString());
 
                 adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
@@ -172,8 +172,16 @@ namespace TKRESEARCH
                         }
                     }
 
-                   
-                    dataGridView1.AutoResizeColumns();                   
+                    //dataGridView1.Columns["分類"].Width = 100;
+                    //dataGridView1.Columns["更新時間"].Width = 100;
+                    //dataGridView1.Columns["供應商"].Width = 100;
+                    // 4. 自動將所有欄位寬度設為 100
+                    foreach (DataGridViewColumn col in dataGridView1.Columns)
+                    {
+                        col.Width = 100;
+                    }
+
+                    //dataGridView1.AutoResizeColumns();                   
                 }
 
             }
