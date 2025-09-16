@@ -36,6 +36,7 @@ namespace TKRESEARCH
 {
     public partial class FrmORIENTS_CHECKLISTS : Form
     {
+        string btnSATUS = null;
         string destFolder = @"\\192.168.1.109\prog更新\TKRESEARCH\IMAGES\FrmORIENTS_CHECKLISTS";
 
         private SqlConnection conn;
@@ -56,6 +57,12 @@ namespace TKRESEARCH
         private void FrmORIENTS_CHECKLISTS_Load(object sender, EventArgs e)
         {
             comboBox1_load();
+
+            // 綁定事件
+            toolStripButton1.Click += BtnAdd_Click;
+            toolStripButton2.Click += BtnDelete_Click;
+            toolStripButton3.Click += BtnEdit_Click;
+            toolStripButton4.Click += BtnSave_Click;
         }
 
         #region FUNCTION
@@ -424,6 +431,57 @@ namespace TKRESEARCH
                     }
                 }
             }
+        }
+
+
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
+            btnSATUS = "ADD";
+
+            MessageBox.Show("新增功能");
+            // TODO: 開啟新增模式，清空輸入欄位
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            btnSATUS = "DELETE";
+
+            MessageBox.Show("刪除功能");
+            // TODO: 確認後刪除選中的資料
+        }
+
+        private void BtnEdit_Click(object sender, EventArgs e)
+        {
+            btnSATUS = "EDIT";
+
+            MessageBox.Show("修改功能");
+            // TODO: 載入選中資料，進入編輯模式
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+           
+            if(btnSATUS == null)
+            {
+                MessageBox.Show("沒有按 功能");
+                return;  // 提早結束，不會往下執行
+            }
+            if (btnSATUS.Equals("ADD") )
+            {
+                MessageBox.Show("ADD");
+            }
+            else if(btnSATUS.Equals("DELETE"))
+            {
+                MessageBox.Show("DELETE");
+            }
+            else if(btnSATUS.Equals("EDIT"))
+            {
+                MessageBox.Show("EDIT");
+            }
+
+            btnSATUS = null;
+
+            // TODO: 將目前資料存入資料庫
         }
         #endregion
 
