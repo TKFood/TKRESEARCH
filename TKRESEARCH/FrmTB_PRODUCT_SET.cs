@@ -1213,7 +1213,76 @@ namespace TKRESEARCH
         }
 
 
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 
+            var dgv = sender as DataGridView;
+            if (dgv.Columns[e.ColumnIndex].Name == "品號")
+            {
+                string mb001 = dgv.Rows[e.RowIndex].Cells["品號"].Value?.ToString();
+                if (!string.IsNullOrEmpty(mb001))
+                {
+                    // 取得品名、單位
+                    DataTable DT = GET_INVMB(mb001);
+                    if (DT != null && DT.Rows.Count>=1)
+                    {
+                        dgv.Rows[e.RowIndex].Cells["品名"].Value = DT.Rows[0]["MB002"].ToString();                        
+                    }
+                }
+            }
+        }
+        private void dataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            var dgv = sender as DataGridView;
+            if (dgv.Columns[e.ColumnIndex].Name == "品號")
+            {
+                string mb001 = dgv.Rows[e.RowIndex].Cells["品號"].Value?.ToString();
+                if (!string.IsNullOrEmpty(mb001))
+                {
+                    // 取得品名、單位
+                    DataTable DT = GET_INVMB(mb001);
+                    if (DT != null && DT.Rows.Count >= 1)
+                    {
+                        dgv.Rows[e.RowIndex].Cells["品名"].Value = DT.Rows[0]["MB002"].ToString();
+                        dgv.Rows[e.RowIndex].Cells["單位"].Value = DT.Rows[0]["MB004"].ToString();
+                    }
+                }
+            }
+        }
+        private DataTable GET_INVMB(string MB001)
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                Class1 TKID = new Class1();
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                using (SqlConnection conn = new SqlConnection(sqlsb.ConnectionString))
+                {
+                    string sql = "SELECT MB002 , MB004 FROM [TK].dbo.INVMB WHERE MB001=@MB001";
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@MB001", MB001);
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            adapter.Fill(dt);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("查詢錯誤: " + ex.Message);
+            }
+
+            return dt;
+        }
         public void SET_TEXTBOX_NULL()
         {
             textBox2.Text = "";
@@ -1483,8 +1552,10 @@ namespace TKRESEARCH
             
         }
 
+
+
         #endregion
 
-
+        
     }
 }
