@@ -119,10 +119,8 @@ namespace TKRESEARCH
         public void comboBox2_load()
         {
             string sql = @"
-                        SELECT '全部' AS 'PARANAME'
-                        UNION ALL
                         SELECT 
-                        [PARANAME]
+                        [PARANAME] AS 'PARANAME'
                         FROM [TKRESEARCH].[dbo].[TBPARA]
                         WHERE [KIND]='TB_ORIENTS_CHECKLISTS_CATEGORY'
                         ";
@@ -340,6 +338,7 @@ namespace TKRESEARCH
                 textBox21.Text = INSPECTION_FREQUENCY;
                 textBox22.Text = BRIX;
                 textBox23.Text = REMARK;
+                comboBox2.Text = CATEGORY;
 
                 // 取圖片路徑
                 string iconPath = dataGridView1.CurrentRow.Cells["圖片路徑"].Value?.ToString();
@@ -584,6 +583,7 @@ namespace TKRESEARCH
                 using (SqlConnection conn = new SqlConnection(sqlsb.ConnectionString))
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
+                    cmd.Parameters.AddWithValue("@ID", ID);
                     cmd.Parameters.AddWithValue("@CATEGORY", CATEGORY);
                     cmd.Parameters.AddWithValue("@SUPPLIER", SUPPLIER);
                     cmd.Parameters.AddWithValue("@PRODUCTNAME", PRODUCTNAME);
@@ -619,15 +619,29 @@ namespace TKRESEARCH
         }
         public void DELETE_TB_ORIENTS_CHECKLISTS(string ID)
         {
-            string sql = "DELETE FROM [TKRESEARCH].[dbo].[TB_ORIENTS_CHECKLISTS] WHERE [ID]=@ID";
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            try
             {
-                cmd.Parameters.AddWithValue("@ID", ID);
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+                string sql = "DELETE FROM [TKRESEARCH].[dbo].[TB_ORIENTS_CHECKLISTS] WHERE [ID]=@ID";
+
+                using (SqlConnection conn = new SqlConnection(sqlsb.ConnectionString))
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@ID", ID);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
             }
+            catch(Exception EX)
+            {
+                MessageBox.Show(EX.ToString());
+            }
+           
         }
         public void SET_TEXTBOX_NULL()
         {
@@ -856,6 +870,14 @@ namespace TKRESEARCH
                 REMARK,
                 BRIX
             );
+
+            string SEARCH_CATEGORY = comboBox1.Text.ToString();
+            string SEARCH_PRODUCTNAME = textBox1.Text.Trim();
+            string SEARCH_SUPPLIER = textBox3.Text.Trim();
+
+            SEARCH(SEARCH_CATEGORY, SEARCH_PRODUCTNAME, SEARCH_SUPPLIER);
+            MessageBox.Show("資料已修改成功！");
+
             //回到原本那筆資料
             RefreshData(currentId);
             btnSATUS = null;
