@@ -303,28 +303,27 @@ namespace TKRESEARCH
                 string REMARK = dataGridView1.CurrentRow.Cells["備註"].Value.ToString();
 
 
-                textBox2.Text = id;
-                textBox2.Text = "";
-                textBox4.Text = "";
-                textBox5.Text = "";
-                textBox6.Text = "";
-                textBox7.Text = "";
-                textBox8.Text = "";
-                textBox9.Text = "";
-                textBox10.Text = "";
-                textBox11.Text = "";
-                textBox12.Text = "";
-                textBox13.Text = "";
-                textBox14.Text = "";
-                textBox15.Text = "";
-                textBox16.Text = "";
-                textBox17.Text = "";
-                textBox18.Text = "";
-                textBox19.Text = "";
-                textBox20.Text = "";
-                textBox21.Text = "";
-                textBox22.Text = "";
-                textBox23.Text = "";
+                textBox2.Text = id;               
+                textBox4.Text = SUPPLIER;
+                textBox5.Text = PRODUCTNAME;
+                textBox6.Text = INGREDIENT_CN;
+                textBox7.Text = INGREDIENT_EN;
+                textBox8.Text = PRODUCT_ALLERGEN;
+                textBox9.Text = LINE_ALLERGEN;
+                textBox10.Text = UNIT_WEIGHT;
+                textBox11.Text = ORIGIN;
+                textBox12.Text = PACKAGE_SPEC;
+                textBox13.Text = PRODUCT_APPEARANCE;
+                textBox14.Text = COLOR;
+                textBox15.Text = FLAVOR;
+                textBox16.Text = BATCHNO;
+                textBox17.Text = SHELFLIFE;
+                textBox18.Text = STORAGE_CONDITION;
+                textBox19.Text = GMO_STATUS;
+                textBox20.Text = HAS_COA;
+                textBox21.Text = INSPECTION_FREQUENCY;
+                textBox22.Text = BRIX;
+                textBox23.Text = REMARK;
 
                 // 取圖片路徑
                 string iconPath = dataGridView1.CurrentRow.Cells["圖片路徑"].Value?.ToString();

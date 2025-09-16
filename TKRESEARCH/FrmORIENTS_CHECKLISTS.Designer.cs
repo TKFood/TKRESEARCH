@@ -570,7 +570,7 @@
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(114, 16);
             this.label18.TabIndex = 58;
-            this.label18.Text = "檢附";
+            this.label18.Text = "檢附COA";
             // 
             // label17
             // 
