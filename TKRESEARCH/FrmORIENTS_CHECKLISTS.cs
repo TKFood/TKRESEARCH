@@ -38,6 +38,7 @@ namespace TKRESEARCH
     {
         string btnSATUS = null;
         string destFolder = @"\\192.168.1.109\prog更新\TKRESEARCH\IMAGES\FrmORIENTS_CHECKLISTS";
+        string currentId = "";
 
         private SqlConnection conn;
         SqlConnection sqlConn = new SqlConnection();
@@ -278,7 +279,7 @@ namespace TKRESEARCH
             SET_TEXTBOX_NULL();
 
             if (dataGridView1.CurrentRow != null)
-            {
+            {               
                 string id = dataGridView1.CurrentRow.Cells["ID"].Value.ToString();
                 string CATEGORY = dataGridView1.CurrentRow.Cells["分類"].Value.ToString();
                 string SUPPLIER = dataGridView1.CurrentRow.Cells["供應商"].Value.ToString();
@@ -410,6 +411,26 @@ namespace TKRESEARCH
                 sqlConn.Close();
             }
         }
+
+        public void RefreshData(string currentId)
+        {            
+            // 3. 回到原本那筆資料
+            if (!string.IsNullOrEmpty(currentId))
+            {
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    if (row.Cells["ID"].Value.ToString() == currentId)
+                    {
+                        row.Selected = true;
+                        dataGridView1.CurrentCell = row.Cells[0];
+
+                        dataGridView1_SelectionChanged(dataGridView1, EventArgs.Empty);
+                   
+                        break;
+                    }
+                }
+            }
+        }
         public void SET_TEXTBOX_NULL()
         {
             textBox2.Text = "";
@@ -523,8 +544,9 @@ namespace TKRESEARCH
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-           
-            if(btnSATUS == null)
+            currentId = textBox2.Text;
+
+            if (btnSATUS == null)
             {
                 MessageBox.Show("沒有按 功能");
                 return;  // 提早結束，不會往下執行
@@ -542,6 +564,14 @@ namespace TKRESEARCH
                 MessageBox.Show("EDIT");
             }
 
+            string CATEGORY = comboBox1.Text.ToString();
+            string PRODUCTNAME = textBox1.Text.Trim();
+            string SUPPLIER = textBox3.Text.Trim();
+
+            SEARCH(CATEGORY, PRODUCTNAME, SUPPLIER);
+
+            //回到原本那筆資料
+            RefreshData(currentId);
             btnSATUS = null;
 
             // TODO: 將目前資料存入資料庫
