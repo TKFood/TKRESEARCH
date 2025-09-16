@@ -1283,6 +1283,102 @@ namespace TKRESEARCH
 
             return dt;
         }
+
+        public void ADD_TK_BOMMJ_BOMMK(string MB001)
+        {
+            string CREATE_DATE = DateTime.Now.ToString("yyyyMMdd");
+            try
+            {
+                StringBuilder sbSql = new StringBuilder();
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                // 關閉再開啟資料庫連線，並開始交易
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                // 清空 StringBuilder 並建立插入語句
+                sbSql.Clear();
+                sbSql.AppendFormat(@"                                    
+                                    INSERT INTO [TK].[dbo].[BOMMJ]
+                                    (
+                                    [COMPANY],[CREATOR],[USR_GROUP],[CREATE_DATE],[MODIFIER],[MODI_DATE],[FLAG],[CREATE_TIME],[MODI_TIME],[TRANS_TYPE],[TRANS_NAME],[sync_date],[sync_time],[sync_mark],[sync_count],[DataUser],[DataGroup]
+                                    ,[MJ001],[MJ004],[MJ005],[MJ006],[MJ007],[MJ008],[MJ009],[MJ010],[MJ011],[MJ012],[MJ013],[MJ014],[MJ015],[MJ016],[MJ017],[MJ018],[MJ019],[MJ020],[MJ021],[MJ022]
+                                    ,[UDF01],[UDF02],[UDF03],[UDF04],[UDF05],[UDF06],[UDF07],[UDF08],[UDF09],[UDF10]
+                                    )
+                                    SELECT TOP 1
+                                    [COMPANY],[CREATOR],[USR_GROUP],'{0}' CREATE_DATE,[MODIFIER],[MODI_DATE],[FLAG],[CREATE_TIME],[MODI_TIME],[TRANS_TYPE],[TRANS_NAME],[sync_date],[sync_time],[sync_mark],[sync_count],[DataUser],[DataGroup]
+                                    ,'{1}' MJ001,0 [MJ004],[MJ005],[MJ006],[MJ007],[MJ008],[MJ009],[MJ010],[MJ011],[MJ012],[MJ013],[MJ014],[MJ015],[MJ016],[MJ017],[MJ018],[MJ019],[MJ020],[MJ021],[MJ022]
+                                    ,'' [UDF01],'' [UDF02],[UDF03],[UDF04],[UDF05],[UDF06],[UDF07],[UDF08],[UDF09],[UDF10]
+                                    FROM [TK].[dbo].[BOMMJ]
+                                    ORDER BY [CREATE_DATE] DESC
+
+                                    INSERT INTO [TK].[dbo].[BOMMK]
+                                    (
+                                     [COMPANY],[CREATOR],[USR_GROUP],[CREATE_DATE],[MODIFIER],[MODI_DATE],[FLAG],[CREATE_TIME],[MODI_TIME],[TRANS_TYPE],[TRANS_NAME],[sync_date],[sync_time],[sync_mark],[sync_count],[DataUser],[DataGroup]
+                                     ,[MK001],[MK002],[MK003],[MK006],[MK007],[MK008],[MK009],[MK010],[MK011],[MK012],[MK013],[MK014],[MK015],[MK016],[MK017],[MK018],[MK019],[MK020],[MK021],[MK022],[MK023],[MK024],[MK025],[MK026],[MK027],[MK028],[MK029],[MK030],[MK031],[MK032],[MK033],[MK034],[MK035],[MK036],[MK037],[MK038]
+                                     ,[UDF01],[UDF02],[UDF03],[UDF04],[UDF05],[UDF06],[UDF07],[UDF08],[UDF09],[UDF10]
+                                     )                                    
+                                    SELECT 
+                                    [COMPANY],[CREATOR],[USR_GROUP],'{0}' CREATE_DATE,[MODIFIER],[MODI_DATE],[FLAG],[CREATE_TIME],[MODI_TIME],[TRANS_TYPE],[TRANS_NAME],[sync_date],[sync_time],[sync_mark],[sync_count],[DataUser],[DataGroup]
+                                    ,[TB_PRODUCT_SET_M].MB001 MK001,[TB_PRODUCT_SET_D].SERNO MK002,[TB_PRODUCT_SET_D].MB001 MK003,[TB_PRODUCT_SET_D].AMOUNTS MK006,[MK007],[MK008],[MK009],[MK010],[MK011],[MK012],[MK013],[MK014],[MK015],[MK016],[MK017],[MK018],[MK019],[MK020],[MK021],[MK022],[MK023],[MK024],[MK025],[MK026],[MK027],[MK028],[MK029],[MK030],[MK031],[MK032],[MK033],[MK034],[MK035],[MK036],[MK037],[MK038]
+                                    ,[UDF01],[UDF02],[UDF03],[UDF04],[UDF05],[UDF06],[UDF07],[UDF08],[UDF09],[UDF10]
+                                    FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M],[TKRESEARCH].[dbo].[TB_PRODUCT_SET_D]
+                                    LEFT JOIN (
+                                        SELECT TOP 1 *
+                                        FROM [TK].[dbo].[BOMMK]
+	                                    ORDER BY [CREATE_DATE] DESC
+                                    ) BOMMK ON 1=1
+                                    WHERE [TB_PRODUCT_SET_M].MID=[TB_PRODUCT_SET_D].MID
+                                    AND [TB_PRODUCT_SET_M].MB001='{1}'
+                                    ", CREATE_DATE, MB001);
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+
+                //使用 cmd.Parameters.Clear() 清除之前的参数，确保在每次执行时没有冲突
+                cmd.Parameters.Clear();
+                // 使用參數化查詢，並對每個參數進行賦值
+               //cmd.Parameters.AddWithValue("@MID", MID);
+              
+                // 執行插入語句
+                result = cmd.ExecuteNonQuery();
+
+                // 處理交易
+                if (result == 0)
+                {
+                    tran.Rollback();    // 交易取消
+                    MessageBox.Show("失敗");
+                }
+                else
+                {
+                    tran.Commit();      // 執行交易
+                    MessageBox.Show("完成");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
         public void SET_TEXTBOX_NULL()
         {
             textBox2.Text = "";
@@ -1554,6 +1650,18 @@ namespace TKRESEARCH
 
         private void button11_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (dataGridView1.CurrentRow != null)
+                {                   
+                    string mb001 = dataGridView1.CurrentRow.Cells["品號"].Value.ToString();
+                    ADD_TK_BOMMJ_BOMMK(mb001);
+                }
+            }
+            catch(Exception EX)
+            {
+                MessageBox.Show(EX.ToString());
+            }
 
         }
 
