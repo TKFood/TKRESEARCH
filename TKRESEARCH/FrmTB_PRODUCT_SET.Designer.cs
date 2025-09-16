@@ -148,6 +148,9 @@
             this.comboBox7 = new System.Windows.Forms.ComboBox();
             this.previewControl1 = new FastReport.Preview.PreviewControl();
             this.button11 = new System.Windows.Forms.Button();
+            this.label43 = new System.Windows.Forms.Label();
+            this.textBox34 = new System.Windows.Forms.TextBox();
+            this.button12 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -264,11 +267,14 @@
             this.tableLayoutPanel1.Controls.Add(this.textBox1, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.comboBox1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button2, 4, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label43, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.textBox34, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.button1, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.button11, 6, 1);
             this.tableLayoutPanel1.Controls.Add(this.button3, 5, 1);
             this.tableLayoutPanel1.Controls.Add(this.button4, 5, 2);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 3, 1);
-            this.tableLayoutPanel1.Controls.Add(this.button11, 7, 1);
+            this.tableLayoutPanel1.Controls.Add(this.button2, 4, 1);
+            this.tableLayoutPanel1.Controls.Add(this.button12, 3, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -1662,13 +1668,43 @@
             // 
             this.button11.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.button11.ForeColor = System.Drawing.Color.Blue;
-            this.button11.Location = new System.Drawing.Point(843, 43);
+            this.button11.Location = new System.Drawing.Point(735, 43);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(114, 34);
+            this.button11.Size = new System.Drawing.Size(102, 34);
             this.button11.TabIndex = 83;
             this.button11.Text = "轉入EBOM";
             this.button11.UseVisualStyleBackColor = true;
             this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // label43
+            // 
+            this.label43.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(39, 92);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(56, 16);
+            this.label43.TabIndex = 84;
+            this.label43.Text = "新品號";
+            // 
+            // textBox34
+            // 
+            this.textBox34.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox34.Location = new System.Drawing.Point(101, 86);
+            this.textBox34.Name = "textBox34";
+            this.textBox34.Size = new System.Drawing.Size(187, 27);
+            this.textBox34.TabIndex = 85;
+            // 
+            // button12
+            // 
+            this.button12.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button12.ForeColor = System.Drawing.Color.Blue;
+            this.button12.Location = new System.Drawing.Point(363, 83);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(114, 34);
+            this.button12.TabIndex = 86;
+            this.button12.Text = "複製到新品號";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // FrmTB_PRODUCT_SET
             // 
@@ -1867,5 +1903,8 @@
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.ComboBox comboBox7;
         private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.TextBox textBox34;
+        private System.Windows.Forms.Button button12;
     }
 }

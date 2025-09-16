@@ -1379,6 +1379,105 @@ namespace TKRESEARCH
                 sqlConn.Close();
             }
         }
+
+        public void ADD_TKRESEARCHTB_PRODUCT_SET_M_TB_PRODUCT_SET_D(string TARGET_MB001,string SOURCE_MB001)
+        {
+            try
+            {
+                StringBuilder sbSql = new StringBuilder();
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+                // 關閉再開啟資料庫連線，並開始交易
+                sqlConn.Close();
+                sqlConn.Open();
+                tran = sqlConn.BeginTransaction();
+
+                // 清空 StringBuilder 並建立插入語句
+                sbSql.Clear();
+                sbSql.AppendFormat(@"    
+                                    -- 新增 TB_PRODUCT_SET_M
+                                    INSERT INTO [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
+                                    (
+                                        [MB001],[MB002],[MB003],[PRICES],[BARCODE],[SIZE],[ISCLOSED],
+                                        [DEP],[KINDS],[UNITS],[BOXS],[BEFORESIZES],[AFTERSIZES],
+                                        [BEFOREWEIGHTS],[AFTERWEIGHTS],[MOQS],[MOQMINS],[PROCESS],
+                                        [PACKAGES],[COMMENTS]
+                                    )
+                                    SELECT
+                                        '{1}' AS [MB001],
+                                        [MB002],[MB003],[PRICES],[BARCODE],[SIZE],[ISCLOSED],
+                                        [DEP],[KINDS],[UNITS],[BOXS],[BEFORESIZES],[AFTERSIZES],
+                                        [BEFOREWEIGHTS],[AFTERWEIGHTS],[MOQS],[MOQMINS],[PROCESS],
+                                        [PACKAGES],[COMMENTS]
+                                    FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
+                                    WHERE [MB001] = '{0}';
+
+                                    -- 取得剛剛新增的 MID
+                                    DECLARE @NewMID INT;
+                                    SET @NewMID = SCOPE_IDENTITY();
+
+                                    -- 用新 MID 寫入明細
+                                    INSERT INTO [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D]
+                                    (
+                                        [MID],[SERNO],[MB001],[MB002],[AMOUNTS],[UNITS],[COMMENTS]
+                                    )
+                                    SELECT
+                                        @NewMID,
+                                        [TB_PRODUCT_SET_D].[SERNO],[TB_PRODUCT_SET_D].[MB001],[TB_PRODUCT_SET_D].[MB002],[TB_PRODUCT_SET_D].[AMOUNTS],[TB_PRODUCT_SET_D].[UNITS],[TB_PRODUCT_SET_D].COMMENTS
+                                    FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D],[TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
+                                    WHERE [TB_PRODUCT_SET_D].MID=[TB_PRODUCT_SET_M].MID
+                                    AND [TB_PRODUCT_SET_M].[MB001] = '{0}';
+                                
+                                
+                                   
+                                    ", SOURCE_MB001, TARGET_MB001);
+
+                cmd.Connection = sqlConn;
+                cmd.CommandTimeout = 60;
+                cmd.CommandText = sbSql.ToString();
+                cmd.Transaction = tran;
+
+                //使用 cmd.Parameters.Clear() 清除之前的参数，确保在每次执行时没有冲突
+                cmd.Parameters.Clear();
+                // 使用參數化查詢，並對每個參數進行賦值
+                //cmd.Parameters.AddWithValue("@MID", MID);
+
+                // 執行插入語句
+                result = cmd.ExecuteNonQuery();
+
+                // 處理交易
+                if (result == 0)
+                {
+                    tran.Rollback();    // 交易取消
+                    MessageBox.Show("失敗");
+                }
+                else
+                {
+                    tran.Commit();      // 執行交易
+                    MessageBox.Show("完成");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            finally
+            {
+                sqlConn.Close();
+            }
+        }
         public void SET_TEXTBOX_NULL()
         {
             textBox2.Text = "";
@@ -1665,6 +1764,25 @@ namespace TKRESEARCH
 
         }
 
+        private void button12_Click(object sender, EventArgs e)
+        {
+            string TARGET_MB001 = textBox34.Text.Trim();
+            try
+            {
+                if (!string.IsNullOrEmpty(TARGET_MB001) && dataGridView1.CurrentRow != null )
+                {                    
+                    string SOURCE_MB001 = dataGridView1.CurrentRow.Cells["品號"].Value.ToString();
+                    ADD_TKRESEARCHTB_PRODUCT_SET_M_TB_PRODUCT_SET_D(TARGET_MB001, SOURCE_MB001);
+
+                    SEARCH(comboBox1.Text.ToString(), textBox1.Text.Trim());
+                }
+            }
+            catch (Exception EX)
+            {
+                MessageBox.Show(EX.ToString());
+            }
+
+        }
 
         #endregion
 
