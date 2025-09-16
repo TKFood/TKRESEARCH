@@ -75,19 +75,19 @@
             this.textBox11 = new System.Windows.Forms.TextBox();
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.textBox13 = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
             this.textBox14 = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.textBox15 = new System.Windows.Forms.TextBox();
-            this.textBox16 = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.textBox17 = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.button6 = new System.Windows.Forms.Button();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.textBox17 = new System.Windows.Forms.TextBox();
+            this.textBox16 = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.splitContainer8 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
@@ -108,12 +108,10 @@
             this.label35 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
-            this.label38 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
             this.textBox32 = new System.Windows.Forms.TextBox();
             this.label41 = new System.Windows.Forms.Label();
             this.textBox33 = new System.Windows.Forms.TextBox();
-            this.label42 = new System.Windows.Forms.Label();
             this.button9 = new System.Windows.Forms.Button();
             this.label33 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
@@ -131,6 +129,8 @@
             this.textBox27 = new System.Windows.Forms.TextBox();
             this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.comboBox6 = new System.Windows.Forms.ComboBox();
+            this.label38 = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -300,7 +300,7 @@
             // 
             this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(101, 8);
+            this.comboBox1.Location = new System.Drawing.Point(101, 10);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(187, 24);
             this.comboBox1.TabIndex = 78;
@@ -805,16 +805,6 @@
             this.textBox13.Size = new System.Drawing.Size(134, 27);
             this.textBox13.TabIndex = 102;
             // 
-            // label18
-            // 
-            this.label18.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(687, 212);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(40, 16);
-            this.label18.TabIndex = 92;
-            this.label18.Text = "備註";
-            // 
             // textBox14
             // 
             this.textBox14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -851,17 +841,6 @@
             this.textBox15.Size = new System.Drawing.Size(134, 27);
             this.textBox15.TabIndex = 104;
             // 
-            // textBox16
-            // 
-            this.textBox16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel3.SetColumnSpan(this.textBox16, 3);
-            this.textBox16.Location = new System.Drawing.Point(733, 84);
-            this.textBox16.Multiline = true;
-            this.textBox16.Name = "textBox16";
-            this.tableLayoutPanel3.SetRowSpan(this.textBox16, 3);
-            this.textBox16.Size = new System.Drawing.Size(334, 112);
-            this.textBox16.TabIndex = 105;
-            // 
             // label17
             // 
             this.label17.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -872,32 +851,11 @@
             this.label17.TabIndex = 91;
             this.label17.Text = "是否結案";
             // 
-            // textBox17
-            // 
-            this.textBox17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel3.SetColumnSpan(this.textBox17, 3);
-            this.textBox17.Location = new System.Drawing.Point(733, 203);
-            this.textBox17.Multiline = true;
-            this.textBox17.Name = "textBox17";
-            this.tableLayoutPanel3.SetRowSpan(this.textBox17, 3);
-            this.textBox17.Size = new System.Drawing.Size(334, 114);
-            this.textBox17.TabIndex = 106;
-            // 
-            // label21
-            // 
-            this.label21.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(575, 92);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(152, 16);
-            this.label21.TabIndex = 95;
-            this.label21.Text = "製作程序說明或附件";
-            // 
             // comboBox2
             // 
             this.comboBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(573, 48);
+            this.comboBox2.Location = new System.Drawing.Point(573, 50);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(154, 24);
             this.comboBox2.TabIndex = 107;
@@ -906,7 +864,7 @@
             // 
             this.comboBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(133, 168);
+            this.comboBox3.Location = new System.Drawing.Point(133, 170);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(114, 24);
             this.comboBox3.TabIndex = 108;
@@ -931,6 +889,48 @@
             this.button6.Text = "存檔";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // label21
+            // 
+            this.label21.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(575, 92);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(152, 16);
+            this.label21.TabIndex = 95;
+            this.label21.Text = "製作程序說明或附件";
+            // 
+            // label18
+            // 
+            this.label18.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(687, 212);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(40, 16);
+            this.label18.TabIndex = 92;
+            this.label18.Text = "備註";
+            // 
+            // textBox17
+            // 
+            this.textBox17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel3.SetColumnSpan(this.textBox17, 3);
+            this.textBox17.Location = new System.Drawing.Point(733, 203);
+            this.textBox17.Multiline = true;
+            this.textBox17.Name = "textBox17";
+            this.tableLayoutPanel3.SetRowSpan(this.textBox17, 3);
+            this.textBox17.Size = new System.Drawing.Size(334, 114);
+            this.textBox17.TabIndex = 106;
+            // 
+            // textBox16
+            // 
+            this.textBox16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel3.SetColumnSpan(this.textBox16, 3);
+            this.textBox16.Location = new System.Drawing.Point(733, 84);
+            this.textBox16.Multiline = true;
+            this.textBox16.Name = "textBox16";
+            this.tableLayoutPanel3.SetRowSpan(this.textBox16, 3);
+            this.textBox16.Size = new System.Drawing.Size(334, 112);
+            this.textBox16.TabIndex = 105;
             // 
             // tabPage3
             // 
@@ -1220,16 +1220,6 @@
             this.label37.TabIndex = 90;
             this.label37.Text = "長/寬/高";
             // 
-            // label38
-            // 
-            this.label38.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(687, 212);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(40, 16);
-            this.label38.TabIndex = 92;
-            this.label38.Text = "備註";
-            // 
             // label39
             // 
             this.label39.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -1271,16 +1261,6 @@
             this.tableLayoutPanel7.SetRowSpan(this.textBox33, 3);
             this.textBox33.Size = new System.Drawing.Size(334, 114);
             this.textBox33.TabIndex = 106;
-            // 
-            // label42
-            // 
-            this.label42.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(575, 92);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(152, 16);
-            this.label42.TabIndex = 95;
-            this.label42.Text = "包裝方式說明或附件";
             // 
             // button9
             // 
@@ -1422,7 +1402,7 @@
             // 
             this.comboBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(573, 50);
+            this.comboBox5.Location = new System.Drawing.Point(573, 48);
             this.comboBox5.Name = "comboBox5";
             this.comboBox5.Size = new System.Drawing.Size(154, 24);
             this.comboBox5.TabIndex = 107;
@@ -1431,10 +1411,30 @@
             // 
             this.comboBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(133, 208);
+            this.comboBox6.Location = new System.Drawing.Point(133, 210);
             this.comboBox6.Name = "comboBox6";
             this.comboBox6.Size = new System.Drawing.Size(114, 24);
             this.comboBox6.TabIndex = 108;
+            // 
+            // label38
+            // 
+            this.label38.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(687, 212);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(40, 16);
+            this.label38.TabIndex = 92;
+            this.label38.Text = "備註";
+            // 
+            // label42
+            // 
+            this.label42.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(575, 92);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(152, 16);
+            this.label42.TabIndex = 95;
+            this.label42.Text = "包裝方式說明或附件";
             // 
             // tabPage4
             // 
@@ -1517,7 +1517,7 @@
             // 
             this.comboBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(101, 10);
+            this.comboBox4.Location = new System.Drawing.Point(101, 8);
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(187, 24);
             this.comboBox4.TabIndex = 78;
@@ -1636,7 +1636,7 @@
             // 
             this.comboBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Location = new System.Drawing.Point(196, 20);
+            this.comboBox7.Location = new System.Drawing.Point(196, 18);
             this.comboBox7.Name = "comboBox7";
             this.comboBox7.Size = new System.Drawing.Size(188, 24);
             this.comboBox7.TabIndex = 111;

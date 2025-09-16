@@ -55,20 +55,70 @@ namespace TKRESEARCH
         }
         private void FrmORIENTS_CHECKLISTS_Load(object sender, EventArgs e)
         {
-
+            comboBox1_load();
         }
 
         #region FUNCTION
-        public void SEARCH(string PRODUCTNAME)
+        public void LoadComboBox(ComboBox comboBox, string sql, string displayMember, string valueMember)
+        {
+            try
+            {
+                Class1 TKID = new Class1();
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                // 解密帳號密碼
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                using (SqlConnection sqlConn = new SqlConnection(sqlsb.ConnectionString))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(sql, sqlConn);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+
+                    if (dt.Rows.Count > 0)
+                    {
+                        comboBox.DataSource = dt;
+                        comboBox.DisplayMember = displayMember;  // 顯示的欄位
+                        comboBox.ValueMember = valueMember;      // 實際值欄位
+                    }
+                    else
+                    {
+                        comboBox.DataSource = null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("載入 ComboBox 發生錯誤：" + ex.Message);
+            }
+        }
+        public void comboBox1_load()
+        {
+            string sql = @"
+                        SELECT '全部' AS 'PARANAME'
+                        UNION ALL
+                        SELECT 
+                        [PARANAME]
+                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                        WHERE [KIND]='TB_ORIENTS_CHECKLISTS_CATEGORY'
+                        ";
+
+            LoadComboBox(comboBox1, sql, "PARANAME", "PARANAME");
+        }
+
+        public void SEARCH(string CATEGORY, string PRODUCTNAME, string SUPPLIER)
         {
             SqlDataAdapter adapter=new SqlDataAdapter();
             DataSet ds;
             StringBuilder sbSql = new StringBuilder();
             StringBuilder sbSqlQuery = new StringBuilder();
             SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+         
 
             dataGridView1.DataSource = null;
-         
+
+          
 
             try
             {
@@ -87,19 +137,38 @@ namespace TKRESEARCH
                 StringBuilder QUERYS2 = new StringBuilder();
                 StringBuilder QUERYS3 = new StringBuilder();
 
-                //if (!string.IsNullOrEmpty(ISCLOSED))
-                //{
-                //    QUERYS.AppendFormat(@"AND ISCLOSED='{0}'", ISCLOSED);
-                //}
+                //QUERYS
+                if (CATEGORY.Equals("全部"))
+                {
+                    QUERYS.AppendFormat(@"");
+                }
+                else if(!string.IsNullOrEmpty(CATEGORY) && !CATEGORY.Equals("全部"))
+                {
+                    QUERYS.AppendFormat(@" AND CATEGORY='{0}' ", CATEGORY);
+                }
+                else
+                {
+                    QUERYS.AppendFormat(@"");
+                }
+                //QUERYS2
+                if (!string.IsNullOrEmpty(PRODUCTNAME))
+                {
+                    QUERYS2.AppendFormat(@" AND PRODUCTNAME LIKE '%{0}%' ", PRODUCTNAME);
+                }
+                else
+                {
+                    QUERYS2.AppendFormat(@"");
+                }
+                //QUERYS3
+                if (!string.IsNullOrEmpty(SUPPLIER))
+                {
+                    QUERYS3.AppendFormat(@"  AND SUPPLIER LIKE '%{0}%' ", SUPPLIER);
+                }
+                else
+                {
+                    QUERYS3.AppendFormat(@"");
+                }
 
-                //if (!string.IsNullOrEmpty(MB001))
-                //{
-                //    QUERYS2.AppendFormat(@"AND (MB001 LIKE '%{0}%' OR MB002 LIKE '%{0}%')", MB001);
-                //}
-                //else
-                //{
-                //    QUERYS2.AppendFormat(@"");
-                //}
 
                 sbSql.Clear();
 
@@ -131,8 +200,11 @@ namespace TKRESEARCH
                                         ICON AS '圖片路徑'
                                     FROM [TKRESEARCH].[dbo].[TB_ORIENTS_CHECKLISTS]
                                     WHERE 1=1
+                                    {0}
+                                    {1}
+                                    {2}
                                     ORDER BY CAST(LEFT(CATEGORY, CHARINDEX('.', CATEGORY) - 1) AS INT),SUPPLIER,PRODUCTNAME
-                                    ", QUERYS.ToString(), QUERYS2.ToString());
+                                    ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
 
                 adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
                 sqlCmdBuilder = new SqlCommandBuilder(adapter);
@@ -300,7 +372,11 @@ namespace TKRESEARCH
         #region BUTTON
         private void button1_Click(object sender, EventArgs e)
         {
-            SEARCH("");
+            string CATEGORY = comboBox1.Text.ToString();
+            string PRODUCTNAME = textBox1.Text.Trim();
+            string SUPPLIER = textBox3.Text.Trim();
+
+            SEARCH(CATEGORY, PRODUCTNAME, SUPPLIER);
         }
 
         private void button2_Click(object sender, EventArgs e)
