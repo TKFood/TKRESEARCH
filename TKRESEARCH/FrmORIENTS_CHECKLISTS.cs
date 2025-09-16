@@ -280,8 +280,51 @@ namespace TKRESEARCH
             if (dataGridView1.CurrentRow != null)
             {
                 string id = dataGridView1.CurrentRow.Cells["ID"].Value.ToString();
-               
+                string CATEGORY = dataGridView1.CurrentRow.Cells["分類"].Value.ToString();
+                string SUPPLIER = dataGridView1.CurrentRow.Cells["供應商"].Value.ToString();
+                string PRODUCTNAME = dataGridView1.CurrentRow.Cells["品名"].Value.ToString();
+                string INGREDIENT_CN = dataGridView1.CurrentRow.Cells["成分(中文)"].Value.ToString();
+                string INGREDIENT_EN = dataGridView1.CurrentRow.Cells["成分(英文)"].Value.ToString();
+                string PRODUCT_ALLERGEN = dataGridView1.CurrentRow.Cells["產品過敏原"].Value.ToString();
+                string LINE_ALLERGEN = dataGridView1.CurrentRow.Cells["產線過敏原"].Value.ToString();
+                string ORIGIN = dataGridView1.CurrentRow.Cells["產地"].Value.ToString();
+                string PACKAGE_SPEC = dataGridView1.CurrentRow.Cells["外包裝及驗收標準"].Value.ToString();
+                string PRODUCT_APPEARANCE = dataGridView1.CurrentRow.Cells["產品外觀"].Value.ToString();
+                string COLOR = dataGridView1.CurrentRow.Cells["色澤"].Value.ToString();
+                string FLAVOR = dataGridView1.CurrentRow.Cells["風味"].Value.ToString();
+                string BATCHNO = dataGridView1.CurrentRow.Cells["產品批號"].Value.ToString();
+                string UNIT_WEIGHT = dataGridView1.CurrentRow.Cells["單位重量"].Value.ToString();
+                string SHELFLIFE = dataGridView1.CurrentRow.Cells["保存期限"].Value.ToString();
+                string STORAGE_CONDITION = dataGridView1.CurrentRow.Cells["保存條件"].Value.ToString();
+                string GMO_STATUS = dataGridView1.CurrentRow.Cells["基改/非基改"].Value.ToString();
+                string HAS_COA = dataGridView1.CurrentRow.Cells["檢附COA"].Value.ToString();
+                string INSPECTION_FREQUENCY = dataGridView1.CurrentRow.Cells["抽驗頻率"].Value.ToString();
+                string BRIX = dataGridView1.CurrentRow.Cells["糖度(Brix)"].Value.ToString();
+                string REMARK = dataGridView1.CurrentRow.Cells["備註"].Value.ToString();
+
+
                 textBox2.Text = id;
+                textBox2.Text = "";
+                textBox4.Text = "";
+                textBox5.Text = "";
+                textBox6.Text = "";
+                textBox7.Text = "";
+                textBox8.Text = "";
+                textBox9.Text = "";
+                textBox10.Text = "";
+                textBox11.Text = "";
+                textBox12.Text = "";
+                textBox13.Text = "";
+                textBox14.Text = "";
+                textBox15.Text = "";
+                textBox16.Text = "";
+                textBox17.Text = "";
+                textBox18.Text = "";
+                textBox19.Text = "";
+                textBox20.Text = "";
+                textBox21.Text = "";
+                textBox22.Text = "";
+                textBox23.Text = "";
 
                 // 取圖片路徑
                 string iconPath = dataGridView1.CurrentRow.Cells["圖片路徑"].Value?.ToString();
@@ -371,6 +414,27 @@ namespace TKRESEARCH
         public void SET_TEXTBOX_NULL()
         {
             textBox2.Text = "";
+            textBox4.Text = "";
+            textBox5.Text = "";
+            textBox6.Text = "";
+            textBox7.Text = "";
+            textBox8.Text = "";
+            textBox9.Text = "";
+            textBox10.Text = "";
+            textBox11.Text = "";
+            textBox12.Text = "";
+            textBox13.Text = "";
+            textBox14.Text = "";
+            textBox15.Text = "";
+            textBox16.Text = "";
+            textBox17.Text = "";
+            textBox18.Text = "";
+            textBox19.Text = "";
+            textBox20.Text = "";
+            textBox21.Text = "";
+            textBox22.Text = "";
+            textBox23.Text = "";
+    
 
         }
 
@@ -438,7 +502,7 @@ namespace TKRESEARCH
         {
             btnSATUS = "ADD";
 
-            MessageBox.Show("新增功能");
+            //MessageBox.Show("新增功能");
             // TODO: 開啟新增模式，清空輸入欄位
         }
 
@@ -446,7 +510,7 @@ namespace TKRESEARCH
         {
             btnSATUS = "DELETE";
 
-            MessageBox.Show("刪除功能");
+            //MessageBox.Show("刪除功能");
             // TODO: 確認後刪除選中的資料
         }
 
@@ -454,7 +518,7 @@ namespace TKRESEARCH
         {
             btnSATUS = "EDIT";
 
-            MessageBox.Show("修改功能");
+            //MessageBox.Show("修改功能");
             // TODO: 載入選中資料，進入編輯模式
         }
 
