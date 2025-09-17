@@ -563,7 +563,8 @@ namespace TKRESEARCH
                                     ,[AFTERWEIGHTS] AS '烘焙後重量(克/厚度)'
                                     ,[MOQS] AS '標準批量(1桶產量)'
                                     ,[MOQMINS] AS '最低製造量'
-                                    ,[PROCESS] AS '製作程序說明或附件'                                  
+                                    ,[PROCESS] AS '製作程序說明或附件'   
+                                    ,[BATCHLOTS] AS '標準批量'                               
                                     ,[COMMENTS] AS '備註'
                                     FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
                                     WHERE [MID]='{0}'
@@ -623,6 +624,7 @@ namespace TKRESEARCH
                     string MOQMINS = dataGridView3.CurrentRow.Cells["最低製造量"].Value.ToString();
                     string PROCESS = dataGridView3.CurrentRow.Cells["製作程序說明或附件"].Value.ToString();
                     string COMMENTS = dataGridView3.CurrentRow.Cells["備註"].Value.ToString();
+                    string BATCHLOTS = dataGridView3.CurrentRow.Cells["標準批量"].Value.ToString();
 
                     textBox5.Text = MB001;
                     textBox6.Text = MB002;
@@ -637,6 +639,7 @@ namespace TKRESEARCH
                     textBox15.Text = MOQMINS;
                     textBox16.Text = PROCESS;
                     textBox17.Text = COMMENTS;
+                    textBox35.Text = BATCHLOTS;
                     comboBox2.Text = ISCLOSED;
                     comboBox3.Text = KINDS;
                 }
@@ -659,7 +662,8 @@ namespace TKRESEARCH
             string MOQS,
             string MOQMINS,
             string PROCESS,
-            string COMMENTS
+            string COMMENTS,
+            string BATCHLOTS
             )
         {
             try
@@ -701,6 +705,7 @@ namespace TKRESEARCH
                                     ,MOQMINS=@MOQMINS
                                     ,PROCESS=@PROCESS
                                     ,COMMENTS=@COMMENTS
+                                    ,BATCHLOTS=@BATCHLOTS
                                     WHERE MID=@MID
                                     ");
 
@@ -728,6 +733,7 @@ namespace TKRESEARCH
                 cmd.Parameters.AddWithValue("@MOQMINS", MOQMINS);
                 cmd.Parameters.AddWithValue("@PROCESS", PROCESS);
                 cmd.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+                cmd.Parameters.AddWithValue("@BATCHLOTS", BATCHLOTS);
 
                 // 執行插入語句
                 result = cmd.ExecuteNonQuery();
@@ -882,7 +888,8 @@ namespace TKRESEARCH
                                     ,[UNITS] AS '計量單位'
                                     ,[BOXS] AS '入/箱'
                                     ,[MOQS] AS '生產批量'
-                                    ,[PACKAGES] AS '包裝方式說明或附件'                            
+                                    ,[PACKAGES] AS '包裝方式說明或附件'   
+                                    ,[BATCHLOTS] AS '標準批量'                                
                                     ,[COMMENTS] AS '備註'
                                     FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
                                     WHERE [MID]='{0}'
@@ -940,6 +947,7 @@ namespace TKRESEARCH
                 string MOQS = dataGridView5.CurrentRow.Cells["生產批量"].Value.ToString();
                 string PACKAGES = dataGridView5.CurrentRow.Cells["包裝方式說明或附件"].Value.ToString();
                 string COMMENTS = dataGridView5.CurrentRow.Cells["備註"].Value.ToString();
+                string BATCHLOTS = dataGridView5.CurrentRow.Cells["標準批量"].Value.ToString();
 
                 textBox22.Text = MB001;
                 textBox23.Text = MB002;
@@ -953,6 +961,7 @@ namespace TKRESEARCH
                 textBox31.Text = MOQS;
                 textBox32.Text = PACKAGES;
                 textBox33.Text = COMMENTS;
+                textBox36.Text = BATCHLOTS;
 
                 comboBox5.Text = ISCLOSED;
                 comboBox6.Text = KINDS;
@@ -975,7 +984,8 @@ namespace TKRESEARCH
             string SIZE,
             string MOQS,
             string PACKAGES,
-            string COMMENTS
+            string COMMENTS,
+            string BATCHLOTS
            )
         {
             try
@@ -1015,7 +1025,8 @@ namespace TKRESEARCH
                                     ,SIZE=@SIZE
                                     ,MOQS=@MOQS
                                     ,PACKAGES=@PACKAGES
-                                    ,COMMENTS=@COMMENTS                              
+                                    ,COMMENTS=@COMMENTS     
+                                    ,BATCHLOTS=@BATCHLOTS                         
                                     WHERE MID=@MID
                                     ");
 
@@ -1042,6 +1053,7 @@ namespace TKRESEARCH
                 cmd.Parameters.AddWithValue("@PRICES", PRICES);
                 cmd.Parameters.AddWithValue("@PACKAGES", PACKAGES);
                 cmd.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+                cmd.Parameters.AddWithValue("@BATCHLOTS", BATCHLOTS);
 
                 // 執行插入語句
                 result = cmd.ExecuteNonQuery();
@@ -1502,6 +1514,7 @@ namespace TKRESEARCH
             textBox15.Text = "";
             textBox16.Text = "";
             textBox17.Text = "";
+            textBox35.Text = "";
         }
 
         public void SET_TEXTBOX_NULL_TAB3()
@@ -1518,7 +1531,8 @@ namespace TKRESEARCH
             textBox31.Text = "";
             textBox32.Text = "";
             textBox33.Text = "";
-         
+            textBox36.Text = "";
+
         }
         #endregion
 
@@ -1656,24 +1670,27 @@ namespace TKRESEARCH
             string MOQMINS = textBox15.Text;
             string PROCESS = textBox16.Text;
             string COMMENTS = textBox17.Text;
+            string BATCHLOTS = textBox35.Text;
+
 
             UPDATE_TB_PRODUCT_SET_M(
-            MID,
-            MB001,
-            MB002,
-            ISCLOSED,
-            DEP,
-            KINDS,
-            UNITS,
-            BOXS,
-            BEFORESIZES,
-            AFTERSIZES,
-            BEFOREWEIGHTS,
-            AFTERWEIGHTS,
-            MOQS,
-            MOQMINS,
-            PROCESS,
-            COMMENTS
+                MID,
+                MB001,
+                MB002,
+                ISCLOSED,
+                DEP,
+                KINDS,
+                UNITS,
+                BOXS,
+                BEFORESIZES,
+                AFTERSIZES,
+                BEFOREWEIGHTS,
+                AFTERWEIGHTS,
+                MOQS,
+                MOQMINS,
+                PROCESS,
+                COMMENTS,
+                BATCHLOTS
             );
 
             SEARCH_TB_PRODUCT_SET_M(textBox2.Text.Trim());
@@ -1723,26 +1740,29 @@ namespace TKRESEARCH
             string MOQS = textBox31.Text;
             string PACKAGES = textBox32.Text;
             string COMMENTS = textBox33.Text;
+            string BATCHLOTS = textBox36.Text;
 
             UPDATE_TB_PRODUCT_SET_M_GV5(
-            MID,
-            MB001,
-            MB002,
-            MB003,
-            ISCLOSED,
-            DEP,
-            KINDS,
-            UNITS,
-            BOXS,
-            PRICES,
-            BARCODE,
-            SIZE,
-            MOQS,
-            PACKAGES,
-            COMMENTS
+                MID,
+                MB001,
+                MB002,
+                MB003,
+                ISCLOSED,
+                DEP,
+                KINDS,
+                UNITS,
+                BOXS,
+                PRICES,
+                BARCODE,
+                SIZE,
+                MOQS,
+                PACKAGES,
+                COMMENTS,
+                BATCHLOTS
             );
 
             SEARCH_TB_PRODUCT_SET_M_GV5(textBox19.Text.Trim());
+        
             MessageBox.Show("完成");
             
         }
