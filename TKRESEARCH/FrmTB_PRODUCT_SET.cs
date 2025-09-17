@@ -1341,9 +1341,10 @@ namespace TKRESEARCH
                                     )
                                     SELECT TOP 1
                                     [COMPANY],[CREATOR],[USR_GROUP],'{0}' CREATE_DATE,[MODIFIER],[MODI_DATE],[FLAG],[CREATE_TIME],[MODI_TIME],[TRANS_TYPE],[TRANS_NAME],[sync_date],[sync_time],[sync_mark],[sync_count],[DataUser],[DataGroup]
-                                    ,'{1}' MJ001,0 [MJ004],[MJ005],[MJ006],[MJ007],[MJ008],[MJ009],[MJ010],[MJ011],[MJ012],[MJ013],[MJ014],[MJ015],[MJ016],[MJ017],[MJ018],[MJ019],[MJ020],[MJ021],[MJ022]
+                                    ,'{1}' MJ001,[BATCHLOTS] [MJ004],[MJ005],[MJ006],[MJ007],[MJ008],[MJ009],[MJ010],[MJ011],[MJ012],[MJ013],[MJ014],[MJ015],[MJ016],[MJ017],[MJ018],[MJ019],[MJ020],[MJ021],[MJ022]
                                     ,'' [UDF01],'' [UDF02],[UDF03],[UDF04],[UDF05],[UDF06],[UDF07],[UDF08],[UDF09],[UDF10]
                                     FROM [TK].[dbo].[BOMMJ]
+                                    LEFT JOIN [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M] ON [TB_PRODUCT_SET_M].MB001='{1}'
                                     ORDER BY [CREATE_DATE] DESC
 
                                     INSERT INTO [TK].[dbo].[BOMMK]
@@ -1354,7 +1355,7 @@ namespace TKRESEARCH
                                      )                                    
                                     SELECT 
                                     [COMPANY],[CREATOR],[USR_GROUP],'{0}' CREATE_DATE,[MODIFIER],[MODI_DATE],[FLAG],[CREATE_TIME],[MODI_TIME],[TRANS_TYPE],[TRANS_NAME],[sync_date],[sync_time],[sync_mark],[sync_count],[DataUser],[DataGroup]
-                                    ,[TB_PRODUCT_SET_M].MB001 MK001,[TB_PRODUCT_SET_D].SERNO MK002,[TB_PRODUCT_SET_D].MB001 MK003,[TB_PRODUCT_SET_D].AMOUNTS MK006,[MK007],[MK008],[MK009],[MK010],[MK011],[MK012],[MK013],[MK014],[MK015],[MK016],[MK017],[MK018],[MK019],[MK020],[MK021],[MK022],[MK023],[MK024],[MK025],[MK026],[MK027],[MK028],[MK029],[MK030],[MK031],[MK032],[MK033],[MK034],[MK035],[MK036],[MK037],[MK038]
+                                    ,[TB_PRODUCT_SET_M].MB001 MK001,[TB_PRODUCT_SET_D].SERNO MK002,[TB_PRODUCT_SET_D].MB001 MK003,[TB_PRODUCT_SET_D].AMOUNTS MK006,[TB_PRODUCT_SET_D].[CALNUMS] [MK007],CONVERT(decimal(16,4),[TB_PRODUCT_SET_D].[LOSENUMS])/100 [MK008],[MK009],[MK010],[MK011],[MK012],[MK013],[MK014],[MK015],[MK016],[MK017],[MK018],[MK019],[MK020],[MK021],[MK022],[MK023],[MK024],[MK025],[MK026],[MK027],[MK028],[MK029],[MK030],[MK031],[MK032],[MK033],[MK034],[MK035],[MK036],[MK037],[MK038]
                                     ,[UDF01],[UDF02],[UDF03],[UDF04],[UDF05],[UDF06],[UDF07],[UDF08],[UDF09],[UDF10]
                                     FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M],[TKRESEARCH].[dbo].[TB_PRODUCT_SET_D]
                                     LEFT JOIN (
@@ -1434,14 +1435,14 @@ namespace TKRESEARCH
                                         [MB001],[MB002],[MB003],[PRICES],[BARCODE],[SIZE],[ISCLOSED],
                                         [DEP],[KINDS],[UNITS],[BOXS],[BEFORESIZES],[AFTERSIZES],
                                         [BEFOREWEIGHTS],[AFTERWEIGHTS],[MOQS],[MOQMINS],[PROCESS],
-                                        [PACKAGES],[COMMENTS]
+                                        [PACKAGES],[BATCHLOTS],[COMMENTS]
                                     )
                                     SELECT
                                         '{1}' AS [MB001],
                                         [MB002],[MB003],[PRICES],[BARCODE],[SIZE],[ISCLOSED],
                                         [DEP],[KINDS],[UNITS],[BOXS],[BEFORESIZES],[AFTERSIZES],
                                         [BEFOREWEIGHTS],[AFTERWEIGHTS],[MOQS],[MOQMINS],[PROCESS],
-                                        [PACKAGES],[COMMENTS]
+                                        [PACKAGES],[BATCHLOTS],[COMMENTS]
                                     FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
                                     WHERE [MB001] = '{0}';
 
@@ -1452,11 +1453,11 @@ namespace TKRESEARCH
                                     -- 用新 MID 寫入明細
                                     INSERT INTO [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D]
                                     (
-                                        [MID],[SERNO],[MB001],[MB002],[AMOUNTS],[UNITS],[COMMENTS]
+                                        [MID],[SERNO],[MB001],[MB002],[AMOUNTS],[UNITS],[CALNUMS],[LOSENUMS],[COMMENTS]
                                     )
                                     SELECT
                                         @NewMID,
-                                        [TB_PRODUCT_SET_D].[SERNO],[TB_PRODUCT_SET_D].[MB001],[TB_PRODUCT_SET_D].[MB002],[TB_PRODUCT_SET_D].[AMOUNTS],[TB_PRODUCT_SET_D].[UNITS],[TB_PRODUCT_SET_D].COMMENTS
+                                        [TB_PRODUCT_SET_D].[SERNO],[TB_PRODUCT_SET_D].[MB001],[TB_PRODUCT_SET_D].[MB002],[TB_PRODUCT_SET_D].[AMOUNTS],[TB_PRODUCT_SET_D].[UNITS],[TB_PRODUCT_SET_D].[CALNUMS],[TB_PRODUCT_SET_D].[LOSENUMS],[TB_PRODUCT_SET_D].COMMENTS
                                     FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D],[TKRESEARCH].[dbo].[TB_PRODUCT_SET_M]
                                     WHERE [TB_PRODUCT_SET_D].MID=[TB_PRODUCT_SET_M].MID
                                     AND [TB_PRODUCT_SET_M].[MB001] = '{0}';
