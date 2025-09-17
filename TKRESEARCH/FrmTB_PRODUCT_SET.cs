@@ -373,6 +373,8 @@ namespace TKRESEARCH
                                 ,[MB002] AS '品名'
                                 ,[AMOUNTS] AS '用量'
                                 ,[UNITS] AS '單位'
+                                ,[CALNUMS] AS '底數'
+                                ,[LOSENUMS] AS '損耗率'
                                 FROM [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D]
                                 WHERE MID='{0}' ", MID);
 
@@ -382,7 +384,7 @@ namespace TKRESEARCH
                 // Insert
                 adapter_TB_PRODUCT_SET_D.InsertCommand = new SqlCommand(
                     @"INSERT INTO [TKRESEARCH].[dbo].[TB_PRODUCT_SET_D] 
-                    (MID, SERNO, MB001, MB002, AMOUNTS, UNITS) 
+                    (MID, SERNO, MB001, MB002, AMOUNTS, UNITS,CALNUMS,LOSENUMS) 
                      VALUES (@MID, @SERNO, @MB001, @MB002, @AMOUNTS, @UNITS)", sqlConn);
                 adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@MID", SqlDbType.Int).SourceColumn = "MID";
                 adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@SERNO", SqlDbType.NVarChar, 20).SourceColumn = "序號";
@@ -390,6 +392,8 @@ namespace TKRESEARCH
                 adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@MB002", SqlDbType.NVarChar, 200).SourceColumn = "品名";
                 adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@AMOUNTS", SqlDbType.NVarChar, 200).SourceColumn = "用量";
                 adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@UNITS", SqlDbType.NVarChar, 20).SourceColumn = "單位";
+                adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@CALNUMS", SqlDbType.NVarChar, 20).SourceColumn = "底數";
+                adapter_TB_PRODUCT_SET_D.InsertCommand.Parameters.Add("@LOSENUMS", SqlDbType.NVarChar, 20).SourceColumn = "損耗率";
 
                 // Update — 注意把 WHERE 的 key 參數設為 Original
                 adapter_TB_PRODUCT_SET_D.UpdateCommand = new SqlCommand(
@@ -397,13 +401,17 @@ namespace TKRESEARCH
                       SET MB001 = @MB001,
                           MB002 = @MB002,
                           AMOUNTS = @AMOUNTS,
-                          UNITS = @UNITS
+                          UNITS = @UNITS,
+                          CALNUMS=@CALNUMS,
+                          LOSENUMS=@LOSENUMS
                       WHERE MID = @MID AND SERNO = @SERNO", sqlConn);
 
                 adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@MB001", SqlDbType.NVarChar, 50).SourceColumn = "品號";
                 adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@MB002", SqlDbType.NVarChar, 200).SourceColumn = "品名";
                 adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@AMOUNTS", SqlDbType.NVarChar, 200).SourceColumn = "用量";
                 adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@UNITS", SqlDbType.NVarChar, 20).SourceColumn = "單位";
+                adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@CALNUMS", SqlDbType.NVarChar, 20).SourceColumn = "底數";
+                adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@LOSENUMS", SqlDbType.NVarChar, 20).SourceColumn = "損耗率";
 
                 // Key 參數 (用 Original 版本以匹配更新前的 key)
                 var pMID = adapter_TB_PRODUCT_SET_D.UpdateCommand.Parameters.Add("@MID", SqlDbType.Int);
@@ -443,6 +451,8 @@ namespace TKRESEARCH
                     dataGridView2.Columns["品名"].Width = 200;
                     dataGridView2.Columns["用量"].Width = 100;
                     dataGridView2.Columns["單位"].Width = 100;
+                    dataGridView2.Columns["底數"].Width = 100;
+                    dataGridView2.Columns["損耗率"].Width = 100;
                 }
 
                 // ✅ 即使沒有資料，也要建立 DataTable 結構並綁定              
@@ -1260,6 +1270,8 @@ namespace TKRESEARCH
                     {
                         dgv.Rows[e.RowIndex].Cells["品名"].Value = DT.Rows[0]["MB002"].ToString();
                         dgv.Rows[e.RowIndex].Cells["單位"].Value = DT.Rows[0]["MB004"].ToString();
+                        dgv.Rows[e.RowIndex].Cells["底數"].Value = "!";
+                        dgv.Rows[e.RowIndex].Cells["損耗率"].Value = "0";
                     }
                 }
             }
