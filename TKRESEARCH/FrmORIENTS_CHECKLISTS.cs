@@ -59,11 +59,6 @@ namespace TKRESEARCH
         {
             comboBox1_load();
             comboBox2_load();
-
-            // 綁定事件
-            toolStripButton1.Click += BtnAdd_Click;
-            toolStripButton2.Click += BtnDelete_Click;
-            toolStripButton3.Click += BtnEdit_Click;
            
         }
 
@@ -196,6 +191,7 @@ namespace TKRESEARCH
                 sbSql.AppendFormat(@"  
                                     SELECT 
                                         ID,
+                                        MB001 AS '品號',                                      
                                         CATEGORY AS '分類',
                                         UPDATETIME AS '更新時間',
                                         SUPPLIER AS '供應商',
@@ -294,6 +290,7 @@ namespace TKRESEARCH
             if (dataGridView1.CurrentRow != null)
             {               
                 string id = dataGridView1.CurrentRow.Cells["ID"].Value.ToString();
+                string MB001 = dataGridView1.CurrentRow.Cells["品號"].Value.ToString();
                 string CATEGORY = dataGridView1.CurrentRow.Cells["分類"].Value.ToString();
                 string SUPPLIER = dataGridView1.CurrentRow.Cells["供應商"].Value.ToString();
                 string PRODUCTNAME = dataGridView1.CurrentRow.Cells["品名"].Value.ToString();
@@ -317,7 +314,8 @@ namespace TKRESEARCH
                 string REMARK = dataGridView1.CurrentRow.Cells["備註"].Value.ToString();
 
 
-                textBox2.Text = id;               
+                textBox2.Text = id;
+                textBox24.Text = MB001;
                 textBox4.Text = SUPPLIER;
                 textBox5.Text = PRODUCTNAME;
                 textBox6.Text = INGREDIENT_CN;
@@ -448,6 +446,7 @@ namespace TKRESEARCH
 
         public void ADD_TB_ORIENTS_CHECKLISTS(
             string ID,
+            string MB001,
             string CATEGORY,
             string SUPPLIER,
             string PRODUCTNAME,
@@ -483,12 +482,12 @@ namespace TKRESEARCH
 
                 string sql = @"
                             INSERT INTO [TKRESEARCH].[dbo].[TB_ORIENTS_CHECKLISTS]
-                            ([CATEGORY],[SUPPLIER],[PRODUCTNAME],[INGREDIENT_CN],[INGREDIENT_EN],
+                            ([MB001],[CATEGORY],[SUPPLIER],[PRODUCTNAME],[INGREDIENT_CN],[INGREDIENT_EN],
                              [PRODUCT_ALLERGEN],[LINE_ALLERGEN],[ORIGIN],[PACKAGE_SPEC],[PRODUCT_APPEARANCE],
                              [COLOR],[FLAVOR],[BATCHNO],[UNIT_WEIGHT],[SHELFLIFE],[STORAGE_CONDITION],
                              [GMO_STATUS],[HAS_COA],[INSPECTION_FREQUENCY],[REMARK],[BRIX],[UPDATETIME])
                             VALUES
-                            (@CATEGORY,@SUPPLIER,@PRODUCTNAME,@INGREDIENT_CN,@INGREDIENT_EN,
+                            (@MB001,@CATEGORY,@SUPPLIER,@PRODUCTNAME,@INGREDIENT_CN,@INGREDIENT_EN,
                              @PRODUCT_ALLERGEN,@LINE_ALLERGEN,@ORIGIN,@PACKAGE_SPEC,@PRODUCT_APPEARANCE,
                              @COLOR,@FLAVOR,@BATCHNO,@UNIT_WEIGHT,@SHELFLIFE,@STORAGE_CONDITION,
                              @GMO_STATUS,@HAS_COA,@INSPECTION_FREQUENCY,@REMARK,@BRIX,@UPDATETIME)
@@ -497,6 +496,7 @@ namespace TKRESEARCH
                 using (SqlConnection conn = new SqlConnection(sqlsb.ConnectionString))
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
+                    cmd.Parameters.AddWithValue("@MB001", MB001);
                     cmd.Parameters.AddWithValue("@CATEGORY", CATEGORY);
                     cmd.Parameters.AddWithValue("@SUPPLIER", SUPPLIER);
                     cmd.Parameters.AddWithValue("@PRODUCTNAME", PRODUCTNAME);
@@ -533,6 +533,7 @@ namespace TKRESEARCH
         }
         public void UPDATE_TB_ORIENTS_CHECKLISTS(
             string ID,
+            string MB001,
             string CATEGORY,
             string SUPPLIER,
             string PRODUCTNAME,
@@ -569,6 +570,7 @@ namespace TKRESEARCH
                 string sql = @"
                             UPDATE [TKRESEARCH].[dbo].[TB_ORIENTS_CHECKLISTS]
                             SET
+                            [MB001]=@MB001,
                             [CATEGORY]=@CATEGORY,[SUPPLIER]=@SUPPLIER,[PRODUCTNAME]=@PRODUCTNAME,
                             [INGREDIENT_CN]=@INGREDIENT_CN,[INGREDIENT_EN]=@INGREDIENT_EN,
                             [PRODUCT_ALLERGEN]=@PRODUCT_ALLERGEN,[LINE_ALLERGEN]=@LINE_ALLERGEN,
@@ -584,6 +586,7 @@ namespace TKRESEARCH
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@ID", ID);
+                    cmd.Parameters.AddWithValue("@MB001", MB001);
                     cmd.Parameters.AddWithValue("@CATEGORY", CATEGORY);
                     cmd.Parameters.AddWithValue("@SUPPLIER", SUPPLIER);
                     cmd.Parameters.AddWithValue("@PRODUCTNAME", PRODUCTNAME);
@@ -666,8 +669,7 @@ namespace TKRESEARCH
             textBox21.Text = "";
             textBox22.Text = "";
             textBox23.Text = "";
-    
-
+            textBox24.Text = "";
         }
 
         #endregion
@@ -730,11 +732,12 @@ namespace TKRESEARCH
         }
 
 
-        private void BtnAdd_Click(object sender, EventArgs e)
+        private void toolStripButton1_Click(object sender, EventArgs e)
         {
             btnSATUS = "ADD";
 
             string ID = textBox2.Text;
+            string MB001 = textBox24.Text;
             string CATEGORY = dataGridView1.CurrentRow.Cells["分類"].Value.ToString();
             string SUPPLIER = textBox4.Text;
             string PRODUCTNAME = textBox5.Text;
@@ -759,6 +762,7 @@ namespace TKRESEARCH
 
             ADD_TB_ORIENTS_CHECKLISTS(
                 ID,
+                MB001,
                 CATEGORY,
                 SUPPLIER,
                 PRODUCTNAME,
@@ -783,47 +787,13 @@ namespace TKRESEARCH
             );
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (dataGridView1.CurrentRow != null)
-                {
-                    string id = dataGridView1.CurrentRow.Cells["ID"].Value.ToString();
-                    string DEL_PRODUCTNAME = dataGridView1.CurrentRow.Cells["品名"].Value.ToString();
-                    // 顯示確認訊息
-                    var result = MessageBox.Show(
-                        $"確定要刪除這筆資料嗎？\n  品名 = {DEL_PRODUCTNAME}",
-                        "刪除確認",
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Warning
-                    );
-
-                    if (result == DialogResult.Yes)
-                    {
-                        DELETE_TB_ORIENTS_CHECKLISTS(id);
-
-                        string CATEGORY = comboBox1.Text.ToString();
-                        string PRODUCTNAME = textBox1.Text.Trim();
-                        string SUPPLIER = textBox3.Text.Trim();
-
-                        SEARCH(CATEGORY, PRODUCTNAME, SUPPLIER);
-                        MessageBox.Show("資料已刪除成功！");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("刪除失敗：" + ex.Message);
-            }
-        }
-
-        private void BtnEdit_Click(object sender, EventArgs e)
+        private void toolStripButton3_Click(object sender, EventArgs e)
         {
             btnSATUS = "EDIT";
             currentId = textBox2.Text;
 
             string ID = textBox2.Text;
+            string MB001 = textBox24.Text;
             string CATEGORY = dataGridView1.CurrentRow.Cells["分類"].Value.ToString();
             string SUPPLIER = textBox4.Text;
             string PRODUCTNAME = textBox5.Text;
@@ -848,6 +818,7 @@ namespace TKRESEARCH
 
             UPDATE_TB_ORIENTS_CHECKLISTS(
                 ID,
+                MB001,
                 CATEGORY,
                 SUPPLIER,
                 PRODUCTNAME,
@@ -883,7 +854,40 @@ namespace TKRESEARCH
             btnSATUS = null;
         }
 
-    
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.CurrentRow != null)
+                {
+                    string id = dataGridView1.CurrentRow.Cells["ID"].Value.ToString();
+                    string DEL_PRODUCTNAME = dataGridView1.CurrentRow.Cells["品名"].Value.ToString();
+                    // 顯示確認訊息
+                    var result = MessageBox.Show(
+                        $"確定要刪除這筆資料嗎？\n  品名 = {DEL_PRODUCTNAME}",
+                        "刪除確認",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning
+                    );
+
+                    if (result == DialogResult.Yes)
+                    {
+                        DELETE_TB_ORIENTS_CHECKLISTS(id);
+
+                        string CATEGORY = comboBox1.Text.ToString();
+                        string PRODUCTNAME = textBox1.Text.Trim();
+                        string SUPPLIER = textBox3.Text.Trim();
+
+                        SEARCH(CATEGORY, PRODUCTNAME, SUPPLIER);
+                        MessageBox.Show("資料已刪除成功！");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("刪除失敗：" + ex.Message);
+            }
+        }
         #endregion
 
 
