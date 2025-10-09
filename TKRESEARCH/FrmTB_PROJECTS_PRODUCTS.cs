@@ -217,17 +217,25 @@ namespace TKRESEARCH
 
             StringBuilder Sequel = new StringBuilder();
             Sequel.AppendFormat(@" 
-                                SELECT OWNER
-                                FROM 
+                               SELECT
+                                OWNER
+                                FROM
                                 (
-	                                SELECT '全部' AS 'OWNER'
-	                                UNION ALL
-	                                SELECT
-	                                [OWNER]      
-	                                FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
-	                                GROUP BY [OWNER]
+                                    SELECT 
+                                        '全部' AS OWNER,      
+                                        0 AS SortOrder
+                                    UNION ALL
+                                    SELECT
+                                        [OWNER],       
+                                        1 AS SortOrder
+                                    FROM 
+                                        [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+                                    GROUP BY 
+                                        [OWNER]
                                 ) AS TEMP
-                                ORDER BY OWNER
+                                ORDER BY 
+                                    TEMP.SortOrder, -- 先按 SortOrder 排序，確保 0 (全部) 在前
+                                    TEMP.OWNER;     -- 再按 OWNER 字母順序排序 (對 '全部' 之後的項目生效)
                                 ");
             SqlDataAdapter da = new SqlDataAdapter(Sequel.ToString(), sqlConn);
             DataTable dt = new DataTable();
