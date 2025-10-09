@@ -646,6 +646,102 @@ namespace TKRESEARCH
             }
            
         }
+
+        private void textBox24_TextChanged(object sender, EventArgs e)
+        {
+            // 1. 檢查輸入是否為空（如果允許空值則跳過）
+            if (string.IsNullOrEmpty(textBox24.Text.Trim()))
+            {
+                return;
+            }
+
+            // 2. 執行耗時的資料庫查詢
+            DataTable DT = FIND_TB_ORIENTS_CHECKLISTS_REPEATS(textBox24.Text.Trim());
+
+            // 3. 判斷重複
+            if (DT != null && DT.Rows.Count >= 2)
+            {
+                // 發現重複時，彈出警告
+                MessageBox.Show("品號:" + textBox24.Text.Trim() + " 有重複 " + DT.Rows.Count + "筆資料, 請修改!", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                // 【可選】如果強制要求修改，可以設定 e.Cancel = true
+                // e.Cancel = true; // 這會阻止使用者離開 textBox24
+            }
+
+        }
+
+        public DataTable FIND_TB_ORIENTS_CHECKLISTS_REPEATS(string MB001)
+        {
+            // 初始化連線資訊和解密（保留您的邏輯）
+            Class1 TKID = new Class1();
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+            // 資料庫使用者密碼解密
+            sqlsb.Password = TKID.Decryption(sqlsb.Password);
+            sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+            // 【SQL 修正】：使用視窗函數確保只回傳出現次數 > 1 的記錄
+            string sqlQuery = @"
+                                SELECT 
+                                    [ID], [MB001], [CATEGORY], [SUPPLIER], [PRODUCTNAME], [INGREDIENT_CN], 
+                                    [INGREDIENT_EN], [PRODUCT_ALLERGEN], [LINE_ALLERGEN], [ORIGIN], 
+                                    [PACKAGE_SPEC], [PRODUCT_APPEARANCE], [COLOR], [FLAVOR], [BATCHNO], 
+                                    [UNIT_WEIGHT], [SHELFLIFE], [STORAGE_CONDITION], [GMO_STATUS], 
+                                    [HAS_COA], [INSPECTION_FREQUENCY], [REMARK], [BRIX], [ICON], 
+                                    [UPDATETIME]
+                                FROM 
+                                    (
+                                        SELECT 
+                                            *,
+                                            -- 使用 PARTITION BY 計算每個 MB001 出現的次數
+                                            COUNT([MB001]) OVER (PARTITION BY [MB001]) AS TotalCount 
+                                        FROM 
+                                            [TKRESEARCH].[dbo].[TB_ORIENTS_CHECKLISTS]
+                                        -- 在子查詢中，先限制 MB001 的範圍，優化性能
+                                        WHERE 
+                                            [MB001] = @MB001  
+                                    ) AS Subquery
+                                WHERE 
+                                    TotalCount >= 1  -- 篩選出所有重複（出現次數大於 1）的記錄
+                                ORDER BY
+                                    [MB001], [ID];
+                            ";
+
+            DataTable dtResult = new DataTable();
+
+            try
+            {
+                // 1. 建立連線物件 (使用解密後的連線字串)
+                using (SqlConnection conn = new SqlConnection(sqlsb.ConnectionString))
+                {
+                    // 2. 建立指令物件 (SqlCommand)
+                    using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                    {
+                        // 3. 參數化處理：新增 SQL 參數
+                        // 這是正確新增參數的地方，且使用了 SQL 語句中的 @MB001
+                        cmd.Parameters.AddWithValue("@MB001", MB001);
+
+                        // 4. 建立資料配接器，並將指令物件傳入
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            // 5. 執行查詢並將結果填入 dtResult
+                            adapter.Fill(dtResult);
+                        }
+                    } // cmd.Dispose()
+                } // conn.Close() and conn.Dispose()
+
+                return dtResult;
+            }
+            catch (Exception ex)
+            {
+                // 處理任何連線或查詢錯誤
+                // 建議保留 MessageBox 或其他日誌記錄
+                // MessageBox.Show("查詢資料庫錯誤: " + ex.Message, "資料庫錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // 在錯誤發生時傳回 null 或一個空的 DataTable
+                return null;
+            }
+        }
         public void SET_TEXTBOX_NULL()
         {
             textBox2.Text = "";
@@ -671,6 +767,7 @@ namespace TKRESEARCH
             textBox23.Text = "";
             textBox24.Text = "";
         }
+
 
         #endregion
 
@@ -888,8 +985,9 @@ namespace TKRESEARCH
                 MessageBox.Show("刪除失敗：" + ex.Message);
             }
         }
+
         #endregion
 
-
+     
     }
 }
