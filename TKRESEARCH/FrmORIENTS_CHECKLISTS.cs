@@ -620,7 +620,7 @@ namespace TKRESEARCH
             }
             
         }
-        public void DELETE_TB_ORIENTS_CHECKLISTS(string ID)
+        public void DELETE_TB_ORIENTS_CHECKLIS TS(string ID)
         {
             try
             {
@@ -891,7 +891,7 @@ namespace TKRESEARCH
 
             string ID = textBox2.Text;
             string MB001 = textBox24.Text;
-            string CATEGORY = dataGridView1.CurrentRow.Cells["分類"].Value.ToString();
+            string CATEGORY = comboBox2.Text.ToString();
             string SUPPLIER = textBox4.Text;
             string PRODUCTNAME = textBox5.Text;
             string INGREDIENT_CN = textBox6.Text;
