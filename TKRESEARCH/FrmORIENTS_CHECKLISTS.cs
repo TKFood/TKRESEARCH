@@ -620,7 +620,7 @@ namespace TKRESEARCH
             }
             
         }
-        public void DELETE_TB_ORIENTS_CHECKLIS TS(string ID)
+        public void DELETE_TB_ORIENTS_CHECKLISTS(string ID)
         {
             try
             {
