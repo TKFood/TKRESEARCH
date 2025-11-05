@@ -1163,7 +1163,8 @@ namespace TKRESEARCH
             string STATUS,
             string TASTESREPLYS,
             string DESIGNREPLYS,
-            string QCREPLYS
+            string QCREPLYS,
+            string PURREPLYS
            )
         {
             try
@@ -1200,7 +1201,8 @@ namespace TKRESEARCH
                                     STATUS,
                                     TASTESREPLYS,
                                     DESIGNREPLYS,
-                                    QCREPLYS
+                                    QCREPLYS,
+                                    PURREPLYS
                                     )
                                     VALUES
                                     (
@@ -1215,7 +1217,8 @@ namespace TKRESEARCH
                                     @STATUS,
                                     @TASTESREPLYS,
                                     @DESIGNREPLYS,
-                                    @QCREPLYS
+                                    @QCREPLYS,
+                                    @PURREPLYS
                                     )
 
                                     ");
@@ -1240,6 +1243,7 @@ namespace TKRESEARCH
                 cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
                 cmd.Parameters.AddWithValue("@DESIGNREPLYS", DESIGNREPLYS);
                 cmd.Parameters.AddWithValue("@QCREPLYS", QCREPLYS);
+                cmd.Parameters.AddWithValue("@PURREPLYS", PURREPLYS);
 
                 // 執行插入語句
                 result = cmd.ExecuteNonQuery();
@@ -1684,6 +1688,7 @@ namespace TKRESEARCH
             string TASTESREPLYS = textBox14.Text.Replace("\r\n", "\n");
             string DESIGNREPLYS = textBox15.Text.Replace("\r\n", "\n");
             string QCREPLYS = textBox17.Text.Replace("\r\n", "\n");
+            string PURREPLYS = textBox19.Text.Replace("\r\n", "\n");
 
             ADD_TB_PROJECTS_PRODUCTS(               
                 NO,
@@ -1697,7 +1702,8 @@ namespace TKRESEARCH
                 STATUS,
                 TASTESREPLYS,
                 DESIGNREPLYS,
-                QCREPLYS
+                QCREPLYS,
+                PURREPLYS
                 );
         }
     }

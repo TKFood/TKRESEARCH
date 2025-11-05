@@ -113,6 +113,8 @@
             this.textBox17 = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.textBox18 = new System.Windows.Forms.TextBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.textBox19 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -903,7 +905,6 @@
             this.tableLayoutPanel5.Controls.Add(this.textBox12, 1, 7);
             this.tableLayoutPanel5.Controls.Add(this.label26, 0, 8);
             this.tableLayoutPanel5.Controls.Add(this.textBox13, 1, 8);
-            this.tableLayoutPanel5.Controls.Add(this.button5, 4, 16);
             this.tableLayoutPanel5.Controls.Add(this.comboBox11, 1, 3);
             this.tableLayoutPanel5.Controls.Add(this.comboBox10, 1, 1);
             this.tableLayoutPanel5.Controls.Add(this.label27, 0, 10);
@@ -912,6 +913,9 @@
             this.tableLayoutPanel5.Controls.Add(this.label30, 0, 14);
             this.tableLayoutPanel5.Controls.Add(this.textBox15, 1, 12);
             this.tableLayoutPanel5.Controls.Add(this.textBox17, 1, 14);
+            this.tableLayoutPanel5.Controls.Add(this.label32, 4, 8);
+            this.tableLayoutPanel5.Controls.Add(this.textBox19, 5, 8);
+            this.tableLayoutPanel5.Controls.Add(this.button5, 6, 11);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
@@ -1095,7 +1099,7 @@
             // 
             this.button5.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.button5.ForeColor = System.Drawing.Color.Blue;
-            this.button5.Location = new System.Drawing.Point(483, 643);
+            this.button5.Location = new System.Drawing.Point(723, 443);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(114, 34);
             this.button5.TabIndex = 93;
@@ -1205,6 +1209,27 @@
             this.textBox18.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox18.Size = new System.Drawing.Size(394, 114);
             this.textBox18.TabIndex = 55;
+            // 
+            // label32
+            // 
+            this.label32.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(483, 332);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(114, 16);
+            this.label32.TabIndex = 102;
+            this.label32.Text = "採購回覆:";
+            // 
+            // textBox19
+            // 
+            this.textBox19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel5.SetColumnSpan(this.textBox19, 2);
+            this.textBox19.Location = new System.Drawing.Point(603, 323);
+            this.textBox19.Multiline = true;
+            this.textBox19.Name = "textBox19";
+            this.tableLayoutPanel5.SetRowSpan(this.textBox19, 2);
+            this.textBox19.Size = new System.Drawing.Size(234, 74);
+            this.textBox19.TabIndex = 103;
             // 
             // FrmTB_PROJECTS_PRODUCTS
             // 
@@ -1340,5 +1365,7 @@
         private System.Windows.Forms.TextBox textBox17;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.TextBox textBox18;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.TextBox textBox19;
     }
 }
