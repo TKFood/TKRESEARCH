@@ -775,7 +775,39 @@ namespace TKRESEARCH
             textBox4.Text = row.Cells["設計回覆"].Value.ToString().Replace("\n", "\r\n");
             textBox5.Text = row.Cells["項目名稱"].Value.ToString().Replace("\n", "\r\n");
             textBox16.Text = row.Cells["品保回覆"].Value.ToString().Replace("\n", "\r\n");
-            textBox18.Text = row.Cells["採購回覆"].Value.ToString().Replace("\n", "\r\n");
+            //textBox18.Text = row.Cells["採購回覆"].Value.ToString().Replace("\n", "\r\n");
+
+            // 檢查是否有選定的行，並且確保 DataGridView 中有資料
+            if (dataGridView1.CurrentRow != null && dataGridView1.CurrentRow.Index >= 0)
+            {
+                // 假設要檢查的欄位名稱為 "採購回覆"
+                string columnName = "採購回覆";
+
+                // 獲取當前選定行中該欄位的值
+                // 使用 Convert.ToString() 確保能處理 DBNull.Value 和 null
+                string cellValue = Convert.ToString(dataGridView1.CurrentRow.Cells[columnName].Value);
+
+                // 定義您的預設文字
+                string defaultText = "1.物料:" + Environment.NewLine +
+                                     "2.物料-估價完成日:" + Environment.NewLine +
+                                     "3.物料-發包完成日:" + Environment.NewLine +
+                                     "4.包材到貨日:" + Environment.NewLine +
+                                     "5.原料:" + Environment.NewLine +
+                                     "6.原料-估價+發包完成日:" + Environment.NewLine +
+                                     "7.原料到貨日:";
+
+                // 判斷該欄位是否為空值或空字串
+                if (string.IsNullOrEmpty(cellValue))
+                {
+                    // 欄位沒值，帶入預設文字
+                    textBox18.Text = defaultText;
+                }
+                else
+                {
+                    // 欄位有值，顯示實際的值
+                    textBox18.Text = row.Cells["採購回覆"].Value.ToString().Replace("\n", "\r\n");
+                }
+            }           
 
         }
 
@@ -1570,14 +1602,25 @@ namespace TKRESEARCH
                 "1.樣本提供:" + "\r\n" +
                 "2.成本提供(初算/正式):" + "\r\n" +
                 "3.特殊原料、製程批量說明:";
+
             textBox14.Text =
                 "1.試吃確認:" + "\r\n" +
                 "2.報價確認:" + "\r\n" +
                 "3.進度更新:";
+
             textBox15.Text =
                 "1.圖面設計:" + "\r\n" +
                 "2.上校稿:" + "\r\n" +
                 "3.廠商確稿發包:";
+
+            textBox18.Text =
+                "1.物料:" + "\r\n" +
+                "2.物料-估價完成日:" + "\r\n" +
+                "3.物料-發包完成日:" + "\r\n" +
+                "4.包材到貨日:" + "\r\n" +
+                "5.原料:" + "\r\n" +
+                "6.原料-估價+發包完成日:" + "\r\n" +
+                "7.原料到貨日:";         
 
         }
 
