@@ -300,7 +300,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tableLayoutPanel2);
             this.splitContainer2.Size = new System.Drawing.Size(970, 657);
-            this.splitContainer2.SplitterDistance = 190;
+            this.splitContainer2.SplitterDistance = 205;
             this.splitContainer2.TabIndex = 0;
             // 
             // dataGridView1
@@ -311,7 +311,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(966, 186);
+            this.dataGridView1.Size = new System.Drawing.Size(966, 201);
             this.dataGridView1.TabIndex = 3;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
@@ -359,7 +359,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(966, 459);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(966, 444);
             this.tableLayoutPanel2.TabIndex = 12;
             // 
             // textBoxid

@@ -717,7 +717,28 @@ namespace TKRESEARCH
                     if (ds.Tables["ds"].Rows.Count >= 1)
                     {                                        
                         dataGridView1.DataSource = ds.Tables["ds"];
-                        dataGridView1.AutoResizeColumns();
+                        //dataGridView1.AutoResizeColumns();
+                        // 1. 設定預設的單元格樣式，啟用文字換行 (WrapMode)
+                        // 這會影響到整個 DataGridView 中所有單元格的文本顯示方式。
+                        dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                        // 2. 設定行高自動調整模式 (AutoSizeRowsMode)
+                        // 這會告訴 DataGridView 根據單元格的內容（特別是換行後的內容）來自動調整行高。
+                        dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+                        // 3. 讓欄寬完全依照所有單元格的內容來決定
+                        // **注意：** 這可能會導致 DataGridView 總寬度超出螢幕或容器邊界，出現水平滾動條。
+                        //dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+                        // 隱藏  欄位
+                        dataGridView1.Columns["研發進度回覆"].Visible = false;
+                        dataGridView1.Columns["業務進度回覆"].Visible = false;
+                        dataGridView1.Columns["設計回覆"].Visible = false;
+                        dataGridView1.Columns["採購回覆"].Visible = false;
+                        dataGridView1.Columns["品保回覆"].Visible = false;
+
+                        if (dataGridView1.Columns.Contains("項目名稱"))
+                        {
+                            dataGridView1.Columns["項目名稱"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        }
                     }
 
                 }
