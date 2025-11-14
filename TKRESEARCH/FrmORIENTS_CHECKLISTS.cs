@@ -169,7 +169,7 @@ namespace TKRESEARCH
                 //QUERYS2
                 if (!string.IsNullOrEmpty(PRODUCTNAME))
                 {
-                    QUERYS2.AppendFormat(@" AND PRODUCTNAME LIKE '%{0}%' ", PRODUCTNAME);
+                    QUERYS2.AppendFormat(@" AND (PRODUCTNAME LIKE '%{0}%' OR MB001 LIKE '%{0}%' )", PRODUCTNAME);
                 }
                 else
                 {
