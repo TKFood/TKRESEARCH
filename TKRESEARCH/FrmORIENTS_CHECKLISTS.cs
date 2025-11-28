@@ -220,7 +220,7 @@ namespace TKRESEARCH
                                     {0}
                                     {1}
                                     {2}
-                                    ORDER BY CAST(LEFT(CATEGORY, CHARINDEX('.', CATEGORY) - 1) AS INT),SUPPLIER,PRODUCTNAME
+                                    ORDER BY CATEGORY,SUPPLIER,PRODUCTNAME
                                     ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
 
                 adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
