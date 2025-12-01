@@ -807,7 +807,89 @@ namespace TKRESEARCH
                     // 欄位有值，顯示實際的值
                     textBox18.Text = row.Cells["採購回覆"].Value.ToString().Replace("\n", "\r\n");
                 }
-            }           
+            }
+
+            if (dataGridView1.CurrentRow != null && dataGridView1.CurrentRow.Index >= 0)
+            {
+                // 假設要檢查的欄位名稱為 "採購回覆"
+                string columnName = "採購回覆";
+
+                // 獲取當前選定行中該欄位的值
+                // 使用 Convert.ToString() 確保能處理 DBNull.Value 和 null
+                string cellValue = Convert.ToString(dataGridView1.CurrentRow.Cells[columnName].Value);
+
+                // 定義您的預設文字
+                string defaultText = "1.樣本提供:" + Environment.NewLine +
+                                     "2.成本提供(初算/正式):" + Environment.NewLine +
+                                     "3.特殊原料、製程批量說明:"
+                                     ;                                  
+
+                // 判斷該欄位是否為空值或空字串
+                if (string.IsNullOrEmpty(cellValue))
+                {
+                    // 欄位沒值，帶入預設文字
+                    textBox2.Text = defaultText;
+                }
+                else
+                {
+                    // 欄位有值，顯示實際的值
+                    textBox2.Text = row.Cells["研發進度回覆"].Value.ToString().Replace("\n", "\r\n");
+                }
+            }
+            if (dataGridView1.CurrentRow != null && dataGridView1.CurrentRow.Index >= 0)
+            {
+                // 假設要檢查的欄位名稱為 "採購回覆"
+                string columnName = "業務進度回覆";
+
+                // 獲取當前選定行中該欄位的值
+                // 使用 Convert.ToString() 確保能處理 DBNull.Value 和 null
+                string cellValue = Convert.ToString(dataGridView1.CurrentRow.Cells[columnName].Value);
+
+                // 定義您的預設文字
+                string defaultText = "1.試吃確認:" + Environment.NewLine +
+                                     "2.報價確認:" + Environment.NewLine +
+                                     "3.進度更新:"
+                                     ;
+
+                // 判斷該欄位是否為空值或空字串
+                if (string.IsNullOrEmpty(cellValue))
+                {
+                    // 欄位沒值，帶入預設文字
+                    textBox3.Text = defaultText;
+                }
+                else
+                {
+                    // 欄位有值，顯示實際的值
+                    textBox3.Text = row.Cells["業務進度回覆"].Value.ToString().Replace("\n", "\r\n");
+                }
+            }
+            if (dataGridView1.CurrentRow != null && dataGridView1.CurrentRow.Index >= 0)
+            {
+                // 假設要檢查的欄位名稱為 "採購回覆"
+                string columnName = "設計回覆";
+
+                // 獲取當前選定行中該欄位的值
+                // 使用 Convert.ToString() 確保能處理 DBNull.Value 和 null
+                string cellValue = Convert.ToString(dataGridView1.CurrentRow.Cells[columnName].Value);
+
+                // 定義您的預設文字
+                string defaultText = "1.圖面設計::" + Environment.NewLine +
+                                     "2.上校稿:" + Environment.NewLine +
+                                     "3.廠商確稿發包:"
+                                     ;
+
+                // 判斷該欄位是否為空值或空字串
+                if (string.IsNullOrEmpty(cellValue))
+                {
+                    // 欄位沒值，帶入預設文字
+                    textBox4.Text = defaultText;
+                }
+                else
+                {
+                    // 欄位有值，顯示實際的值
+                    textBox4.Text = row.Cells["設計回覆"].Value.ToString().Replace("\n", "\r\n");
+                }
+            }
 
         }
 
