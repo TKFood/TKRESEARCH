@@ -50,7 +50,8 @@ namespace TKRESEARCH
         int rownum = 0;
         int result;
         string currentID = null;
-
+        string TB_ORIENTS_CHECKLISTS_TW = "";
+        string TB_ORIENTS_CHECKLISTS_NOT_TW = "";
         public FrmORIENTS_CHECKLISTS()
         {
             InitializeComponent();
@@ -59,7 +60,9 @@ namespace TKRESEARCH
         {
             comboBox1_load();
             comboBox2_load();
-           
+
+            TB_ORIENTS_CHECKLISTS_TW = FIND_TB_ORIENTS_CHECKLISTS_TW();
+            TB_ORIENTS_CHECKLISTS_NOT_TW= FIND_TB_ORIENTS_CHECKLISTS_NOT_TW();
         }
 
         #region FUNCTION
@@ -123,6 +126,124 @@ namespace TKRESEARCH
             LoadComboBox(comboBox2, sql, "PARANAME", "PARANAME");
         }
 
+        public string FIND_TB_ORIENTS_CHECKLISTS_TW()
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            DataSet ds;
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+                             
+
+                sbSql.AppendFormat(@"  
+                                   SELECT  [ID]
+                                          ,[KIND]
+                                          ,[PARAID]
+                                          ,[PARANAME]
+                                      FROM [TKRESEARCH].[dbo].[TBPARA]
+                                      WHERE [KIND]='TB_ORIENTS_CHECKLISTS_TW'
+                                    ");
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds = new DataSet(); // 這樣就不需要再 Clear()
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    DataTable dt = ds.Tables["ds"];
+                    string TB_ORIENTS_CHECKLISTS_TW = dt.Rows[0]["PARANAME"].ToString();
+                    return TB_ORIENTS_CHECKLISTS_TW;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception EX)
+            {
+                return null;
+            }
+            finally
+            {
+
+            }
+        }
+        public string FIND_TB_ORIENTS_CHECKLISTS_NOT_TW()
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            DataSet ds;
+            StringBuilder sbSql = new StringBuilder();
+            StringBuilder sbSqlQuery = new StringBuilder();
+            SqlCommandBuilder sqlCmdBuilder = new SqlCommandBuilder();
+
+            try
+            {
+                //20210902密
+                Class1 TKID = new Class1();//用new 建立類別實體
+                SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString);
+
+                //資料庫使用者密碼解密
+                sqlsb.Password = TKID.Decryption(sqlsb.Password);
+                sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
+
+                String connectionString;
+                sqlConn = new SqlConnection(sqlsb.ConnectionString);
+
+
+                sbSql.AppendFormat(@"  
+                                   SELECT  [ID]
+                                          ,[KIND]
+                                          ,[PARAID]
+                                          ,[PARANAME]
+                                      FROM [TKRESEARCH].[dbo].[TBPARA]
+                                      WHERE [KIND]='TB_ORIENTS_CHECKLISTS_NOT_TW'
+                                    ");
+
+                adapter = new SqlDataAdapter(@"" + sbSql, sqlConn);
+                sqlCmdBuilder = new SqlCommandBuilder(adapter);
+                sqlConn.Open();
+                ds = new DataSet(); // 這樣就不需要再 Clear()
+                adapter.Fill(ds, "ds");
+                sqlConn.Close();
+
+                if (ds.Tables["ds"].Rows.Count >= 1)
+                {
+                    DataTable dt = ds.Tables["ds"];
+                    string TB_ORIENTS_CHECKLISTS_NOT_TW = dt.Rows[0]["PARANAME"].ToString();
+                    return TB_ORIENTS_CHECKLISTS_NOT_TW;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception EX)
+            {
+                return null;
+            }
+            finally
+            {
+
+            }
+        }
         public void SEARCH(string CATEGORY, string PRODUCTNAME, string SUPPLIER)
         {
             SqlDataAdapter adapter=new SqlDataAdapter();
@@ -742,6 +863,21 @@ namespace TKRESEARCH
                 return null;
             }
         }
+        private void textBox11_TextChanged(object sender, EventArgs e)
+        {
+            string ORIGIN = textBox11.Text;
+            string BATCHNO = textBox16.Text;
+
+            if (ORIGIN.Contains("台灣"))
+            {
+                textBox16.Text = TB_ORIENTS_CHECKLISTS_TW;
+            }
+            else
+            {
+                textBox16.Text = TB_ORIENTS_CHECKLISTS_NOT_TW;
+            }
+        }
+
         public void SET_TEXTBOX_NULL()
         {
             textBox2.Text = "";
@@ -986,8 +1122,9 @@ namespace TKRESEARCH
             }
         }
 
+
         #endregion
 
-     
+       
     }
 }
