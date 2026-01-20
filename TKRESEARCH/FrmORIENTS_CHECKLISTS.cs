@@ -335,6 +335,7 @@ namespace TKRESEARCH
                                         INSPECTION_FREQUENCY AS '抽驗頻率',
                                         REMARK AS '備註',
                                         BRIX AS '糖度(Brix)',
+                                        RAWTYPES AS '原料素別',
                                         ICON AS '圖片路徑'
                                     FROM [TKRESEARCH].[dbo].[TB_ORIENTS_CHECKLISTS]
                                     WHERE 1=1
@@ -433,6 +434,7 @@ namespace TKRESEARCH
                 string INSPECTION_FREQUENCY = dataGridView1.CurrentRow.Cells["抽驗頻率"].Value.ToString();
                 string BRIX = dataGridView1.CurrentRow.Cells["糖度(Brix)"].Value.ToString();
                 string REMARK = dataGridView1.CurrentRow.Cells["備註"].Value.ToString();
+                string RAWTYPES = dataGridView1.CurrentRow.Cells["原料素別"].Value.ToString();
 
 
                 textBox2.Text = id;
@@ -458,6 +460,7 @@ namespace TKRESEARCH
                 textBox22.Text = BRIX;
                 textBox23.Text = REMARK;
                 comboBox2.Text = CATEGORY;
+                textBox25.Text = RAWTYPES;
 
                 // 取圖片路徑
                 string iconPath = dataGridView1.CurrentRow.Cells["圖片路徑"].Value?.ToString();
@@ -588,7 +591,8 @@ namespace TKRESEARCH
             string HAS_COA,
             string INSPECTION_FREQUENCY,
             string REMARK,
-            string BRIX
+            string BRIX,
+            string RAWTYPES
             )
         {
             try
@@ -606,12 +610,14 @@ namespace TKRESEARCH
                             ([MB001],[CATEGORY],[SUPPLIER],[PRODUCTNAME],[INGREDIENT_CN],[INGREDIENT_EN],
                              [PRODUCT_ALLERGEN],[LINE_ALLERGEN],[ORIGIN],[PACKAGE_SPEC],[PRODUCT_APPEARANCE],
                              [COLOR],[FLAVOR],[BATCHNO],[UNIT_WEIGHT],[SHELFLIFE],[STORAGE_CONDITION],
-                             [GMO_STATUS],[HAS_COA],[INSPECTION_FREQUENCY],[REMARK],[BRIX],[UPDATETIME])
+                             [GMO_STATUS],[HAS_COA],[INSPECTION_FREQUENCY],[REMARK],[BRIX],[UPDATETIME],
+                            [RAWTYPES])
                             VALUES
                             (@MB001,@CATEGORY,@SUPPLIER,@PRODUCTNAME,@INGREDIENT_CN,@INGREDIENT_EN,
                              @PRODUCT_ALLERGEN,@LINE_ALLERGEN,@ORIGIN,@PACKAGE_SPEC,@PRODUCT_APPEARANCE,
                              @COLOR,@FLAVOR,@BATCHNO,@UNIT_WEIGHT,@SHELFLIFE,@STORAGE_CONDITION,
-                             @GMO_STATUS,@HAS_COA,@INSPECTION_FREQUENCY,@REMARK,@BRIX,@UPDATETIME)
+                             @GMO_STATUS,@HAS_COA,@INSPECTION_FREQUENCY,@REMARK,@BRIX,@UPDATETIME,
+                            @RAWTYPES)
                             ";
 
                 using (SqlConnection conn = new SqlConnection(sqlsb.ConnectionString))
@@ -640,6 +646,7 @@ namespace TKRESEARCH
                     cmd.Parameters.AddWithValue("@REMARK", REMARK);
                     cmd.Parameters.AddWithValue("@BRIX", BRIX);
                     cmd.Parameters.AddWithValue("@UPDATETIME", DateTime.Now.ToString("yyyy/MM/dd"));
+                    cmd.Parameters.AddWithValue("@RAWTYPES", RAWTYPES);
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
@@ -675,7 +682,8 @@ namespace TKRESEARCH
             string HAS_COA,
             string INSPECTION_FREQUENCY,
             string REMARK,
-            string BRIX
+            string BRIX,
+            string RAWTYPES
 
             )
         {
@@ -699,7 +707,8 @@ namespace TKRESEARCH
                             [COLOR]=@COLOR,[FLAVOR]=@FLAVOR,[BATCHNO]=@BATCHNO,[UNIT_WEIGHT]=@UNIT_WEIGHT,
                             [SHELFLIFE]=@SHELFLIFE,[STORAGE_CONDITION]=@STORAGE_CONDITION,[GMO_STATUS]=@GMO_STATUS,
                             [HAS_COA]=@HAS_COA,[INSPECTION_FREQUENCY]=@INSPECTION_FREQUENCY,[REMARK]=@REMARK,
-                            [BRIX]=@BRIX,[UPDATETIME]=@UPDATETIME
+                            [BRIX]=@BRIX,[UPDATETIME]=@UPDATETIME,
+                            [RAWTYPES]=@RAWTYPES
                             WHERE [ID]=@ID"
                             ;
 
@@ -730,6 +739,7 @@ namespace TKRESEARCH
                     cmd.Parameters.AddWithValue("@REMARK", REMARK);
                     cmd.Parameters.AddWithValue("@BRIX", BRIX);
                     cmd.Parameters.AddWithValue("@UPDATETIME", DateTime.Now.ToString("yyyy/MM/dd"));
+                    cmd.Parameters.AddWithValue("@RAWTYPES", RAWTYPES);
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
@@ -948,6 +958,7 @@ namespace TKRESEARCH
             textBox22.Text = "";
             textBox23.Text = "";
             textBox24.Text = "";
+            textBox25.Text = "";
         }
 
 
@@ -1038,6 +1049,7 @@ namespace TKRESEARCH
             string INSPECTION_FREQUENCY = textBox21.Text;
             string BRIX = textBox22.Text;
             string REMARK = textBox23.Text;
+            string RAWTYPES = textBox25.Text;
 
             ADD_TB_ORIENTS_CHECKLISTS(
                 ID,
@@ -1062,7 +1074,8 @@ namespace TKRESEARCH
                 HAS_COA,
                 INSPECTION_FREQUENCY,
                 REMARK,
-                BRIX
+                BRIX,
+                RAWTYPES
             );
         }
 
@@ -1094,6 +1107,7 @@ namespace TKRESEARCH
             string INSPECTION_FREQUENCY = textBox21.Text;
             string BRIX = textBox22.Text;
             string REMARK = textBox23.Text;
+            string RAWTYPES= textBox25.Text;
 
             UPDATE_TB_ORIENTS_CHECKLISTS(
                 ID,
@@ -1118,7 +1132,8 @@ namespace TKRESEARCH
                 HAS_COA,
                 INSPECTION_FREQUENCY,
                 REMARK,
-                BRIX
+                BRIX,
+                RAWTYPES
             );
 
             string SEARCH_CATEGORY = comboBox1.Text.ToString();
