@@ -877,7 +877,53 @@ namespace TKRESEARCH
                 textBox16.Text = TB_ORIENTS_CHECKLISTS_NOT_TW;
             }
         }
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            CHECK_ALL_BOX();
+        }
 
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            CHECK_ALL_BOX();
+        } 
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            CHECK_ALL_BOX();
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            CHECK_ALL_BOX();
+        }
+
+        private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        {
+            CHECK_ALL_BOX();
+        }
+
+        private void checkBox6_CheckedChanged(object sender, EventArgs e)
+        {
+            CHECK_ALL_BOX();
+        }
+        public void CHECK_ALL_BOX()
+        {
+            textBox25.Text = "";
+            string selectedItems = "";
+            bool anyChecked = false;
+
+            if (checkBox1.Checked) { selectedItems += "葷食 "; anyChecked = true; }
+            if (checkBox2.Checked) { selectedItems += "全素 "; anyChecked = true; }
+            if (checkBox3.Checked) { selectedItems += "蛋素 "; anyChecked = true; }
+            if (checkBox4.Checked) { selectedItems += "奶素 "; anyChecked = true; }
+            if (checkBox5.Checked) { selectedItems += "蛋奶素 "; anyChecked = true; }
+            if (checkBox6.Checked) { selectedItems += "植物五辛素 "; anyChecked = true; }
+
+            if (anyChecked)
+            {
+                textBox25.Text=selectedItems;
+            }
+        }
         public void SET_TEXTBOX_NULL()
         {
             textBox2.Text = "";
@@ -1121,6 +1167,7 @@ namespace TKRESEARCH
                 MessageBox.Show("刪除失敗：" + ex.Message);
             }
         }
+
 
 
         #endregion
