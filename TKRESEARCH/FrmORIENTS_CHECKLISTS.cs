@@ -103,12 +103,14 @@ namespace TKRESEARCH
         public void comboBox1_load()
         {
             string sql = @"
-                        SELECT '全部' AS 'PARANAME'
+                        SELECT '全部' AS 'PARANAME',0 AS 'PARAID'
                         UNION ALL
                         SELECT 
-                        [PARANAME]
+                        [PARANAME],CONVERT(INT,[PARAID])
                         FROM [TKRESEARCH].[dbo].[TBPARA]
                         WHERE [KIND]='TB_ORIENTS_CHECKLISTS_CATEGORY'
+                        ORDER BY [PARAID]
+
                         ";
 
             LoadComboBox(comboBox1, sql, "PARANAME", "PARANAME");
