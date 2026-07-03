@@ -781,26 +781,29 @@ namespace TKRESEARCH
         }
 
         private void textBox24_TextChanged(object sender, EventArgs e)
+        {         
+            
+
+        }
+
+        private void textBox24_Validating(object sender, CancelEventArgs e)
         {
-            // 1. 檢查輸入是否為空（如果允許空值則跳過）
-            if (string.IsNullOrEmpty(textBox24.Text.Trim()))
+            // 如果是因為點選 GridView 導致帶入資料，可以加上一個 bool 變數 flag 去跳過此檢查
+            // 或者判斷目前表單是否處於「修改模式」，修改模式通常不檢查自身重複
+
+            string partNo = textBox24.Text.Trim();
+            if (string.IsNullOrEmpty(partNo)) return;
+
+            DataTable DT = FIND_TB_ORIENTS_CHECKLISTS_REPEATS(partNo);
+
+            if (DT != null && DT.Rows.Count >= 1)
             {
-                return;
+                MessageBox.Show("品號:" + partNo + " 有重複 " + DT.Rows.Count + "筆資料, 請修改!", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                textBox24.Text = ""; // 這裡清空不會造成無窮迴圈
+
+                // e.Cancel = true; // 如果打開這行，使用者不輸入正確的品號，游標會被強制卡在 textBox24 移不開
             }
-
-            // 2. 執行耗時的資料庫查詢
-            DataTable DT = FIND_TB_ORIENTS_CHECKLISTS_REPEATS(textBox24.Text.Trim());
-
-            // 3. 判斷重複
-            if (DT != null && DT.Rows.Count >= 2)
-            {
-                // 發現重複時，彈出警告
-                MessageBox.Show("品號:" + textBox24.Text.Trim() + " 有重複 " + DT.Rows.Count + "筆資料, 請修改!", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                // 【可選】如果強制要求修改，可以設定 e.Cancel = true
-                // e.Cancel = true; // 這會阻止使用者離開 textBox24
-            }
-
         }
 
         public DataTable FIND_TB_ORIENTS_CHECKLISTS_REPEATS(string MB001)
@@ -1184,6 +1187,7 @@ namespace TKRESEARCH
                 MessageBox.Show("刪除失敗：" + ex.Message);
             }
         }
+
 
 
 
