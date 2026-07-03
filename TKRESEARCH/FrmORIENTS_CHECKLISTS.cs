@@ -788,25 +788,11 @@ namespace TKRESEARCH
 
         private void textBox24_Validating(object sender, CancelEventArgs e)
         {
-            // 如果是因為點選 GridView 導致帶入資料，可以加上一個 bool 變數 flag 去跳過此檢查
-            // 或者判斷目前表單是否處於「修改模式」，修改模式通常不檢查自身重複
-
-            string partNo = textBox24.Text.Trim();
-            if (string.IsNullOrEmpty(partNo)) return;
-
-            DataTable DT = FIND_TB_ORIENTS_CHECKLISTS_REPEATS(partNo);
-
-            if (DT != null && DT.Rows.Count >= 1)
-            {
-                MessageBox.Show("品號:" + partNo + " 有重複 " + DT.Rows.Count + "筆資料, 請修改!", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                textBox24.Text = ""; // 這裡清空不會造成無窮迴圈
-
-                // e.Cancel = true; // 如果打開這行，使用者不輸入正確的品號，游標會被強制卡在 textBox24 移不開
-            }
+            
         }
 
-        public DataTable FIND_TB_ORIENTS_CHECKLISTS_REPEATS(string MB001)
+        // 【修正】：必須多傳入 currentID，才能讓修改模式排除自己
+        public DataTable FIND_TB_ORIENTS_CHECKLISTS_REPEATS(string MB001, string currentID)
         {
             // 初始化連線資訊和解密（保留您的邏輯）
             Class1 TKID = new Class1();
@@ -816,65 +802,55 @@ namespace TKRESEARCH
             sqlsb.Password = TKID.Decryption(sqlsb.Password);
             sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
 
-            // 【SQL 修正】：使用視窗函數確保只回傳出現次數 > 1 的記錄
+            // 【SQL 優化】：直接對主表查詢即可，不需要包兩層子查詢，效能更好
             string sqlQuery = @"
-                                SELECT 
-                                    [ID], [MB001], [CATEGORY], [SUPPLIER], [PRODUCTNAME], [INGREDIENT_CN], 
-                                    [INGREDIENT_EN], [PRODUCT_ALLERGEN], [LINE_ALLERGEN], [ORIGIN], 
-                                    [PACKAGE_SPEC], [PRODUCT_APPEARANCE], [COLOR], [FLAVOR], [BATCHNO], 
-                                    [UNIT_WEIGHT], [SHELFLIFE], [STORAGE_CONDITION], [GMO_STATUS], 
-                                    [HAS_COA], [INSPECTION_FREQUENCY], [REMARK], [BRIX], [ICON], 
-                                    [UPDATETIME]
-                                FROM 
-                                    (
-                                        SELECT 
-                                            *,
-                                            -- 使用 PARTITION BY 計算每個 MB001 出現的次數
-                                            COUNT([MB001]) OVER (PARTITION BY [MB001]) AS TotalCount 
-                                        FROM 
-                                            [TKRESEARCH].[dbo].[TB_ORIENTS_CHECKLISTS]
-                                        -- 在子查詢中，先限制 MB001 的範圍，優化性能
-                                        WHERE 
-                                            [MB001] = @MB001  
-                                    ) AS Subquery
-                                WHERE 
-                                    TotalCount >= 1  -- 篩選出所有重複（出現次數大於 1）的記錄
-                                ORDER BY
-                                    [MB001], [ID];
-                            ";
+        SELECT 
+            [ID], [MB001], [CATEGORY], [SUPPLIER], [PRODUCTNAME], [INGREDIENT_CN], 
+            [INGREDIENT_EN], [PRODUCT_ALLERGEN], [LINE_ALLERGEN], [ORIGIN], 
+            [PACKAGE_SPEC], [PRODUCT_APPEARANCE], [COLOR], [FLAVOR], [BATCHNO], 
+            [UNIT_WEIGHT], [SHELFLIFE], [STORAGE_CONDITION], [GMO_STATUS], 
+            [HAS_COA], [INSPECTION_FREQUENCY], [REMARK], [BRIX], [ICON], 
+            [UPDATETIME] 
+        FROM [TKRESEARCH].[dbo].[TB_ORIENTS_CHECKLISTS]
+        WHERE [MB001] = @MB001
+    ";
+
+            // 【修正 1、2】：補上 C# 括號，並將排除條件安全地加在主查詢的 WHERE 後面
+            // 假設您的主鍵欄位叫 [ID] (請根據您資料庫的實際欄位名修改，例如 ID 或 SYS_ID)
+            if (btnSATUS != null && btnSATUS.Equals("EDIT"))
+            {
+                sqlQuery += " AND [ID] <> @CurrentID ";
+            }
 
             DataTable dtResult = new DataTable();
 
             try
             {
-                // 1. 建立連線物件 (使用解密後的連線字串)
                 using (SqlConnection conn = new SqlConnection(sqlsb.ConnectionString))
                 {
-                    // 2. 建立指令物件 (SqlCommand)
                     using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                     {
-                        // 3. 參數化處理：新增 SQL 參數
-                        // 這是正確新增參數的地方，且使用了 SQL 語句中的 @MB001
-                        cmd.Parameters.AddWithValue("@MB001", MB001);
+                        // 【修正 3】：標準參數化綁定
+                        cmd.Parameters.AddWithValue("@MB001", string.IsNullOrEmpty(MB001) ? "" : MB001.Trim());
 
-                        // 4. 建立資料配接器，並將指令物件傳入
+                        // 【修正 4】：如果是修改模式，記得要把排除的 ID 參數也餵給 SqlCommand
+                        if (btnSATUS != null && btnSATUS.Equals("EDIT"))
+                        {
+                            cmd.Parameters.AddWithValue("@CurrentID", string.IsNullOrEmpty(currentID) ? "" : currentID.Trim());
+                        }
+
                         using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                         {
-                            // 5. 執行查詢並將結果填入 dtResult
                             adapter.Fill(dtResult);
                         }
-                    } // cmd.Dispose()
-                } // conn.Close() and conn.Dispose()
+                    }
+                }
 
                 return dtResult;
             }
             catch (Exception ex)
             {
-                // 處理任何連線或查詢錯誤
-                // 建議保留 MessageBox 或其他日誌記錄
-                // MessageBox.Show("查詢資料庫錯誤: " + ex.Message, "資料庫錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                // 在錯誤發生時傳回 null 或一個空的 DataTable
+                // 錯誤處理
                 return null;
             }
         }
@@ -1056,32 +1032,50 @@ namespace TKRESEARCH
             string REMARK = textBox23.Text;
             string RAWTYPES = textBox25.Text;
 
-            ADD_TB_ORIENTS_CHECKLISTS(
-                ID,
-                MB001,
-                CATEGORY,
-                SUPPLIER,
-                PRODUCTNAME,
-                INGREDIENT_CN,
-                INGREDIENT_EN,
-                PRODUCT_ALLERGEN,
-                LINE_ALLERGEN,
-                ORIGIN,
-                PACKAGE_SPEC,
-                PRODUCT_APPEARANCE,
-                COLOR,
-                FLAVOR,
-                BATCHNO,
-                UNIT_WEIGHT,
-                SHELFLIFE,
-                STORAGE_CONDITION,
-                GMO_STATUS,
-                HAS_COA,
-                INSPECTION_FREQUENCY,
-                REMARK,
-                BRIX,
-                RAWTYPES
-            );
+            string partNo = textBox24.Text.Trim();
+            //執行資料庫查詢
+            DataTable DT = FIND_TB_ORIENTS_CHECKLISTS_REPEATS(partNo, ID);
+
+            //判斷重複（C# 5.0 安全寫法）
+            if (!string.IsNullOrEmpty(partNo) && DT != null && DT.Rows.Count >= 1)
+            {
+                // 發現重複時，彈出警告
+                MessageBox.Show("品號: " + partNo + " 在系統中已存在 " + DT.Rows.Count + " 筆重複資料，請修正品號！", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                textBox24.Text = ""; // 依您需求：清空輸入框
+                textBox24.Focus();   // 將游標停留在該輸入框方便重新輸入
+                return;              // 📌 關鍵：直接攔截，不允許執行後續的存檔動作！
+            }
+            else
+            {
+                ADD_TB_ORIENTS_CHECKLISTS(
+                               ID,
+                               MB001,
+                               CATEGORY,
+                               SUPPLIER,
+                               PRODUCTNAME,
+                               INGREDIENT_CN,
+                               INGREDIENT_EN,
+                               PRODUCT_ALLERGEN,
+                               LINE_ALLERGEN,
+                               ORIGIN,
+                               PACKAGE_SPEC,
+                               PRODUCT_APPEARANCE,
+                               COLOR,
+                               FLAVOR,
+                               BATCHNO,
+                               UNIT_WEIGHT,
+                               SHELFLIFE,
+                               STORAGE_CONDITION,
+                               GMO_STATUS,
+                               HAS_COA,
+                               INSPECTION_FREQUENCY,
+                               REMARK,
+                               BRIX,
+                               RAWTYPES
+                           );
+            }
+           
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)
@@ -1114,43 +1108,61 @@ namespace TKRESEARCH
             string REMARK = textBox23.Text;
             string RAWTYPES= textBox25.Text;
 
-            UPDATE_TB_ORIENTS_CHECKLISTS(
-                ID,
-                MB001,
-                CATEGORY,
-                SUPPLIER,
-                PRODUCTNAME,
-                INGREDIENT_CN,
-                INGREDIENT_EN,
-                PRODUCT_ALLERGEN,
-                LINE_ALLERGEN,
-                ORIGIN,
-                PACKAGE_SPEC,
-                PRODUCT_APPEARANCE,
-                COLOR,
-                FLAVOR,
-                BATCHNO,
-                UNIT_WEIGHT,
-                SHELFLIFE,
-                STORAGE_CONDITION,
-                GMO_STATUS,
-                HAS_COA,
-                INSPECTION_FREQUENCY,
-                REMARK,
-                BRIX,
-                RAWTYPES
-            );
+            string partNo = textBox24.Text.Trim();
+            //執行資料庫查詢
+            DataTable DT = FIND_TB_ORIENTS_CHECKLISTS_REPEATS(partNo, ID);
 
-            string SEARCH_CATEGORY = comboBox1.Text.ToString();
-            string SEARCH_PRODUCTNAME = textBox1.Text.Trim();
-            string SEARCH_SUPPLIER = textBox3.Text.Trim();
+            //判斷重複（C# 5.0 安全寫法）
+            if (!string.IsNullOrEmpty(partNo) &&DT != null && DT.Rows.Count >= 1)
+            {
+                // 發現重複時，彈出警告
+                MessageBox.Show("品號: " + partNo + " 在系統中已存在 " + DT.Rows.Count + " 筆重複資料，請修正品號！", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-            SEARCH(SEARCH_CATEGORY, SEARCH_PRODUCTNAME, SEARCH_SUPPLIER);
-            MessageBox.Show("資料已修改成功！");
+                textBox24.Text = ""; // 依您需求：清空輸入框
+                textBox24.Focus();   // 將游標停留在該輸入框方便重新輸入
+                return;              // 📌 關鍵：直接攔截，不允許執行後續的存檔動作！
+            }
+            else
+            {
+               UPDATE_TB_ORIENTS_CHECKLISTS(
+               ID,
+               MB001,
+               CATEGORY,
+               SUPPLIER,
+               PRODUCTNAME,
+               INGREDIENT_CN,
+               INGREDIENT_EN,
+               PRODUCT_ALLERGEN,
+               LINE_ALLERGEN,
+               ORIGIN,
+               PACKAGE_SPEC,
+               PRODUCT_APPEARANCE,
+               COLOR,
+               FLAVOR,
+               BATCHNO,
+               UNIT_WEIGHT,
+               SHELFLIFE,
+               STORAGE_CONDITION,
+               GMO_STATUS,
+               HAS_COA,
+               INSPECTION_FREQUENCY,
+               REMARK,
+               BRIX,
+               RAWTYPES
+           );
 
-            //回到原本那筆資料
-            RefreshData(currentId);
-            btnSATUS = null;
+                string SEARCH_CATEGORY = comboBox1.Text.ToString();
+                string SEARCH_PRODUCTNAME = textBox1.Text.Trim();
+                string SEARCH_SUPPLIER = textBox3.Text.Trim();
+
+                SEARCH(SEARCH_CATEGORY, SEARCH_PRODUCTNAME, SEARCH_SUPPLIER);
+                MessageBox.Show("資料已修改成功！");
+
+                //回到原本那筆資料
+                RefreshData(currentId);
+                btnSATUS = null;
+            }
+           
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
