@@ -804,16 +804,16 @@ namespace TKRESEARCH
 
             // 【SQL 優化】：直接對主表查詢即可，不需要包兩層子查詢，效能更好
             string sqlQuery = @"
-        SELECT 
-            [ID], [MB001], [CATEGORY], [SUPPLIER], [PRODUCTNAME], [INGREDIENT_CN], 
-            [INGREDIENT_EN], [PRODUCT_ALLERGEN], [LINE_ALLERGEN], [ORIGIN], 
-            [PACKAGE_SPEC], [PRODUCT_APPEARANCE], [COLOR], [FLAVOR], [BATCHNO], 
-            [UNIT_WEIGHT], [SHELFLIFE], [STORAGE_CONDITION], [GMO_STATUS], 
-            [HAS_COA], [INSPECTION_FREQUENCY], [REMARK], [BRIX], [ICON], 
-            [UPDATETIME] 
-        FROM [TKRESEARCH].[dbo].[TB_ORIENTS_CHECKLISTS]
-        WHERE [MB001] = @MB001
-    ";
+                                SELECT 
+                                    [ID], [MB001], [CATEGORY], [SUPPLIER], [PRODUCTNAME], [INGREDIENT_CN], 
+                                    [INGREDIENT_EN], [PRODUCT_ALLERGEN], [LINE_ALLERGEN], [ORIGIN], 
+                                    [PACKAGE_SPEC], [PRODUCT_APPEARANCE], [COLOR], [FLAVOR], [BATCHNO], 
+                                    [UNIT_WEIGHT], [SHELFLIFE], [STORAGE_CONDITION], [GMO_STATUS], 
+                                    [HAS_COA], [INSPECTION_FREQUENCY], [REMARK], [BRIX], [ICON], 
+                                    [UPDATETIME] 
+                                FROM [TKRESEARCH].[dbo].[TB_ORIENTS_CHECKLISTS]
+                                WHERE [MB001] = @MB001
+                            ";
 
             // 【修正 1、2】：補上 C# 括號，並將排除條件安全地加在主查詢的 WHERE 後面
             // 假設您的主鍵欄位叫 [ID] (請根據您資料庫的實際欄位名修改，例如 ID 或 SYS_ID)
